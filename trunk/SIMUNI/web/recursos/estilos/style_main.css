@@ -1,0 +1,304 @@
+/*
+    El estilo a utilizar es optimizado para navegadores de computadora a una proyeccion minima de 1024x768
+    Los identificadores se componen de, dos caracteres del sistema, un guion bajo, la etiquta padre, otro guion
+    bajo y  la descripcion del identificador o nombre de clase correspondiente.
+
+    Esta es la seccion para el header de la pagina maestra.
+    El encabezado del sitio web, esta seccion que contiene el menu y el banner de la aplicación para el usuario.
+*/
+header{
+    background-color: red;
+    height: 200px;
+}
+
+/*  
+    En esta parte hay dos partes importantes, una que es el banner y otra la parte de control de usuario.
+    En las parte de banners se divide entre dos partes, la primera que contiene el logo de simuni
+    el cual es el proyecto, la segunda es el logo de la municipalidad, ambos con el mismo estilo.
+*/
+/*
+    el contenedor del logo de la muni y del simuni
+*/
+#sm_div_logomunicontainer,#sm_div_logosimunicontainer{
+    width: 128px;
+    height: 140px;
+    background-color: green;
+    display: inline-block;
+    float: left;
+    padding-top:  4px;
+    padding-left:   20px;
+
+}
+
+#sm_div_logomunicontainer{
+    border-right: 3px black solid;
+} 
+
+#sm_div_logosimunicontainer{
+    width: 300px; 
+}
+
+/*
+    Los campos qeu contienen propiamente la imagen logo de simuni y de la municipalidad.
+*/
+#sm_div_logomuni,#sm_div_logosimuni{
+    border-left:  2px black;
+    width: 100px;
+    height: 100px;
+  
+
+}
+
+#sm_div_logomuni{
+    background-image: url(../imagenes/sistema/sm_logo_muni.jpg);
+        background-size: 100px 100px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    
+}
+/*
+    Para la imagen se hace un padding de 100
+*/
+#sm_div_logosimuni{
+    width: 175px;
+    height: 83px;
+    padding-left: 100px;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-right: 0px black solid;
+    background-image: url(../imagenes/sistema/sm_logo_simuni.png);
+    background-size: 100px 100px;
+    background-repeat: no-repeat;
+     overflow: hidden;
+    
+}
+
+
+#sm_div_logosimunislogan{
+    display: inline-block;
+    width: 150px;
+    float: left;
+}
+
+/*
+    para que el menu aparezca debajo del banner.
+*/
+nav{
+    clear: both;
+}
+
+
+
+
+/*   para la parte del user profile*/
+
+#sm_div_usersettings .sm_div_colcontainer{
+    font-family: sans-serif;
+    font-size: 1.1em;
+}
+#sm_div_usersettings:hover{
+    cursor: pointer;
+
+}
+#sm_header_userprofilecontainer{
+    float: right;
+    background-color: yellow;
+
+}
+
+#sm_div_userprofile{
+    width: 300px;
+    height: 110px;
+    padding-top: 30px;
+    padding-left: 10px;
+
+}
+.sm_div_colcontainer{
+    display: inline-block;
+    padding: 5px;
+
+}
+.sm_div_colcontainer:first-child{
+    width: 200px;
+
+
+}
+
+#sm_header_bannerandusercontainer{
+    height: 144px;
+
+}
+
+#sm_header_menuprincipal{
+    background-color: brown;
+}
+
+#sm_nav_menuelementscontainer{
+    margin: 0px;
+    padding: 0px;
+    border-top:   solid 3px black;
+    border-bottom:    solid 3px black;
+}
+#sm_nav_menuelementscontainer .sm_ul_menuitem:first-child{
+    border-left:   solid 3px black;
+    margin-left: -0.5px;
+    padding-left: 45px; 
+ }
+.sm_ul_menuitem{
+    display: inline-block;
+    padding-top:  15px;
+    padding-bottom:   15px;
+    padding-right:  45px;
+    margin-left: 30px;
+    border-right:  solid 3px black;
+}
+
+#sm_div_configuracion{
+    width: 45px;
+    height: 45px;
+     background-image: url(../imagenes/sistema/sm_configuracion_cuenta.png);
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+   background-position: -0px -0px;
+}
+
+
+/*
+    barra lateral donde estara el menu lateral con mensajes, etc.
+*/
+#sm_body_barralateral{
+    background-color: blue;
+    padding: 15px;
+}
+
+#sm_body_barralateral,#sm_body_mainsection{
+    float: left;
+    display: inline-block;
+
+}
+
+#sm_body_notificacion{
+    clear: both;
+}
+
+.sm_aside_barralateralitem{
+    margin-top: 4px;
+}
+footer{
+    clear: both;
+}
+/*
+    para la parte principal de la pagina
+*/
+#sm_body_mainsection{
+    padding: 10px;
+}
+
+/*
+    para la parte de barra de estado del sistema 
+*/
+#sm_body_notificacion{
+    background-color: violet;
+    padding: 10px;
+    padding-top: 15px;
+    padding-bottom:  15px;
+    
+}
+
+/*estilizado de las notificaciones del sistema*/
+.sm_div_notificacion{
+    padding: 5px;
+    max-width: 200px;
+    padding-left: 60px;
+    background-image: url(../imagenes/sistema/sm_notificacion_usuario.png);
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    
+    
+}
+.sm_div_notificacion:not(:first-child){
+    margin-top: 8px;
+ 
+}
+
+.sm_div_mensaje{
+     padding: 5px;
+    max-width: 200px;
+    padding-left: 60px;
+    background-image: url(../imagenes/sistema/sm_mensaje_usuario.png);
+    background-size: 30px 30px;
+    background-repeat: no-repeat;   
+}
+.sm_div_mensaje:not(:first-child){
+    margin-top: 8px;
+}
+
+.sm_div_edicionperfil{
+     padding: 5px;
+    max-width: 200px;
+    padding-left: 60px;
+    background-image: url(../imagenes/sistema/sm_edit_user.png);
+    background-size: 30px 30px;
+    background-repeat: no-repeat;   
+}
+.sm_div_edicionperfil:not(:first-child){
+    margin-top: 8px;
+}
+
+.sm_div_ayudausuario{
+     padding: 5px;
+    max-width: 200px;
+    padding-left: 60px;
+    background-image: url(../imagenes/sistema/sm_help.png);
+    background-size: 30px 30px;
+    background-repeat: no-repeat;   
+}
+.sm_div_ayudausuario:not(:first-child){
+    margin-top: 8px;
+}
+
+.sm_div_cerrarsesion{
+     padding: 5px;
+    max-width: 200px;
+    padding-left: 60px;
+    background-image: url(../imagenes/sistema/sm_logout.png);
+    background-size: 30px 30px;
+    background-repeat: no-repeat;   
+}
+.sm_div_cerrarsesion:not(:first-child){
+    margin-top: 8px;
+}
+
+
+.sm_div_separadorhr{
+    background-color: #eee;
+    border: 0 none;
+    color: #eee;
+    height: 1px;
+    
+}
+
+
+/*seccion para el footer*/
+footer .sm_div_rowcontainer{
+    display: block;
+}
+footer .sm_div_colcontainer{
+    width: 393.5px !important;
+  
+}
+
+footer .sm_div_rowcontainer{
+     background-color: blueviolet;
+    
+} 
+footer .sm_div_rowcontainer:not(:first-child){
+     margin-top: -15px;
+}
+
+footer #sm_div_copyrigth_container{
+    text-align: center;
+}
+footer .sm_div_colcontainer:not(:first-child){
+    margin-left: -5px;
+}
