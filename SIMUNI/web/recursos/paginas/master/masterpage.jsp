@@ -6,15 +6,17 @@
 <html>
     <head>
         <title></title>
-        <script src="../../scripts/jquery-2.1.1.min.js"></script>
-        <script src="../../scripts/jquery-ui.js"></script>
-        <script src="../../scripts/componentes/chesdev_userbox_v1.js"></script>
-        <script src="../../scripts/js_paginas/script_main.js"></script>
+        <script src="<%=request.getContextPath()%>/recursos/scripts/jquery-2.1.1.min.js"></script>
+        <script src="<%=request.getContextPath()%>/recursos/scripts/jquery-ui.js"></script>
+        <script src="<%=request.getContextPath()%>/recursos/scripts/componentes/chesdev_userbox_v1.js"></script>
+        <script src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_main.js"></script>
 
-        <link rel="stylesheet" href="../../estilos/style_main.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/recursos/estilos/style_main.css">
 
     </head>
     <body>
+        
+        <a name="sm_body_headanchor"></a>
         <header>
             <div id="sm_header_bannerandusercontainer">
                 <div class="sm_header_bannercontainer">
@@ -63,7 +65,7 @@
             </nav>
         </header>  
         <aside id="sm_body_barralateral" >
-            <div class="sm_aside_barralateralitem">
+            <div class="sm_aside_barralateralitem" id="sm_aside_barralateralitemnotificacion">
                 <fieldset>
                     <legend>Notificaciones</legend>
                     <div id="sm_fieldset_notificacionescontainer">
@@ -79,12 +81,25 @@
                             Notificacion primera que se hizo8787sfasdfasdfqwefaasa asdfasdf
                             Notificacion primera que se hizo8787sfasdfasdfqwefaasa asdfasdf
                             Notificacion primera que se hizo8787sfasdfasdfqwefaasa asdfasdf
+                        </div>                        
+                        <hr class="sm_div_separadorhr">
+                        <div class="sm_div_notificacion">
+                            Notificacion primera que se hizo
                         </div>
                         <hr class="sm_div_separadorhr">
+                        <div class="sm_div_notificacion">
+                            Notificacion primera que se hizo
+                        </div>
+                        <hr class="sm_div_separadorhr">
+                        <div class="sm_div_notificacion">
+                            Notificacion primera que se hizo8787sfasdfasdfqwefaasa asdfasdf
+                            Notificacion primera que se hizo8787sfasdfasdfqwefaasa asdfasdf
+                            Notificacion primera que se hizo8787sfasdfasdfqwefaasa asdfasdf
+                        </div>                        
                     </div>
                 </fieldset>
             </div>
-            <div class="sm_aside_barralateralitem">
+            <div class="sm_aside_barralateralitem" id="sm_aside_barralateralitemmensaje">
                 <fieldset>
                     <legend>Mensajes</legend>
                     <div id="sm_fieldset_notificacionescontainer">
@@ -117,8 +132,28 @@
                 </fieldset>
             </div>
         </aside>
+        <div id="sm_body_navegationbarmenu">
+            <span class="sm_div_navmenuitem">
+                <a href="">
+                    Home
+                </a>
+            </span>
+            <span class="sm_div_navmenuseparator">
+                /
+            </span>
+            <span class="sm_div_navmenuitem">
+                <a href="">
+                    Patitos
+                </a>
+            </span>
+            <span class="sm_div_navmenuseparator">
+                /
+            </span>            
+        </div>
         <section id="sm_body_mainsection">
-            esta es la secgunda
+            esta es la seccion principal.
+            <decorator:placeholder name='sm_section_mainsectioncontainer'/>
+            
         </section>
         <section id="sm_body_notificacion">
             la barra de estado del sistema :D
@@ -137,11 +172,12 @@
                     </div>                     
                 </div>
                 <div class="sm_div_rowcontainer" id="sm_div_copyrigth_container">
-                    <p>Copyright 2014 SIMUNI</p>
+                    <p>Copyright 2015 SIMUNI</p>
                 </div>
             </div>            
 
         </footer>
+                    <a href="#uno">vaya arriba</a>
     </body>
 </html>
 

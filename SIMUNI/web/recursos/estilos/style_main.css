@@ -11,6 +11,8 @@ header{
     height: 200px;
 }
 
+
+
 /*  
     En esta parte hay dos partes importantes, una que es el banner y otra la parte de control de usuario.
     En las parte de banners se divide entre dos partes, la primera que contiene el logo de simuni
@@ -83,7 +85,7 @@ header{
 /*
     para que el menu aparezca debajo del banner.
 */
-nav{
+#sm_header_menuprincipalsm_ul_menuitem{
     clear: both;
 }
 
@@ -151,8 +153,22 @@ nav{
     padding-right:  45px;
     margin-left: 30px;
     border-right:  solid 3px black;
+   
+    
+  
+}
+.sm_ul_menuitem a { 
+    font-size: 1.2em;
+    font-family: sans-serif;
+      color: gray;
+      text-decoration: none;
+      padding: 15px;
 }
 
+.sm_ul_menuitem a:hover{
+    color:white;
+     border-bottom:    solid 3px white;
+}
 #sm_div_configuracion{
     width: 45px;
     height: 45px;
@@ -184,6 +200,15 @@ nav{
 .sm_aside_barralateralitem{
     margin-top: 4px;
 }
+
+#sm_aside_barralateralitemnotificacion,#sm_aside_barralateralitemmensaje{
+    max-height: 300px;
+    overflow-y: auto;
+    
+}
+
+
+
 footer{
     clear: both;
 }
@@ -301,4 +326,37 @@ footer #sm_div_copyrigth_container{
 }
 footer .sm_div_colcontainer:not(:first-child){
     margin-left: -5px;
+}
+
+
+/*seccion para la barra de navegacion */
+#sm_body_navegationbarmenu{
+    background-color: chartreuse;
+    height: 35px;
+}
+
+
+#sm_body_navegationbarmenu .sm_div_navmenuseparator{
+    display: inline-block;
+    font-size: 1.3em;
+    color:gray;
+    margin-left:  15px;
+    margin-right: 12px;
+    padding: 5px;
+}
+
+#sm_body_navegationbarmenu .sm_div_navmenuitem{
+    text-decoration: none;
+    color: gray;
+    font-size: 1.2em;
+    padding: 5px;
+}
+
+#sm_body_navegationbarmenu .sm_div_navmenuitem a{     
+        text-decoration: none;
+    color: gray;
+}
+
+#sm_body_navegationbarmenu .sm_div_navmenuitem:first-child{
+    margin-left: 30px;
 }
