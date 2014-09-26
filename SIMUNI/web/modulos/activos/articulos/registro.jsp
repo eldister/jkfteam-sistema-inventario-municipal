@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/"%>
 <decorator:decorate filename='../../../recursos/paginas/master/masterpage.jsp'>
+     <decorator:content placeholder='sm_section_titulodepagina'>Titulo de pagina</decorator:content>    
+        <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
+            scripts
+        </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <div id="staticMenu">
             <a>Inicio</a> / <a>Activos</a> / <a>Gestión de activos</a> / <a>Registro de activos</a>
         </div>
         <br/>
-        <div id="informationProcess">
+        <div id="sm_div_informacionproceso">
             <p>
                 Este es el formulario para el ingreso o registro de nuevos activos a la base de datos 
                 de la municipalidad a tráves del sistema de inventario <b>SIMUNI</b>.<br/>
@@ -16,7 +20,7 @@
         <form id="formulario" action="">
             <fieldset>
                 <legend>Registro de activos</legend>
-                <div id="registerInformation">
+                <div id="sm_form_registroinformacion">
                     <table>
                         <tr>
                             <td>
