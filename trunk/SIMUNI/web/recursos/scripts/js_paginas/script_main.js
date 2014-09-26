@@ -6,7 +6,7 @@
 window.onload = function() {
     userboxcomponent1 = chesdev_components_userbox_handler;
 
-    userboxcomponent1.setUserText("Usuario SIMUNI, configuraciones")
+    userboxcomponent1.setUserText("Configuraciones Generales")
     userboxcomponent1.addMenuItem("www.google.com", "Google");
     userboxcomponent1.addMenuItem("www.google.com", "Google");
     userboxcomponent1.addMenuItem("www.google.com", "Ir a configuraciones");
