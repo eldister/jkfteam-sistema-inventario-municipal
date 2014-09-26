@@ -5,14 +5,14 @@
 
 <html>
     <head>
-        <title></title>
+        <title> <decorator:placeholder name='sm_section_titulodepagina'/></title>
         <script src="<%=request.getContextPath()%>/recursos/scripts/jquery-2.1.1.min.js"></script>
         <script src="<%=request.getContextPath()%>/recursos/scripts/jquery-ui.js"></script>
         <script src="<%=request.getContextPath()%>/recursos/scripts/componentes/chesdev_userbox_v1.js"></script>
         <script src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_main.js"></script>
 
         <link rel="stylesheet" href="<%=request.getContextPath()%>/recursos/estilos/style_main.css">
-
+         <decorator:placeholder name='sm_section_estilosyscriptssectioncontainer'/>
     </head>
     <body>
         
