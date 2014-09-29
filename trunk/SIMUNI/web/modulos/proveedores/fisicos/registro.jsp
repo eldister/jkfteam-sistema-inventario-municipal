@@ -3,11 +3,11 @@
 <decorator:decorate filename='../../../recursos/paginas/master/masterpage.jsp'>
     <decorator:content placeholder='sm_section_titulodepagina'>Titulo de pagina</decorator:content>    
         <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
-            scripts
+             <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodeproveedores.css">
         </decorator:content>
         <decorator:content placeholder='sm_section_mainsectioncontainer'>
             <div id="staticMenu">
-            <a>Inicio</a> / <a>Proveedores</a> / <a>Gestión de proveedores</a> / <a>Registro de proveedores</a>
+                <a>Inicio</a> / <a>Proveedores</a> / <a>Gestión de proveedores</a> / <a>Registro de proveedores</a>
         </div>
         <br/>
         <div id="informationProcess">
@@ -17,7 +17,7 @@
             </p>
         </div>
         <form id="formulario" action="">
-            <fieldset>
+            <fieldset id="proveedores">
                 <legend>Registro de proveedores</legend>
                 <div id="registerInformation">
                     <table>

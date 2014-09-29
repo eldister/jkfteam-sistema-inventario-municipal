@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/"%>
 <decorator:decorate filename='../../../recursos/paginas/master/masterpage.jsp'>
-     <decorator:content placeholder='sm_section_titulodepagina'>Titulo de pagina</decorator:content>    
+     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de activos</decorator:content>    
         <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
-            scripts
+            <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodearticulos.css">
         </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <div id="staticMenu">
@@ -17,8 +17,8 @@
                 Seleccione el tipo de activo a registrar y se le desplegará el formulario que debe llenar.
             </p>
         </div>
-        <form id="formulario" action="">
-            <fieldset>
+        <form id="sm_div_formulario" action="">
+            <fieldset id="sm_fs_articulos">
                 <legend>Registro de activos</legend>
                 <div id="sm_form_registroinformacion">
                     <table>
@@ -35,7 +35,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="button" value="Desplegar formulario" name="btnDesplegar" />
+                                <input type="button" value="Desplegar formulario" id="btnDesplegar" />
                             </td>
                         </tr>
                         <tr>
@@ -181,25 +181,23 @@
                         </tr>
                         <tr>
                             <td>
-                                <input type="submit" name="btnRegistrar" value="Registrar activo">
+                                <input type="submit" id="btnRegistrar" value="Registrar activo">
                             </td>
                             <td>
-                                <input type="button" name="btnLimpiarFormulario" value="Limpiar formulario">
+                                <input type="button" id="btnLimpiarFormulario" value="Limpiar formulario">
                             </td>
                         </tr>
                     </table>
                 </div>
-                <div id="registerImage">
-                    <fieldset>
+                <div id="sm_div_registerImage">
+                    <fieldset id="sm_fs_imagen">
                         <legend>Foto del activo</legend>
                         <img name="imgImagenCargada" src="#" alt="Fotografía de activo"><br/>
-                        <input type="file" name="btnImagenActivo" accept="image/*" onchange="fnMostrarImagen(this);">
+                        <input type="file" id="btnImagenActivo" accept="image/*" onchange="fnMostrarImagen(this);">
                     </fieldset>
                 </div>
             </fieldset>
         </form>
-
-
     </decorator:content>
 
 </decorator:decorate>
