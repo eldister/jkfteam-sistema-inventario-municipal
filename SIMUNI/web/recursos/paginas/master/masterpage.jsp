@@ -56,7 +56,9 @@
                             out.print("<li class='sm_ul_menuitem'><a href=''>Permiso para 1</a></li>");
                             out.print("<li class='sm_ul_menuitem'><a href=''>Permiso para 2</a></li>");
                             out.print("<li class='sm_ul_menuitem'><a href=''>Permiso para3</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Permiso para 4</a></li>");
+                            out.print("<li class='sm_ul_menuitem'><a href=''>Permiso para 1</a></li>");
+                            out.print("<li class='sm_ul_menuitem'><a href=''>Permiso para 2</a></li>");
+                          out.print("<li class='sm_ul_menuitem'><a href=''>Permiso para 4</a></li>");
 
                         }
                     %>
@@ -125,14 +127,9 @@
                     </div>
                 </fieldset>
             </div>
-            <div class="sm_aside_barralateralitem">
-                <fieldset>
-                    <legend>Reloj</legend>
-
-                </fieldset>
-            </div>
         </aside>
         <div id="sm_body_navegationbarmenu">
+           
             <span class="sm_div_navmenuitem">
                 <a href="">
                     Home
@@ -148,7 +145,8 @@
             </span>
             <span class="sm_div_navmenuseparator">
                 /
-            </span>            
+            </span> 
+             <hr id="sm_div_separadormenunavegacion">
         </div>
         <section id="sm_body_mainsection">
             <!--esta es la seccion prinicipal-->
@@ -168,6 +166,7 @@
                             <li><p>Acerca de la Universidad Nacional</p></li>
                         </ul>
                     </div>
+                 
                     <div class="sm_div_colcontainer">
                         <b>SIMUNI</b><br/>
                         <ul>
@@ -177,6 +176,7 @@
                             <li><p>Propósito</p></li>
                         </ul>
                     </div>  
+                    
                     <div class="sm_div_colcontainer">
                         <b>Ayuda</b><br/>
                         <ul>

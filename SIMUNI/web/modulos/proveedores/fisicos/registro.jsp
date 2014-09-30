@@ -178,7 +178,7 @@
                                 <input type="submit" name="btnRegistrar" value="Registrar activo">
                             </td>
                             <td>
-                                <input type="button" name="btnLimpiarFormulario" value="Limpiar formulario">
+                                <input type="reset" name="btnLimpiarFormulario" value="Limpiar formulario">
                             </td>
                         </tr>    
                     </table>
