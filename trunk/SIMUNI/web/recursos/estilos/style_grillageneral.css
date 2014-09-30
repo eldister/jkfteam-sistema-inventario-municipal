@@ -1,0 +1,232 @@
+
+#sm_grilla_maincontainer{
+    display: block;
+    width: available;
+ 
+     
+
+   
+}
+tr{
+    padding: 0px;
+   
+}
+
+#sm_grilla_maincontainer .sm_div_operacionesbusquedacontainer .sm_div_colsim{
+    width:fit-content;
+    
+}
+#sm_grilla_maincontainer .sm_div_operacionesbusquedacontainer .sm_div_colsim:not(:first-child){
+  margin-left: 20px;
+    
+}
+#sm_grilla_maincontainer .sm_div_colsim{
+    display: inline-block;
+  
+    
+}
+#sm_grilla_maincontainer .sm_div_tablemain{
+    width: 100%; 
+
+}
+#sm_grilla_maincontainer .sm_div_tablemain th{
+    background-color: rgba(0,255,0,0.6);
+}
+
+.sm_td_operacionescontainer .sm_div_rowsim{
+    display: inline-block;
+    margin: 0px;
+   
+}
+#sm_grilla_maincontainer .sm_div_tablemain th:last-child{
+   min-width: 150px !important;
+   max-width: 150px;
+}
+
+#sm_grilla_maincontainer .sm_div_tablemain{
+ 
+        height: 100%;
+   
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+
+}
+#sm_grilla_maincontainer .sm_div_tablemain th{
+    border: 3px inset green;
+     padding: 5px;
+}
+
+#sm_grilla_maincontainer .sm_div_tablemain td{
+    padding: 0px;
+    border: 2px inset green;
+    padding: 0px;
+   
+}
+td{
+       max-width: 200px !important; 
+}
+#sm_grilla_maincontainer .sm_div_tablemain td{
+    width: fit-content;
+
+}
+.sm_td_operacionescontainer{
+    text-align: center;
+    padding: 0px;
+   
+}
+
+#sm_div_grillamodificar{
+    background-image: url(../imagenes/grilla/sm_grilla_editar.png);
+    background-size: 40px 40px;
+    width: 40px;
+    height: 40px; 
+    margin: 5px;
+}
+
+#sm_div_grillamodificar:hover{
+    cursor: pointer;
+  
+}
+
+
+#sm_div_grillaimprimir{
+    background-image: url(../imagenes/grilla/sm_grilla_imprimir.png);
+    background-size: 40px 40px;
+    width: 40px;
+    height: 40px; 
+    margin: 5px;
+}
+
+#sm_div_grillaimprimir:hover{
+    cursor: pointer;
+  
+}
+
+
+
+#sm_div_grillaeliminar{
+    background-image: url(../imagenes/grilla/sm_grilla_eliminar.png);
+    background-size: 40px 40px;
+    width: 40px;
+    height: 40px; 
+    margin: 5px;
+}
+
+#sm_div_grillaeliminar:hover{
+    cursor: pointer;
+  
+}
+
+
+#sm_div_grillaverimagen{
+    background-image: url(../imagenes/grilla/sm_grilla_verimagenes.png);
+    background-size: 40px 40px;
+    width: 40px;
+    height: 40px; 
+    margin: 5px;
+}
+
+#sm_div_grillaverimagen:hover{
+    cursor: pointer;
+  
+}
+
+
+.sm_div_paginaciongrillacontainer{
+  
+    padding: 5px;
+    text-align: center;
+}
+
+.sm_div_paginaciongrillacontainer .sm_div_elementpagcontainer{
+    font-size: 1.2em;
+  
+    margin: 4px;
+}
+
+.sm_div_paginaciongrillacontainer .sm_div_elementpagcontainer:not(:last-child){
+      border-right:   1px solid black;
+}
+
+.sm_div_elementpagcontainer a{
+    color: darkgreen;  
+    padding: 5px;
+    text-decoration: none;
+}
+
+.sm_div_elementpagcontainer a:hover{
+    color:black;
+      border-bottom:   1px solid black;
+}
+
+
+/*parte de arriba*/
+
+#sm_div_busquedacontainer:not(:nth-child(n-1)){
+    margin-top: 5px;
+}
+
+.sm_div_operacionesbusquedacontainer .sm_div_label{
+  font-size: 1.3em;
+  color:green;
+}
+
+/*boton busqueda*/
+#sm_div_botonbusqueda{
+    display: inline-block;
+        background-image: url(../imagenes/grilla/sm_grilla_busqueda.png);
+    background-size: 40px 40px;
+    background-repeat: no-repeat;
+
+    overflow: visible;
+    padding-top: 8px; 
+    width: 45px;
+    height: 45px; 
+}
+
+#sm_div_botonbusqueda:hover{
+    cursor: pointer;
+}
+#sm_div_agregaritemcontainer{
+    margin-left: 20px;
+    padding: 10px;
+    padding-left: 45px;
+      font-size: 1.3em;
+  color:green;
+          background-image: url(../imagenes/grilla/sm_grilla_agregar.png);
+    background-size: 40px 40px;
+      background-repeat: no-repeat;
+         
+   
+}
+#sm_div_agregaritemcontainer{
+    cursor: pointer;
+}
+#sm_grilla_maincontainer .sm_div_operacionesbusquedacontainer .sm_div_colsim:last-child{
+    float: right;
+    
+}
+
+#sm_grilla_maincontainer .sm_div_operacionesbusquedacontainer .sm_div_colsim a{
+   
+     text-decoration: none;
+}
+
+#sm_divpaginaciondefiner{
+    
+    display: inline-block;
+    float: right;
+          font-size: 1.3em;
+  color:green;
+   
+ 
+}
+#sm_div_paginacionelementscontainer{
+    display: inline-block;
+    width: calc(100%-50px);
+}
+
+#sm_divpaginaciondefiner input[type=text]{
+    width: 20px;
+}

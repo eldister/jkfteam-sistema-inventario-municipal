@@ -151,7 +151,7 @@
             </span>            
         </div>
         <section id="sm_body_mainsection">
-            esta es la seccion principal.
+            <!--esta es la seccion prinicipal-->
             <decorator:placeholder name='sm_section_mainsectioncontainer'/>
             
         </section>
