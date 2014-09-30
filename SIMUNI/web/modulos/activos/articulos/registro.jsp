@@ -4,12 +4,12 @@
      <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de activos</decorator:content>    
         <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
             <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodearticulos.css">
+            <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/jquery-registroactivos.js"></script>
         </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
-        <div id="staticMenu">
-            <a>Inicio</a> / <a>Activos</a> / <a>Gestión de activos</a> / <a>Registro de activos</a>
+        <div>
+            
         </div>
-        <br/>
         <div id="sm_div_informacionproceso">
             <p>
                 Este es el formulario para el ingreso o registro de nuevos activos a la base de datos 
@@ -33,9 +33,6 @@
                                     <option>Tecnológico</option>
                                     <option>Artículo</option>
                                 </select>
-                            </td>
-                            <td>
-                                <input type="button" value="Desplegar formulario" id="btnDesplegar" />
                             </td>
                         </tr>
                         <tr>
@@ -192,7 +189,7 @@
                 <div id="sm_div_registerImage">
                     <fieldset id="sm_fs_imagen">
                         <legend>Foto del activo</legend>
-                        <img name="imgImagenCargada" src="#" alt="Fotografía de activo"><br/>
+                        <img id="imgImagenCargada" src="#" alt="Fotografía de activo"><br/>
                         <input type="file" id="btnImagenActivo" accept="image/*" onchange="fnMostrarImagen(this);">
                     </fieldset>
                 </div>

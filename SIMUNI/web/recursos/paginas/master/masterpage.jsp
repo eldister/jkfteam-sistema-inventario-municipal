@@ -161,14 +161,29 @@
         <footer>
             <div class="sm_footer_tablecontainer">
                 <div class="sm_div_rowcontainer">
+                    <div id="sm_div_colespaciadora"></div>
                     <div class="sm_div_colcontainer">
-                        88
+                        <b>Universidad Nacional</b>
+                        <ul>
+                            <li><p>Acerca de la Universidad Nacional</p></li>
+                        </ul>
                     </div>
                     <div class="sm_div_colcontainer">
-                        88
+                        <b>SIMUNI</b><br/>
+                        <ul>
+                            <li><p>Mapa del sistema</p></li>
+                            <li><p>Desarrolladores</p></li>
+                            <li><p>Acerca del proyecto</p></li>
+                            <li><p>Propósito</p></li>
+                        </ul>
                     </div>  
                     <div class="sm_div_colcontainer">
-                        9898
+                        <b>Ayuda</b><br/>
+                        <ul>
+                            <li><p>Faq</p></li>
+                            <li><p>Manual de usuario</p></li>
+                            <li><p>Faq</p></li>
+                        </ul>
                     </div>                     
                 </div>
                 <div class="sm_div_rowcontainer" id="sm_div_copyrigth_container">
