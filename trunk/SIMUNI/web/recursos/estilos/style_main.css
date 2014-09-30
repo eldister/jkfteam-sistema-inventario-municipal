@@ -7,8 +7,9 @@
     El encabezado del sitio web, esta seccion que contiene el menu y el banner de la aplicación para el usuario.
 */
 header{
-    background-color: red;
+    background-color: white;
     height: 200px;
+    border-bottom: 1px white solid;
 }
 
 #sm_body_mainsection{
@@ -27,7 +28,7 @@ header{
 #sm_div_logomunicontainer,#sm_div_logosimunicontainer{
     width: 128px;
     height: 140px;
-    background-color: green;
+    background-color: white;
     display: inline-block;
     float: left;
     padding-top:  4px;
@@ -65,8 +66,8 @@ header{
     Para la imagen se hace un padding de 100
 */
 #sm_div_logosimuni{
-    width: 175px;
-    height: 83px;
+    width: 200px;
+    height: 110px;
     padding-left: 100px;
     margin-top: 20px;
     padding-top: 18px;
@@ -75,6 +76,7 @@ header{
     background-size: 100px 100px;
     background-repeat: no-repeat;
      overflow: hidden;
+     text-align: center;
     
 }
 
@@ -107,7 +109,7 @@ header{
 }
 #sm_header_userprofilecontainer{
     float: right;
-    background-color: yellow;
+    background-color: white;
 
 }
 
@@ -132,22 +134,28 @@ header{
 #sm_header_bannerandusercontainer{
     height: 144px;
 
+
 }
 
 #sm_header_menuprincipal{
-    background-color: brown;
+    background-color: white;
+    text-align: center;
+
 }
 
 #sm_nav_menuelementscontainer{
     margin: 0px;
     padding: 0px;
-    border-top:   solid 3px black;
-    border-bottom:    solid 3px black;
+    border-top:   solid 3px top;
+    border-bottom:    solid 3px white;
 }
 #sm_nav_menuelementscontainer .sm_ul_menuitem:first-child{
-    border-left:   solid 3px black;
+    border-left:   solid 3px white;
     margin-left: -0.5px;
     padding-left: 45px; 
+ }
+ #sm_nav_menuelementscontainer .sm_ul_menuitem:last-child{
+     border-right:   solid 3px white;
  }
 .sm_ul_menuitem{
     display: inline-block;
@@ -155,7 +163,7 @@ header{
     padding-bottom:   15px;
     padding-right:  45px;
     margin-left: 30px;
-    border-right:  solid 3px black;
+    border-right:  solid 1px black;
    
     
   
@@ -169,8 +177,8 @@ header{
 }
 
 .sm_ul_menuitem a:hover{
-    color:white;
-     border-bottom:    solid 3px white;
+    color:darkgreen;
+     border-bottom:    solid 1px black;
 }
 #sm_div_configuracion{
     width: 45px;
@@ -186,8 +194,9 @@ header{
     barra lateral donde estara el menu lateral con mensajes, etc.
 */
 #sm_body_barralateral{
-    background-color: blue;
+    background-color: white;
     padding: 15px;
+    border-right: 1px solid lightblue;
 }
 
 #sm_body_barralateral,#sm_body_mainsection{
@@ -197,6 +206,8 @@ header{
 }
 #sm_body_mainsection{
     width: 1100px;
+     margin-top: 50px;
+     margin-left: 10px;
     padding: 10px;
 }
 
@@ -218,6 +229,7 @@ header{
 
 footer{
     clear: both;
+    border-top:1px solid lightblue;
 }
 /*
     para la parte principal de la pagina
@@ -228,10 +240,11 @@ footer{
     para la parte de barra de estado del sistema 
 */
 #sm_body_notificacion{
-    background-color: violet;
+    background-color: white;
     padding: 10px;
     padding-top: 15px;
     padding-bottom:  15px;
+    border-top:1px solid lightblue;
     
 }
 
@@ -301,7 +314,7 @@ footer{
 
 
 .sm_div_separadorhr{
-    background-color: #eee;
+    background-color: white;
     border: 0 none;
     color: #eee;
     height: 1px;
@@ -319,7 +332,7 @@ footer .sm_div_colcontainer{
 }
 
 footer .sm_div_rowcontainer{
-     background-color: blueviolet;
+     background-color: white;
     
 } 
 footer .sm_div_rowcontainer:not(:first-child){
@@ -336,7 +349,7 @@ footer .sm_div_colcontainer:not(:first-child){
 
 /*seccion para la barra de navegacion */
 #sm_body_navegationbarmenu{
-    background-color: chartreuse;
+    background-color: white;
     height: 35px;
 }
 
@@ -364,4 +377,27 @@ footer .sm_div_colcontainer:not(:first-child){
 
 #sm_body_navegationbarmenu .sm_div_navmenuitem:first-child{
     margin-left: 30px;
+}
+
+.sm_footer_tablecontainer .sm_div_colcontainer:not(:last-child){
+    border-right: 1px solid black;
+}
+
+.sm_footer_tablecontainer .sm_div_colcontainer:first-child{
+    display: table-cell;
+}
+
+
+#sm_div_separadormenunavegacion{
+    margin-left: 16px;
+   
+}
+
+
+/**/
+#sm_div_simunislogan{
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 900;
+   
 }
