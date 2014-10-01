@@ -2,3 +2,11 @@
     padding: 10px;
     float: left;
 }
+#sm_tb_campos, td{
+    margin: 0px;
+    padding: 4px;
+}
+#sm_tb_imagen, td{
+    margin: 0px;
+    padding: 4px;
+}

@@ -6,10 +6,6 @@
              <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodeproveedores.css">
         </decorator:content>
         <decorator:content placeholder='sm_section_mainsectioncontainer'>
-            <div id="staticMenu">
-                <a>Inicio</a> / <a>Proveedores</a> / <a>Gestión de proveedores</a> / <a>Registro de proveedores</a>
-        </div>
-        <br/>
         <div id="informationProcess">
             <p>
                 Este es el formulario para el ingreso o registro de nuevos proveedores a la base de datos 
@@ -20,10 +16,10 @@
             <fieldset id="proveedores">
                 <legend>Registro de proveedores</legend>
                 <div id="registerInformation">
-                    <table>
+                    <table id="sm_tb_campos">
                         <tr>
                             <td>
-                                <label>Número de indentificación del proveedor </label>
+                                <label>Número de indentificación: </label>
                             </td>
                             <td>
                                 <input type="text" name="txtIdentificadorProveedor" />
@@ -31,7 +27,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <label>Nombre del proveedor: </label>
+                                <label>Nombre: </label>
                             </td>
                             <td>
                                 <input type="text" name="txtNombreProveedor">
@@ -39,7 +35,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <label>Primer apellido del proveedor: </label>
+                                <label>Primer apellido: </label>
                             </td>
                             <td>
                                 <input type="text" name="txtApellido1Proveedor">
@@ -47,7 +43,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <label>Segundo apellido del proveedor: </label>
+                                <label>Segundo apellido: </label>
                             </td>
                             <td>
                                 <input type="text" name="txtApellido2Proveedor">

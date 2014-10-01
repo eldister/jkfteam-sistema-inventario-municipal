@@ -11,19 +11,18 @@
             <div class="sm_div_operacionesbusquedacontainer">
                 <div class="sm_div_rowsim">
                     <div class="sm_div_colsim">
-                        <span class="sm_div_label">Ordenar por</span>
+                        <span class="sm_div_label">Filtar por</span>
                         <select>
-                            <option>Nombre</option>                                          
-                            <option>Un o</option>
-                            <option>Apellidos</option>
-                            <option>Telefno</option>
-                            <option>Cuatro</option>
+                            <option>-- Seleccionar --</option>                                          
+                            <option>Transporte</option>
+                            <option>Tecnológico</option>
+                            <option>Muebles</option>
                         </select>
                     </div> 
                     <div class="sm_div_colsim">
 
                         <div id="sm_div_busquedacontainer"> 
-                            <span class="sm_div_label">Filtrar por</span>
+                            <span class="sm_div_label">Buscar activo</span>
                             <input type="text" placeholder="Ingrese su busqueda">
                             <div id="sm_div_botonbusqueda">&nbsp;</div>
                         </div>
@@ -67,16 +66,16 @@
                         <td class="sm_tr_columnadatos">
                             <div class="sm_td_operacionescontainer">
                                 <div class="sm_div_rowsim">
-                                    <div class="sm_div_colsim" id="sm_div_grillamodificar" title="una prueba">
+                                    <div class="sm_div_colsim" id="sm_div_grillamodificar" title="Modificar información">
                                         &nbsp;
                                     </div> 
-                                    <div class="sm_div_colsim" id="sm_div_grillaimprimir">
+                                    <div class="sm_div_colsim" id="sm_div_grillaimprimir" title="Imprimir reporte">
                                         &nbsp;
                                     </div> 
-                                    <div class="sm_div_colsim" id="sm_div_grillaeliminar">
+                                    <div class="sm_div_colsim" id="sm_div_grillaeliminar" title="Eliminar activo">
                                         &nbsp;
                                     </div> 
-                                    <div class="sm_div_colsim" id="sm_div_grillaverimagen">
+                                    <div class="sm_div_colsim" id="sm_div_grillaverimagen" title="ver imagen de activo">
                                         &nbsp;
                                     </div>                                     
                                 </div>
