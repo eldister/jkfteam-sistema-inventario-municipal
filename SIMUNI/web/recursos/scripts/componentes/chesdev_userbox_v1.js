@@ -1,10 +1,10 @@
-var style_text = ".chesdev_component_userbox_link{font-size: 1.2em;font-family: sans-serif;color: gray;text-decoration: none;}" +
+var style_text = ".chesdev_component_userbox_link{font-size: 1.2em;font-family: sans-serif;color: blue;text-decoration: none;}" +
         ".chesdev_component_userbox_item{padding: 9px;}" +
         ".chesdev_component_userbox_link,.chesdev_component_userbox_link:visited,.chesdev_component_userbox_link:active{color: gray;}" +
         ".chesdev_component_userbox_link:hover{color:black;}#chesdev_component_userbox_taguser{font-family: sans-serif; font-size: 1.1em;color: black;}" +
         "#chesdev_component_userbox_item_container{margin-top: 20px;}" +
         "#chesdev_component_userbox_container,#chesdev_component_userbox_generalcontainer{padding: 10px;width:300px;}" +
-        "#chesdev_component_userbox_generalcontainer{background-color:green;width:330px;}"+
+        "#chesdev_component_userbox_generalcontainer{background-color:white;width:330px;}"+
         ".chesdev_component_userbox_link{padding: 25px;font-size: 1.25em;}" +
         "#chesdev_component_userbox_container{border: solid black 0,5px;}" +
         "#chesdev_component_userbox_taguser{float: right;bottom: 0px;}";

@@ -38,30 +38,30 @@
             <table class="sm_div_tablemain" >
                 <thead><!--seccion solo encabezado-->
                     <tr class="sm_thead_filaencabezado">
-                        <th class="sm_tr_columnaencabezado">Columna 1</th>
-                        <th class="sm_tr_columnaencabezado">Columna 2</th>
-                        <th class="sm_tr_columnaencabezado">Columna 3</th>
-                        <th class="sm_tr_columnaencabezado">Columna 4</th>
-                        <th class="sm_tr_columnaencabezado">Columna 5</th>
+                        <th class="sm_tr_columnaencabezado">Identificador activo</th>
+                        <th class="sm_tr_columnaencabezado">Nombre</th>
+                        <th class="sm_tr_columnaencabezado">Categoría</th>
+                        <th class="sm_tr_columnaencabezado">Modelo</th>
+                        <th class="sm_tr_columnaencabezado">Descripción</th>
                         <th class="sm_tr_columnaencabezado">Procesos</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="sm_tbody_filadatos">
                         <td class="sm_tr_columnadatos">
-                            VAlor 1                   
+                          544411122354                   
                             <input type="hidden" value="VAlor 1">
                         </td>
-                        <td class="sm_tr_columnadatos">VAlor 2
+                        <td class="sm_tr_columnadatos">Impresora multifuncional Epson        
                             <input type="hidden" value="VAlor 1">
                         </td>
-                        <td class="sm_tr_columnadatos">VAlor 34444 uno oto asmfa sqwieuaid fiqwuf wiufioqweufow foausdfia sd4444444444444                            
+                        <td class="sm_tr_columnadatos">Equipo tecnológico                
                             <input type="hidden" value="VAlor 1">
                         </td>
-                        <td class="sm_tr_columnadatos">VAlor 4
+                        <td class="sm_tr_columnadatos">e130
                             <input type="hidden" value="VAlor 1">
                         </td>
-                        <td class="sm_tr_columnadatos">VAlor 5
+                        <td class="sm_tr_columnadatos">Impresora en buen estado, comprada de segunda
                             <input type="hidden" value="VAlor 1">
                         </td>
                         <td class="sm_tr_columnadatos">

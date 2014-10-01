@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/" %>
 
@@ -12,10 +13,10 @@
         <script src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_main.js"></script>
 
         <link rel="stylesheet" href="<%=request.getContextPath()%>/recursos/estilos/style_main.css">
-         <decorator:placeholder name='sm_section_estilosyscriptssectioncontainer'/>
+        <decorator:placeholder name='sm_section_estilosyscriptssectioncontainer'/>
     </head>
     <body>
-        
+
         <a name="sm_body_headanchor"></a>
         <header>
             <div id="sm_header_bannerandusercontainer">
@@ -46,19 +47,19 @@
                     <%
                         if (session.getAttribute("username") == null) {
                             session.setAttribute("username", "jajaj");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Your menu</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Your menu</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Your menu</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Your menu</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Your menu</a></li>");
+                            out.print("<li class='sm_ul_menuitem'><a href=''>Inicio</a></li>");
+                            out.print("<li class='sm_ul_menuitem'><a href=''>Activos</a></li>");
+                            out.print("<li class='sm_ul_menuitem'><a href=''>Proveedores</a></li>");
+                            out.print("<li class='sm_ul_menuitem'><a href=''>Reportes</a></li>");
+                            out.print("<li class='sm_ul_menuitem'><a href=''>Soporte</a></li>");
 
                         } else {
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Permiso para 1</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Permiso para 2</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Permiso para3</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Permiso para 1</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Permiso para 2</a></li>");
-                          out.print("<li class='sm_ul_menuitem'><a href=''>Permiso para 4</a></li>");
+                            out.print("<li class='sm_ul_menuitem'><a href=''>Inicio</a></li>");
+                            out.print("<li class='sm_ul_menuitem'><a href=''>Activos</a></li>");
+                            out.print("<li class='sm_ul_menuitem'><a href=''>Usuarios</a></li>");
+                            out.print("<li class='sm_ul_menuitem'><a href=''>Reportes</a></li>");
+                            out.print("<li class='sm_ul_menuitem'><a href=''>Ayuda</a></li>");
+                            out.print("<li class='sm_ul_menuitem'><a href=''>Area Personal</a></li>");
 
                         }
                     %>
@@ -70,51 +71,78 @@
             <div class="sm_aside_barralateralitem" id="sm_aside_barralateralitemnotificacion">
                 <fieldset>
                     <legend>Notificaciones</legend>
-                    <div id="sm_fieldset_notificacionescontainer">
+                    <div class="sm_fieldset_notificacionescontainer">
                         <div class="sm_div_notificacion">
-                            Notificacion primera que se hizo
-                        </div>
-                        <hr class="sm_div_separadorhr">
+                            <div class="sm_div_notificacionfechacontainer">
+                                <% out.print(new Date().toLocaleString()); %>
+                                <hr>
+                            </div>
+                            <b>User3</b> Se ha agregado un nuevo registro de activo con el codigo 62254454646.
+                        </div>  
+                        <hr>
                         <div class="sm_div_notificacion">
-                            Notificacion primera que se hizo
-                        </div>
-                        <hr class="sm_div_separadorhr">
+                            <div class="sm_div_notificacionfechacontainer">
+                                <% out.print(new Date().toLocaleString()); %>
+                                <hr>
+                            </div>
+                            <b>User2</b> Se ha agregado un nuevo registro de activo con el codigo 52254454646.
+                        </div>  
+
+                        <hr>
                         <div class="sm_div_notificacion">
-                            Notificacion primera que se hizo8787sfasdfasdfqwefaasa asdfasdf
-                            Notificacion primera que se hizo8787sfasdfasdfqwefaasa asdfasdf
-                            Notificacion primera que se hizo8787sfasdfasdfqwefaasa asdfasdf
+                            <div class="sm_div_notificacionfechacontainer">
+                                <% out.print(new Date().toLocaleString()); %>
+                                <hr>
+                            </div>
+                            <b>User1</b> Se ha agregado un nuevo registro de activo con el codigo 52254454646.
                         </div>                        
-                        <hr class="sm_div_separadorhr">
+
+                        <hr>
                         <div class="sm_div_notificacion">
-                            Notificacion primera que se hizo
-                        </div>
-                        <hr class="sm_div_separadorhr">
+                            <div class="sm_div_notificacionfechacontainer">
+                                <% out.print(new Date().toLocaleString()); %>
+                                <hr>
+                            </div>
+                            <b>User1</b> ha sido bloqueado
+                        </div>  
+
+                        <hr>
                         <div class="sm_div_notificacion">
-                            Notificacion primera que se hizo
-                        </div>
-                        <hr class="sm_div_separadorhr">
-                        <div class="sm_div_notificacion">
-                            Notificacion primera que se hizo8787sfasdfasdfqwefaasa asdfasdf
-                            Notificacion primera que se hizo8787sfasdfasdfqwefaasa asdfasdf
-                            Notificacion primera que se hizo8787sfasdfasdfqwefaasa asdfasdf
-                        </div>                        
+                            <div class="sm_div_notificacionfechacontainer">
+                                <% out.print(new Date().toLocaleString()); %>
+                                <hr>
+                            </div>
+                            Reporte de activos proximo a realizarse.
+                        </div>                     
                     </div>
                 </fieldset>
             </div>
             <div class="sm_aside_barralateralitem" id="sm_aside_barralateralitemmensaje">
                 <fieldset>
                     <legend>Mensajes</legend>
-                    <div id="sm_fieldset_notificacionescontainer">
+                    <div class="sm_fieldset_notificacionescontainer">
                         <div class="sm_div_mensaje">
-                            Mensaje de user1  
+                            <div class="sm_div_notificacionfechacontainer">
+                                <% out.print(new Date().toLocaleString()); %>
+                                <hr>
+                            </div>
+                            Buenas, podria enviarme a alguien para revisar la compu
                         </div>
+                        <hr>
+                        <div class="sm_div_mensaje">
+                            <div class="sm_div_notificacionfechacontainer">
+                                <% out.print(new Date().toLocaleString());%>
+                                <hr>
+                            </div>
+                            Buenas, podria enviarme a alguien para revisar la compu, rapido porfis
+                        </div>                                
                     </div>
                 </fieldset>
             </div>
             <div class="sm_aside_barralateralitem">
                 <fieldset>
                     <legend>Configuraciones</legend>
-                    <div id="sm_fieldset_notificacionescontainer">
+                    <div class="sm_fieldset_notificacionescontainer">
                         <div class="sm_div_edicionperfil">
                             Actualizar datos de perfil.
                         </div>
@@ -129,7 +157,7 @@
             </div>
         </aside>
         <div id="sm_body_navegationbarmenu">
-           
+
             <span class="sm_div_navmenuitem">
                 <a href="">
                     Home
@@ -140,59 +168,61 @@
             </span>
             <span class="sm_div_navmenuitem">
                 <a href="">
-                    Patitos
+                    Registro
                 </a>
             </span>
             <span class="sm_div_navmenuseparator">
                 /
             </span> 
-             <hr id="sm_div_separadormenunavegacion">
+            <hr id="sm_div_separadormenunavegacion">
         </div>
         <section id="sm_body_mainsection">
             <!--esta es la seccion prinicipal-->
             <decorator:placeholder name='sm_section_mainsectioncontainer'/>
-            
+
         </section>
         <section id="sm_body_notificacion">
-            la barra de estado del sistema :D
+            <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Sesión iniciada : </span><% out.print(new Date().toLocaleString()); %></div>
+            <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usuario:</span> user1</div>
+            <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usted se ha conectado desde</span> <% out.print(request.getRemoteAddr()); %> </div>
         </section>        
         <footer>
             <div class="sm_footer_tablecontainer">
                 <div class="sm_div_rowcontainer">
-                    <div id="sm_div_colespaciadora"></div>
+
                     <div class="sm_div_colcontainer">
-                        <b>Universidad Nacional</b>
+                        <b>Páginas</b>
                         <ul>
-                            <li><p>Acerca de la Universidad Nacional</p></li>
+                            <li><a href="">Acerca de</a></li>
+                            <li><a href="">Mapa del sitio</a></li>
+                            <li><a href="">Mantenimiento Activos</a></li>
+
                         </ul>
                     </div>
-                 
+
                     <div class="sm_div_colcontainer">
                         <b>SIMUNI</b><br/>
-                        <ul>
-                            <li><p>Mapa del sistema</p></li>
-                            <li><p>Desarrolladores</p></li>
-                            <li><p>Acerca del proyecto</p></li>
-                            <li><p>Propósito</p></li>
+                        <ul> 
+                            <li><a href="">Acerca del proyecto</a></li>
+                            <li><a href="">Desarrolladores</a></li>                     
                         </ul>
                     </div>  
-                    
+
                     <div class="sm_div_colcontainer">
                         <b>Ayuda</b><br/>
                         <ul>
-                            <li><p>Faq</p></li>
-                            <li><p>Manual de usuario</p></li>
-                            <li><p>Faq</p></li>
+                            <li><a href="">FAQ</a></li>
+                            <li><a href="">Manual de usuario</a></li>
+                            <li><a href="">Contacto</a></li>
                         </ul>
                     </div>                     
                 </div>
                 <div class="sm_div_rowcontainer" id="sm_div_copyrigth_container">
-                    <p>Copyright 2015 SIMUNI</p>
+                    <p>Copyright 2015 SIMUNI<span id="sm_div_footerprojecticon">&nbsp;</span></p>
                 </div>
             </div>            
 
         </footer>
-                    <a href="#uno">vaya arriba</a>
     </body>
 </html>
 
