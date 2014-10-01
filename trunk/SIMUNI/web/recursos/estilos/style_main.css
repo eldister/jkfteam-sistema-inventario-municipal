@@ -1,3 +1,43 @@
+/*seccion de fuentes*/
+@CHARSET "UTF-8";
+
+@font-face {
+  font-family: 'georgianormal';
+  src: url('../fuentes/georgia/Georgia.eot');
+  src: url('../fuentes/georgia/Georgia.woff') format('woff'),
+       url('../fuentes/georgia/Georgia.svg#Georgia') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'georgiabold';
+  src: url('../fuentes/georgia/GeorgiaBold.eot');
+  src: url('../fuentes/georgia/GeorgiaBold.woff') format('woff'),
+       url('../fuentes/georgia/GeorgiaBold.svg#GeorgiaBold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'georgiaitalic';
+  src: url('../fuentes/georgia/GeorgiaItalic.eot');
+  src: url('../fuentes/georgia/GeorgiaItalic.woff') format('woff'),
+       url('../fuentes/georgia/GeorgiaItalic.svg#GeorgiaItalic') format('svg');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face{
+    font-family: 'verdananormal';
+        src:url('../fuentes/verdana/verdana.eot');
+  src: url('../fuentes/verdana/verdana.woff') format('woff'),
+       url('../fuentes/georgia/verdana.svg') format('svg');        
+}
+
+
+*{
+    font-family: 'georgia';
+}
+
 /*
     El estilo a utilizar es optimizado para navegadores de computadora a una proyeccion minima de 1024x768
     Los identificadores se componen de, dos caracteres del sistema, un guion bajo, la etiquta padre, otro guion
@@ -120,16 +160,7 @@ header{
     padding-left: 10px;
 
 }
-.sm_div_colcontainer{
-    display: inline-block;
-    padding: 5px;
 
-}
-.sm_div_colcontainer:first-child{
-    width: 200px;
-
-
-}
 
 #sm_header_bannerandusercontainer{
     height: 144px;
@@ -270,7 +301,8 @@ footer{
     padding-left: 60px;
     background-image: url(../imagenes/sistema/sm_mensaje_usuario.png);
     background-size: 30px 30px;
-    background-repeat: no-repeat;   
+    background-repeat: no-repeat;  
+   
 }
 .sm_div_mensaje:not(:first-child){
     margin-top: 8px;
@@ -323,16 +355,12 @@ footer{
 
 
 /*seccion para el footer*/
-footer .sm_div_rowcontainer{
-    display: block;
-}
-footer .sm_div_colcontainer{
-    width: 393.5px !important;
-  
-}
 
 footer .sm_div_rowcontainer{
      background-color: white;
+          display: table-cell;
+        vertical-align:top;
+height: 100%;
     
 } 
 footer .sm_div_rowcontainer:not(:first-child){
@@ -380,7 +408,7 @@ footer .sm_div_colcontainer:not(:first-child){
 }
 
 .sm_footer_tablecontainer .sm_div_colcontainer:not(:last-child){
-    border-right: 1px solid black;
+    border-right: 1px solid lightblue;
 }
 
 .sm_footer_tablecontainer .sm_div_colcontainer:first-child{
@@ -400,4 +428,80 @@ footer .sm_div_colcontainer:not(:first-child){
     font-size: 1.1em;
     font-weight: 900;
    
+}
+footer{
+    text-align: center;
+}
+
+.sm_div_rowcontainer .sm_div_colcontainer{
+    height: auto;
+}
+footer .sm_div_rowcontainer{
+    display: block;
+   
+}
+
+footer .sm_div_colcontainer{
+    width: 500px !important;
+    display: table-cell;
+    background-color: lightblue;
+   
+  
+}
+footer .sm_div_colcontainer ul{
+     text-align: justify;
+     list-style: none;
+}
+
+.sm_div_colcontainer{
+    display: inline-block;
+    padding: 5px;
+  
+
+}
+.sm_div_colcontainer:first-child{
+    width: 200px;
+
+
+}
+
+.sm_div_colcontainer a{
+    text-decoration: none;
+    padding: 6px;
+    font-size: 1.3em;
+    color:black;
+}
+
+#sm_div_footerprojecticon{
+    display: inline-block;
+    background-image: url(../imagenes/sistema/sm_logo_simuni.png);
+    background-size: 40px 40px;
+    background-position-y: -6px;
+    overflow: visible;
+    background-repeat: no-repeat;
+    margin-top: -5px;
+    width: 40px;
+    height: 40px;
+}
+
+#sm_div_copyrigth_container{
+    padding-top: 5px;
+    border-top: 1px solid lightblue;
+    vertical-align: central;
+}
+
+/*seccion de notificaciones*/
+.sm_section_notificacioncontainer{
+    display: inline-block;
+    padding: 5px;
+}
+.sm_section_notificacioncontainer:not(:first-child){
+    margin-left: 10px;
+}
+.sm_div_notiftag{
+    font-weight: 900;
+}
+
+#sm_body_notificacion{
+    text-align: center;
 }
