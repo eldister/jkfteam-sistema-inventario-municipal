@@ -21,23 +21,23 @@
             <fieldset id="sm_fs_articulos">
                 <legend>Registro de activos</legend>
                 <div id="sm_form_registroinformacion">
-                    <table>
+                    <table id="sm_tb_campos">
                         <tr>
                             <td>
-                                <label>Tipo de activos </label>
+                                <label>Tipo del activo </label>
                             </td>
                             <td>
                                 <select name="cmbTipoActivos">
                                     <option>-- Seleccionar --</option>
                                     <option>Transporte</option>
                                     <option>Tecnológico</option>
-                                    <option>Artículo</option>
+                                    <option>Muebles</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>Número placa de activo: </label>
+                                <label>Número de placa: </label>
                             </td>
                             <td>
                                 <input type="text" name="txtNumeroPlaca">
@@ -45,15 +45,15 @@
                         </tr>    
                         <tr>
                             <td>
-                                <label>Descripción del artículo: </label>
+                                <label>Descripción: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtDescripción">
+                                <textarea type="text" name="txtDescripcion" maxlength="300"></textarea>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>Modelo del artículo: </label>
+                                <label>Modelo: </label>
                             </td>
                             <td>
                                 <input type="text" name="txtModelo">
@@ -61,7 +61,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <label>Marca del artículo: </label>
+                                <label>Marca: </label>
                             </td>
                             <td>
                                 <input type="text" name="txtMarca">
@@ -69,7 +69,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <label>Estado del artículo: </label>
+                                <label>Estado: </label>
                             </td>
                             <td>
                                 <select name="cmbEstadoActivo">
@@ -139,14 +139,6 @@
                         </tr>
                         <tr>
                             <td>
-                                <label>Descripción del artículo: </label>
-                            </td>
-                            <td>
-                                <input type="text" name="txtDescripción">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
                                 <label>Fecha de compra: </label>
                             </td>
                             <td>
@@ -181,16 +173,26 @@
                                 <input type="submit" id="btnRegistrar" value="Registrar activo">
                             </td>
                             <td>
-                                <input type="button" id="btnLimpiarFormulario" value="Limpiar formulario">
+                                <input type="reset" id="btnLimpiarFormulario" value="Limpiar formulario">
                             </td>
                         </tr>
                     </table>
                 </div>
                 <div id="sm_div_registerImage">
                     <fieldset id="sm_fs_imagen">
-                        <legend>Foto del activo</legend>
-                        <img id="imgImagenCargada" src="#" alt="Fotografía de activo"><br/>
-                        <input type="file" id="btnImagenActivo" accept="image/*" onchange="fnMostrarImagen(this);">
+                        <legend>Fotografía</legend>
+                        <table id="sm_tb_imagen">
+                            <tr>
+                                <td>
+                                    <img id="imgImagenCargada" src="#" alt="Fotografía de activo">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="file" id="btnImagenActivo" accept="image/*" onchange="fnMostrarImagen(this);">
+                                </td>
+                            </tr>
+                        </table>
                     </fieldset>
                 </div>
             </fieldset>

@@ -218,7 +218,7 @@
                     </div>                     
                 </div>
                 <div class="sm_div_rowcontainer" id="sm_div_copyrigth_container">
-                    <p>Copyright 2015 SIMUNI<span id="sm_div_footerprojecticon">&nbsp;</span></p>
+                    <p>Copyright &#169 2015 SIMUNI<span id="sm_div_footerprojecticon">&nbsp;</span></p>
                 </div>
             </div>            
 

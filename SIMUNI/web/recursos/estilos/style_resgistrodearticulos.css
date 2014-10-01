@@ -4,11 +4,20 @@
 }
 #sm_div_registerImage{
     float: left;
-    padding-top: 100px;
+    padding-top: 80px;
     padding-left: 20px;
+    padding-bottom: 80px;
 }
 #imgImagenCargada{
     border-style: solid;
     padding: 2px;
     border-width: 1px;
+}
+#sm_tb_campos, td{
+    margin: 0px;
+    padding: 4px;
+}
+#sm_tb_imagen, td{
+    margin: 0px;
+    padding: 4px;
 }
