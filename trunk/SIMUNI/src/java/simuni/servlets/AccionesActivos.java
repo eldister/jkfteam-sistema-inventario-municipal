@@ -231,7 +231,8 @@ public class AccionesActivos extends HttpServlet {
 
                     } else {
                         //redirigir a pagina de error y/o recargar el formulario
-
+                        RequestDispatcher disp=request.getRequestDispatcher("/recursos/paginas/notificaciones/error.jsp?id="+activoarticulo.getPa_identificadorActivo()+"&msg=1");
+                        disp.forward(request, response);
                     }
 
                     /*                 out.println("<!DOCTYPE html>");
