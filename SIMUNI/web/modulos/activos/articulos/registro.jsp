@@ -7,6 +7,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/"%>
 <decorator:decorate filename='../../../recursos/paginas/master/masterpage.jsp'>
+     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de activos</decorator:content>    
+        <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
+            <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodearticulos.css">
+            <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/jquery-registroactivos.js"></script>
+            <scrip type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_registroactivos.js"></scrip>
+        </decorator:content>
     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de activos</decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
         <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodearticulos.css">
@@ -169,6 +175,7 @@
                                 <label>Porcentaje Depreciación </label>
                             </td>
                             <td>
+                                <input type="text" name="txtDepartamento">
                                 <input type="text" name="txtPorcentajeDepreciacion">
                             </td>
                         </tr>
@@ -248,6 +255,14 @@
                         </tr>                        
                         <tr>
                             <td>
+                                <label>Observaciones: </label>
+                            </td>
+                            <td>
+                                <textarea id="txtObservaciones" type="text"></textarea><p id="cd">l</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <label>Descripción </label>
                             </td>
                             <td>
@@ -299,5 +314,4 @@
             </div>
         </form>
     </decorator:content>
-
 </decorator:decorate>
