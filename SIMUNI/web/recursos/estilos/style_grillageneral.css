@@ -77,7 +77,7 @@ td{
    
 }
 
-#sm_div_grillamodificar{
+.sm_div_grillamodificar{
     background-image: url(../imagenes/grilla/sm_grilla_editar.png);
     background-size: 40px 40px;
     width: 40px;
@@ -85,13 +85,13 @@ td{
     margin: 5px;
 }
 
-#sm_div_grillamodificar:hover{
+.sm_div_grillamodificar:hover{
     cursor: pointer;
   
 }
 
 
-#sm_div_grillaimprimir{
+.sm_div_grillaimprimir{
     background-image: url(../imagenes/grilla/sm_grilla_imprimir.png);
     background-size: 40px 40px;
     width: 40px;
@@ -99,14 +99,14 @@ td{
     margin: 5px;
 }
 
-#sm_div_grillaimprimir:hover{
+.sm_div_grillaimprimir:hover{
     cursor: pointer;
   
 }
 
 
 
-#sm_div_grillaeliminar{
+.sm_div_grillaeliminar{
     background-image: url(../imagenes/grilla/sm_grilla_eliminar.png);
     background-size: 40px 40px;
     width: 40px;
@@ -114,13 +114,13 @@ td{
     margin: 5px;
 }
 
-#sm_div_grillaeliminar:hover{
+.sm_div_grillaeliminar:hover{
     cursor: pointer;
   
 }
 
 
-#sm_div_grillaverimagen{
+.sm_div_grillaverimagen{
     background-image: url(../imagenes/grilla/sm_grilla_verimagenes.png);
     background-size: 40px 40px;
     width: 40px;
@@ -128,7 +128,7 @@ td{
     margin: 5px;
 }
 
-#sm_div_grillaverimagen:hover{
+.sm_div_grillaverimagen:hover{
     cursor: pointer;
   
 }
@@ -174,7 +174,7 @@ td{
 }
 
 /*boton busqueda*/
-#sm_div_botonbusqueda{
+#sm__divgrillageneral_botonbusqueda{
     display: inline-block;
         background-image: url(../imagenes/grilla/sm_grilla_busqueda.png);
     background-size: 40px 40px;
@@ -186,7 +186,7 @@ td{
     height: 45px; 
 }
 
-#sm_div_botonbusqueda:hover{
+#sm__divgrillageneral_botonbusqueda:hover{
     cursor: pointer;
 }
 #sm_div_agregaritemcontainer{
