@@ -26,6 +26,7 @@ import simuni.classes.EN.Departamento;
 import simuni.classes.EN.EstadoActivo;
 import simuni.classes.EN.TipoActivo;
 import simuni.classes.EN.TipoPago;
+import simuni.classes.EN.imagenActivo;
 import simuni.classes.LN.ManejadorActivos;
 import simuni.classes.LN.ManejadorEstadoActivos;
 import simuni.classes.LN.ManejadorTipoActivo;
@@ -159,6 +160,7 @@ public class AccionesActivos extends HttpServlet {
         PrintWriter out = response.getWriter();
         DateFormat formatter;
         Date date;
+        boolean errores=false;
         ManejadorActivos manejadoractivos = new ManejadorActivos();
         try {
             String numeroplaca = request.getParameter("txtNumeroPlaca");
@@ -186,7 +188,8 @@ public class AccionesActivos extends HttpServlet {
                     date = new java.sql.Date(formatter.parse(fechainiciooperacion).getTime());
                 
                     ///VALIDAR SI LOS CAMPOS REQUERIDOS SON VALIDOS O NO (NULOS) y que la imagen sea png o jpg
-
+                        //validar que la placa no este registrada en base de datos.
+                        //
                     //INSTANCIAR EL OBJETO
                     Activos_Articulos activoarticulo = new Activos_Articulos();
                     activoarticulo.setPa_identificadorActivo(numeroplaca);
@@ -194,11 +197,21 @@ public class AccionesActivos extends HttpServlet {
                     activoarticulo.setPa_marca(marcaactivo);
                     activoarticulo.setPd_puestaOperacion(date);
                     activoarticulo.setPa_codigoProveedor(idproveedor);
+                    
                     //instanciamos depto
                     Departamento depto = new Departamento();
-                    depto.setPn_codigo(Integer.parseInt(iddepto));
-                   
+                    depto.setPn_codigo(Integer.parseInt(iddepto));                  
                     activoarticulo.setPo_depto(depto);
+                    
+                    //instanciamos para las imagenes
+                    imagenActivo imagenactivo=new imagenActivo();
+                    imagenactivo.setPa_nombreArchivo(filename);
+                    imagenactivo.setStreamarchivo(filecontent);
+                    ArrayList<imagenActivo>listadoimagen=new ArrayList<imagenActivo>();
+                    listadoimagen.add(imagenactivo);
+                    activoarticulo.setPo_imagenActivo(listadoimagen);
+                    
+                    //hacer validaciones si es entero.
                     date = new java.sql.Date(formatter.parse(fechacompraactivo).getTime());
                     activoarticulo.setPd_fechaCompra(date);
                     activoarticulo.setPd_precioCompra(Double.parseDouble(preciocompra));
@@ -215,8 +228,10 @@ public class AccionesActivos extends HttpServlet {
             //hacer el proceso de registro
                     if (manejadoractivos.agregarActivoArticulo(activoarticulo)) {
                         //redirigir a una pagina de exito
+                        
                     } else {
                         //redirigir a pagina de error y/o recargar el formulario
+                        
                     }
 
    /*                 out.println("<!DOCTYPE html>");

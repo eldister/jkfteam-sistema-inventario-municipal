@@ -35,5 +35,9 @@ public class ManejadorDatosActivos {
     public ArrayList<imagenActivo> getListaImagenesActivo(int tn_codigoactivo) {
         return null;
     }
+    
+    public boolean isActivoExistente(String idactivo){
+        return false;
+    }
 
 }
