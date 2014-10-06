@@ -77,7 +77,7 @@
                             </td>
                             <td>
                                 <select name="cmbCategoria">
-                                    <option>-- Seleccionar --</option>
+                                    <option value="-1">-- Seleccionar --</option>
                                     <%
                                         if (tiposactivos != null) {
                                             Iterator<TipoActivo> iter = tiposactivos.iterator();
@@ -131,7 +131,7 @@
                             <td>
                                 <!--<input type="text" name="txtDescripción">-->
                                 <select name="cmbDepartamento">
-                                    <option>-- Seleccionar --</option>                                
+                                    <option value="-1">-- Seleccionar --</option>                                
                                     <%
                                         if (deptos != null) {
                                             Iterator<Departamento> iter = deptos.iterator();
@@ -186,7 +186,7 @@
                             </td>
                             <td>
                                 <select name="cmbTipoPago">
-                                    <option>-- Seleccionar --</option>
+                                    <option value="-1">-- Seleccionar --</option>
                                     <%
                                         if (tipospago != null) {
                                             Iterator<TipoPago> iter = tipospago.iterator();
@@ -215,7 +215,7 @@
                             </td>
                             <td>
                                 <select name="cmbEstadoActivo">
-                                    <option>-- Seleccionar --</option>
+                                    <option value="-1">-- Seleccionar --</option>
                                     <%
                                         if (tiposestadoactivo != null) {
                                             Iterator<EstadoActivo> iter = tiposestadoactivo.iterator();
@@ -292,6 +292,10 @@
             </fieldset>
             <div id="sm_form_extracontent">
                 <input type="hidden" value="1" name="hiddenidProveedor">
+                <input type="hidden" value="1" name="hiddenidCategoria">
+                <input type="hidden" value="1" name="hiddenidTipoPago">
+                  <input type="hidden" value="1" name="hiddenidDepartamento">
+
             </div>
         </form>
     </decorator:content>

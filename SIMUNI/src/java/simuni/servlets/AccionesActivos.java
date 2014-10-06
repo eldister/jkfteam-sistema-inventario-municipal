@@ -32,7 +32,6 @@ import simuni.classes.LN.ManejadorEstadoActivos;
 import simuni.classes.LN.ManejadorTipoActivo;
 import simuni.classes.LN.ManejadorTipoPago;
 
-
 /**
  *
  * @author FchescO
@@ -160,21 +159,21 @@ public class AccionesActivos extends HttpServlet {
         PrintWriter out = response.getWriter();
         DateFormat formatter;
         Date date;
-        boolean errores=false;
+        boolean errores = false;
         ManejadorActivos manejadoractivos = new ManejadorActivos();
         try {
             String numeroplaca = request.getParameter("txtNumeroPlaca");
             String modeloactivo = request.getParameter("txtModelo");
             String marcaactivo = request.getParameter("txtMarca");
-            String categoriaactivo = request.getParameter("cmbCategoria");
+            String categoriaactivo = request.getParameter("hiddenidCategoria");
             String fechainiciooperacion = request.getParameter("dpPuestaOperacion");
             String idproveedor = request.getParameter("hiddenidProveedor");//FALTAA
-            String iddepto = request.getParameter("cmbDepartamento");//FALTAA-
+            String iddepto = request.getParameter("hiddenidDepartamento");//FALTAA-
             String fechacompraactivo = request.getParameter("dpFechaCompra");
             String preciocompra = request.getParameter("txtPrecioCompra");
             String porcentajedepreciacion = request.getParameter("txtPorcentajeDepreciacion");
             String porcentajerescate = request.getParameter("txtPorcentajeRescate");
-            String idtipopago = request.getParameter("cmbTipoPago");//FALTAA-
+            String idtipopago = request.getParameter("hiddenidTipoPago");//FALTAA-
             String estadoactivo = request.getParameter("cmbEstadoActivo");
             String descripcion = request.getParameter("txtDescripcion"); // Retrieves <input type="text" name="description">
             String observaciones = request.getParameter("txtObservaciones");
@@ -186,10 +185,10 @@ public class AccionesActivos extends HttpServlet {
                     String filename = getFilename(filePart);
                     formatter = new SimpleDateFormat("dd-mm-yyyy");
                     date = new java.sql.Date(formatter.parse(fechainiciooperacion).getTime());
-                
+
                     ///VALIDAR SI LOS CAMPOS REQUERIDOS SON VALIDOS O NO (NULOS) y que la imagen sea png o jpg
-                        //validar que la placa no este registrada en base de datos.
-                        //
+                    //validar que la placa no este registrada en base de datos.
+                    //
                     //INSTANCIAR EL OBJETO
                     Activos_Articulos activoarticulo = new Activos_Articulos();
                     activoarticulo.setPa_identificadorActivo(numeroplaca);
@@ -197,20 +196,20 @@ public class AccionesActivos extends HttpServlet {
                     activoarticulo.setPa_marca(marcaactivo);
                     activoarticulo.setPd_puestaOperacion(date);
                     activoarticulo.setPa_codigoProveedor(idproveedor);
-                    
+
                     //instanciamos depto
                     Departamento depto = new Departamento();
-                    depto.setPn_codigo(Integer.parseInt(iddepto));                  
+                    depto.setPn_codigo(Integer.parseInt(iddepto));
                     activoarticulo.setPo_depto(depto);
-                    
+
                     //instanciamos para las imagenes
-                    imagenActivo imagenactivo=new imagenActivo();
+                    imagenActivo imagenactivo = new imagenActivo();
                     imagenactivo.setPa_nombreArchivo(filename);
                     imagenactivo.setStreamarchivo(filecontent);
-                    ArrayList<imagenActivo>listadoimagen=new ArrayList<imagenActivo>();
+                    ArrayList<imagenActivo> listadoimagen = new ArrayList<imagenActivo>();
                     listadoimagen.add(imagenactivo);
                     activoarticulo.setPo_imagenActivo(listadoimagen);
-                    
+
                     //hacer validaciones si es entero.
                     date = new java.sql.Date(formatter.parse(fechacompraactivo).getTime());
                     activoarticulo.setPd_fechaCompra(date);
@@ -222,28 +221,29 @@ public class AccionesActivos extends HttpServlet {
                     activoarticulo.setPa_Estado(Integer.parseInt(estadoactivo));
                     activoarticulo.setPa_Descripcion(descripcion);
                     activoarticulo.setPa_Observaciones(observaciones);
-                    
-                    //falta imagen
 
-            //hacer el proceso de registro
+                    //falta imagen
+                    //hacer el proceso de registro
                     if (manejadoractivos.agregarActivoArticulo(activoarticulo)) {
                         //redirigir a una pagina de exito
-                        
+                        RequestDispatcher disp=request.getRequestDispatcher("/recursos/paginas/notificaciones/exito.jsp?id="+activoarticulo.getPa_identificadorActivo()+"&msg=1");
+                        disp.forward(request, response);
+
                     } else {
                         //redirigir a pagina de error y/o recargar el formulario
-                        
+
                     }
 
-   /*                 out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Servlet AccionesActivos</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>Servlet AccionesActivos at " + request.getContextPath() + "</h1>");
-                    out.print(filename);
-                    out.println("</body>");
-                    out.println("</html>");*/
+                    /*                 out.println("<!DOCTYPE html>");
+                     out.println("<html>");
+                     out.println("<head>");
+                     out.println("<title>Servlet AccionesActivos</title>");
+                     out.println("</head>");
+                     out.println("<body>");
+                     out.println("<h1>Servlet AccionesActivos at " + request.getContextPath() + "</h1>");
+                     out.print(filename);
+                     out.println("</body>");
+                     out.println("</html>");*/
                     // ... (do your job here)
                     break;
             }

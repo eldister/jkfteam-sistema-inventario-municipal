@@ -25,7 +25,7 @@
             for(int a=0;a<5;a++){
               Activos_Articulos articulo=new Activos_Articulos();
             articulo.setPa_identificadorActivo("123456asdf");
-            articulo.setPa_tipoActivo("Mueble");
+            articulo.setPa_tipoActivo(2);
             articulo.setPa_marca("patito 1");
             articulo.setPa_modelo("modelo a");
             articulo.setPd_puestaOperacion(new Date());
