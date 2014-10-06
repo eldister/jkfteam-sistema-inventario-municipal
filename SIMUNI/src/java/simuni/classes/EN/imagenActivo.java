@@ -1,8 +1,11 @@
 package simuni.classes.EN;
 
+import java.io.InputStream;
+
 public class imagenActivo {
     private String pa_nombreArchivo;
     private String pa_url;
+    private InputStream streamarchivo;
     
     public imagenActivo(){
         
@@ -18,5 +21,19 @@ public class imagenActivo {
     }
     public void setPa_url(String pa_url) {
         this.pa_url = pa_url;
+    }
+
+    /**
+     * @return the streamarchivo
+     */
+    public InputStream getStreamarchivo() {
+        return streamarchivo;
+    }
+
+    /**
+     * @param streamarchivo the streamarchivo to set
+     */
+    public void setStreamarchivo(InputStream streamarchivo) {
+        this.streamarchivo = streamarchivo;
     }
 }

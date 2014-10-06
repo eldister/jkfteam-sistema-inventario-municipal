@@ -32,8 +32,12 @@ public class ManejadorActivos {
         return null;
     }
 
-    public ArrayList<imagenActivo> getListaImagenesActivo(int tn_codigoactivo) {
+    public ArrayList<imagenActivo> getListaImagenesActivo(String ta_codigoactivo) {
         return null;
+    }
+    
+    public boolean isActivoExistente(String ta_codigoactivo){
+        return new ManejadorActivos().isActivoExistente(ta_codigoactivo);
     }
 
 }
