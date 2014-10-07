@@ -8,10 +8,14 @@
     <decorator:content placeholder='sm_section_titulodepagina'>Activos Artículos</decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
         <link rel='stylesheet' href='<%=request.getContextPath()%>/recursos/estilos/style_grillageneral.css'>
+        <link rel='stylesheet' href='<%=request.getContextPath()%>/recursos/estilos/style_actualizacionarticulos.css'>        
         <script src='<%=request.getContextPath()%>/recursos/scripts/script_sm_grillageneral.js'></script>
+        <script src='<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_mantenimientoactivos.js'></script>
+        
         <script>
             $(document).ready(function() {
                 sm_grillageneral_inicializar();
+                inicializarpaginamantenimiento();
             });
         </script>
     </decorator:content>
@@ -38,5 +42,7 @@
 
                 
         %>
+        <div id="sm_body_ventanamodal">55555</div>
+        <div id="sm_respuesta"></div>
     </decorator:content>
 </decorator:decorate>

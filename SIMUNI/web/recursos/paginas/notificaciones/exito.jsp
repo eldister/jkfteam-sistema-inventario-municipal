@@ -11,6 +11,7 @@
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <div>
         <%
+            out.print("siiiiiii"+request.getParameter("ayuda"));
             out.print("<div class='sm_body_contenedormensaje'>");
             out.print("Codigo de proceso :"+request.getParameter("id"));
             out.print("<hr>");

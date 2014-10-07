@@ -2,6 +2,7 @@
 package simuni.classes.LN;
 
 import java.util.ArrayList;
+import simuni.classes.AD.ManejadorDatosActivos;
 import simuni.classes.EN.Activos_Articulos;
 import simuni.classes.EN.imagenActivo;
 
@@ -17,7 +18,8 @@ public class ManejadorActivos {
     }
 
     public boolean modificarActivoArticulo(Activos_Articulos to_articulo) {
-        return true;
+        ManejadorDatosActivos manejadordatosactivos=new ManejadorDatosActivos();
+        return manejadordatosactivos.modificarActivoArticulo(to_articulo);
     }
 
     public boolean desactivarActivoArticulo(int tn_codigoactivo) {
@@ -29,7 +31,9 @@ public class ManejadorActivos {
     }
 
     public Activos_Articulos getActivoArticulo(String ta_codigoactivo) {
-        return null;
+        ManejadorDatosActivos manejadordatosactivos=new ManejadorDatosActivos();
+        return manejadordatosactivos.getActivoArticulo(ta_codigoactivo);
+      
     }
 
     public ArrayList<imagenActivo> getListaImagenesActivo(String ta_codigoactivo) {
