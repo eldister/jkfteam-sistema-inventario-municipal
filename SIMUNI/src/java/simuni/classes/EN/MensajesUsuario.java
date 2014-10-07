@@ -30,4 +30,23 @@ public class MensajesUsuario {
             return mensaje;
         }
     }
+    
+    public static enum MensajesError{
+        ERRORENREGISTROACTIVOARTICULO("El proceso de registro ha presentado un error"), 
+        ERRORENREGISTROACTIVOTRANSPORTE("");
+       
+        private final String mensaje;
+        private MensajesError(String s) {
+            mensaje = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : mensaje.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return mensaje;
+        }
+    }
 }
