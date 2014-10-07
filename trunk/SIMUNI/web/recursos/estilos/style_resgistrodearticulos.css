@@ -21,3 +21,16 @@
     margin: 0px;
     padding: 4px;
 }
+#txtDes, #txtOb{
+    height: 10em;
+    width: 300px;
+}
+#LetrasRestantes1, #LetrasRestantes2{
+    font-size: 80%;
+}
+#contadorCaracteres1, #contadorCaracteres2{
+    float: next;
+}
+#btnImagenActivo{
+    display: none;
+}

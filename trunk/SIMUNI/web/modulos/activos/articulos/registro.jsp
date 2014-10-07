@@ -11,12 +11,38 @@
         <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
             <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodearticulos.css">
             <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/jquery-registroactivos.js"></script>
-            <scrip type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_registroactivos.js"></scrip>
+            <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_registroactivos.js"></script>
+            
         </decorator:content>
     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de activos</decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
         <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodearticulos.css">
         <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/jquery-registroactivos.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/script_plugins/maxLength/maxLength.js"></script>
+        <script src="<%=request.getContextPath()%>/recursos/scripts/script_plugins/webShim/minified/polyfiller.js"></script>
+        <script>
+            webshims.setOptions('waitReady', false);
+            webshims.setOptions('forms-ext', {types: 'date'});
+            webshims.polyfill('forms forms-ext');
+        </script>
+        <script>
+            $(function(){
+                $("#txtDes").maxLength(300, { showNumber: "#contadorCaracteres1"});
+             });
+             $(function(){
+                $("#txtOb").maxLength(300, { showNumber: "#contadorCaracteres2"});
+             });
+             $(document).ready(function(){
+                 var intervalo = function(){
+                     $("#btnImagenActivo").html($("#btnImagenActivo").val());  
+                 };
+                     $("#btnsubirImagen").on("click", function(){
+                         $("#btnImagenActivo").click();
+                         setInterval(intervalo, 1);
+                         return false;
+                     });
+             });
+        </script>
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <%
@@ -32,7 +58,6 @@
             <p>
                 Este es el formulario para el ingreso o registro de nuevos activos a la base de datos 
                 de la municipalidad a tráves del sistema de inventario <b>SIMUNI</b>.<br/>
-                Seleccione el tipo de activo a registrar y se le desplegará el formulario que debe llenar.
             </p>
         </div>
         <form id="sm_div_formulario" method="POST" action="/SIMUNI/modulos/activos?proceso=registroactivoarticulo" enctype="multipart/form-data">
@@ -159,7 +184,7 @@
                                 <label>Fecha de compra </label>
                             </td>
                             <td>
-                                <input type="date" name="dpFechaCompra">
+                                <input type="date" name="dpFechaCompra" id="dpFechaCompra">
                             </td>
                         </tr>
                         <tr>
@@ -175,7 +200,6 @@
                                 <label>Porcentaje Depreciación </label>
                             </td>
                             <td>
-                                <input type="text" name="txtDepartamento">
                                 <input type="text" name="txtPorcentajeDepreciacion">
                             </td>
                         </tr>
@@ -252,21 +276,15 @@
 
                                 </select>
                             </td>
-                        </tr>                        
-                        <tr>
-                            <td>
-                                <label>Observaciones: </label>
-                            </td>
-                            <td>
-                                <textarea id="txtObservaciones" type="text"></textarea><p id="cd">l</p>
-                            </td>
                         </tr>
                         <tr>
                             <td>
                                 <label>Descripción </label>
                             </td>
                             <td>
-                                <textarea type="text" name="txtDescripcion" maxlength="300"></textarea>
+                                <textarea type="text" name="txtDescripcion" maxlength="300" id="txtDes"></textarea>
+                                <br/>
+                                <label id="LetrasRestantes1">Letras restantes: <div id="contadorCaracteres1"></div></label>
                             </td>
                         </tr>                  
                         <tr>
@@ -274,7 +292,9 @@
                                 <label>Observaciones </label>
                             </td>
                             <td>
-                                <textarea type="text" name="txtObservaciones" placeholder="Indique aspectos generales de los activos que considere necesario" maxlength="300"></textarea>
+                                <textarea type="text" id="txtOb" name="txtObservaciones" placeholder="Indique aspectos generales de los activos que considere necesario" maxlength="300"></textarea>
+                                <br/>
+                                <label id="LetrasRestantes2">Letras restantes: <div id="contadorCaracteres2"></div></label>
                             </td>
                         </tr>                        
                         <tr>
@@ -299,6 +319,7 @@
                             <tr>
                                 <td>
                                     <input type="file" id="btnImagenActivo" required="required" name="fileimagenactivo" accept="image/*" onchange="fnMostrarImagen(this);">
+                                    <input type="button" id="btnsubirImagen" value="Examinar">
                                 </td>
                             </tr>
                         </table>

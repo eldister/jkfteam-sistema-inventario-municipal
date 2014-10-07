@@ -3,14 +3,13 @@
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/"%>
 <decorator:decorate filename='/recursos/paginas/master/masterpage.jsp'>
     <decorator:content placeholder='sm_section_titulodepagina'>
-
         <%
             out.print("Proceso correcto " + request.getParameter("id") != null ? "para " + request.getParameter("idactivo") : "Proceso correcto");
         %>
     </decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>Insert title here</decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
-        <div>66666
+        <div>
         <%
             out.print("<div class='sm_body_contenedormensaje'>");
             out.print("Codigo de proceso :"+request.getParameter("id"));
@@ -19,6 +18,18 @@
             out.print("</div>");
             
 
-        %></div>
+        %>
+        </div>
+        <div id="sm_div_contBotones">
+            <div id="sm_div_reenvioInicio">
+                
+            </div>
+            <div id="sm_div_reenvioRegistroActivos">
+                
+            </div>
+            <div id="sm_div_reenvioGrilla">
+                <a href="../../../modulos/activos/articulos/mantenimiento_1.jsp">Ir a la pantalla de listado</a>
+            </div>
+        </div>
     </decorator:content>
 </decorator:decorate>
