@@ -10,6 +10,7 @@ public class Activos_Articulos extends Activos{
     private Date pd_puestaOperacion;
     private Departamento po_depto;
     private String pa_codigoProveedor;
+    private String pa_nombreproveedor;
     private String pa_marca;
     private int pn_aniosutilidadactivo;
     private double pb_porcentajeDepreciacion;
@@ -76,5 +77,19 @@ public class Activos_Articulos extends Activos{
     }
     public void setPb_porcentajeDepreciacion(double pb_porcentajeDepreciacion) {
         this.pb_porcentajeDepreciacion = pb_porcentajeDepreciacion;
+    }
+
+    /**
+     * @return the pa_nombreproveedor
+     */
+    public String getPa_nombreproveedor() {
+        return pa_nombreproveedor;
+    }
+
+    /**
+     * @param pa_nombreproveedor the pa_nombreproveedor to set
+     */
+    public void setPa_nombreproveedor(String pa_nombreproveedor) {
+        this.pa_nombreproveedor = pa_nombreproveedor;
     }
 }

@@ -8,8 +8,8 @@ public class Activos {
     private String pa_Descripcion;
     private Date pd_fechaCompra;
     private double pd_precioCompra;
-    private String pa_tipoPago;
-    private int pa_Estado;
+    private int pa_tipoPago;
+    private String pa_Estado;
     private int pa_tipoActivo;
     private ArrayList<imagenActivo> po_imagenActivo = new ArrayList<imagenActivo>();
     private String pa_Observaciones;
@@ -41,16 +41,16 @@ public class Activos {
     public void setPd_precioCompra(double pd_precioCompra) {
         this.pd_precioCompra = pd_precioCompra;
     }
-    public String getPa_tipoPago() {
+    public int getPa_tipoPago() {
         return pa_tipoPago;
     }
-    public void setPa_tipoPago(String pa_tipoPago) {
+    public void setPa_tipoPago(int pa_tipoPago) {
         this.pa_tipoPago = pa_tipoPago;
     }
-    public int getPa_Estado() {
+    public String getPa_Estado() {
         return pa_Estado;
     }
-    public void setPa_Estado(int pa_Estado) {
+    public void setPa_Estado(String pa_Estado) {
         this.pa_Estado = pa_Estado;
     }
     public int getPa_tipoActivo() {
@@ -70,5 +70,9 @@ public class Activos {
     }
     public void setPa_Observaciones(String pa_Observaciones) {
         this.pa_Observaciones = pa_Observaciones;
+    }
+    
+    public void agregarImagen(imagenActivo imagen){
+        this.po_imagenActivo.add(imagen);
     }
 }

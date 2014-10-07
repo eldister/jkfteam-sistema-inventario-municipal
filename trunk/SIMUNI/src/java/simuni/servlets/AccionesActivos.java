@@ -45,7 +45,8 @@ public class AccionesActivos extends HttpServlet {
         ObtenerActivoArticulo,
         AccionDefault,
         RegistrarActivoArticulo,
-        ActualizarActivoArticulo
+        ActualizarActivoArticulo,
+        BajarActivoArticuloAsinc
 
     }
 
@@ -106,11 +107,11 @@ public class AccionesActivos extends HttpServlet {
                 request.setAttribute("listadoarticulos", articulos);
                 disp.forward(request, response);
                 break;
-            case ObtenerActivoArticulo:
+            case ActualizarActivoArticulo:
                 String codigoactivo = request.getParameter("codigoactivo");
                 Activos_Articulos articulo = manejador.getActivoArticulo(codigoactivo);
                 //hay que crear la vista
-                disp = request.getRequestDispatcher("/modulos/activos/articulos/mantenimiento_1.jsp");
+                disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizacionactivoarticulo.jsp");
                 request.setAttribute("articulo", articulo);
                 disp.forward(request, response);
                 break;
@@ -157,8 +158,14 @@ public class AccionesActivos extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        DateFormat formatter;
-        Date date;
+        Departamento depto = new Departamento();
+        DateFormat formatter = null;
+        InputStream filecontent = null;
+        RequestDispatcher disp = null;
+        Date date = null;
+        String filename = "";
+        Activos_Articulos activoarticulo = new Activos_Articulos();
+
         boolean errores = false;
         ManejadorActivos manejadoractivos = new ManejadorActivos();
         try {
@@ -178,19 +185,21 @@ public class AccionesActivos extends HttpServlet {
             String descripcion = request.getParameter("txtDescripcion"); // Retrieves <input type="text" name="description">
             String observaciones = request.getParameter("txtObservaciones");
             Part filePart = request.getPart("fileimagenactivo"); // Retrieves <input type="file" name="file">
-
+            if(filePart!=null){
+                System.out.println("archivo presente ayuda nombres iii "+filePart.getSize());
+            }
             switch (getOpcion(request.getParameter("proceso"))) {
                 case RegistrarActivoArticulo:
-                    InputStream filecontent = filePart.getInputStream();
-                    String filename = getFilename(filePart);
+                    filecontent = filePart.getInputStream();
+                    filename = getFilename(filePart);
                     formatter = new SimpleDateFormat("dd-mm-yyyy");
                     date = new java.sql.Date(formatter.parse(fechainiciooperacion).getTime());
 
                     ///VALIDAR SI LOS CAMPOS REQUERIDOS SON VALIDOS O NO (NULOS) y que la imagen sea png o jpg
                     //validar que la placa no este registrada en base de datos.
-                    //
+                    
+                    
                     //INSTANCIAR EL OBJETO
-                    Activos_Articulos activoarticulo = new Activos_Articulos();
                     activoarticulo.setPa_identificadorActivo(numeroplaca);
                     activoarticulo.setPa_modelo(modeloactivo);
                     activoarticulo.setPa_marca(marcaactivo);
@@ -198,7 +207,6 @@ public class AccionesActivos extends HttpServlet {
                     activoarticulo.setPa_codigoProveedor(idproveedor);
 
                     //instanciamos depto
-                    Departamento depto = new Departamento();
                     depto.setPn_codigo(Integer.parseInt(iddepto));
                     activoarticulo.setPo_depto(depto);
 
@@ -216,22 +224,22 @@ public class AccionesActivos extends HttpServlet {
                     activoarticulo.setPd_precioCompra(Double.parseDouble(preciocompra));
                     activoarticulo.setPb_porcentajeDepreciacion(Double.parseDouble(porcentajedepreciacion));
                     activoarticulo.setPb_porcentajeRescate(Double.parseDouble(porcentajerescate));
-                    activoarticulo.setPa_tipoPago(idtipopago);//corregir, aqui es int
+                    activoarticulo.setPa_tipoPago(Integer.parseInt(idtipopago));//corregir, aqui es int
                     activoarticulo.setPa_tipoActivo(Integer.parseInt(categoriaactivo));//corregir, aqui es int
-                    activoarticulo.setPa_Estado(Integer.parseInt(estadoactivo));
+                    activoarticulo.setPa_Estado(estadoactivo);
                     activoarticulo.setPa_Descripcion(descripcion);
                     activoarticulo.setPa_Observaciones(observaciones);
 
                     //falta imagen
                     //hacer el proceso de registro
-                    if (manejadoractivos.agregarActivoArticulo(activoarticulo)) {
+                    if (!errores&&manejadoractivos.agregarActivoArticulo(activoarticulo)) {
                         //redirigir a una pagina de exito
-                        RequestDispatcher disp=request.getRequestDispatcher("/recursos/paginas/notificaciones/exito.jsp?id="+activoarticulo.getPa_identificadorActivo()+"&msg=1");
+                        disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito.jsp?id=" + activoarticulo.getPa_identificadorActivo() + "&msg=1");
                         disp.forward(request, response);
 
                     } else {
                         //redirigir a pagina de error y/o recargar el formulario
-                        RequestDispatcher disp=request.getRequestDispatcher("/recursos/paginas/notificaciones/error.jsp?id="+activoarticulo.getPa_identificadorActivo()+"&msg=1");
+                        disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error.jsp?id=" + activoarticulo.getPa_identificadorActivo() + "&msg=1");
                         disp.forward(request, response);
                     }
 
@@ -247,6 +255,68 @@ public class AccionesActivos extends HttpServlet {
                      out.println("</html>");*/
                     // ... (do your job here)
                     break;
+                case ActualizarActivoArticulo:
+                   /* filecontent = filePart.getInputStream();
+                    filename = getFilename(filePart);*/
+                    formatter = new SimpleDateFormat("dd-mm-yyyy");
+                    System.out.println("el valoooor es "+fechainiciooperacion);
+                    date = new java.sql.Date(formatter.parse(fechainiciooperacion).getTime());
+
+                    ///VALIDAR SI LOS CAMPOS REQUERIDOS SON VALIDOS O NO (NULOS) y que la imagen sea png o jpg
+                    //validar que la placa no este registrada en base de datos.
+                    //
+                    //INSTANCIAR EL OBJETO
+                    activoarticulo = new Activos_Articulos();
+                    activoarticulo.setPa_identificadorActivo(numeroplaca);
+                    activoarticulo.setPa_modelo(modeloactivo);
+                    activoarticulo.setPa_marca(marcaactivo);
+                    activoarticulo.setPd_puestaOperacion(date);
+                    activoarticulo.setPa_codigoProveedor(idproveedor);
+
+                    //instanciamos depto
+                    depto = new Departamento();
+                    depto.setPn_codigo(Integer.parseInt(iddepto));
+                    activoarticulo.setPo_depto(depto);
+
+                    //instanciamos para las imagenes
+                    imagenactivo = new imagenActivo();
+                    imagenactivo.setPa_nombreArchivo(filename);
+                  imagenactivo.setStreamarchivo(filecontent);
+                    listadoimagen = new ArrayList<imagenActivo>();
+                    listadoimagen.add(imagenactivo);
+                    activoarticulo.setPo_imagenActivo(listadoimagen);
+
+                    //hacer validaciones si es entero.
+                    date = new java.sql.Date(formatter.parse(fechacompraactivo).getTime());
+                    activoarticulo.setPd_fechaCompra(date);
+                    activoarticulo.setPd_precioCompra(Double.parseDouble(preciocompra));
+                    activoarticulo.setPb_porcentajeDepreciacion(Double.parseDouble(porcentajedepreciacion));
+                    activoarticulo.setPb_porcentajeRescate(Double.parseDouble(porcentajerescate));
+                    activoarticulo.setPa_tipoPago(Integer.parseInt(idtipopago));//corregir, aqui es int
+                    activoarticulo.setPa_tipoActivo(Integer.parseInt(categoriaactivo));//corregir, aqui es int
+                    activoarticulo.setPa_Estado(estadoactivo);
+                    activoarticulo.setPa_Descripcion(descripcion);
+                    activoarticulo.setPa_Observaciones(observaciones);
+
+                    //falta imagen
+                    //hacer el proceso de registro
+                    if (!errores&&manejadoractivos.modificarActivoArticulo(activoarticulo)) {
+                        //redirigir a una pagina de exito
+                        disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito.jsp?id=" + activoarticulo.getPa_identificadorActivo() + "&msg=2");
+                        disp.forward(request, response);
+
+                    } else {
+                        //redirigir a pagina de error y/o recargar el formulario
+                        disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error.jsp?id=" + activoarticulo.getPa_identificadorActivo() + "&msg=2");
+                        disp.forward(request, response);
+                    }
+
+                    break;
+                    
+                case BajarActivoArticuloAsinc:
+                    //AQUIII
+                    break;
+
             }
         } catch (ParseException ex) {
             System.out.print(ex.getMessage());
@@ -284,7 +354,13 @@ public class AccionesActivos extends HttpServlet {
             return OpcionesDo.ObtenerActivoArticulo;
         } else if (key.equals("registroactivoarticulo")) {
             return OpcionesDo.RegistrarActivoArticulo;
+        } else if (key.equals("modificacionarticulo")) {
+            return OpcionesDo.ActualizarActivoArticulo;
+        } if (key.equals("bajaarticuloasinc")) {
+            return OpcionesDo.BajarActivoArticuloAsinc;
         }
+        
+        
         return OpcionesDo.AccionDefault;
     }
 }

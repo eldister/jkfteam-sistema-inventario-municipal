@@ -13,6 +13,7 @@
         <script src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_main.js"></script>
 
         <link rel="stylesheet" href="<%=request.getContextPath()%>/recursos/estilos/style_main.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/recursos/estilos/temas/jquery_smoothness/style_jquery-ui.css">
         <decorator:placeholder name='sm_section_estilosyscriptssectioncontainer'/>
     </head>
     <body>
