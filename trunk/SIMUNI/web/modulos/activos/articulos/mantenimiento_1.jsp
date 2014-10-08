@@ -1,3 +1,4 @@
+<%@page import="simuni.classes.EN.TipoActivo"%>
 <%@page import="simuni.classes.UI.ActivosMostrador"%>
 <%@page import="simuni.classes.EN.Activos_Articulos"%>
 <%@page import="java.util.ArrayList"%>
@@ -22,23 +23,8 @@
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <%
             ArrayList<Activos_Articulos> to_articulo=(ArrayList<Activos_Articulos>)request.getAttribute("listadoarticulos");
-            if(to_articulo==null){
-                to_articulo=new ArrayList<Activos_Articulos>();
-            }
-
-            for(int a=0;a<5;a++){
-              Activos_Articulos articulo=new Activos_Articulos();
-            articulo.setPa_identificadorActivo("123456asdf");
-            articulo.setPa_tipoActivo(2);
-            articulo.setPa_marca("patito 1");
-            articulo.setPa_modelo("modelo a");
-            articulo.setPd_puestaOperacion(new Date());
-            articulo.setPa_Descripcion("Una descripcion rara");  
-            to_articulo.add(articulo);
-            }
-      
-            
-            out.write(new ActivosMostrador().RenderizarActivos(to_articulo,10));
+            ArrayList<TipoActivo>to_tipoactivo=(ArrayList<TipoActivo>)request.getAttribute("listadotiposactivo");
+            out.write(new ActivosMostrador().RenderizarActivos(to_tipoactivo,to_articulo,10));
 
                 
         %>

@@ -74,7 +74,7 @@ public class GrillaBase {
         resp.append(" </div>");
         //FIN DE LA SECCION BUSQEUDA
         resp.append(" </div>");
-
+        resp.append("<div class='sm_div_puratablecontainer' id='sm_div_puratablecontainertarget'>");///EESTE CAMBIO DE ULTIMA HORA
         resp.append(" <table class='sm_div_tablemain' >");
         resp.append("  <thead><!--seccion solo encabezado-->");
         resp.append("     <tr class='sm_thead_filaencabezado'>");
@@ -154,8 +154,8 @@ public class GrillaBase {
 
         resp.append("    </tbody>  ");
         resp.append("   </table>");
-            //find e seccion de tablas
-
+        //find e seccion de tablas
+        resp.append("</div>");//CAMBIO DE ULTIMA HORA CIERRE LLAVE
         //SECCION PAGINACION
         resp.append(" <div class='sm_div_paginaciongrillacontainer'>");
         resp.append("    <div id='sm_div_paginacionelementscontainer'>");
@@ -336,6 +336,95 @@ public class GrillaBase {
      */
     public void setOpciommostrarfiltro(boolean opciommostrarfiltro) {
         this.opciommostrarfiltro = opciommostrarfiltro;
+    }
+
+    public String renderizarSoloCuerpoTabla(Object[] encabezados, ArrayList<Object[]> filas,int cantidadpaginas) {
+        StringBuilder resp = new StringBuilder();
+        resp.append("<div class='sm_div_puratablecontainer'>");///EESTE CAMBIO DE ULTIMA HORA
+        resp.append(" <table class='sm_div_tablemain' >");
+        resp.append("  <thead><!--seccion solo encabezado-->");
+        resp.append("     <tr class='sm_thead_filaencabezado'>");
+
+        for (int a = 0; a < encabezados.length; a++) {
+            resp.append("<th class='sm_tr_columnaencabezado'>");
+            resp.append(encabezados[a]);
+            resp.append("</th>");
+        }
+        resp.append(" <th class='sm_tr_columnaencabezado'>Procesos</th>");
+        resp.append("        </tr>");
+        resp.append("   </thead>");
+        resp.append("    <tbody>");
+
+        //SECCION CUERPO DE LA GRILLA.. LAS FILAS
+        Iterator<Object[]> iter = filas.iterator();
+        while (iter.hasNext()) {
+            resp.append("<tr class='sm_tbody_filadatos'>");
+            Object[] row = iter.next();
+            for (int a = 0; a < row.length; a++) {
+                resp.append("<td class='sm_tr_columnadatos'>");
+                resp.append(row[a]);
+
+                //si estamos en la primer fila se guarda en una variable el identificador de la fila
+                if (a == 0) {
+                    resp.append(" <input type='hidden' value='");
+                    resp.append(row[a]);
+                    resp.append("'>");
+                }
+                resp.append("</td>");
+
+                //SECCION DE OPERACIONES SOBRE ACTIVOS
+                //si estamos en la ultima fila agregamos los procesos si se requiere
+                if (a == row.length - 1) {
+                    resp.append("  <td class='sm_tr_columnadatos'>");
+                    resp.append("          <div class='sm_td_operacionescontainer'>");
+                    resp.append("   <div class='sm_div_rowsim'>");
+
+                    if (isOpcionactualizar()) {
+
+                        resp.append("             <div class='sm_div_colsim sm_div_grillamodificar'  title='Modificar información'>");
+                        resp.append("              &nbsp;");
+                        resp.append("        </div>  ");
+                    }
+
+                    if (isOpcionimprimir()) {
+
+                        resp.append("<div class='sm_div_colsim sm_div_grillaimprimir' title='Imprimir reporte'>");
+                        resp.append("&nbsp;");
+                        resp.append("</div>");
+                    }
+
+                    if (isOpcionver()) {
+
+                        resp.append("<div class='sm_div_colsim sm_div_grillaverimagen' title='ver imagen de activo'>");
+                        resp.append("&nbsp;");
+                        resp.append("</div>  ");
+                    }
+
+                    if (isOpcioneliminar()) {
+
+                        resp.append("<div class='sm_div_colsim sm_div_grillaeliminar' title='Eliminar activo'>");
+                        resp.append("&nbsp;");
+                        resp.append("</div>  ");
+                    }
+
+                    resp.append("</div>");
+                    resp.append("</div>");
+                    resp.append("</td>");
+                    resp.append("</tr>");
+
+                }
+
+            }
+
+        }
+
+        resp.append("    </tbody>  ");
+        resp.append("   </table>");
+        //find e seccion de tablas
+        resp.append("</div>");///EESTE CAMBIO DE ULTIMA HORA CIERRE DE LLAVE
+
+        return resp.toString();
+
     }
 
 }

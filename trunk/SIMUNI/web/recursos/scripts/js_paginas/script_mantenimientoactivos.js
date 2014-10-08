@@ -25,8 +25,7 @@ function mostrarventanamodal() {
 
 
 function  sm_grilla_proceso_modificaractivo(sm_grilla_item_id) {
-    // mostrarventanamodal();
-    $("#sm_body_ventanamodal").css('top', 0);
+
     $.ajax({
         url: "/SIMUNI/modulos/activos?proceso=modificacionarticulo&codigoactivo=" + sm_grilla_item_id,
         cache: false
@@ -35,13 +34,14 @@ function  sm_grilla_proceso_modificaractivo(sm_grilla_item_id) {
                 $("#sm_body_ventanamodal").html(html);
                 setManejadorFormularioActualizacion();
             });
+
     mostrarventanamodal();
 
 }
 
 function setManejadorFormularioActualizacion() {
     var frm = $('#sm_div_formulario');
- 
+
     frm.submit(function(ev) {
         var formObj = $(this);
         var formURL = formObj.attr("action");
@@ -55,21 +55,89 @@ function setManejadorFormularioActualizacion() {
             cache: false,
             processData: false,
             success: function(data) {
-                $("#sm_respuesta").html($("#sm_respuesta").html() + "correcto" + data.responseText);
+                alert(data);
             },
             complete: function(xhr, data) {
-                console.log(xhr.status);
-                $("#sm_respuesta").html($("#sm_respuesta").html() + "completooo" + data + xhr.responseText);
+              //  console.log(xhr.status);
+               // $("#sm_respuesta").html($("#sm_respuesta").html() + "completooo" + data + xhr.responseText);
             },
             error: function(data) {
                 //alert(data.responseText);
-                $("#sm_respuesta").html($("#sm_respuesta").html() + data.responseText);
+            //    $("#sm_respuesta").html($("#sm_respuesta").html() + data.responseText);
+              alert(data);
             }
         });
 
         ev.preventDefault(); //Prevent Default action. 
-        ev.unbind();
+       // ev.unbind();
     });
 
+
+}
+
+function  sm_grilla_proceso_eliminaractivo(sm_grilla_item_id) {
+    $.ajax({
+        type: 'POST',
+        url: "/SIMUNI/modulos/activos?proceso=bajaarticuloasinc&codigoactivo=" + sm_grilla_item_id,
+        contentType: ' charset=utf-8',
+        success: function(data) {
+            alert(data);
+            // $("#sm_body_ventanamodal").html(data.status+textStatus);
+            //se actualiza los activos
+        },
+        error: function(data) {
+            alert(data);
+            // $("#sm_body_ventanamodal").html(jqXHR.status+textStatus);
+
+        }
+
+    });
+
+
+}
+
+function sm_grilla_cambiarpaginacion(valorpaginacion) {
+    $.ajax({
+        type: 'POST',
+        url: "/SIMUNI/modulos/activos?proceso=modificacionpaginacionasinc&valorpaginacion=" + valorpaginacion,
+        contentType: ' charset=utf-8',
+        success: function(data) {
+            console.info("correcto" + data);
+            //actualizar grilla
+            sm_grilla_actualizargrillageneral();
+        },
+        error: function(data) {
+            console.info(data);
+
+        }
+
+    });
+
+}
+function sm_grilla_actualizargrillageneral() {
+    $.ajax({
+        type: 'POST',
+        url: "/SIMUNI/modulos/activos?proceso=ver_activosarticulosasinc",
+        contentType: ' charset=utf-8',
+        success: function(data) {
+            //console.info("correcto" +data);
+            $("#sm_div_puratablecontainertarget").html(data);
+            sm_grillageneral_refrescareventosgrilla();
+            //actualizar grilla
+        },
+        beforeSend: function() {
+            $("#sm_div_puratablecontainertarget").addClass('sm_div_grillageneralloading');
+           // $('#sm_respuesta').css('font-size','3em');
+        },
+        complete: function() {
+             // $('#sm_respuesta').css('font-size','0.51em');
+               $("#sm_div_puratablecontainertarget").removeClass('sm_div_grillageneralloading');
+        },
+        error: function(data) {
+            console.info(data);
+
+        }
+
+    });
 
 }
