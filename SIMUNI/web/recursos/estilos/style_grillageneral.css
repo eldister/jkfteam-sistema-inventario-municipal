@@ -231,3 +231,13 @@ td{
 #sm_divpaginaciondefiner input[type=text]{
     width: 20px;
 }
+
+
+/*grilla general loading*/
+
+.sm_div_grillageneralloading{
+    background-image:url(/SIMUNI/recursos/imagenes/sistema/sm_grilla_loadinggif.gif);
+    background-color: rgba(126,230,128,0.5);
+    background-position:center;
+    background-repeat:no-repeat;
+}
