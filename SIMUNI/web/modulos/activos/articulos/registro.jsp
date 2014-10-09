@@ -152,7 +152,7 @@
                                 <label>Nombre del proveedor </label>
                             </td>
                             <td>
-                                <input type="text" name="txtProveedor"><input type="button" value="Seleccionar">
+                                <input type="text" name="txtProveedor">&nbsp;&nbsp;<input type="button" value="Seleccionar">
                             </td>
                         </tr>
                         <tr>

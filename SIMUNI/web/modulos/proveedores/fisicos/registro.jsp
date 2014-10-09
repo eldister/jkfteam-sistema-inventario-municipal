@@ -4,6 +4,22 @@
     <decorator:content placeholder='sm_section_titulodepagina'>Titulo de pagina</decorator:content>    
         <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
              <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodeproveedores.css">
+             <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/script_plugins/maxLength/maxLength.js"></script>
+             <script>
+            $(function(){
+                $("#txtDC").maxLength(300, { showNumber: "#contCaracteres"});
+             });
+             $(document).ready(function(){
+                 var intervalo = function(){
+                     $("#btnArchivo").html($("#btnSubirArchivo").val());  
+                 };
+                     $("#btnSubirArchivo").on("click", function(){
+                         $("#btnArchivo").click();
+                         setInterval(intervalo, 1);
+                         return false;
+                     });
+             });
+             </script>
         </decorator:content>
         <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <div id="informationProcess">
@@ -22,7 +38,7 @@
                                 <label>Número de indentificación: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtIdentificadorProveedor" />
+                                <input type="text" id="txtID" name="txtIdentificadorProveedor" />
                             </td>                            
                         </tr>
                         <tr>
@@ -30,7 +46,7 @@
                                 <label>Nombre: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtNombreProveedor">
+                                <input type="text" id="txtNP" name="txtNombreProveedor">
                             </td>
                         </tr>
                         <tr>
@@ -38,7 +54,7 @@
                                 <label>Primer apellido: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtApellido1Proveedor">
+                                <input type="text" id="txtPAP" name="txtApellido1Proveedor">
                             </td>
                         </tr>
                         <tr>
@@ -46,7 +62,7 @@
                                 <label>Segundo apellido: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtApellido2Proveedor">
+                                <input type="text" id="txtSAP" name="txtApellido2Proveedor">
                             </td>
                         </tr>
                         <tr>
@@ -54,7 +70,7 @@
                                 <label>Teléfono habitación: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtTelefonoHabitacion">
+                                <input type="text" id="txtTel" name="txtTelefonoHabitacion">
                             </td>
                         </tr>
                         <tr>
@@ -62,7 +78,7 @@
                                 <label>Teléfono oficina: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtTelefonoOficina">
+                                <input type="text" id="txtTO" name="txtTelefonoOficina">
                             </td>
                         </tr>
                         <tr>
@@ -70,7 +86,7 @@
                                 <label>Teléfono móvil: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtTelefonoMovil">
+                                <input type="text" id="txtTM" name="txtTelefonoMovil">
                             </td>
                         </tr>
                         <tr>
@@ -78,7 +94,7 @@
                                 <labe>Número de fax: </labe>
                             </td>
                             <td>
-                                <input type="text" name="txtNumeroFax">
+                                <input type="text" id="txtTF" name="txtNumeroFax">
                             </td>
                         </tr>
                         <tr>
@@ -86,7 +102,7 @@
                                 <label>Correo electrónico: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtEmail">
+                                <input type="text" id="txtMail" name="txtEmail">
                             </td>
                         </tr>
                         <tr>
@@ -94,7 +110,7 @@
                                 <label>Dirección web: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtDireccionWeb">
+                                <input type="text" id="txtDW" name="txtDireccionWeb">
                             </td>
                         </tr>
                         <tr>
@@ -102,7 +118,7 @@
                                 <label>Apartado Postal: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtApartadoPostal">
+                                <input type="text" id="txtAP" name="txtApartadoPostal">
                             </td>
                         </tr>
                         <tr>
@@ -110,7 +126,7 @@
                                 <label>Nombre de la compañía: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtNombreCompañia">
+                                <input type="text" id="txtNC" name="txtNombreCompañia">
                             </td>
                         </tr>
                         <tr>
@@ -118,7 +134,9 @@
                                 <label>Dirección de la compañía: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtDireccionCompañia">
+                                <textarea type="text" id="txtDC" name="txtDireccionCompañia" maxlength="300"></textarea>
+                                <br/>
+                                <div><label id="LetrasRestantes1">Letras restantes: </div><div id="contCaracteres"></div>
                             </td>
                         </tr>
                         <tr>
@@ -126,7 +144,7 @@
                                 <label>Nombre del representante legal: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtNombreRepresentante">
+                                <input type="text" id="txtNR" name="txtNombreRepresentante">
                             </td>
                         </tr>
                         <tr>
@@ -134,7 +152,7 @@
                                 <label>Primer apellido del representante legal: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtApellido1Representante">
+                                <input type="text" id="txtPAR" name="txtApellido1Representante">
                             </td>
                         </tr>
                         <tr>
@@ -142,7 +160,7 @@
                                 <label>Segundo apellido del representante legal: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtApellido2Representante">
+                                <input type="text" id="txtSAR" name="txtApellido2Representante">
                             </td>
                         </tr>
                         <tr>
@@ -150,7 +168,7 @@
                                 <label>Nombre del banco: </label>
                             </td>
                             <td>
-                                <input type="text" name="txtNombreBanco">
+                                <input type="text" id="txtNB" name="txtNombreBanco">
                             </td>
                         </tr>
                         <tr>
@@ -158,7 +176,7 @@
                                 <label>Número de cuenta:</label>   
                             </td>
                             <td>
-                                <input type="text" name="txtNumeroCuenta">
+                                <input type="text" id="txtNumC" name="txtNumeroCuenta">
                             </td>
                         </tr>
                         <tr>
@@ -166,7 +184,8 @@
                                 <label>Cargar documentos requeridos: </label>
                             </td>
                             <td>
-                                <input type="file" name="btnArchivos" accept="application/pdf">
+                                <input type="file" id="btnArchivo" name="btnArchivos" accept="application/pdf">
+                                <input type="button" id="btnSubirArchivo" value="Examinar">
                             </td>
                         </tr>
                         <tr>

@@ -7,7 +7,9 @@
             out.print("Proceso correcto " + request.getParameter("id") != null ? "para " + request.getParameter("idactivo") : "Proceso correcto");
         %>
     </decorator:content>    
-    <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>Insert title here</decorator:content>
+    <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
+        <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/recursos/estilos/style_mensajesEE.css">
+    </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <div>
         <%
@@ -21,15 +23,18 @@
 
         %>
         </div>
+        <br/>
+        <hr/>
+        <br/>
         <div id="sm_div_contBotones">
             <div id="sm_div_reenvioInicio">
-                
+                <a href="#">Ir a la pantalla de inicio &raquo;</a>
             </div>
             <div id="sm_div_reenvioRegistroActivos">
-                
+                <a href="#">Ir a la pantalla de registro de activos &raquo;</a>
             </div>
             <div id="sm_div_reenvioGrilla">
-                <a href="../../../modulos/activos/articulos/mantenimiento_1.jsp">Ir a la pantalla de listado</a>
+                <a href="#">Ir a la pantalla de listado de los activos &raquo;</a>
             </div>
         </div>
     </decorator:content>
