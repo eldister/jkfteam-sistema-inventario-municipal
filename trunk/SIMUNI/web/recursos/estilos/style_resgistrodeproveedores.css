@@ -26,6 +26,7 @@
 #contCaracteres{
     float: left;
     font-size: 80%;
+    display: inline-block;
 }
 input[type=submit]{
     border : solid 2px #0f0e0f;
@@ -80,11 +81,6 @@ input[type=button]{
     background : linear-gradient(top, #aac4f7 0%, #2349c4 100%);
     filter : progid:DXImageTransform.Microsoft.gradient( startColorstr='#bacef5', endColorstr='#02238f',GradientType=0 );
     cursor: pointer;
-    /*padding: 6px;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border: 1px solid #ccc;*/
 }
 input[type=text]{
     padding: 2px;
