@@ -38,7 +38,7 @@
                                 <label>Número de indentificación: </label>
                             </td>
                             <td>
-                                <input type="text" id="txtID" name="txtIdentificadorProveedor" />
+                                <input type="text" id="txtID" name="codigoproveedor" />
                             </td>                            
                         </tr>
                         <tr>
@@ -184,8 +184,8 @@
                                 <label>Cargar documentos requeridos: </label>
                             </td>
                             <td>
-                                <input type="file" id="btnArchivo" name="btnArchivos" accept="application/pdf">
-                                <input type="button" id="btnSubirArchivo" value="Examinar">
+                                <input type="file" id="btnArchivo" name="btnArchivos" multiple accept="application/pdf">
+                                <input type="button" id="btnSubirArchivo"  value="Examinar">
                             </td>
                         </tr>
                         <tr>
@@ -198,6 +198,7 @@
                         </tr>    
                     </table>
                 </div>
+            </fieldset>
         </form>
         </decorator:content>
                

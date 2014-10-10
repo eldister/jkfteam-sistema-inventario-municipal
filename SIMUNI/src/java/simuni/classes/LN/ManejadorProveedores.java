@@ -31,7 +31,7 @@ public class ManejadorProveedores {
         }
     }
 
-    public boolean desactivarProveedorFisico(int tn_codigoproveedorfisico) {
+    public boolean desactivarProveedorFisico(String tn_codigoproveedorfisico) {
         try{
             ManejadorDatosProveedores p= new ManejadorDatosProveedores();
             return p.desactivarProveedorFisico(tn_codigoproveedorfisico);
@@ -41,17 +41,17 @@ public class ManejadorProveedores {
         }
     }
 
-    public ArrayList<ProveedorFisico> getListaProveedores() {
+    public ArrayList<ProveedorFisico> getListaProveedoresFisicos(int npagina,int npaginacion) {
         try{
             ManejadorDatosProveedores p= new ManejadorDatosProveedores();
-            return p.getListaProveedoresFisicos();
+            return p.getListaProveedoresFisicos(npagina,npaginacion);
         }catch(Exception ex){
             //registrar error
             return null;
         }
     }
 
-    public ProveedorFisico getProveedorFisico(int tn_codigoproveedorfisico) {
+    public ProveedorFisico getProveedorFisico(String tn_codigoproveedorfisico) {
         try{
             ManejadorDatosProveedores p= new ManejadorDatosProveedores();
             return p.getProveedorFisico(tn_codigoproveedorfisico);
