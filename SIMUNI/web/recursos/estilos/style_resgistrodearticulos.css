@@ -31,6 +31,9 @@
 #contadorCaracteres1, #contadorCaracteres2{
     float: next;
 }
+#contadorCaracteres1{
+    display: inline-block;
+}
 #btnImagenActivo{
     display: none;
 }

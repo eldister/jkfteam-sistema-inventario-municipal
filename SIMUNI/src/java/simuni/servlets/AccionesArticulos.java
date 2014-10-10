@@ -32,7 +32,7 @@ import simuni.classes.LN.UtilidadesServlet;
  * @author FchescO
  */
 @MultipartConfig
-public class AccionesActivos extends HttpServlet {
+public class AccionesArticulos extends HttpServlet {
 
     enum OpcionesDo {
 
@@ -329,7 +329,7 @@ public class AccionesActivos extends HttpServlet {
                         request.getSession().setAttribute("paginacion", paginacion);
                         //modificar preferencias en base de datos.
 
-                    } catch (NumberFormatException ex) {
+                    } catch (Exception  ex) {
                         //registrar error en base de datos
                         request.getSession().setAttribute("paginacion", 5);
                         System.out.println(ex.getMessage());

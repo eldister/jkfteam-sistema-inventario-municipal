@@ -67,6 +67,9 @@ public class ActivosMostrador {
         if (to_articulo == null) {
             to_articulo = new ArrayList<Activos_Articulos>();
         }
+        if (tiposactivo == null) {
+            tiposactivo = new ArrayList<TipoActivo>();
+        }       
         Iterator<Activos_Articulos> iter = to_articulo.iterator();
         String nombretipo = "";
 
