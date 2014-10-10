@@ -26,8 +26,11 @@ public class ProveedoresFisicosMostrador {
 
     }
 
-    public String RenderizarActivos(ArrayList<ProveedorFisico> to_proveedores, int cantidadpaginas) {
+    public String RenderizarProveedoresFisicos(ArrayList<ProveedorFisico> to_proveedores, int cantidadpaginas) {
         ArrayList<Object[]> filas = new ArrayList<Object[]>();
+        if(to_proveedores==null){
+            to_proveedores=new ArrayList<ProveedorFisico>();
+        }
         Iterator<ProveedorFisico> iter = to_proveedores.iterator();
         String estadoproveedorfisico = "";
         while (iter.hasNext()) {
@@ -53,6 +56,39 @@ public class ProveedoresFisicosMostrador {
         GrillaBase gril = new GrillaBase();
         gril.setOpciommostrarfiltro(false);
         gril.setUrlagregaropcionagregar("registro.jsp");
+        gril.setBusquedalabel("Buscar Proveedor");
         return gril.renderizar(criteriofiltros, encabezados, filas, cantidadpaginas);
     }
+    public String RenderizarActualizacionProveedoresFisicos(ArrayList<ProveedorFisico> to_proveedores, int cantidadpaginas) {
+        ArrayList<Object[]> filas = new ArrayList<Object[]>();
+        if(to_proveedores==null){
+            to_proveedores=new ArrayList<ProveedorFisico>();
+        }
+        Iterator<ProveedorFisico> iter = to_proveedores.iterator();
+        String estadoproveedorfisico = "";
+        while (iter.hasNext()) {
+            ProveedorFisico proveedorfisico = iter.next();
+            switch (proveedorfisico.getPb_estadoprovedor()) {
+                case 1:
+                    estadoproveedorfisico = "Activo";
+                    break;
+                case 0:
+                    estadoproveedorfisico = "Desactivo";
+                    break;
+            }
+            Object[] obj = new Object[]{
+                proveedorfisico.getPa_cedula(),
+                proveedorfisico.getPa_nombre(),
+                proveedorfisico.getPa_primerApellido(),
+                proveedorfisico.getPa_segundoApellido(),
+                proveedorfisico.getPd_fecharegistro(),
+                estadoproveedorfisico
+            };
+            filas.add(obj);
+        }
+        GrillaBase gril = new GrillaBase();
+        gril.setOpciommostrarfiltro(false);
+        gril.setUrlagregaropcionagregar("registro.jsp");
+        return gril.renderizarSoloCuerpoTabla(encabezados, filas, cantidadpaginas);
+    }    
 }

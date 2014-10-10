@@ -4,9 +4,17 @@
         <servlet-name>AccionesActivos</servlet-name>
         <servlet-class>simuni.servlets.AccionesArticulos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccionesProveedores</servlet-name>
+        <servlet-class>simuni.servlets.AccionesProveedoresF</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccionesActivos</servlet-name>
         <url-pattern>/modulos/activos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccionesProveedores</servlet-name>
+        <url-pattern>/modulos/proveedores</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

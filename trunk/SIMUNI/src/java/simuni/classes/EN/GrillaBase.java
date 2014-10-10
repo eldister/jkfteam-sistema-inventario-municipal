@@ -25,6 +25,7 @@ public class GrillaBase {
     private String mensajeplaceholderbusqueda = "Ingrese su criterio de busqueda";
     private String urlpaginacionlink = "";
     private String urlagregaropcionagregar = "";
+    private String busquedalabel="Buscar Activo";
 
     public String renderizar(Object[] criteriofiltro, Object[] encabezados, ArrayList<Object[]> filas, int cantidadpag) {
         StringBuilder resp = new StringBuilder();
@@ -51,7 +52,9 @@ public class GrillaBase {
         resp.append(" <div class='sm_div_colsim'>");
 
         resp.append("    <div id='sm_div_busquedacontainer'> ");
-        resp.append("       <span class='sm_div_label'>Buscar activo</span>");
+        resp.append("       <span class='sm_div_label'>");
+        resp.append(busquedalabel);
+        resp.append("</span>");
         resp.append("      <input type='text' placeholder='");
         resp.append(getMensajeplaceholderbusqueda());
         resp.append("'>");
@@ -425,6 +428,20 @@ public class GrillaBase {
 
         return resp.toString();
 
+    }
+
+    /**
+     * @return the busquedalabel
+     */
+    public String getBusquedalabel() {
+        return busquedalabel;
+    }
+
+    /**
+     * @param busquedalabel the busquedalabel to set
+     */
+    public void setBusquedalabel(String busquedalabel) {
+        this.busquedalabel = busquedalabel;
     }
 
 }

@@ -7,28 +7,26 @@
 <decorator:decorate filename='../../../recursos/paginas/master/masterpage.jsp'>
     <decorator:content placeholder='sm_section_titulodepagina'>Insert title here</decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
-        <link rel='stylesheet' href='../../../recursos/estilos/style_grillageneral.css'>
-        <script src='../../../recursos/scripts/script_sm_grillageneral.js'></script>
+        <link rel='stylesheet' href='<%=request.getContextPath()%>/recursos/estilos/style_grillageneral.css'>
+        <script src='<%=request.getContextPath()%>/recursos/scripts/script_sm_grillageneral.js'></script>
+        <script src='<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_mantenimientoproveedorfisico.js'></script>
         <script>
             $(document).ready(function() {
                 sm_grillageneral_inicializar();
+                inicializarpaginamantenimiento();
             });
         </script>
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <%
-            ArrayList<ProveedorFisico> to_proveedores = new ArrayList<ProveedorFisico>();
-            for (int a = 0; a < 5; a++) {
-                ProveedorFisico proveedorfisico = new ProveedorFisico();
-                proveedorfisico.setPersona("504230366", "Francisco Coulon", "Coulon", "Ollivier");
-                proveedorfisico.setPa_correoElectronico("javiercoulon@hotmail.com");
-                proveedorfisico.setPb_estadoprovedor(1);
-                proveedorfisico.setPd_fecharegistro(new java.sql.Date(System.currentTimeMillis()));
-
-                to_proveedores.add(proveedorfisico);
-            }
-            out.write(new ProveedoresFisicosMostrador().RenderizarActivos(to_proveedores, 10));
+            
+            
+            ArrayList<ProveedorFisico> to_proveedores = (ArrayList<ProveedorFisico>)request.getAttribute("listadoproveedoresfisicos");
+           
+            out.write(new ProveedoresFisicosMostrador().RenderizarProveedoresFisicos(to_proveedores, 10));
 
         %>
+       <div id="sm_body_ventanamodal">55555</div>
+        <div id="sm_respuesta"></div>
     </decorator:content>
 </decorator:decorate>
