@@ -7,7 +7,7 @@
         proveedor = new ProveedorFisico();
     }
 %>
-<form id="sm_div_formulario" method="POST" action="/SIMUNI/modulos/proveedores?proceso=modificacionproveedorfisico">
+<form id="sm_div_formulario" method="POST" enctype="multipart/form-data"   action="/SIMUNI/modulos/proveedores?proceso=modificacionproveedorfisico">
     <fieldset id="proveedores">
         <legend>Registro de proveedores</legend>
         <div id="registerInformation">
@@ -144,9 +144,17 @@
                         <input type="text" value="<%out.print(proveedor.getPa_numeroCuenta()); %>" id="txtNumC" name="txtNumeroCuenta">
                     </td>
                 </tr>
+                        <tr>
+                            <td>
+                                <label>Actualizar documentos proveedor: </label>
+                            </td>
+                            <td>
+                                <input type="file" id="btnArchivo" name="filearchivosproveedor" multiple accept="application/pdf">
+                            </td>
+                        </tr>                
                 <tr>
                     <td>
-                        <input type="submit" name="btnRegistrar" value="Actualizar activo">
+                        <input type="submit" name="btnRegistrar" value="Actualizar Proveedor">
                     </td>
                     <td>
                         
@@ -156,6 +164,6 @@
         </div>
     </fieldset>
                             <div id="sm_form_extracontent">
-            <input type="hidden"  value="<% out.print(proveedor.getPa_cedula()); %>" name="hiddenidProveedor">
+            <input type="hidden"  value="<% out.print(proveedor.getPa_cedula()); %>" name="codigoproveedor">
            </div>
 </form>

@@ -17,7 +17,7 @@ public class ProveedorFisico extends Persona{
     private int pb_estadoprovedor;
     private Date pd_fecharegistro;
     
-    private ArrayList<Documentos>po_documentos = new ArrayList<Documentos>();
+    private ArrayList<Documentos>po_documentos ;
     
     public ProveedorFisico(){
         super();

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -43,7 +42,9 @@ public class AccionesArticulos extends HttpServlet {
         RegistrarActivoArticulo,
         ActualizarActivoArticulo,
         ActualizarPropiedadPaginacionAsinc,
-        BajarActivoArticuloAsinc
+        BajarActivoArticuloAsinc,
+        VerificarSiArticuloYaRegistrado,
+        BusquedaArticulo
 
     }
 
@@ -132,6 +133,13 @@ public class AccionesArticulos extends HttpServlet {
                 disp = request.getRequestDispatcher("/modulos/activos/articulos/registro.jsp");
                 disp.forward(request, response);
                 break;
+            case VerificarSiArticuloYaRegistrado:
+                manejador=new ManejadorActivos();
+                codigoactivo=request.getParameter("codigoactivo");
+                if(manejador.isActivoExistente(codigoactivo)){
+                    response.getOutputStream().print("Si Existe");
+                }
+                break;
 
         }
     }
@@ -193,6 +201,7 @@ public class AccionesArticulos extends HttpServlet {
                     filePart = request.getPart("fileimagenactivo"); // Retrieves <input type="file" name="file">
                     if (filePart != null) {
                         System.out.println("archivo presente ayuda nombres iii " + filePart.getSize());
+                     
                     }
                     filecontent = filePart.getInputStream();
                     filename = UtilidadesServlet.getFilename(filePart);
@@ -370,9 +379,26 @@ public class AccionesArticulos extends HttpServlet {
                     request.setAttribute("listadotiposactivo", tiposactivos);
                     disp.forward(request, response);
                     break;
+                    
+                case BusquedaArticulo:
+                   String query=request.getParameter("query");
+                    articulos = manejadoractivos.buscarActivosArticulos(query);
+                   
+                    disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=1");
+                    deptos = manejadordeptos.getListaDepartamentos();
+                    tipospago = manejadortpago.getListaTipoPago();
+                    tiposactivos = manejadortactivos.getListaTiposActivos();
+                    estadoactivos = manejadorestadoactivo.getListadoEstadosActivos();
+                    request.setAttribute("departamentos", deptos);
+                    request.setAttribute("tiposactivo", tiposactivos);
+                    request.setAttribute("tipospago", tipospago);
+                    request.setAttribute("estadoactivos", estadoactivos);
+                    request.setAttribute("listadoarticulos", articulos);
+                    disp.forward(request, response);                    
+                    break;
 
             }
-        } catch (ParseException ex) {
+        } catch (Exception ex) {
             System.out.print(ex.getMessage());
         }
     }
@@ -396,6 +422,10 @@ public class AccionesArticulos extends HttpServlet {
             return OpcionesDo.ActualizarPropiedadPaginacionAsinc;
         } else if (key.equals("ver_activosarticulosasinc")) {
             return OpcionesDo.ObtenerActivosArticulosAsinc;
+        }else if(key.equals("verificarsiactivoexiste")){
+            return OpcionesDo.VerificarSiArticuloYaRegistrado;
+        }else if(key.equals("busquedaarticulo")){
+            return OpcionesDo.BusquedaArticulo;
         }
         return OpcionesDo.AccionDefault;
     }

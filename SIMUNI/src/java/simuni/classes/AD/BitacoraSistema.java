@@ -12,10 +12,12 @@ package simuni.classes.AD;
  */
 public class BitacoraSistema {
     
-    public boolean registrarErrorSistema(String origen,String mensaje){
+    public synchronized boolean registrarErrorSistema(String origen,String mensaje){
+        //hacer registro en base de datos
         return true;
     }
-    public boolean registrarProcesoSistema(String usuario,String mensaje){
+    public synchronized boolean registrarProcesoSistema(String usuario,String mensaje){
+        //hacer registro en base de datos
         return true;
     }   
     

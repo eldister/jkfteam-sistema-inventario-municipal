@@ -104,7 +104,7 @@ function sm_grilla_cambiarpaginacion(valorpaginacion) {
         success: function(data) {
             console.info("correcto" + data);
             //actualizar grilla
-            sm_grilla_actualizargrillageneral();
+            sm_grilla_actualizargrillageneral("ver_activosarticulosasinc");
         },
         error: function(data) {
             console.info(data);
@@ -114,10 +114,18 @@ function sm_grilla_cambiarpaginacion(valorpaginacion) {
     });
 
 }
-function sm_grilla_actualizargrillageneral() {
+function sm_grilla_busqueda(sm_grillageneral_query){
+ //alert(sm_grillageneral_query); 
+ sm_grilla_actualizargrillageneral("busquedaarticulo&query="+sm_grillageneral_query);
+ 
+}
+
+
+
+function sm_grilla_actualizargrillageneral(proceso) {
     $.ajax({
         type: 'POST',
-        url: "/SIMUNI/modulos/activos?proceso=ver_activosarticulosasinc",
+        url: "/SIMUNI/modulos/activos?proceso="+proceso,
         contentType: ' charset=utf-8',
         success: function(data) {
             //console.info("correcto" +data);
@@ -139,5 +147,6 @@ function sm_grilla_actualizargrillageneral() {
         }
 
     });
+
 
 }

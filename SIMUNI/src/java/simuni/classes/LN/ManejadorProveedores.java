@@ -17,6 +17,7 @@ public class ManejadorProveedores {
             return p.agregarProveedorFisico(to_proveedorfisico);
         }catch(Exception ex){
             //registrar error
+            ex.printStackTrace();
             return false;
         }
     }
@@ -24,9 +25,10 @@ public class ManejadorProveedores {
     public boolean modificarProveedorFisico(ProveedorFisico to_proveedorfisico) {
         try{
             ManejadorDatosProveedores p= new ManejadorDatosProveedores();
-            return p.agregarProveedorFisico(to_proveedorfisico);
+            return p.modificarProveedorFisico(to_proveedorfisico);
         }catch(Exception ex){
             //registrar error
+            ex.printStackTrace();
             return false;
         }
     }
@@ -60,5 +62,21 @@ public class ManejadorProveedores {
             return null;
         }
     }
+    public boolean isProveedorExistente(String codigoproveedor){
+        return true;
+    }
+    
+    public int getNumeroProveedoresRegistrados(){
+        return 0;
+    }
 
+    public ArrayList<ProveedorFisico> buscarProveedoresFisicos(String query) {
+        try{
+            ManejadorDatosProveedores p= new ManejadorDatosProveedores();
+            return p.buscarProveedoresFisicos(query);
+        }catch(Exception ex){
+            //registrar error
+            return null;
+        }
+    }
 }

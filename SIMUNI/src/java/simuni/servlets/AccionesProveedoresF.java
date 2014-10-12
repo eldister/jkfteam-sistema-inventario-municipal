@@ -6,21 +6,24 @@
 package simuni.servlets;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import simuni.classes.EN.Documentos;
 import simuni.classes.EN.ProveedorFisico;
 import simuni.classes.LN.ManejadorProveedores;
+import simuni.classes.LN.UtilidadesServlet;
 
 /**
  *
  * @author FchescO
  */
+@MultipartConfig
 public class AccionesProveedoresF extends HttpServlet {
 
     enum OpcionesDo {
@@ -32,7 +35,9 @@ public class AccionesProveedoresF extends HttpServlet {
         RegistrarProveedorFisico,
         ActualizarProveedorFisico,
         ActualizarPropiedadPaginacionAsinc,
-        BajarProveedorFisicoAsinc
+        BajarProveedorFisicoAsinc,
+        VerificarSiProveedorExiste,
+        BuscarProveedor
 
     }
 
@@ -91,6 +96,13 @@ public class AccionesProveedoresF extends HttpServlet {
                 disp = request.getRequestDispatcher("/modulos/proveedores/fisicos/registro.jsp");
                 disp.forward(request, response);
                 break;
+            case VerificarSiProveedorExiste:
+
+                                manejador=new ManejadorProveedores();
+                codigoproveedor=request.getParameter("codigoproveedor");
+                if(manejador.isProveedorExistente(codigoproveedor)){
+                    response.getOutputStream().print("Si Existe");
+                }break;
 
         }
 
@@ -107,115 +119,146 @@ public class AccionesProveedoresF extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-try{
-        ProveedorFisico proveedor = null;
-        RequestDispatcher disp = null;
-        Date date = null;
-        int npagina = 0;
-        int paginacion = 0;//obtener la paginacion y pagina actual  
-        Part filePart = null;
-        ManejadorProveedores manejadorproveedores = null;
-        ArrayList<ProveedorFisico> proveedores = null;
-        switch (getOpcion(request.getParameter("proceso"))) {
-            case RegistrarProveedorFisico:
-                //obtener los archivos
+        try {
+            ProveedorFisico proveedor = null;
+            RequestDispatcher disp = null;
+            int npagina = 0;
+            int paginacion = 0;//obtener la paginacion y pagina actual  
+            Part filePart = null;
+            ManejadorProveedores manejadorproveedores = null;
+            ArrayList<ProveedorFisico> proveedores = null;
 
-                proveedor = generarproveedor(request);
-                manejadorproveedores = new ManejadorProveedores();
-
-                if (manejadorproveedores.agregarProveedorFisico(proveedor)) {
-                    //redirigir a una pagina de exito
-                    disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito_asinc.jsp?id=" + proveedor.getPa_cedula() + "&msg=3");
-                    disp.forward(request, response);
-
-                } else {
-                    //redirigir a pagina de error y/o recargar el formulario
-                    disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error_asinc.jsp?id=" + proveedor.getPa_cedula() + "&msg=3");
-                    disp.forward(request, response);
-                }
-
-                break;
-
-            case ActualizarProveedorFisico:
-
-                proveedor = generarproveedor(request);
-                manejadorproveedores = new ManejadorProveedores();
-
-                if (manejadorproveedores.modificarProveedorFisico(proveedor)) {
-                    //redirigir a una pagina de exito
-                    disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito_asinc.jsp?id=" + proveedor.getPa_cedula() + "&msg=3");
-                    disp.forward(request, response);
-
-                } else {
-                    //redirigir a pagina de error y/o recargar el formulario
-                    disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error_asinc.jsp?id=" + proveedor.getPa_cedula() + "&msg=3");
-                    disp.forward(request, response);
-                }
-
-                break;
-            case BajarProveedorFisicoAsinc:
-                String codigoproveedor = request.getParameter("codigoproveedor");
-                manejadorproveedores = new ManejadorProveedores();
-                if (manejadorproveedores.desactivarProveedorFisico(codigoproveedor)) {
-                    //redirigir a una pagina de exito
-                    disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito_asinc.jsp?id=" + codigoproveedor + "&msg=3");
-                    disp.forward(request, response);
-
-                } else {
-                    //redirigir a pagina de error y/o recargar el formulario
-                    disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error_asinc.jsp?id=" + codigoproveedor + "&msg=3");
-                    disp.forward(request, response);
-                }
-                break;
-            case ActualizarPropiedadPaginacionAsinc:
-                //vamos por aqui
-                try {
-                    paginacion = 5;
-                    String valorpaginacion = request.getParameter("valorpaginacion");
-                    if (valorpaginacion != null) {
-                        paginacion = Integer.parseInt(valorpaginacion);
+            switch (getOpcion(request.getParameter("proceso"))) {
+                case RegistrarProveedorFisico:
+                    //obtener los archivos
+                    filePart = request.getPart("filearchivosproveedor"); // Retrieves <input type="file" name="file">
+                    proveedor = generarproveedor(request);
+                    if (filePart != null && filePart.getSize() > 0) {
+                        String filename = UtilidadesServlet.getFilename(filePart);
+                        System.out.println("archivo presente ayuda nombres iii " + filePart.getSize());
+                        Documentos documentos = new Documentos();
+                        documentos.setStreamarchivo(filePart.getInputStream());
+                        ArrayList<Documentos> docs = new ArrayList<Documentos>();
+                        documentos.setPa_nombreArchivo(filename);
+                        docs.add(documentos);
+                        proveedor.setPo_documentos(docs);
                     }
-                    request.getSession().setAttribute("paginacion", paginacion);
-                    //modificar preferencias en base de datos.
 
-                } catch (Exception ex) {
-                    //registrar error en base de datos
-                    request.getSession().setAttribute("paginacion", 5);
-                    System.out.println(ex.getMessage());
-                }
-                break;
+                    manejadorproveedores = new ManejadorProveedores();
 
-            case ObtenerProveedoresFisicosAsinc:
-                try {
-                    npagina = Integer.parseInt(request.getParameter("pag"));
+                    if (manejadorproveedores.agregarProveedorFisico(proveedor)) {
+                        //redirigir a una pagina de exito
+                        disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito.jsp?id=" + proveedor.getPa_cedula() + "&msg=3");
+                        disp.forward(request, response);
 
-                } catch (NumberFormatException ex) {
+                    } else {
+                        //redirigir a pagina de error y/o recargar el formulario
+                        disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error.jsp?id=" + proveedor.getPa_cedula() + "&msg=3");
+                        disp.forward(request, response);
+                    }
+
+                    break;
+
+                case ActualizarProveedorFisico:
+
+                    filePart = request.getPart("filearchivosproveedor"); // Retrieves <input type="file" name="file">
+                    proveedor = generarproveedor(request);
+                    if (filePart != null && filePart.getSize() > 0) {
+                        String filename = UtilidadesServlet.getFilename(filePart);
+                        System.out.println("archivo presente ayuda nombres iii " + filePart.getSize());
+                        Documentos documentos = new Documentos();
+                        documentos.setStreamarchivo(filePart.getInputStream());
+                        ArrayList<Documentos> docs = new ArrayList<Documentos>();
+                        documentos.setPa_nombreArchivo(filename);
+                        docs.add(documentos);
+                        proveedor.setPo_documentos(docs);
+                    }
+
+                    manejadorproveedores = new ManejadorProveedores();
+
+                    if (manejadorproveedores.modificarProveedorFisico(proveedor)) {
+                        //redirigir a una pagina de exito
+                        disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito_asinc.jsp?id=" + proveedor.getPa_cedula() + "&msg=3");
+                        disp.forward(request, response);
+
+                    } else {
+                        //redirigir a pagina de error y/o recargar el formulario
+                        disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error_asinc.jsp?id=" + proveedor.getPa_cedula() + "&msg=3");
+                        disp.forward(request, response);
+                    }
+
+                    break;
+                case BajarProveedorFisicoAsinc:
+                    String codigoproveedor = request.getParameter("codigoproveedor");
+                    manejadorproveedores = new ManejadorProveedores();
+                    if (manejadorproveedores.desactivarProveedorFisico(codigoproveedor)) {
+                        //redirigir a una pagina de exito
+                        disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito_asinc.jsp?id=" + codigoproveedor + "&msg=3");
+                        disp.forward(request, response);
+
+                    } else {
+                        //redirigir a pagina de error y/o recargar el formulario
+                        disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error_asinc.jsp?id=" + codigoproveedor + "&msg=3");
+                        disp.forward(request, response);
+                    }
+                    break;
+                case ActualizarPropiedadPaginacionAsinc:
+                    //vamos por aqui
+                    try {
+                        paginacion = 5;
+                        String valorpaginacion = request.getParameter("valorpaginacion");
+                        if (valorpaginacion != null) {
+                            paginacion = Integer.parseInt(valorpaginacion);
+                        }
+                        request.getSession().setAttribute("paginacion", paginacion);
+                        //modificar preferencias en base de datos.
+
+                    } catch (Exception ex) {
+                        //registrar error en base de datos
+                        request.getSession().setAttribute("paginacion", 5);
+                        System.out.println(ex.getMessage());
+                    }
+                    break;
+
+                case ObtenerProveedoresFisicosAsinc:
+                    try {
+                        npagina = Integer.parseInt(request.getParameter("pag"));
+
+                    } catch (NumberFormatException ex) {
                         //registrar en bitacora el error
-                    //colocar los valores por defecto 
-                    npagina = 1;
+                        //colocar los valores por defecto 
+                        npagina = 1;
 
-                }
-                try {
-                    paginacion = Integer.parseInt(request.getSession().getAttribute("paginacion").toString());
+                    }
+                    try {
+                        paginacion = Integer.parseInt(request.getSession().getAttribute("paginacion").toString());
 
-                } catch (NumberFormatException ex) {
+                    } catch (NumberFormatException ex) {
                         //registrar en bitacora el error
-                    //colocar los valores por defecto 
+                        //colocar los valores por defecto 
 
-                    paginacion = 5;
-                    request.getSession().setAttribute("paginacion", paginacion);
-                }
-                manejadorproveedores = new ManejadorProveedores();
-                proveedores = manejadorproveedores.getListaProveedoresFisicos(npagina, paginacion);
-                request.setAttribute("proveedores", proveedores);
-                disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=2");
-                disp.forward(request, response);
-                break;
+                        paginacion = 5;
+                        request.getSession().setAttribute("paginacion", paginacion);
+                    }
+                    manejadorproveedores = new ManejadorProveedores();
+                    proveedores = manejadorproveedores.getListaProveedoresFisicos(npagina, paginacion);
+                    request.setAttribute("proveedores", proveedores);
+                    disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=2");
+                    disp.forward(request, response);
+                    break;
+                case BuscarProveedor:
+                    manejadorproveedores = new ManejadorProveedores();
+                    String query=request.getParameter("query");
+                    proveedores = manejadorproveedores.buscarProveedoresFisicos(query);
+                    request.setAttribute("proveedores", proveedores);
+                    disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=2");
+                    disp.forward(request, response);
+                    break;
 
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-}catch(Exception ex){
-    ex.printStackTrace();
-}
     }
 
     private ProveedorFisico generarproveedor(HttpServletRequest request) {
@@ -231,7 +274,10 @@ try{
         proveedorfisico.setPa_correoElectronico(request.getParameter("txtEmail"));
         proveedorfisico.setPa_sitioWeb(request.getParameter("txtDireccionWeb"));
         System.out.println(request.getParameter("txtApartadoPostal"));
-        proveedorfisico.setPn_apartadoPostal(Integer.parseInt(request.getParameter("txtApartadoPostal") == null ?  "1":request.getParameter("txtApartadoPostal")));
+
+        proveedorfisico.setPn_apartadoPostal(
+                Integer.parseInt(UtilidadesServlet.tryParseInt(request.getParameter("txtApartadoPostal"))
+                        ? request.getParameter("txtApartadoPostal") : "1"));
         proveedorfisico.setPa_nombreCompania(request.getParameter("txtNombreCompañia"));
         proveedorfisico.setPa_direccionCompania(request.getParameter("txtDireccionCompañia"));
         proveedorfisico.setPa_banco(request.getParameter("txtNombreBanco"));
@@ -259,6 +305,10 @@ try{
             return OpcionesDo.ActualizarPropiedadPaginacionAsinc;
         } else if (key.equals("ver_proveedorfisicoasinc")) {
             return OpcionesDo.ObtenerProveedoresFisicosAsinc;
+        }else if(key.equals("verificarsiproveedorexiste")){
+            return OpcionesDo.VerificarSiProveedorExiste;
+        }else if(key.equals("busquedaproveedorfisico")){
+            return OpcionesDo.BuscarProveedor;
         }
         return OpcionesDo.AccionDefault;
     }
