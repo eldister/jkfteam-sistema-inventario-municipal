@@ -1,9 +1,13 @@
 package simuni.classes.AD;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import simuni.classes.AR.ManejadorArchivos;
 import simuni.classes.EN.Activos_Articulos;
 import simuni.classes.EN.Departamento;
+import simuni.classes.EN.Servidor;
 import simuni.classes.EN.imagenActivo;
 
 /**
@@ -12,11 +16,60 @@ import simuni.classes.EN.imagenActivo;
  */
 public class ManejadorDatosActivos {
 
-    public boolean agregarActivoArticulo(Activos_Articulos to_articulo) {
+    public boolean agregarActivoArticulo(Activos_Articulos to_articulo) throws Exception {
+        try {
+            ManejadorArchivos manejadorarchivos = new ManejadorArchivos();
+            ArrayList<imagenActivo> imagenes = to_articulo.getPo_imagenActivo();
+            imagenActivo imagen = null;
+            if (imagenes != null) {
+                Iterator<imagenActivo> iter = imagenes.iterator();
+                imagen = iter.next();
+            }
+            if (imagen != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                Date date = new Date();
+                String sDate = sdf.format(date);
+                sDate += ("-" + date.getHours() + "-" + date.getMinutes());
+                String ruta = Servidor.SSA.CARPETARAIZARCHIVOSACTIVOS.toString() + to_articulo.getPa_identificadorActivo() + "\\" + sDate;
+                manejadorarchivos.guardarArchivo(ruta, imagen.getPa_nombreArchivo(), imagen.getStreamarchivo());
+                //registrarlo en bd
+            } else {
+                //registrar imagien "sin foto"
+            }
+            //registramos activo en bd
+
+        } catch (Exception ex) {
+            throw ex;
+        }
+
         return true;
     }
 
-    public boolean modificarActivoArticulo(Activos_Articulos to_articulo) {
+    public boolean modificarActivoArticulo(Activos_Articulos to_articulo) throws Exception {
+        try {
+            ManejadorArchivos manejadorarchivos = new ManejadorArchivos();
+            ArrayList<imagenActivo> imagenes = to_articulo.getPo_imagenActivo();
+            imagenActivo imagen = null;
+            if (imagenes != null) {
+                Iterator<imagenActivo> iter = imagenes.iterator();
+                imagen = iter.next();
+
+            }
+            if (imagen != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                Date date = new Date();
+                String sDate = sdf.format(date);
+                sDate += ("-" + date.getHours() + "-" + date.getMinutes());
+                String ruta = Servidor.SSA.CARPETARAIZARCHIVOSACTIVOS.toString() + to_articulo.getPa_identificadorActivo() + "\\" + sDate;
+                manejadorarchivos.guardarArchivo(ruta, imagen.getPa_nombreArchivo(), imagen.getStreamarchivo());
+                //registrarlo en bd
+                // Servidor.SSI.ARCHIVOSACTIVOSCONTEXT.toString()+to_articulo.getPa_identificadorActivo()+sDate;
+            }
+
+        } catch (Exception ex) {
+            throw ex;
+        }
+
         return true;
     }
 
@@ -64,8 +117,8 @@ public class ManejadorDatosActivos {
         articuloejemplo.setPn_aniosutilidadactivo(1);
         ArrayList<imagenActivo> imgs = new ArrayList<imagenActivo>();
         imagenActivo a = new imagenActivo();
-        a.setPa_url("http://dailydropcap.com/images");
-        a.setPa_nombreArchivo("J-1.jpg");
+        a.setPa_url("http://localhost:8080/archivos/Activos\\555\\12-10-2014-7-33");
+        a.setPa_nombreArchivo("20141009_195653.jpg");
         imgs.add(a);
         articuloejemplo.setPo_imagenActivo(imgs);
         System.out.print(articuloejemplo.getPo_imagenActivo().size());
@@ -85,4 +138,24 @@ public class ManejadorDatosActivos {
         return false;
     }
 
+    public int getNumeroActivosRegistrados() {
+        return 0;
+    }
+
+    public ArrayList<Activos_Articulos> buscarActivosArticulos(String query) {
+        ArrayList<Activos_Articulos> to_articulo = new ArrayList<Activos_Articulos>();
+
+        for (int a = 0; a < 0; a++) {
+            Activos_Articulos articulo = new Activos_Articulos();
+            articulo.setPa_identificadorActivo(query);
+            articulo.setPa_tipoActivo(2);
+            articulo.setPa_marca("patito 1");
+            articulo.setPa_modelo("modelo a");
+            articulo.setPd_puestaOperacion(new Date());
+            articulo.setPa_Descripcion("Una descripcion rara");
+            to_articulo.add(articulo);
+
+        }
+        return to_articulo;
+    }
 }

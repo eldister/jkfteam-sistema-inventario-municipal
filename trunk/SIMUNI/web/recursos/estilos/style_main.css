@@ -2,35 +2,35 @@
 @CHARSET "UTF-8";
 
 @font-face {
-  font-family: 'georgianormal';
-  src: url('../fuentes/georgia/Georgia.eot');
-  src: url('../fuentes/georgia/Georgia.woff') format('woff'),
-       url('../fuentes/georgia/Georgia.svg#Georgia') format('svg');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'georgianormal';
+    src: url('../fuentes/georgia/Georgia.eot');
+    src: url('../fuentes/georgia/Georgia.woff') format('woff'),
+        url('../fuentes/georgia/Georgia.svg#Georgia') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 @font-face {
-  font-family: 'georgiabold';
-  src: url('../fuentes/georgia/GeorgiaBold.eot');
-  src: url('../fuentes/georgia/GeorgiaBold.woff') format('woff'),
-       url('../fuentes/georgia/GeorgiaBold.svg#GeorgiaBold') format('svg');
-  font-weight: bold;
-  font-style: normal;
+    font-family: 'georgiabold';
+    src: url('../fuentes/georgia/GeorgiaBold.eot');
+    src: url('../fuentes/georgia/GeorgiaBold.woff') format('woff'),
+        url('../fuentes/georgia/GeorgiaBold.svg#GeorgiaBold') format('svg');
+    font-weight: bold;
+    font-style: normal;
 }
 @font-face {
-  font-family: 'georgiaitalic';
-  src: url('../fuentes/georgia/GeorgiaItalic.eot');
-  src: url('../fuentes/georgia/GeorgiaItalic.woff') format('woff'),
-       url('../fuentes/georgia/GeorgiaItalic.svg#GeorgiaItalic') format('svg');
-  font-weight: normal;
-  font-style: italic;
+    font-family: 'georgiaitalic';
+    src: url('../fuentes/georgia/GeorgiaItalic.eot');
+    src: url('../fuentes/georgia/GeorgiaItalic.woff') format('woff'),
+        url('../fuentes/georgia/GeorgiaItalic.svg#GeorgiaItalic') format('svg');
+    font-weight: normal;
+    font-style: italic;
 }
 
 @font-face{
     font-family: 'verdananormal';
-        src:url('../fuentes/verdana/verdana.eot');
-  src: url('../fuentes/verdana/verdana.woff') format('woff'),
-       url('../fuentes/georgia/verdana.svg') format('svg');        
+    src:url('../fuentes/verdana/verdana.eot');
+    src: url('../fuentes/verdana/verdana.woff') format('woff'),
+        url('../fuentes/georgia/verdana.svg') format('svg');        
 }
 
 
@@ -91,16 +91,16 @@ header{
     border-left:  2px black;
     width: 100px;
     height: 100px;
-  
+
 
 }
 
 #sm_div_logomuni{
     background-image: url(../imagenes/sistema/sm_logo_muni.jpg);
-        background-size: 100px 100px;
+    background-size: 100px 100px;
     background-repeat: no-repeat;
     overflow: hidden;
-    
+
 }
 /*
     Para la imagen se hace un padding de 100
@@ -115,9 +115,9 @@ header{
     background-image: url(../imagenes/sistema/sm_logo_simuni.png);
     background-size: 100px 100px;
     background-repeat: no-repeat;
-     overflow: hidden;
-     text-align: center;
-    
+    overflow: hidden;
+    text-align: center;
+
 }
 
 
@@ -184,10 +184,10 @@ header{
     border-left:   solid 3px white;
     margin-left: -0.5px;
     padding-left: 45px; 
- }
- #sm_nav_menuelementscontainer .sm_ul_menuitem:last-child{
-     border-right:   solid 3px white;
- }
+}
+#sm_nav_menuelementscontainer .sm_ul_menuitem:last-child{
+    border-right:   solid 3px white;
+}
 .sm_ul_menuitem{
     display: inline-block;
     padding-top:  15px;
@@ -195,29 +195,29 @@ header{
     padding-right:  45px;
     margin-left: 30px;
     border-right:  solid 1px black;
-   
-    
-  
+
+
+
 }
 .sm_ul_menuitem a { 
     font-size: 1.2em;
     font-family: sans-serif;
-      color: gray;
-      text-decoration: none;
-      padding: 15px;
+    color: gray;
+    text-decoration: none;
+    padding: 15px;
 }
 
 .sm_ul_menuitem a:hover{
     color:darkgreen;
-     border-bottom:    solid 1px black;
+    border-bottom:    solid 1px black;
 }
 #sm_div_configuracion{
     width: 45px;
     height: 45px;
-     background-image: url(../imagenes/sistema/sm_configuracion_cuenta.png);
+    background-image: url(../imagenes/sistema/sm_configuracion_cuenta.png);
     background-size: 30px 30px;
     background-repeat: no-repeat;
-   background-position: -0px -0px;
+    background-position: -0px -0px;
 }
 
 
@@ -237,8 +237,8 @@ header{
 }
 #sm_body_mainsection{
     width: 1100px;
-     margin-top: 50px;
-     margin-left: 10px;
+    margin-top: 50px;
+    margin-left: 10px;
     padding: 10px;
 }
 
@@ -253,7 +253,7 @@ header{
 #sm_aside_barralateralitemnotificacion,#sm_aside_barralateralitemmensaje{
     max-height: 300px;
     overflow-y: auto;
-    
+
 }
 
 
@@ -276,7 +276,7 @@ footer{
     padding-top: 15px;
     padding-bottom:  15px;
     border-top:1px solid lightblue;
-    
+
 }
 
 /*estilizado de las notificaciones del sistema*/
@@ -287,29 +287,29 @@ footer{
     background-image: url(../imagenes/sistema/sm_notificacion_usuario.png);
     background-size: 30px 30px;
     background-repeat: no-repeat;
-    
-    
+
+
 }
 .sm_div_notificacion:not(:first-child){
     margin-top: 8px;
- 
+
 }
 
 .sm_div_mensaje{
-     padding: 5px;
+    padding: 5px;
     max-width: 200px;
     padding-left: 60px;
     background-image: url(../imagenes/sistema/sm_mensaje_usuario.png);
     background-size: 30px 30px;
     background-repeat: no-repeat;  
-   
+
 }
 .sm_div_mensaje:not(:first-child){
     margin-top: 8px;
 }
 
 .sm_div_edicionperfil{
-     padding: 5px;
+    padding: 5px;
     max-width: 200px;
     padding-left: 60px;
     background-image: url(../imagenes/sistema/sm_edit_user.png);
@@ -321,7 +321,7 @@ footer{
 }
 
 .sm_div_ayudausuario{
-     padding: 5px;
+    padding: 5px;
     max-width: 200px;
     padding-left: 60px;
     background-image: url(../imagenes/sistema/sm_help.png);
@@ -333,7 +333,7 @@ footer{
 }
 
 .sm_div_cerrarsesion{
-     padding: 5px;
+    padding: 5px;
     max-width: 200px;
     padding-left: 60px;
     background-image: url(../imagenes/sistema/sm_logout.png);
@@ -350,21 +350,21 @@ footer{
     border: 0 none;
     color: #eee;
     height: 1px;
-    
+
 }
 
 
 /*seccion para el footer*/
 
 footer .sm_div_rowcontainer{
-     background-color: white;
-          display: table-cell;
-        vertical-align:top;
-height: 100%;
-    
+    background-color: white;
+    display: table-cell;
+    vertical-align:top;
+    height: 100%;
+
 } 
 footer .sm_div_rowcontainer:not(:first-child){
-     margin-top: -15px;
+    margin-top: -15px;
 }
 
 footer #sm_div_copyrigth_container{
@@ -399,7 +399,7 @@ footer .sm_div_colcontainer:not(:first-child){
 }
 
 #sm_body_navegationbarmenu .sm_div_navmenuitem a{     
-        text-decoration: none;
+    text-decoration: none;
     color: gray;
 }
 
@@ -418,7 +418,7 @@ footer .sm_div_colcontainer:not(:first-child){
 
 #sm_div_separadormenunavegacion{
     margin-left: 16px;
-   
+
 }
 
 
@@ -427,7 +427,7 @@ footer .sm_div_colcontainer:not(:first-child){
     text-align: center;
     font-size: 1.1em;
     font-weight: 900;
-   
+
 }
 footer{
     text-align: center;
@@ -438,25 +438,25 @@ footer{
 }
 footer .sm_div_rowcontainer{
     display: block;
-   
+
 }
 
 footer .sm_div_colcontainer{
     width: 500px !important;
     display: table-cell;
     background-color: lightblue;
-   
-  
+
+
 }
 footer .sm_div_colcontainer ul{
-     text-align: justify;
-     list-style: none;
+    text-align: justify;
+    list-style: none;
 }
 
 .sm_div_colcontainer{
     display: inline-block;
     padding: 5px;
-  
+
 
 }
 .sm_div_colcontainer:first-child{
@@ -504,4 +504,28 @@ footer .sm_div_colcontainer ul{
 
 #sm_body_notificacion{
     text-align: center;
+}
+
+
+/*seccion de labels .. correcto incorrecto*/
+.lblcampoinvalido,.lblcampowarning,.lblcampovalido,.lblinfocontainer{
+    display: inline-block;
+    min-width: 20px;
+    min-height: 20px;
+    max-width: 50px;
+    max-height: 50px; 
+    background-size: 20px 20px;
+}
+.lblcampovalido{
+
+    background-image: url(../imagenes/sistema/correct.png);
+
+}
+
+.lblcampoinvalido{
+    background-image: url(../imagenes/sistema/error.png);
+}
+
+.lblcampowarning{
+    background-image: url(../imagenes/sistema/warning.png);
 }

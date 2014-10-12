@@ -30,4 +30,49 @@ public class Servidor {
             return texto;
         }
     }
+
+    public static enum SSA {
+
+        CARPETABASE("C:\\Users\\FchescO\\Downloads\\pruebas\\"),
+        CARPETARAIZARCHIVOSACTIVOS(CARPETABASE + "Activos\\"),
+        CARPETAPROVEEDORES(CARPETABASE + "Proveedores\\");
+
+        private final String texto;
+
+        private SSA(String s) {
+            texto = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : texto.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return texto;
+        }
+    }
+
+    public static enum SSI {
+
+        ARCHIVOSBASECONTEXT("/archivos/"),
+        ARCHIVOSACTIVOSCONTEXT(ARCHIVOSBASECONTEXT + "Activos/"),
+        ARCHIVOSPROVEEDORESCONTEXT(ARCHIVOSBASECONTEXT + "Proveedores/");
+
+        private final String texto;
+
+        private SSI(String s) {
+            texto = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : texto.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return texto;
+        }
+    }
+
 }

@@ -18,6 +18,7 @@
         activo = new Activos_Articulos();
     }
 %>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/jquery-registroactivos.js"></script>
 <div id="sm_formembebido_actualizacionarticulos">
     <form id="sm_div_formulario" method="POST" action="/SIMUNI/modulos/activos?proceso=modificacionarticulo" enctype="multipart/form-data">
         <fieldset id="sm_fs_articulos">

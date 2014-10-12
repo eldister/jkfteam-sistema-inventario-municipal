@@ -5,6 +5,7 @@
         <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
              <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodeproveedores.css">
              <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/script_plugins/maxLength/maxLength.js"></script>
+             <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_registroproveedor.js"></script>
              <script>
             $(function(){
                 $("#txtDC").maxLength(300, { showNumber: "#contCaracteres"});
@@ -18,6 +19,7 @@
                          setInterval(intervalo, 1);
                          return false;
                      });
+                     addEventosACamposDeTexto();
              });
              </script>
         </decorator:content>
@@ -28,7 +30,7 @@
                 de la municipalidad a tráves del sistema de inventario <b>SIMUNI</b>.<br/>
             </p>
         </div>
-        <form id="formulario" action="">
+        <form id="formulario"  enctype="multipart/form-data" action="/SIMUNI/modulos/proveedores?proceso=registroproveedorfisico" method="POST">
             <fieldset id="proveedores">
                 <legend>Registro de proveedores</legend>
                 <div id="registerInformation">
@@ -38,7 +40,8 @@
                                 <label>Número de indentificación: </label>
                             </td>
                             <td>
-                                <input type="text" id="txtID" name="codigoproveedor" />
+                                <input type="text" required="required" id="txtID" name="codigoproveedor" />
+                                <span id="codigoproveedorinfo" class="lblinfocontainer">&nbsp;</span>
                             </td>                            
                         </tr>
                         <tr>
@@ -184,7 +187,7 @@
                                 <label>Cargar documentos requeridos: </label>
                             </td>
                             <td>
-                                <input type="file" id="btnArchivo" name="btnArchivos" multiple accept="application/pdf">
+                                <input type="file" id="btnArchivo" name="filearchivosproveedor" multiple accept="application/pdf">
                                 <input type="button" id="btnSubirArchivo"  value="Examinar">
                             </td>
                         </tr>

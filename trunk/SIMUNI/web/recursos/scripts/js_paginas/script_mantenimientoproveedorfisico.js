@@ -103,7 +103,7 @@ function sm_grilla_cambiarpaginacion(valorpaginacion) {
         success: function(data) {
             console.info("correcto" + data);
             //actualizar grilla
-            sm_grilla_actualizargrillageneral();
+            sm_grilla_actualizargrillageneral("ver_proveedorfisicoasinc");
         },
         error: function(data) {
             console.info(data);
@@ -113,10 +113,16 @@ function sm_grilla_cambiarpaginacion(valorpaginacion) {
     });
 
 }
-function sm_grilla_actualizargrillageneral() {
+function sm_grilla_busqueda(sm_grillageneral_query){
+ //alert(sm_grillageneral_query); 
+ sm_grilla_actualizargrillageneral("busquedaproveedorfisico&query="+sm_grillageneral_query);
+ 
+}
+
+function sm_grilla_actualizargrillageneral(nombreproceso) {
     $.ajax({
         type: 'POST',
-        url: "/SIMUNI/modulos/proveedores?proceso=ver_proveedorfisicoasinc",
+        url: "/SIMUNI/modulos/proveedores?proceso="+nombreproceso,
         contentType: ' charset=utf-8',
         success: function(data) {
             //console.info("correcto" +data);

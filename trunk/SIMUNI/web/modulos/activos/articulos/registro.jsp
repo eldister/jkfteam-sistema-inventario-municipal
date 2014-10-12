@@ -7,13 +7,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/"%>
 <decorator:decorate filename='../../../recursos/paginas/master/masterpage.jsp'>
-     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de activos</decorator:content>    
-        <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
-            <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodearticulos.css">
-            <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/jquery-registroactivos.js"></script>
-            <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_registroactivos.js"></script>
-            
-        </decorator:content>
+    <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de activos</decorator:content>    
     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de activos</decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
         <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodearticulos.css">
@@ -26,22 +20,23 @@
             webshims.polyfill('forms forms-ext');
         </script>
         <script>
-            $(function(){
-                $("#txtDes").maxLength(300, { showNumber: "#contadorCaracteres1"});
-             });
-             $(function(){
-                $("#txtOb").maxLength(300, { showNumber: "#contadorCaracteres2"});
-             });
-             $(document).ready(function(){
-                 var intervalo = function(){
-                     $("#btnImagenActivo").html($("#btnImagenActivo").val());  
-                 };
-                     $("#btnsubirImagen").on("click", function(){
-                         $("#btnImagenActivo").click();
-                         setInterval(intervalo, 1);
-                         return false;
-                     });
-             });
+            $(function() {
+                $("#txtDes").maxLength(300, {showNumber: "#contadorCaracteres1"});
+            });
+            $(function() {
+                $("#txtOb").maxLength(300, {showNumber: "#contadorCaracteres2"});
+            });
+            $(document).ready(function() {
+                var intervalo = function() {
+                    $("#btnImagenActivo").html($("#btnImagenActivo").val());
+                };
+                $("#btnsubirImagen").on("click", function() {
+                    $("#btnImagenActivo").click();
+                    setInterval(intervalo, 1);
+                    return false;
+                });
+                addEventosACamposDeTexto();
+            });
         </script>
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
@@ -65,25 +60,13 @@
                 <legend>Registro de activos</legend>
                 <div id="sm_form_registroinformacion">
                     <table id="sm_tb_campos">
-                        <!-- <tr>
-                             <td>
-                                 <label>Tipo del activo </label>
-                             </td>
-                             <td>
-                                 <select name="cmbTipoActivos">
-                                     <option>-- Seleccionar --</option>
-                                     <option>Transporte</option>
-                                     <option>Tecnológico</option>
-                                     <option>Muebles</option>
-                                 </select>
-                             </td>
-                         </tr>-->
                         <tr>
                             <td>
                                 <label>Número de placa </label>
                             </td>
                             <td>
-                                <input type="text" required="required" oninvalid="this.setCustomValidity('Este campo es requerido')" name="txtNumeroPlaca">
+                                <input type="text" id="txtnumplaca" required="required" oninvalid="this.setCustomValidity('Este campo es requerido')" name="txtNumeroPlaca">
+                                <span id="txtnumplacainfo" class="lblinfocontainer">&nbsp;</span>
                             </td>
                         </tr>    
                         <tr>
@@ -330,7 +313,7 @@
                 <input type="hidden" value="1" name="hiddenidProveedor">
                 <input type="hidden" value="1" name="hiddenidCategoria">
                 <input type="hidden" value="1" name="hiddenidTipoPago">
-                  <input type="hidden" value="1" name="hiddenidDepartamento">
+                <input type="hidden" value="1" name="hiddenidDepartamento">
 
             </div>
         </form>
