@@ -44,7 +44,8 @@ public class AccionesArticulos extends HttpServlet {
         ActualizarPropiedadPaginacionAsinc,
         BajarActivoArticuloAsinc,
         VerificarSiArticuloYaRegistrado,
-        BusquedaArticulo
+        BusquedaArticulo,
+        HacerReporteActivoArticuloParticular
 
     }
 
@@ -78,6 +79,7 @@ public class AccionesArticulos extends HttpServlet {
             /*parte uno es para los activos articulos*/
 
             case ObtenerActivosArticulos:
+
                 try {
                     npagina = Integer.parseInt(request.getParameter("pag"));
                 } catch (NumberFormatException ex) {
@@ -97,6 +99,7 @@ public class AccionesArticulos extends HttpServlet {
                 disp = request.getRequestDispatcher("/modulos/activos/articulos/mantenimiento_1.jsp");
                 request.setAttribute("listadoarticulos", articulos);
                 request.setAttribute("listadotiposactivo", tiposactivos);
+
                 disp.forward(request, response);
                 break;
 
@@ -134,12 +137,28 @@ public class AccionesArticulos extends HttpServlet {
                 disp.forward(request, response);
                 break;
             case VerificarSiArticuloYaRegistrado:
-                manejador=new ManejadorActivos();
-                codigoactivo=request.getParameter("codigoactivo");
-                if(manejador.isActivoExistente(codigoactivo)){
+                manejador = new ManejadorActivos();
+                codigoactivo = request.getParameter("codigoactivo");
+                if (manejador.isActivoExistente(codigoactivo)) {
                     response.getOutputStream().print("Si Existe");
                 }
                 break;
+                case HacerReporteActivoArticuloParticular:
+                    deptos = manejadordeptos.getListaDepartamentos();
+                    tiposactivos = manejadortactivos.getListaTiposActivos();
+                    tipospago = manejadortpago.getListaTipoPago();
+                    estadoactivos = manejadorestadoactivo.getListadoEstadosActivos();
+                    request.setAttribute("departamentos", deptos);
+                    request.setAttribute("tiposactivo", tiposactivos);
+                    request.setAttribute("tipospago", tipospago);
+                    request.setAttribute("estadoactivos", estadoactivos);
+                    codigoactivo = request.getParameter("codigoactivo");
+                     articulo = manejador.getActivoArticulo(codigoactivo);
+                    //hay que crear la vista
+                    disp = request.getRequestDispatcher("/recursos/paginas/embebidos/reportesgeneral_asinc.jsp?mod=1");
+                    request.setAttribute("articulo", articulo);
+                    disp.forward(request, response);
+                    break;                
 
         }
     }
@@ -195,13 +214,12 @@ public class AccionesArticulos extends HttpServlet {
             String observaciones = request.getParameter("txtObservaciones");
 
             switch (getOpcion(request.getParameter("proceso"))) {
-                
-                
+
                 case RegistrarActivoArticulo:
                     filePart = request.getPart("fileimagenactivo"); // Retrieves <input type="file" name="file">
                     if (filePart != null) {
                         System.out.println("archivo presente ayuda nombres iii " + filePart.getSize());
-                     
+
                     }
                     filecontent = filePart.getInputStream();
                     filename = UtilidadesServlet.getFilename(filePart);
@@ -338,7 +356,7 @@ public class AccionesArticulos extends HttpServlet {
                         request.getSession().setAttribute("paginacion", paginacion);
                         //modificar preferencias en base de datos.
 
-                    } catch (Exception  ex) {
+                    } catch (Exception ex) {
                         //registrar error en base de datos
                         request.getSession().setAttribute("paginacion", 5);
                         System.out.println(ex.getMessage());
@@ -379,11 +397,11 @@ public class AccionesArticulos extends HttpServlet {
                     request.setAttribute("listadotiposactivo", tiposactivos);
                     disp.forward(request, response);
                     break;
-                    
+
                 case BusquedaArticulo:
-                   String query=request.getParameter("query");
+                    String query = request.getParameter("query");
                     articulos = manejadoractivos.buscarActivosArticulos(query);
-                   
+
                     disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=1");
                     deptos = manejadordeptos.getListaDepartamentos();
                     tipospago = manejadortpago.getListaTipoPago();
@@ -394,7 +412,23 @@ public class AccionesArticulos extends HttpServlet {
                     request.setAttribute("tipospago", tipospago);
                     request.setAttribute("estadoactivos", estadoactivos);
                     request.setAttribute("listadoarticulos", articulos);
-                    disp.forward(request, response);                    
+                    disp.forward(request, response);
+                    break;
+                case HacerReporteActivoArticuloParticular:
+                    deptos = manejadordeptos.getListaDepartamentos();
+                    tiposactivos = manejadortactivos.getListaTiposActivos();
+                    tipospago = manejadortpago.getListaTipoPago();
+                    estadoactivos = manejadorestadoactivo.getListadoEstadosActivos();
+                    request.setAttribute("departamentos", deptos);
+                    request.setAttribute("tiposactivo", tiposactivos);
+                    request.setAttribute("tipospago", tipospago);
+                    request.setAttribute("estadoactivos", estadoactivos);
+                    codigoactivo = request.getParameter("codigoactivo");
+                    Activos_Articulos articulo = manejadoractivos.getActivoArticulo(codigoactivo);
+                    //hay que crear la vista
+                    disp = request.getRequestDispatcher("/recursos/paginas/embebidos/reportesgeneral_asinc.jsp?mod=1");
+                    request.setAttribute("articulo", articulo);
+                    disp.forward(request, response);
                     break;
 
             }
@@ -422,10 +456,12 @@ public class AccionesArticulos extends HttpServlet {
             return OpcionesDo.ActualizarPropiedadPaginacionAsinc;
         } else if (key.equals("ver_activosarticulosasinc")) {
             return OpcionesDo.ObtenerActivosArticulosAsinc;
-        }else if(key.equals("verificarsiactivoexiste")){
+        } else if (key.equals("verificarsiactivoexiste")) {
             return OpcionesDo.VerificarSiArticuloYaRegistrado;
-        }else if(key.equals("busquedaarticulo")){
+        } else if (key.equals("busquedaarticulo")) {
             return OpcionesDo.BusquedaArticulo;
+        } else if(key.equals("hacerreporteactivoparticular")){
+            return OpcionesDo.HacerReporteActivoArticuloParticular;
         }
         return OpcionesDo.AccionDefault;
     }

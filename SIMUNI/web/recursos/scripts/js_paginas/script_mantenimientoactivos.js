@@ -22,7 +22,16 @@ function mostrarventanamodal() {
 
 
 }
+function mostrarventanamodal2() {
+    $("#sm_body_ventanamodal").show('slow');
+    $("#sm_body_ventanamodal").dialog({
+        width: "70%",
+        minHeight:'600px',
+        position: {my: "left-10 top-20", at: "left top", of: sm_body_mainsection},
+        maxWidth: "768px"});
 
+
+}
 
 function  sm_grilla_proceso_modificaractivo(sm_grilla_item_id) {
 
@@ -149,4 +158,19 @@ function sm_grilla_actualizargrillageneral(proceso) {
     });
 
 
+}
+
+function  sm_grilla_proceso_imprimirreporteactivo(sm_grilla_item_id){
+     $("#sm_body_ventanamodal").html('');
+     var newelement=$("<object>");
+     newelement.attr('type','application/pdf');
+    newelement.attr('data','/SIMUNI/modulos/activos?proceso=hacerreporteactivoparticular&codigoactivo='+sm_grilla_item_id);
+    newelement.attr('width','100%');
+    newelement.attr('height','100%');
+    $("#sm_body_ventanamodal").append(newelement);
+    $("#sm_body_ventanamodal").height('600px')
+     mostrarventanamodal2();
+         
+    
+    
 }
