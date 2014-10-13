@@ -7,6 +7,7 @@
 package simuni.classes.LN;
 
 import java.util.ArrayList;
+import simuni.classes.AD.ManejadorDatosTipoActivo;
 import simuni.classes.EN.TipoActivo;
 
 /**
@@ -15,6 +16,15 @@ import simuni.classes.EN.TipoActivo;
  */
 public class ManejadorTipoActivo {
         public ArrayList<TipoActivo> getListaTiposActivos(){
+            try{
+                ManejadorDatosTipoActivo manejadortipoactivo= new ManejadorDatosTipoActivo();
+                ArrayList<TipoActivo> tipoactivo = manejadortipoactivo.getListaTipoActivos();
+                UtilidadesServlet.registrarProcesoSistema("getListaTiposActivos", "Se obtuvo la Lista de tipo de activo");
+                return tipoactivo;
+            }
+            catch (Exception e){
+                UtilidadesServlet.registrarErrorSistema("getListaTiposActivos", e.getMessage());
+            }
         return null;
     }
 }

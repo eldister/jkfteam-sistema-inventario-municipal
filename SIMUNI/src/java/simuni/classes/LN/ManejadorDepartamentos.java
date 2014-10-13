@@ -7,6 +7,7 @@
 package simuni.classes.LN;
 
 import java.util.ArrayList;
+import simuni.classes.AD.ManejadorDatosDepartamento;
 import simuni.classes.EN.Departamento;
 
 /**
@@ -15,6 +16,15 @@ import simuni.classes.EN.Departamento;
  */
 public class ManejadorDepartamentos {
        public ArrayList<Departamento> getListaDepartamentos() {
+           try{
+               ManejadorDatosDepartamento manejadordepartamentos = new ManejadorDatosDepartamento();
+               ArrayList<Departamento> departamento = manejadordepartamentos.getListaDepartamentos();
+               UtilidadesServlet.registrarProcesoSistema("getListaDepartamentos", "Se obtuvo la lista de Departamentos");
+               return departamento;
+           }
+           catch (Exception e){
+               UtilidadesServlet.registrarErrorSistema("getListaDepartamentos", e.getMessage());
+           }
         return null;
     }
 }

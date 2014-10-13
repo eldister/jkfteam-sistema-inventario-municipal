@@ -14,51 +14,121 @@ import simuni.classes.EN.imagenActivo;
 public class ManejadorActivos {
 
     public boolean agregarActivoArticulo(Activos_Articulos to_articulo) throws Exception {
-        ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
-        manejadordatosactivos.agregarActivoArticulo(to_articulo);
+        try{
+            ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
+            manejadordatosactivos.agregarActivoArticulo(to_articulo);
+            UtilidadesServlet.registrarProcesoSistema("agregarActivoArticulo", "Se inserto con éxito el activo");
+        }
+        catch(Exception e){
+            UtilidadesServlet.registrarErrorSistema("agregarActivoArticulo", e.getMessage());
+        }
         return true;
     }
 
     public boolean modificarActivoArticulo(Activos_Articulos to_articulo) {
+       try{
         ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
         try {
             return manejadordatosactivos.modificarActivoArticulo(to_articulo);
         } catch (Exception ex) {
             Logger.getLogger(ManejadorActivos.class.getName()).log(Level.SEVERE, null, ex);
         }
+          UtilidadesServlet.registrarProcesoSistema("modificarActivoArticulo", "Se modificó con éxito el activo");
+       }
+       
+       catch (Exception e)
+       {
+           UtilidadesServlet.registrarErrorSistema("modificarActivoArticulo", e.getMessage());
+       }
+       
         return false;
     }
 
     public boolean desactivarActivoArticulo(String ta_codigoactivo) {
+        try {
+            ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
+            manejadordatosactivos.desactivarActivoArticulo(ta_codigoactivo);
+            UtilidadesServlet.registrarProcesoSistema("desactivarActivoArticulo", "Se desactivo con éxito el activo");
+        }
+        catch (Exception e){
+            UtilidadesServlet.registrarErrorSistema("desactivarActivoArticulo", e.getMessage());
+        }
         return true;
     }
 
-    public ArrayList<Activos_Articulos> getListaArticulos(int npagina, int paginacion) {
-        ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
-        return manejadordatosactivos.getListaArticulos(npagina, paginacion);
+    public ArrayList<Activos_Articulos> getListaArticulos(int npagina, int paginacion) {  
+        try{
+             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
+             ArrayList<Activos_Articulos> articulos= manejadordatosactivos.getListaArticulos(npagina, paginacion);
+             UtilidadesServlet.registrarProcesoSistema("getListaArticulos", "Se obtuvo la lista de Articulos");
+             return articulos;
+        }
+        catch (Exception e){
+            UtilidadesServlet.registrarErrorSistema("getListaArticulos", e.getMessage());
+        }
+        return null;
     }
 
     public Activos_Articulos getActivoArticulo(String ta_codigoactivo) {
-        ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
-        return manejadordatosactivos.getActivoArticulo(ta_codigoactivo);
-
+        try{
+            ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
+            Activos_Articulos articulo= manejadordatosactivos.getActivoArticulo(ta_codigoactivo);
+            UtilidadesServlet.registrarProcesoSistema("getActivoArticulo", "Se obtuvo el Articulo del Activo");
+            return articulo;
+        }
+        catch (Exception e){
+            UtilidadesServlet.registrarErrorSistema("getActivoArticulo", e.getMessage());
+        }
+        return null;
     }
 
-    public ArrayList<imagenActivo> getListaImagenesActivo(String ta_codigoactivo) {
+    public ArrayList<imagenActivo> getListaImagenesActivo(int tn_codigoactivo) {
+        try{
+             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
+             ArrayList<imagenActivo> articulos= manejadordatosactivos.getListaImagenesActivo(tn_codigoactivo);
+             UtilidadesServlet.registrarProcesoSistema("getListaImagenesActivo", "Se obtuvo la lista de Imagenes");
+             return articulos;
+        }
+        catch (Exception e){
+            UtilidadesServlet.registrarErrorSistema("getListaImagenesActivo", e.getMessage());
+        }
         return null;
     }
 
     public boolean isActivoExistente(String ta_codigoactivo) {
-        return new ManejadorDatosActivos().isActivoExistente(ta_codigoactivo);
+        try{            
+            boolean ActivoExiste= new ManejadorDatosActivos().isActivoExistente(ta_codigoactivo);
+            UtilidadesServlet.registrarProcesoSistema("isActivoExistente", "ActivoExistente");
+            return  ActivoExiste;
+        }
+        catch(Exception e){
+            UtilidadesServlet.registrarErrorSistema("isActivoExistente", e.getMessage());
+        }
+        return false;
     }
 
     public int getNumeroActivosRegistrados() {
+        try {
+            ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
+            manejadordatosactivos.getNumeroActivosRegistrados();
+            UtilidadesServlet.registrarProcesoSistema("getNumeroActivosRegistrados", "Numero de activos registrados" );
+        }
+        catch (Exception e){
+            UtilidadesServlet.registrarErrorSistema("getNumeroActivosRegistrados", e.getMessage());
+        }
         return 0;
     }
 
-    public ArrayList<Activos_Articulos> buscarActivosArticulos(String query) {
-        ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
-        return manejadordatosactivos.buscarActivosArticulos(query);
+    public ArrayList<Activos_Articulos> buscarActivosArticulos(String query) { 
+        try{
+            ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
+            ArrayList<Activos_Articulos>  activos = manejadordatosactivos.buscarActivosArticulos(query);
+            UtilidadesServlet.registrarProcesoSistema("buscarActivosArticulos","La busqueda ha sido exitosa" );
+            return activos;
+        }
+        catch (Exception e){
+            UtilidadesServlet.registrarErrorSistema("buscarActivosArticulos", e.getMessage());
+        }   
+        return null;
     }
-
 }
