@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/"%>
 <decorator:decorate filename='../../../recursos/paginas/master/masterpage.jsp'>
-    <decorator:content placeholder='sm_section_titulodepagina'>Titulo de pagina</decorator:content>    
+    <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de proveedores</decorator:content>    
         <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
              <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodeproveedores.css">
              <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/script_plugins/maxLength/maxLength.js"></script>
+             <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_validaciones.js"></script>
              <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_registroproveedor.js"></script>
              <script>
             $(function(){
@@ -17,19 +18,13 @@
                      $("#btnSubirArchivo").on("click", function(){
                          $("#btnArchivo").click();
                          setInterval(intervalo, 1);
+                         $("#check").html('<img src="../../../recursos/imagenes/sistema/sm_check.png" height="20" width="20"/>');
                          return false;
                      });
-                     addEventosACamposDeTexto();
              });
              </script>
         </decorator:content>
         <decorator:content placeholder='sm_section_mainsectioncontainer'>
-        <div id="informationProcess">
-            <p>
-                Este es el formulario para el ingreso o registro de nuevos proveedores a la base de datos 
-                de la municipalidad a tráves del sistema de inventario <b>SIMUNI</b>.<br/>
-            </p>
-        </div>
         <form id="formulario"  enctype="multipart/form-data" action="/SIMUNI/modulos/proveedores?proceso=registroproveedorfisico" method="POST">
             <fieldset id="proveedores">
                 <legend>Registro de proveedores</legend>
@@ -40,6 +35,8 @@
                                 <label>Número de indentificación: </label>
                             </td>
                             <td>
+                                <input type="text" id="txtID" name="txtIdentificadorProveedor" placeholder="Cédula #-####-####"/>
+                                <div id="mensaje"></div>
                                 <input type="text" required="required" id="txtID" name="codigoproveedor" />
                                 <span id="codigoproveedorinfo" class="lblinfocontainer">&nbsp;</span>
                             </td>                            
@@ -49,7 +46,7 @@
                                 <label>Nombre: </label>
                             </td>
                             <td>
-                                <input type="text" id="txtNP" name="txtNombreProveedor">
+                                <input type="text" id="txtNP" name="txtNombreProveedor" placeholder="Primer nombre">
                             </td>
                         </tr>
                         <tr>
@@ -73,7 +70,9 @@
                                 <label>Teléfono habitación: </label>
                             </td>
                             <td>
-                                <input type="text" id="txtTel" name="txtTelefonoHabitacion">
+                                <input type="text" id="txtTel" name="txtTelefonoHabitacion" placeholder="formato: ####-####">
+                                <div id="mensaje2"></div>
+                                
                             </td>
                         </tr>
                         <tr>
@@ -81,7 +80,8 @@
                                 <label>Teléfono oficina: </label>
                             </td>
                             <td>
-                                <input type="text" id="txtTO" name="txtTelefonoOficina">
+                                <input type="text" id="txtTO" name="txtTelefonoOficina" placeholder="formato: ####-####">
+                                <div id="mensaje3"></div>
                             </td>
                         </tr>
                         <tr>
@@ -89,7 +89,8 @@
                                 <label>Teléfono móvil: </label>
                             </td>
                             <td>
-                                <input type="text" id="txtTM" name="txtTelefonoMovil">
+                                <input type="text" id="txtTM" name="txtTelefonoMovil" placeholder="formato: ####-####">
+                                <div id="mensaje4"></div>
                             </td>
                         </tr>
                         <tr>
@@ -97,7 +98,8 @@
                                 <labe>Número de fax: </labe>
                             </td>
                             <td>
-                                <input type="text" id="txtTF" name="txtNumeroFax">
+                                <input type="text" id="txtTF" name="txtNumeroFax" placeholder="formato: ####-####">
+                                <div id="mensaje5"></div>
                             </td>
                         </tr>
                         <tr>
@@ -106,6 +108,7 @@
                             </td>
                             <td>
                                 <input type="text" id="txtMail" name="txtEmail">
+                                <div id="mensaje6"></div>
                             </td>
                         </tr>
                         <tr>
@@ -139,7 +142,7 @@
                             <td>
                                 <textarea type="text" id="txtDC" name="txtDireccionCompañia" maxlength="300"></textarea>
                                 <br/>
-                                <div><label id="LetrasRestantes1">Letras restantes: </div><div id="contCaracteres"></div>
+                                <label id="LetrasRestantes1">Letras restantes: <div id="contCaracteres"></label></div>
                             </td>
                         </tr>
                         <tr>
@@ -147,23 +150,7 @@
                                 <label>Nombre del representante legal: </label>
                             </td>
                             <td>
-                                <input type="text" id="txtNR" name="txtNombreRepresentante">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label>Primer apellido del representante legal: </label>
-                            </td>
-                            <td>
-                                <input type="text" id="txtPAR" name="txtApellido1Representante">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label>Segundo apellido del representante legal: </label>
-                            </td>
-                            <td>
-                                <input type="text" id="txtSAR" name="txtApellido2Representante">
+                                <input type="text" id="txtNR" name="txtNombreRepresentante" placeholder="Nombre completo">
                             </td>
                         </tr>
                         <tr>
@@ -187,13 +174,14 @@
                                 <label>Cargar documentos requeridos: </label>
                             </td>
                             <td>
-                                <input type="file" id="btnArchivo" name="filearchivosproveedor" multiple accept="application/pdf">
-                                <input type="button" id="btnSubirArchivo"  value="Examinar">
+                                <input type="file" id="btnArchivo" name="btnArchivos" accept="application/pdf"/>
+                                <input type="button" id="btnSubirArchivo" value="Examinar" >
+                                <div id="check"></div>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <input type="submit" name="btnRegistrar" value="Registrar activo">
+                                <input type="submit" name="btnRegistrar" value="Registrar activo" onclick="validarTelefono();">
                             </td>
                             <td>
                                 <input type="reset" name="btnLimpiarFormulario" value="Limpiar formulario">
@@ -204,5 +192,4 @@
             </fieldset>
         </form>
         </decorator:content>
-               
 </decorator:decorate>
