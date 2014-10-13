@@ -4,6 +4,7 @@
         <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Contáctenos</decorator:content>    
         <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
             <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/recursos/estilos/style_contacto.css">
+            <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_validaciones.js"></script>
             <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/script_plugins/maxLength/maxLength.js"></script>
             <script>
                 $(function(){
@@ -45,16 +46,27 @@
                                 </div>
                             </fieldset>
                         </div>
+                        <div id="sm_div_tercerContacto">
+                            <fieldset>
+                                <legend>Contacte con</legend>
+                                <div id="sm_div_sc">
+                                    <h3>Jefferson Salazar Monge</h3>
+                                    <label>Teléfono: cualquiera</label><br/>
+                                    <label>Correo electrónico: pjingames@gmail.com</label><br/>
+                                    <label>Estudiante de la UNA</label>
+                                </div>
+                            </fieldset>
+                        </div>
                     </div>
                     <hr/>
                     <div id="sm_div_mail">
                         <table id="sm_tb_contacto">
                             <tr>
                                 <td>
-                                    <label>Nombre completo: </label>
+                                    <label>Nombre: </label>
                                 </td>
                                 <td>
-                                    <input type="text" id="txtNombC" name="txtNombreContacto"/>
+                                    <input type="text" id="txtNombC" name="txtNombreContacto" placeholder="Nombre completo"/>
                                 </td>
                             </tr>
                             <tr>
@@ -71,6 +83,7 @@
                                 </td>
                                 <td>
                                     <input typ="text" id="txtMailC" name="txtMailContacto"/>
+                                    <div id="mensaje"></div>
                                 </td>
                             </tr>
                             <tr>
@@ -82,7 +95,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><input type="submit" value="Enviar"/></td>
+                                <td><input type="submit" value="Enviar" onclick="validarMail();"/></td>
                             </tr>
                         </table>
                     </div>
