@@ -12,7 +12,7 @@
         <link rel='stylesheet' href='<%=request.getContextPath()%>/recursos/estilos/style_actualizacionarticulos.css'>        
         <script src='<%=request.getContextPath()%>/recursos/scripts/script_sm_grillageneral.js'></script>
         <script src='<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_mantenimientoactivos.js'></script>
-        
+
         <script>
             $(document).ready(function() {
                 sm_grillageneral_inicializar();
@@ -22,11 +22,9 @@
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <%
-            ArrayList<Activos_Articulos> to_articulo=(ArrayList<Activos_Articulos>)request.getAttribute("listadoarticulos");
-            ArrayList<TipoActivo>to_tipoactivo=(ArrayList<TipoActivo>)request.getAttribute("listadotiposactivo");
-            out.write(new ActivosMostrador().RenderizarActivos(to_tipoactivo,to_articulo,10));
-
-                
+            ArrayList<Activos_Articulos> to_articulo = (ArrayList<Activos_Articulos>) request.getAttribute("listadoarticulos");
+            ArrayList<TipoActivo> to_tipoactivo = (ArrayList<TipoActivo>) request.getAttribute("listadotiposactivo");
+            out.write(new ActivosMostrador().RenderizarActivos(to_tipoactivo, to_articulo, 10));
         %>
         <div id="sm_body_ventanamodal">55555</div>
         <div id="sm_respuesta"></div>
