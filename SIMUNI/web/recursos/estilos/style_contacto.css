@@ -41,6 +41,12 @@ fieldset legend{
 #sm_div_segundoContacto{
     padding-left: 60px;
 }
+#sm_div_tercerContacto{
+    padding: 20px;
+}
+#sm_div_tercerContacto{
+    padding-left: 60px;
+}
 #sm_div_mail{
     padding: 40px;
 }
@@ -86,5 +92,9 @@ input[type=text]{
 }
 #contadorCaracteres{
     float: next;
+    display: inline-block;
+}
+#mensaje{
+    font-size: 90%;
     display: inline-block;
 }

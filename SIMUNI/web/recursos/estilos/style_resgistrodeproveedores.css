@@ -24,8 +24,7 @@
     font-size: 80%;
 }
 #contCaracteres{
-    float: left;
-    font-size: 80%;
+    float: next;
     display: inline-block;
 }
 input[type=submit]{
@@ -98,4 +97,11 @@ input[type=text]{
 }
 #btnArchivo{
     display: none;
+}
+#check{
+    display: inline-block;
+}
+#mensaje, #mensaje2, #mensaje3, #mensaje4, #mensaje5, #mensaje6{
+    font-size: 90%;
+    display: inline-block;
 }

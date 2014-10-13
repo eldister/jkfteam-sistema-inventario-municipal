@@ -1,15 +1,10 @@
 
 #sm_grilla_maincontainer{
     display: block;
-    width: available;
- 
-     
-
-   
+    width: available;   
 }
 tr{
     padding: 0px;
-   
 }
 
 #sm_grilla_maincontainer .sm_div_operacionesbusquedacontainer .sm_div_colsim{
@@ -30,7 +25,7 @@ tr{
 
 }
 #sm_grilla_maincontainer .sm_div_tablemain th{
-    background-color: rgba(0,255,0,0.6);
+    background-color: #00CCFF;
 }
 
 .sm_td_operacionescontainer .sm_div_rowsim{
@@ -50,17 +45,17 @@ tr{
     margin: 0;
     padding: 0;
     border-collapse: collapse;
-    border-bottom: 1px solid green;
+    border-bottom: 1px solid black;
 
 }
 #sm_grilla_maincontainer .sm_div_tablemain th{
-    border: 3px inset green;
+    border: 3px inset #0033FF;
      padding: 5px;
 }
 
 #sm_grilla_maincontainer .sm_div_tablemain td{
 
-    border: 3px inset green;
+    border: 3px inset #0033FF;
     padding: 5px;
    
 }
@@ -157,7 +152,7 @@ td{
 }
 
 .sm_div_elementpagcontainer a:hover{
-    color:black;
+    color: black;
       border-bottom:   1px solid black;
 }
 
@@ -219,7 +214,7 @@ td{
     display: inline-block;
     float: right;
           font-size: 1.3em;
-  color:green;
+  color:black;
    
  
 }
