@@ -3,7 +3,7 @@ function fnMostrarImagen(input) {
         var reader = new FileReader();
         reader.onload = function(e) {
             $('#imgImagenCargada')
-                    .attr('src', e.target.result).width(218).height(218);
+                    .attr('src', e.target.result).width(300).height(300);
         };
         reader.readAsDataURL(input.files[0]);
     }

@@ -7,6 +7,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/"%>
 <decorator:decorate filename='../../../recursos/paginas/master/masterpage.jsp'>
+     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de activos</decorator:content>    
+        <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
+            <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodearticulos.css">
+            <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/jquery-registroactivos.js"></script>
+        </decorator:content>
     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de activos</decorator:content>    
     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de activos</decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
@@ -38,6 +43,9 @@
                 addEventosACamposDeTexto();
             });
         </script>
+        <script type="text/javascript">
+            
+        </script>
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <%
@@ -46,15 +54,6 @@
             ArrayList<TipoPago> tipospago = (ArrayList<TipoPago>) request.getAttribute("tipospago");
             ArrayList<EstadoActivo> tiposestadoactivo = (ArrayList<EstadoActivo>) request.getAttribute("estadoactivos");
         %>
-        <div>
-
-        </div>
-        <div id="sm_div_informacionproceso">
-            <p>
-                Este es el formulario para el ingreso o registro de nuevos activos a la base de datos 
-                de la municipalidad a tráves del sistema de inventario <b>SIMUNI</b>.<br/>
-            </p>
-        </div>
         <form id="sm_div_formulario" method="POST" action="/SIMUNI/modulos/activos?proceso=registroactivoarticulo" enctype="multipart/form-data">
             <fieldset id="sm_fs_articulos">
                 <legend>Registro de activos</legend>
@@ -127,7 +126,7 @@
                                 <label>Fecha inicio operación </label>
                             </td>
                             <td>
-                                <input type="date" name="dpPuestaOperacion">
+                                <input type="date" name="dpPuestaOperacion" id="dpPO" value="">
                             </td>
                         </tr>
                         <tr>
@@ -135,7 +134,7 @@
                                 <label>Nombre del proveedor </label>
                             </td>
                             <td>
-                                <input type="text" name="txtProveedor">&nbsp;&nbsp;<input type="button" value="Seleccionar">
+                                <input type="text" name="txtProveedor"  placeholder="Nombre completo">&nbsp;&nbsp;<input type="button" value="Seleccionar">
                             </td>
                         </tr>
                         <tr>
@@ -265,7 +264,7 @@
                                 <label>Descripción </label>
                             </td>
                             <td>
-                                <textarea type="text" name="txtDescripcion" maxlength="300" id="txtDes"></textarea>
+                                <textarea type="text" name="txtDescripcion" maxlength="300" id="txtDes" placeholder="Escriba una breve descripción sobre las características que considere importantes del artículo"></textarea>
                                 <br/>
                                 <label id="LetrasRestantes1">Letras restantes: <div id="contadorCaracteres1"></div></label>
                             </td>
