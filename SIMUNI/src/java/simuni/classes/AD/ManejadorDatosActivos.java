@@ -73,7 +73,7 @@ public class ManejadorDatosActivos {
         return true;
     }
 
-    public boolean desactivarActivoArticulo(int tn_codigoactivo) {
+    public boolean desactivarActivoArticulo(String ta_codigoactivo) {
         return true;
     }
 
