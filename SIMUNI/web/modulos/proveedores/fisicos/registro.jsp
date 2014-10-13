@@ -35,9 +35,8 @@
                                 <label>Número de indentificación: </label>
                             </td>
                             <td>
-                                <input type="text" id="txtID" name="txtIdentificadorProveedor" placeholder="Cédula #-####-####"/>
+                                <input type="text" id="txtID" required="required" name="txtIdentificadorProveedor" placeholder="Cédula #-####-####"/>
                                 <div id="mensaje"></div>
-                                <input type="text" required="required" id="txtID" name="codigoproveedor" />
                                 <span id="codigoproveedorinfo" class="lblinfocontainer">&nbsp;</span>
                             </td>                            
                         </tr>

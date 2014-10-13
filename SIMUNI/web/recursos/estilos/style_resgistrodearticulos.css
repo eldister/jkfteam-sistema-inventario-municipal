@@ -41,7 +41,7 @@ input[type=submit]{
     -moz-border-radius : 6px;
     -webkit-border-radius: 6px;
     font-size : 100%;
-    color : black;
+    color : white;
     padding : 4px;
     background : #aac4f7;
     background : -webkit-gradient(linear, left top, left bottom, color-stop(0%,#aac4f7), color-stop(100%,#2349c4));
@@ -59,7 +59,7 @@ input[type=reset]{
     -moz-border-radius : 6px;
     -webkit-border-radius: 6px;
     font-size : 100%;
-    color : black;
+    color : white;
     padding : 4px;
     background : #aac4f7;
     background : -webkit-gradient(linear, left top, left bottom, color-stop(0%,#aac4f7), color-stop(100%,#2349c4));
@@ -77,7 +77,7 @@ input[type=button]{
     -moz-border-radius : 6px;
     -webkit-border-radius: 6px;
     font-size : 100%;
-    color : black;
+    color : white;
     padding : 4px;
     background : #aac4f7;
     background : -webkit-gradient(linear, left top, left bottom, color-stop(0%,#aac4f7), color-stop(100%,#2349c4));
@@ -88,11 +88,6 @@ input[type=button]{
     background : linear-gradient(top, #aac4f7 0%, #2349c4 100%);
     filter : progid:DXImageTransform.Microsoft.gradient( startColorstr='#bacef5', endColorstr='#02238f',GradientType=0 );
     cursor: pointer;
-    /*padding: 6px;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border: 1px solid #ccc;*/
 }
 input[type=text]{
     padding: 2px;

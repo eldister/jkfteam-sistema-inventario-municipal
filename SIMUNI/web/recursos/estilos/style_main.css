@@ -100,7 +100,7 @@ header{
     background-size: 100px 100px;
     background-repeat: no-repeat;
     overflow: hidden;
-
+    cursor: pointer;
 }
 /*
     Para la imagen se hace un padding de 100
@@ -117,7 +117,7 @@ header{
     background-repeat: no-repeat;
     overflow: hidden;
     text-align: center;
-
+    cursor: pointer;
 }
 
 
@@ -125,6 +125,10 @@ header{
     display: inline-block;
     width: 150px;
     float: left;
+}
+#enlaceInicio{
+    text-decoration: none;
+    color: black;
 }
 
 /*
@@ -505,8 +509,15 @@ footer .sm_div_colcontainer ul{
 #sm_body_notificacion{
     text-align: center;
 }
-
-
+/*en esta seccion se encuentra el boton flotante para volver arriba de la pagina*/
+#imgVolverArriba{
+    position:fixed; 
+    padding: 32px;
+    bottom:0; 
+    right:0;
+    width: 40px;
+    height: 40px;
+}
 /*seccion de labels .. correcto incorrecto*/
 .lblcampoinvalido,.lblcampowarning,.lblcampovalido,.lblinfocontainer{
     display: inline-block;

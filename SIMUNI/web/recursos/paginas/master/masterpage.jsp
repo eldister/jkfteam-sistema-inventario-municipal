@@ -12,9 +12,27 @@
         <script src="<%=request.getContextPath()%>/recursos/scripts/jquery-ui.js"></script>
         <script src="<%=request.getContextPath()%>/recursos/scripts/componentes/chesdev_userbox_v1.js"></script>
         <script src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_main.js"></script>
-
         <link rel="stylesheet" href="<%=request.getContextPath()%>/recursos/estilos/style_main.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/recursos/estilos/temas/jquery_smoothness/style_jquery-ui.css">
+        <script>
+            $(document).ready(function() {
+                var desplazado = 220;
+                var duracion = 500;
+                $(window).scroll(function() {
+                    if ($(this).scrollTop() > desplazado) {
+                        $("#volverTop").fadeIn(duracion);
+                    } else {
+                        $("#volverTop").fadeOut(duracion);
+                    }
+                });
+
+                $("#volverTop").click(function(event) {
+                    event.preventDefault();
+                    $("html, body").animate({scrollTop: 0}, duracion);
+                    return false;
+                });
+            });
+        </script>
         <decorator:placeholder name='sm_section_estilosyscriptssectioncontainer'/>
     </head>
     <body>
@@ -24,12 +42,12 @@
             <div id="sm_header_bannerandusercontainer">
                 <div class="sm_header_bannercontainer">
                     <div id="sm_div_logomunicontainer">&nbsp;
-                        <div id="sm_div_logomuni">&nbsp;</div>                
+                        <a href="http://www.nandayure.go.cr/"><div id="sm_div_logomuni">&nbsp;</div></a> 
                     </div>
                     <div id="sm_div_logosimunicontainer">
-                        <div id="sm_div_logosimuni">
+                        <a href="#" id="enlaceInicio"><div id="sm_div_logosimuni">
                             <span id="sm_div_simunislogan">Sistema de Información para el Control de Inventario Municipal&nbsp;</span>
-                        </div>   
+                        </div></a>
 
                     </div>
                 </div>
@@ -225,6 +243,7 @@
             </div>            
 
         </footer>
+        <a href="#" id="volverTop" style="display: inline;"><img border="0" id="imgVolverArriba" src="../../../recursos/imagenes/sistema/sm_volver_arriba.png" title="Ir arriba"/></a>
     </body>
 </html>
 
