@@ -74,5 +74,25 @@ public class Servidor {
             return texto;
         }
     }
+    public static enum R {
+
+        LOGOSIMUNIURL("http://localhost:8080/SIMUNI/recursos/imagenes/sistema/logomuni.jpg");
+
+        private final String texto;
+
+        private R(String s) {
+            texto = s;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName == null) ? false : texto.equals(otherName);
+        }
+
+        @Override
+        public String toString() {
+            return texto;
+        }
+    }    
+    
 
 }
