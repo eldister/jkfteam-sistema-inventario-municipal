@@ -11,10 +11,11 @@ function validarMail()
         document.getElementById("mensaje").innerHTML = "";
     }
 }
+
 function validarCedula(){
     var cedula = document.getElementById("txtID").value;
     var filtroExtrajera = /^\d{8}[A-Z]$/;
-    var filtroNac = /^$/;
+    var filtroNac = /^\d{1}-\d{4}-\d{4}$/;
     if(!filtroExtrajera.test(cedula) && !filtroNac.test(cedula)) {
         document.getElementById("mensaje").innerHTML = "Introduzca una c\u00e9dula v\u00e1lida";
         return false;
@@ -23,6 +24,7 @@ function validarCedula(){
          document.getElementById("mensaje").innerHTML = "";
     }
 }
+
 function validarTelefono(){
     var telefono = document.getElementById("txtTel").value;
     var filtroTelefono = /^\d{4}-\d{4}$/;

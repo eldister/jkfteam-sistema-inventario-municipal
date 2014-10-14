@@ -1,10 +1,13 @@
 package simuni.classes.AD;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import simuni.classes.AR.ManejadorArchivos;
+import simuni.classes.EN.BD.ConexionMYSQL;
 import simuni.classes.EN.Documentos;
 import simuni.classes.EN.ProveedorFisico;
 import simuni.classes.EN.Servidor;
@@ -37,12 +40,38 @@ public class ManejadorDatosProveedores {
             } else {
                 //registrar imagien "sin foto"
             }
-            //registramos activo en bd
-
+            //registramos proveedores en bd
+            Connection con = ConexionMYSQL.obtenerConexion();
+            CallableStatement sp_ingresoproveedorfisico 
+                    = con.prepareCall("{CALL sp_registrarProveedor_fisico(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            
+            sp_ingresoproveedorfisico.setString(1, to_proveedor.getPa_cedula());
+            sp_ingresoproveedorfisico.setString(2, to_proveedor.getPa_nombre());
+            sp_ingresoproveedorfisico.setString(3, to_proveedor.getPa_primerApellido());
+            sp_ingresoproveedorfisico.setString(4, to_proveedor.getPa_segundoApellido());
+            sp_ingresoproveedorfisico.setString(5, to_proveedor.getPa_numeroCuenta());
+            sp_ingresoproveedorfisico.setString(6, to_proveedor.getPa_correoElectronico());
+            sp_ingresoproveedorfisico.setString(7, to_proveedor.getPa_sitioWeb());
+            sp_ingresoproveedorfisico.setInt(8, to_proveedor.getPn_apartadoPostal());
+            sp_ingresoproveedorfisico.setString(9, to_proveedor.getPa_nombreCompania());
+            sp_ingresoproveedorfisico.setString(10, to_proveedor.getPa_direccionCompania());
+            sp_ingresoproveedorfisico.setString(11, "123P123");
+            sp_ingresoproveedorfisico.setString(12, "Ramón");
+            sp_ingresoproveedorfisico.setString(13, "Valdez");
+            sp_ingresoproveedorfisico.setString(14, "Sánchez");
+            sp_ingresoproveedorfisico.setString(15, to_proveedor.getPa_estadoprovedor());
+            sp_ingresoproveedorfisico.setDate(16, to_proveedor.getPd_fecharegistro());
+            sp_ingresoproveedorfisico.setString(17, to_proveedor.getPa_telefonoFijo());
+            sp_ingresoproveedorfisico.setString(18, to_proveedor.getPa_fax());
+            sp_ingresoproveedorfisico.setString(19, to_proveedor.getPa_telefonoMovil());
+            sp_ingresoproveedorfisico.setString(20, to_proveedor.getPa_telefonoOficina());
+            
+            sp_ingresoproveedorfisico.executeUpdate();
+            ConexionMYSQL.cerrarConexion(con);
+// hacer vara aqui
         } catch (Exception ex) {
             throw ex;
         }
-
         return true;
     }
 
@@ -97,7 +126,7 @@ public class ManejadorDatosProveedores {
             proveedorfisico.setPa_sitioWeb("www.google.com");
             proveedorfisico.setPa_telefonoFijo("8520236" + a);
             proveedorfisico.setPa_telefonoMovil("8411" + a * 2);
-            proveedorfisico.setPb_estadoprovedor(0);
+            proveedorfisico.setPa_estadoprovedor("0");
             proveedorfisico.setPd_fecharegistro(new java.sql.Date(new java.util.Date().getTime()));
             proveedorfisico.setPn_apartadoPostal(a * 100);
             proveedores.add(proveedorfisico);
@@ -120,7 +149,7 @@ public class ManejadorDatosProveedores {
         proveedorfisico.setPa_sitioWeb("www.google.com");
         proveedorfisico.setPa_telefonoFijo("852023656");
         proveedorfisico.setPa_telefonoMovil("84110967");
-        proveedorfisico.setPb_estadoprovedor(0);
+        proveedorfisico.setPa_estadoprovedor("0");
         proveedorfisico.setPd_fecharegistro(new java.sql.Date(new java.util.Date().getTime()));
         proveedorfisico.setPn_apartadoPostal(44844);
         return proveedorfisico;
@@ -152,7 +181,7 @@ public class ManejadorDatosProveedores {
                 proveedorfisico.setPa_sitioWeb("www.google.com");
                 proveedorfisico.setPa_telefonoFijo("8520236" + a);
                 proveedorfisico.setPa_telefonoMovil("8411" + a * 2);
-                proveedorfisico.setPb_estadoprovedor(0);
+                proveedorfisico.setPa_estadoprovedor("0");
                 proveedorfisico.setPd_fecharegistro(new java.sql.Date(new java.util.Date().getTime()));
                 proveedorfisico.setPn_apartadoPostal(a * 100);
                 proveedores.add(proveedorfisico);
