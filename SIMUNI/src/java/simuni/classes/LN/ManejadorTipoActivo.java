@@ -7,13 +7,10 @@ package simuni.classes.LN;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-<<<<<<< .mine
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import simuni.classes.AD.ManejadorDatosTipoActivo;
-=======
-import simuni.classes.AD.ManejadorDatosTipoActivo;
->>>>>>> .r40
 import simuni.classes.EN.TipoActivo;
 
 /**

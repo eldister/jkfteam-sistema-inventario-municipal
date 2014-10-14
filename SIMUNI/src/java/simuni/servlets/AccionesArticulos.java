@@ -63,6 +63,7 @@ public class AccionesArticulos extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //aqui se manejara los procesos  
+        
         ManejadorActivos manejador = new ManejadorActivos();
         ManejadorDepartamentos manejadordeptos = new ManejadorDepartamentos();
         ManejadorTipoActivo manejadortactivos = new ManejadorTipoActivo();
@@ -95,11 +96,14 @@ public class AccionesArticulos extends HttpServlet {
                     //colocar los valores por defecto 
                     paginacion = 7;
                 }
-                articulos = manejador.getListaArticulos(npagina, paginacion);
+                int desplazamiento=((npagina-1)*paginacion);
+                System.out.println("Desplazameitnto" +desplazamiento);
+                articulos = manejador.getListaArticulos(desplazamiento, paginacion);
                 tiposactivos = manejadortactivos.getListaTiposActivos();
                 disp = request.getRequestDispatcher("/modulos/activos/articulos/mantenimiento_1.jsp");
                 request.setAttribute("listadoarticulos", articulos);
                 request.setAttribute("listadotiposactivo", tiposactivos);
+                request.setAttribute("paginacion", ((int)manejador.getCantidadRegistrosActivosArticulos()/paginacion)+1);       
 
                 disp.forward(request, response);
                 break;
@@ -380,11 +384,11 @@ public class AccionesArticulos extends HttpServlet {
                         //registrar en bitacora el error
                         //colocar los valores por defecto 
 
-                        paginacion = 5;
+                        paginacion = 7;
                         request.getSession().setAttribute("paginacion", paginacion);
                     }
-
-                    articulos = manejadoractivos.getListaArticulos(npagina, paginacion);
+                     int desplazamiento=((npagina-1)*paginacion);
+                    articulos = manejadoractivos.getListaArticulos(desplazamiento, paginacion);
                     disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=1");
                     deptos = manejadordeptos.getListaDepartamentos();
                     tipospago = manejadortpago.getListaTipoPago();

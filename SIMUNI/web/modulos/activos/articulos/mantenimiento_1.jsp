@@ -1,3 +1,4 @@
+<%@page import="simuni.classes.LN.UtilidadesServlet"%>
 <%@page import="simuni.classes.EN.TipoActivo"%>
 <%@page import="simuni.classes.UI.ActivosMostrador"%>
 <%@page import="simuni.classes.EN.Activos_Articulos"%>
@@ -22,9 +23,15 @@
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <%
+        String pagaux=request.getAttribute("paginacion")!=null?request.getAttribute("paginacion").toString():"1";
+        int paginacion=0;
+       if( UtilidadesServlet.tryParseInt(pagaux)){
+           paginacion=Integer.parseInt(pagaux);
+       }
+        
             ArrayList<Activos_Articulos> to_articulo = (ArrayList<Activos_Articulos>) request.getAttribute("listadoarticulos");
             ArrayList<TipoActivo> to_tipoactivo = (ArrayList<TipoActivo>) request.getAttribute("listadotiposactivo");
-            out.write(new ActivosMostrador().RenderizarActivos(to_tipoactivo, to_articulo, 10));
+            out.write(new ActivosMostrador().RenderizarActivos(to_tipoactivo, to_articulo, paginacion));
         %>
         <div id="sm_body_ventanamodal">55555</div>
         <div id="sm_respuesta"></div>
