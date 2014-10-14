@@ -39,6 +39,13 @@
                     return false;
                 });
                 addEventosACamposDeTexto();
+                var now = new Date();
+
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                var today = now.getFullYear() + "-" + (month) + "-" + (day);
+                $('input[type=date]').attr('value', today);
             });
         </script>
     </decorator:content>
@@ -86,34 +93,19 @@
                             </td>
                             <td>
                                 <select name="cmbCategoria">
-                                    <option value="-1">-- Seleccionar --</option>
                                     <%
                                         if (tiposactivos != null) {
                                             Iterator<TipoActivo> iter = tiposactivos.iterator();
                                             while (iter.hasNext()) {
                                                 TipoActivo tactivo = iter.next();
-                                                out.print("option value'");
+                                                out.print("<option value='");
                                                 out.print(tactivo.getCodigoTipoActivo());
                                                 out.print("'>");
                                                 out.print(tactivo.getNombreTipoActivo());
-                                                out.print("</option");
+                                                out.print("</option>");
                                             }
                                         }
                                     %>
-                                    <!--    <option>Edificios</option>
-                                        <option>Multimedia</option>
-                                        <option>Computación</option>
-                                        <option>Impresión</option>
-                                        <option>Telefonía</option>
-                                        <option>Máquinaria</option>
-                                        <option>Máquinaria pesada</option>
-                                        <option>Oficina</option>
-                                        <option>Recolección de basura</option>
-                                        <option>Refrigeración</option>
-                                        <option>Transporte</option>
-                                        <option>Herramientas de trabajo</option>
-                                        <option>Muebles</option>
-                                        <option>Otros (Sin clasificación)</option>-->
                                 </select>
                             </td>
                         </tr>
@@ -139,18 +131,17 @@
                             </td>
                             <td>
                                 <!--<input type="text" name="txtDescripción">-->
-                                <select name="cmbDepartamento">
-                                    <option value="-1">-- Seleccionar --</option>                                
+                                <select name="cmbDepartamento">                            
                                     <%
                                         if (deptos != null) {
                                             Iterator<Departamento> iter = deptos.iterator();
                                             while (iter.hasNext()) {
                                                 Departamento depto = iter.next();
-                                                out.print("option value'");
+                                                out.print("<option value='");
                                                 out.print(depto.getPn_codigo());
                                                 out.print("'>");
                                                 out.print(depto.getPa_nombre());
-                                                out.print("</option");
+                                                out.print("</option>");
                                             }
                                         }
                                     %>  
@@ -195,17 +186,16 @@
                             </td>
                             <td>
                                 <select name="cmbTipoPago">
-                                    <option value="-1">-- Seleccionar --</option>
                                     <%
                                         if (tipospago != null) {
                                             Iterator<TipoPago> iter = tipospago.iterator();
                                             while (iter.hasNext()) {
                                                 TipoPago tpago = iter.next();
-                                                out.print("option value'");
+                                                out.print("<option value='");
                                                 out.print(tpago.getCodigoTipoPago());
                                                 out.print("'>");
                                                 out.print(tpago.getNombreTipoPago());
-                                                out.print("</option");
+                                                out.print("</option>");
                                             }
                                         }
                                     %>                                    
@@ -224,34 +214,19 @@
                             </td>
                             <td>
                                 <select name="cmbEstadoActivo">
-                                    <option value="-1">-- Seleccionar --</option>
                                     <%
                                         if (tiposestadoactivo != null) {
                                             Iterator<EstadoActivo> iter = tiposestadoactivo.iterator();
                                             while (iter.hasNext()) {
                                                 EstadoActivo testadoactivo = iter.next();
-                                                out.print("option value'");
+                                                out.print("<option value='");
                                                 out.print(testadoactivo.getNombreEstado());
                                                 out.print("'>");
                                                 out.print(testadoactivo.getNombreEstado());
-                                                out.print("</option");
+                                                out.print("</option>");
                                             }
                                         }
                                     %>                                    
-                                    <!--
-                                    <option>Excelente</option>
-                                    <option>Bueno</option>
-                                    <option>Regular</option>
-                                    <option>Malo</option>
-                                    <option>Irreparable</option>
-                                    <option>Alquilado</option>
-                                    <option>Depreciado</option>
-                                    <option>Desechado</option>
-                                    <option>Donado</option>
-                                    <option>Préstado</option>
-                                    <option>En reparación</option>
-                                    <option>Robado</option>-->
-
                                 </select>
                             </td>
                         </tr>

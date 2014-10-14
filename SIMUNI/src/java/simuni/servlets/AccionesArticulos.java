@@ -21,6 +21,7 @@ import simuni.classes.EN.TipoActivo;
 import simuni.classes.EN.TipoPago;
 import simuni.classes.EN.imagenActivo;
 import simuni.classes.LN.ManejadorActivos;
+import simuni.classes.LN.ManejadorDepartamentos;
 import simuni.classes.LN.ManejadorEstadoActivos;
 import simuni.classes.LN.ManejadorTipoActivo;
 import simuni.classes.LN.ManejadorTipoPago;
@@ -63,7 +64,7 @@ public class AccionesArticulos extends HttpServlet {
             throws ServletException, IOException {
         //aqui se manejara los procesos  
         ManejadorActivos manejador = new ManejadorActivos();
-        ManejadorDatosDepartamento manejadordeptos = new ManejadorDatosDepartamento();
+        ManejadorDepartamentos manejadordeptos = new ManejadorDepartamentos();
         ManejadorTipoActivo manejadortactivos = new ManejadorTipoActivo();
         ManejadorTipoPago manejadortpago = new ManejadorTipoPago();
         ManejadorEstadoActivos manejadorestadoactivo = new ManejadorEstadoActivos();
@@ -143,22 +144,22 @@ public class AccionesArticulos extends HttpServlet {
                     response.getOutputStream().print("Si Existe");
                 }
                 break;
-                case HacerReporteActivoArticuloParticular:
-                    deptos = manejadordeptos.getListaDepartamentos();
-                    tiposactivos = manejadortactivos.getListaTiposActivos();
-                    tipospago = manejadortpago.getListaTipoPago();
-                    estadoactivos = manejadorestadoactivo.getListadoEstadosActivos();
-                    request.setAttribute("departamentos", deptos);
-                    request.setAttribute("tiposactivo", tiposactivos);
-                    request.setAttribute("tipospago", tipospago);
-                    request.setAttribute("estadoactivos", estadoactivos);
-                    codigoactivo = request.getParameter("codigoactivo");
-                     articulo = manejador.getActivoArticulo(codigoactivo);
-                    //hay que crear la vista
-                    disp = request.getRequestDispatcher("/recursos/paginas/embebidos/reportesgeneral_asinc.jsp?mod=1");
-                    request.setAttribute("articulo", articulo);
-                    disp.forward(request, response);
-                    break;                
+            case HacerReporteActivoArticuloParticular:
+                deptos = manejadordeptos.getListaDepartamentos();
+                tiposactivos = manejadortactivos.getListaTiposActivos();
+                tipospago = manejadortpago.getListaTipoPago();
+                estadoactivos = manejadorestadoactivo.getListadoEstadosActivos();
+                request.setAttribute("departamentos", deptos);
+                request.setAttribute("tiposactivo", tiposactivos);
+                request.setAttribute("tipospago", tipospago);
+                request.setAttribute("estadoactivos", estadoactivos);
+                codigoactivo = request.getParameter("codigoactivo");
+                articulo = manejador.getActivoArticulo(codigoactivo);
+                //hay que crear la vista
+                disp = request.getRequestDispatcher("/recursos/paginas/embebidos/reportesgeneral_asinc.jsp?mod=1");
+                request.setAttribute("articulo", articulo);
+                disp.forward(request, response);
+                break;
 
         }
     }
@@ -460,7 +461,7 @@ public class AccionesArticulos extends HttpServlet {
             return OpcionesDo.VerificarSiArticuloYaRegistrado;
         } else if (key.equals("busquedaarticulo")) {
             return OpcionesDo.BusquedaArticulo;
-        } else if(key.equals("hacerreporteactivoparticular")){
+        } else if (key.equals("hacerreporteactivoparticular")) {
             return OpcionesDo.HacerReporteActivoArticuloParticular;
         }
         return OpcionesDo.AccionDefault;

@@ -9,7 +9,7 @@ public class Activos {
     private Date pd_fechaCompra;
     private double pd_precioCompra;
     private int pa_tipoPago;
-    private String pa_Estado;
+    private String pa_Estado="ACTIVO";
     private int pa_tipoActivo;
     private ArrayList<imagenActivo> po_imagenActivo = new ArrayList<imagenActivo>();
     private String pa_Observaciones;
