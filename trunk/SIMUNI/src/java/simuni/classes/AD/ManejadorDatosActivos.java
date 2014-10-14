@@ -1,11 +1,14 @@
 package simuni.classes.AD;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import simuni.classes.AR.ManejadorArchivos;
 import simuni.classes.EN.Activos_Articulos;
+import simuni.classes.EN.BD.ConexionMYSQL;
 import simuni.classes.EN.Departamento;
 import simuni.classes.EN.Servidor;
 import simuni.classes.EN.imagenActivo;
@@ -15,7 +18,7 @@ import simuni.classes.EN.imagenActivo;
  * @author FchescO
  */
 public class ManejadorDatosActivos {
-
+    
     public boolean agregarActivoArticulo(Activos_Articulos to_articulo) throws Exception {
         try {
             ManejadorArchivos manejadorarchivos = new ManejadorArchivos();
@@ -23,8 +26,11 @@ public class ManejadorDatosActivos {
             imagenActivo imagen = null;
             if (imagenes != null) {
                 Iterator<imagenActivo> iter = imagenes.iterator();
-                imagen = iter.next();
+                
+                if(iter.hasNext()){imagen = iter.next();};
             }
+            to_articulo.setPa_codigoProveedor("504230366");
+            
             if (imagen != null) {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 Date date = new Date();
@@ -37,14 +43,37 @@ public class ManejadorDatosActivos {
                 //registrar imagien "sin foto"
             }
             //registramos activo en bd
-
+            Connection con = ConexionMYSQL.obtenerConexion();
+            CallableStatement sp_ingresoarticulo
+                    = con.prepareCall("{CALL sp_registrarActivo_Articulo(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+               
+            sp_ingresoarticulo.setString(1, to_articulo.getPa_identificadorActivo());
+            sp_ingresoarticulo.setString(2, to_articulo.getPa_Observaciones());
+            sp_ingresoarticulo.setDouble(3, to_articulo.getPd_precioCompra());
+            sp_ingresoarticulo.setDate(4, new java.sql.Date(to_articulo.getPd_fechaCompra().getTime()));
+            sp_ingresoarticulo.setString(5, to_articulo.getPa_Estado());
+            sp_ingresoarticulo.setString(6, to_articulo.getPa_Descripcion());
+            sp_ingresoarticulo.setInt(7, to_articulo.getPa_tipoActivo());
+            sp_ingresoarticulo.setInt(8, to_articulo.getPo_depto().getPn_codigo());
+            sp_ingresoarticulo.setInt(9, to_articulo.getPa_tipoPago());
+            sp_ingresoarticulo.setString(10, to_articulo.getPa_marca());
+            sp_ingresoarticulo.setString(11, to_articulo.getPa_modelo());
+            sp_ingresoarticulo.setDouble(12, to_articulo.getPb_porcentajeDepreciacion());
+            sp_ingresoarticulo.setDouble(13, to_articulo.getPb_porcentajeRescate());
+            sp_ingresoarticulo.setDate(14, new java.sql.Date(to_articulo.getPd_puestaOperacion().getTime()));
+            sp_ingresoarticulo.setString(15, to_articulo.getPa_codigoProveedor());
+            sp_ingresoarticulo.setDate(16, new java.sql.Date(new Date().getTime()));
+            sp_ingresoarticulo.setString(17, "una url falsat");
+            sp_ingresoarticulo.setString(18, "nuevo nombreeeeeeee");
+            sp_ingresoarticulo.executeUpdate();
+            ConexionMYSQL.cerrarConexion(con);
         } catch (Exception ex) {
             throw ex;
         }
-
+        
         return true;
     }
-
+    
     public boolean modificarActivoArticulo(Activos_Articulos to_articulo) throws Exception {
         try {
             ManejadorArchivos manejadorarchivos = new ManejadorArchivos();
@@ -53,7 +82,7 @@ public class ManejadorDatosActivos {
             if (imagenes != null) {
                 Iterator<imagenActivo> iter = imagenes.iterator();
                 imagen = iter.next();
-
+                
             }
             if (imagen != null) {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -65,22 +94,22 @@ public class ManejadorDatosActivos {
                 //registrarlo en bd
                 // Servidor.SSI.ARCHIVOSACTIVOSCONTEXT.toString()+to_articulo.getPa_identificadorActivo()+sDate;
             }
-
+            
         } catch (Exception ex) {
             throw ex;
         }
-
+        
         return true;
     }
-
+    
     public boolean desactivarActivoArticulo(String ta_codigoactivo) {
         return true;
     }
-
+    
     public ArrayList<Activos_Articulos> getListaArticulos(int npagina, int paginacion) {
-
+        
         ArrayList<Activos_Articulos> to_articulo = new ArrayList<Activos_Articulos>();
-
+        
         for (int a = 0; a < paginacion; a++) {
             Activos_Articulos articulo = new Activos_Articulos();
             articulo.setPa_identificadorActivo("123456asdf");
@@ -91,10 +120,10 @@ public class ManejadorDatosActivos {
             articulo.setPa_Descripcion("Una descripcion rara");
             to_articulo.add(articulo);
         }
-
+        
         return to_articulo;
     }
-
+    
     public Activos_Articulos getActivoArticulo(String ta_codigoactivo) {
         Activos_Articulos articuloejemplo = new Activos_Articulos();
         articuloejemplo.setPa_Descripcion("Una descripcion rara");
@@ -126,25 +155,25 @@ public class ManejadorDatosActivos {
         d.setPa_nombre("Depto feo");
         d.setPn_codigo(1);
         articuloejemplo.setPo_depto(d);
-
+        
         return articuloejemplo;
     }
-
+    
     public ArrayList<imagenActivo> getListaImagenesActivo(int tn_codigoactivo) {
         return null;
     }
-
+    
     public boolean isActivoExistente(String idactivo) {
         return false;
     }
-
+    
     public int getNumeroActivosRegistrados() {
         return 0;
     }
-
+    
     public ArrayList<Activos_Articulos> buscarActivosArticulos(String query) {
         ArrayList<Activos_Articulos> to_articulo = new ArrayList<Activos_Articulos>();
-
+        
         for (int a = 0; a < 0; a++) {
             Activos_Articulos articulo = new Activos_Articulos();
             articulo.setPa_identificadorActivo(query);
@@ -154,7 +183,7 @@ public class ManejadorDatosActivos {
             articulo.setPd_puestaOperacion(new Date());
             articulo.setPa_Descripcion("Una descripcion rara");
             to_articulo.add(articulo);
-
+            
         }
         return to_articulo;
     }

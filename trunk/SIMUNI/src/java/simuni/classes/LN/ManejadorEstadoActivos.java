@@ -16,6 +16,9 @@ import simuni.classes.EN.EstadoActivo;
  */
 public class ManejadorEstadoActivos {
         public ArrayList<EstadoActivo> getListadoEstadosActivos(){
+
+        return new ManejadorDatosEstadoActivo().getListadoEstadosActivos();
+
             try{
             ManejadorDatosEstadoActivo manejadorestadosactivos = new ManejadorDatosEstadoActivo();
             ArrayList<EstadoActivo> estadoactivo = manejadorestadosactivos.getListadoEstadosActivos();
@@ -26,5 +29,6 @@ public class ManejadorEstadoActivos {
             UtilidadesServlet.registrarErrorSistema("getListadoEstadosActivos", e.getMessage());
             }           
         return null;
+
     }
 }
