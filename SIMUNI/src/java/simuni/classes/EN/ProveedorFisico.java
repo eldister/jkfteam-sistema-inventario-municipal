@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class ProveedorFisico extends Persona{
     private String pa_telefonoFijo;
     private String pa_telefonoMovil;
+    private String pa_telefonoOficina;
     private String pa_fax;
     private String pa_correoElectronico;
     private String pa_sitioWeb;
@@ -14,7 +15,7 @@ public class ProveedorFisico extends Persona{
     private String pa_banco;
     private String pa_nombreCompania;
     private String pa_direccionCompania;
-    private int pb_estadoprovedor;
+    private String pa_estadoprovedor;
     private Date pd_fecharegistro;
     
     private ArrayList<Documentos>po_documentos ;
@@ -92,15 +93,13 @@ public class ProveedorFisico extends Persona{
     /**
      * @return the pb_estadoprovedor
      */
-    public int getPb_estadoprovedor() {
-        return pb_estadoprovedor;
+    public String getPa_estadoprovedor() {
+        return pa_estadoprovedor;
     }
 
-    /**
-     * @param pb_estadoprovedor the pb_estadoprovedor to set
-     */
-    public void setPb_estadoprovedor(int pb_estadoprovedor) {
-        this.pb_estadoprovedor = pb_estadoprovedor;
+    
+    public void setPa_estadoprovedor(String pa_estadoprovedor) {
+        this.pa_estadoprovedor = pa_estadoprovedor;
     }
 
     /**
@@ -117,4 +116,10 @@ public class ProveedorFisico extends Persona{
         this.pd_fecharegistro = pd_fecharegistro;
     }
     
+    public String getPa_telefonoOficina(){
+        return this.pa_telefonoOficina;
+    }
+    public void setPa_telefonoOficina(String pa_telefonoOficina){
+        this.pa_telefonoOficina = pa_telefonoOficina;
+    }
 }
