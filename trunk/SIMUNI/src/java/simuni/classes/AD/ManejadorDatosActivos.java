@@ -97,7 +97,31 @@ public class ManejadorDatosActivos {
                 manejadorarchivos.guardarArchivo(ruta, imagen.getPa_nombreArchivo(), imagen.getStreamarchivo());
                 //registrarlo en bd
                 // Servidor.SSI.ARCHIVOSACTIVOSCONTEXT.toString()+to_articulo.getPa_identificadorActivo()+sDate;
+                //     
             }
+            //modificacion de los activos en la bd 
+            Connection con = ConexionMYSQL.obtenerConexion();
+             CallableStatement sp_modificacionarticulo
+                    = con.prepareCall("{CALL sp_actualizarActivo_Articulo(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+             sp_modificacionarticulo.setString(1, to_articulo.getPa_identificadorActivo());
+             sp_modificacionarticulo.setString(2, to_articulo.getPa_Observaciones());
+             sp_modificacionarticulo.setDouble(3, to_articulo.getPd_precioCompra());
+             sp_modificacionarticulo.setDate(4, new java.sql.Date(to_articulo.getPd_fechaCompra().getTime()));
+             sp_modificacionarticulo.setString(5, to_articulo.getPa_Estado());
+             sp_modificacionarticulo.setString(6, to_articulo.getPa_Descripcion());
+             sp_modificacionarticulo.setString(7, to_articulo.getPa_marca());
+             sp_modificacionarticulo.setString(8, to_articulo.getPa_modelo());
+             sp_modificacionarticulo.setDouble(9, to_articulo.getPb_porcentajeDepreciacion());
+             sp_modificacionarticulo.setDouble(10, to_articulo.getPb_porcentajeRescate());
+             sp_modificacionarticulo.setDate(11, new java.sql.Date(to_articulo.getPd_puestaOperacion().getTime()));
+             sp_modificacionarticulo.setDate(12, new java.sql.Date(new Date().getTime()));
+             sp_modificacionarticulo.setString(13, to_articulo.getPo_imagenActivo().toString());
+             sp_modificacionarticulo.setInt(14, to_articulo.getPa_tipoActivo());
+             sp_modificacionarticulo.setInt(15, to_articulo.getPo_depto().getPn_codigo());
+             sp_modificacionarticulo.setInt(16, to_articulo.getPa_tipoPago());
+             
+             sp_modificacionarticulo.executeUpdate();
+             ConexionMYSQL.cerrarConexion(con);
 
         } catch (Exception ex) {
             throw ex;
@@ -106,7 +130,19 @@ public class ManejadorDatosActivos {
         return true;
     }
 
-    public boolean desactivarActivoArticulo(String ta_codigoactivo) {
+    public boolean desactivarActivoArticulo(String ta_codigoactivo)  throws Exception{
+        try{
+       
+         Connection con = ConexionMYSQL.obtenerConexion();
+            CallableStatement sp_desactivarActivoArticulo
+                    = con.prepareCall("{CALL sp_eliminarActivo_Articulo(?}");
+           sp_desactivarActivoArticulo.setString(1, ta_codigoactivo);
+           sp_desactivarActivoArticulo.executeUpdate();
+            ConexionMYSQL.cerrarConexion(con);
+        }
+        catch (Exception ex){
+        throw ex;
+        }
         return true;
     }
 
@@ -185,7 +221,7 @@ public class ManejadorDatosActivos {
         return articuloejemplo;
     }
 
-    public ArrayList<imagenActivo> getListaImagenesActivo(int tn_codigoactivo) {
+    public ArrayList<imagenActivo> getListaImagenesActivo(int tn_codigoactivo) { // cambiar tipo a string 
         return null;
     }
 
