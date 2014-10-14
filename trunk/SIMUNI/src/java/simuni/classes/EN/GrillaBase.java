@@ -166,7 +166,7 @@ public class GrillaBase {
             resp.append("  <span class='sm_div_elementpagcontainer'>");
             resp.append("    <a href='");
             resp.append(getUrlpaginacionlink());
-            resp.append("?pag=");
+            resp.append("&pag=");
             resp.append(a);
             resp.append("'>");
             resp.append(a);

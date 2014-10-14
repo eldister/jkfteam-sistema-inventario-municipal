@@ -17,9 +17,8 @@ import simuni.classes.EN.Departamento;
 public class ManejadorDepartamentos {
        public ArrayList<Departamento> getListaDepartamentos() {
 
-        return new ManejadorDatosDepartamento().getListaDepartamentos();
-
-           try{ return new ManejadorDatosDepartamento().getListaDepartamentos();
+           try{ 
+             
                ManejadorDatosDepartamento manejadordepartamentos = new ManejadorDatosDepartamento();
                ArrayList<Departamento> departamento = manejadordepartamentos.getListaDepartamentos();
                UtilidadesServlet.registrarProcesoSistema("getListaDepartamentos", "Se obtuvo la lista de Departamentos");
