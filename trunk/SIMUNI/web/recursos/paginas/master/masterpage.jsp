@@ -18,6 +18,7 @@
             $(document).ready(function() {
                 var desplazado = 220;
                 var duracion = 500;
+                $("#volverTop").fadeOut(0);
                 $(window).scroll(function() {
                     if ($(this).scrollTop() > desplazado) {
                         $("#volverTop").fadeIn(duracion);
