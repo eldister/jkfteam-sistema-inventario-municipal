@@ -2,6 +2,9 @@ package simuni.classes.AD;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,9 +45,9 @@ public class ManejadorDatosProveedores {
             }
             //registramos proveedores en bd
             Connection con = ConexionMYSQL.obtenerConexion();
-            CallableStatement sp_ingresoproveedorfisico 
+            CallableStatement sp_ingresoproveedorfisico
                     = con.prepareCall("{CALL sp_registrarProveedor_fisico(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-            
+
             sp_ingresoproveedorfisico.setString(1, to_proveedor.getPa_cedula());
             sp_ingresoproveedorfisico.setString(2, to_proveedor.getPa_nombre());
             sp_ingresoproveedorfisico.setString(3, to_proveedor.getPa_primerApellido());
@@ -65,7 +68,7 @@ public class ManejadorDatosProveedores {
             sp_ingresoproveedorfisico.setString(18, to_proveedor.getPa_fax());
             sp_ingresoproveedorfisico.setString(19, to_proveedor.getPa_telefonoMovil());
             sp_ingresoproveedorfisico.setString(20, to_proveedor.getPa_telefonoOficina());
-            
+
             sp_ingresoproveedorfisico.executeUpdate();
             ConexionMYSQL.cerrarConexion(con);
 // hacer vara aqui
@@ -131,6 +134,26 @@ public class ManejadorDatosProveedores {
             proveedorfisico.setPn_apartadoPostal(a * 100);
             proveedores.add(proveedorfisico);
         }
+        return proveedores;
+    }
+
+    public ArrayList<ProveedorFisico> getListaProveedoresFisicos() throws SQLException {
+        ArrayList<ProveedorFisico> proveedores = new ArrayList<ProveedorFisico>();
+        Connection con = ConexionMYSQL.obtenerConexion();
+        PreparedStatement pst = con.prepareCall("SELECT * FROM sm_vista_listadoproveedoresseleccionador");
+        ResultSet rs = pst.executeQuery();
+        //   SM00IDPR,SM01NOPR,SM02PAPR,SM03SAPR,SM05EMPR,SM03NUCE
+        while (rs.next()) {
+            ProveedorFisico proveedorfisico = new ProveedorFisico();
+            proveedorfisico.setPa_cedula(rs.getString("SM00IDPR"));
+            proveedorfisico.setPa_correoElectronico(rs.getString("SM05EMPR"));
+            proveedorfisico.setPa_nombre(rs.getString("SM01NOPR"));
+            proveedorfisico.setPa_primerApellido(rs.getString("SM02PAPR"));
+            proveedorfisico.setPa_segundoApellido(rs.getString("SM03SAPR"));
+            proveedorfisico.setPa_telefonoMovil(rs.getString("SM03NUCE"));
+            proveedores.add(proveedorfisico);
+        }
+        ConexionMYSQL.cerrarConexion(con);
         return proveedores;
     }
 

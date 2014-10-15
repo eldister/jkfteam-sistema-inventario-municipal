@@ -46,6 +46,8 @@
 
                 var today = now.getFullYear() + "-" + (month) + "-" + (day);
                 $('input[type=date]').attr('value', today);
+                
+                setEventoSeleccionarProveedor();
             });
         </script>
     </decorator:content>
@@ -122,7 +124,8 @@
                                 <label>Nombre del proveedor </label>
                             </td>
                             <td>
-                                <input type="text" name="txtProveedor"  placeholder="Nombre completo">&nbsp;&nbsp;<input type="button" value="Seleccionar">
+                                <input type="text" name="txtProveedor" id="txtProveedor" readonly="readonly" required="required" placeholder="Nombre completo">&nbsp;&nbsp;
+                                <input type="button" id='txtbtnseleccionarproveedor' value="Seleccionar">
                             </td>
                         </tr>
                         <tr>
@@ -161,7 +164,7 @@
                                 <label>Precio de compra </label>
                             </td>
                             <td>
-                                <input type="text" name="txtPrecioCompra">
+                                <input required="required" type="number" step="any" name="txtPrecioCompra">
                             </td>
                         </tr>
                         <tr>
@@ -169,7 +172,7 @@
                                 <label>Porcentaje Depreciación </label>
                             </td>
                             <td>
-                                <input type="text" name="txtPorcentajeDepreciacion">
+                                <input required="required" type="number" step="any" min="0" max="100" name="txtPorcentajeDepreciacion">
                             </td>
                         </tr>
                         <tr>
@@ -177,7 +180,7 @@
                                 <label>Porcentaje Rescate</label>
                             </td>
                             <td>
-                                <input type="text" name="txtPorcentajeRescate">
+                                <input required="required" type="number" step="any" min="0" max="100" name="txtPorcentajeRescate">
                             </td>
                         </tr>                        
                         <tr>
@@ -286,5 +289,6 @@
                 <input type="hidden" value="1" name="hiddenidDepartamento">
             </div>
         </form>
+                                <div id='sm_body_ventanamodal'>&nbsp;</div>
     </decorator:content>
 </decorator:decorate>

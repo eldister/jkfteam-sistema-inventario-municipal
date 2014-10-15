@@ -103,3 +103,12 @@ input[type=text]{
     -webkit-border-radius: 5px;
     border: 1px solid #ccc;
 }
+
+.sm_popup_identificadorproveedor{
+    font-size: 1.2em;
+    font-weight: 900;
+}
+.sm_popup_identificadorproveedor:hover{
+    color: blue;
+    cursor: pointer;
+}

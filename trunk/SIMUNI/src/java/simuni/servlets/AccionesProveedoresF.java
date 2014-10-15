@@ -37,7 +37,8 @@ public class AccionesProveedoresF extends HttpServlet {
         ActualizarPropiedadPaginacionAsinc,
         BajarProveedorFisicoAsinc,
         VerificarSiProveedorExiste,
-        BuscarProveedor
+        BuscarProveedor,
+        ObtenerProveedoresParaSeleccionAsinc
 
     }
 
@@ -98,11 +99,19 @@ public class AccionesProveedoresF extends HttpServlet {
                 break;
             case VerificarSiProveedorExiste:
 
-                                manejador=new ManejadorProveedores();
-                codigoproveedor=request.getParameter("codigoproveedor");
-                if(manejador.isProveedorExistente(codigoproveedor)){
+                manejador = new ManejadorProveedores();
+                codigoproveedor = request.getParameter("codigoproveedor");
+                if (manejador.isProveedorExistente(codigoproveedor)) {
                     response.getOutputStream().print("Si Existe");
-                }break;
+                }
+                break;
+            case ObtenerProveedoresParaSeleccionAsinc:
+                manejador=new ManejadorProveedores();
+                proveedores=manejador.getListaProveedoresFisicos();
+                disp = request.getRequestDispatcher("/recursos/paginas/embebidos/listadoproveedoresregistrados.jsp");
+                request.setAttribute("listadoproveedoresfisicos", proveedores);
+                disp.forward(request, response);                
+                break;
 
         }
 
@@ -248,7 +257,7 @@ public class AccionesProveedoresF extends HttpServlet {
                     break;
                 case BuscarProveedor:
                     manejadorproveedores = new ManejadorProveedores();
-                    String query=request.getParameter("query");
+                    String query = request.getParameter("query");
                     proveedores = manejadorproveedores.buscarProveedoresFisicos(query);
                     request.setAttribute("proveedores", proveedores);
                     disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=2");
@@ -305,10 +314,12 @@ public class AccionesProveedoresF extends HttpServlet {
             return OpcionesDo.ActualizarPropiedadPaginacionAsinc;
         } else if (key.equals("ver_proveedorfisicoasinc")) {
             return OpcionesDo.ObtenerProveedoresFisicosAsinc;
-        }else if(key.equals("verificarsiproveedorexiste")){
+        } else if (key.equals("verificarsiproveedorexiste")) {
             return OpcionesDo.VerificarSiProveedorExiste;
-        }else if(key.equals("busquedaproveedorfisico")){
+        } else if (key.equals("busquedaproveedorfisico")) {
             return OpcionesDo.BuscarProveedor;
+        } else if (key.equals("obtenerregistroproveedor")) {
+            return OpcionesDo.ObtenerProveedoresParaSeleccionAsinc;
         }
         return OpcionesDo.AccionDefault;
     }

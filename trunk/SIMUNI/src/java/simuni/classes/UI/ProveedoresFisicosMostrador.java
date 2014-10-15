@@ -32,17 +32,10 @@ public class ProveedoresFisicosMostrador {
             to_proveedores=new ArrayList<ProveedorFisico>();
         }
         Iterator<ProveedorFisico> iter = to_proveedores.iterator();
-        String estadoproveedorfisico = "";
+        String estadoproveedorfisico ="" ;
         while (iter.hasNext()) {
             ProveedorFisico proveedorfisico = iter.next();
-            switch (proveedorfisico.getPb_estadoprovedor()) {
-                case 1:
-                    estadoproveedorfisico = "Activo";
-                    break;
-                case 0:
-                    estadoproveedorfisico = "Desactivo";
-                    break;
-            }
+            estadoproveedorfisico=proveedorfisico.getPa_estadoprovedor();
             Object[] obj = new Object[]{
                 proveedorfisico.getPa_cedula(),
                 proveedorfisico.getPa_nombre(),
@@ -68,14 +61,7 @@ public class ProveedoresFisicosMostrador {
         String estadoproveedorfisico = "";
         while (iter.hasNext()) {
             ProveedorFisico proveedorfisico = iter.next();
-            switch (proveedorfisico.getPb_estadoprovedor()) {
-                case 1:
-                    estadoproveedorfisico = "Activo";
-                    break;
-                case 0:
-                    estadoproveedorfisico = "Desactivo";
-                    break;
-            }
+           estadoproveedorfisico=proveedorfisico.getPa_estadoprovedor();
             Object[] obj = new Object[]{
                 proveedorfisico.getPa_cedula(),
                 proveedorfisico.getPa_nombre(),

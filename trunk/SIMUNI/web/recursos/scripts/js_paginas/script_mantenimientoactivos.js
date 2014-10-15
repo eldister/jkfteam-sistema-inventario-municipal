@@ -42,11 +42,14 @@ function  sm_grilla_proceso_modificaractivo(sm_grilla_item_id) {
             .done(function(html) {
                 $("#sm_body_ventanamodal").html(html);
                 setManejadorFormularioActualizacion();
+              
             });
 
     mostrarventanamodal();
 
 }
+
+
 
 function setManejadorFormularioActualizacion() {
     var frm = $('#sm_div_formulario');
@@ -173,4 +176,18 @@ function  sm_grilla_proceso_imprimirreporteactivo(sm_grilla_item_id){
          
     
     
+}
+
+
+function sm_grilla_proceso_verimagen(sm_grilla_item_id){
+        $.ajax({
+        url: "/SIMUNI/modulos/activos?proceso=obtenerimagenesactivo&codigoactivo=" + sm_grilla_item_id,
+        cache: false
+    })
+            .done(function(html) {
+                $("#sm_body_ventanamodal").html(html);
+                setManejadorFormularioActualizacion();
+            });
+
+    mostrarventanamodal();
 }

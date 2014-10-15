@@ -46,7 +46,8 @@ public class AccionesArticulos extends HttpServlet {
         BajarActivoArticuloAsinc,
         VerificarSiArticuloYaRegistrado,
         BusquedaArticulo,
-        HacerReporteActivoArticuloParticular
+        HacerReporteActivoArticuloParticular,
+        ObtenerImagenesActivoAsinc
 
     }
 
@@ -63,7 +64,7 @@ public class AccionesArticulos extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //aqui se manejara los procesos  
-        
+
         ManejadorActivos manejador = new ManejadorActivos();
         ManejadorDepartamentos manejadordeptos = new ManejadorDepartamentos();
         ManejadorTipoActivo manejadortactivos = new ManejadorTipoActivo();
@@ -96,14 +97,14 @@ public class AccionesArticulos extends HttpServlet {
                     //colocar los valores por defecto 
                     paginacion = 7;
                 }
-                int desplazamiento=((npagina-1)*paginacion);
-                System.out.println("Desplazameitnto" +desplazamiento);
+                int desplazamiento = ((npagina - 1) * paginacion);
+                System.out.println("Desplazameitnto" + desplazamiento);
                 articulos = manejador.getListaArticulos(desplazamiento, paginacion);
                 tiposactivos = manejadortactivos.getListaTiposActivos();
                 disp = request.getRequestDispatcher("/modulos/activos/articulos/mantenimiento_1.jsp");
                 request.setAttribute("listadoarticulos", articulos);
                 request.setAttribute("listadotiposactivo", tiposactivos);
-                request.setAttribute("paginacion", ((int)manejador.getCantidadRegistrosActivosArticulos()/paginacion)+1);       
+                request.setAttribute("paginacion", ((int) manejador.getCantidadRegistrosActivosArticulos() / paginacion) + 1);
 
                 disp.forward(request, response);
                 break;
@@ -162,6 +163,19 @@ public class AccionesArticulos extends HttpServlet {
                 //hay que crear la vista
                 disp = request.getRequestDispatcher("/recursos/paginas/embebidos/reportesgeneral_asinc.jsp?mod=1");
                 request.setAttribute("articulo", articulo);
+                disp.forward(request, response);
+                break;
+            case ObtenerImagenesActivoAsinc:
+
+                codigoactivo = request.getParameter("codigoactivo");
+                ArrayList<imagenActivo> imagenes = null;
+
+                imagenes = manejador.getListaImagenesActivo(codigoactivo);
+
+                //hay que crear la vista
+                disp = request.getRequestDispatcher("/recursos/paginas/embebidos/vistaimagenesactivos.jsp");
+                request.setAttribute("imagenes", imagenes);
+                request.setAttribute("codigoactivo", codigoactivo);
                 disp.forward(request, response);
                 break;
 
@@ -228,8 +242,10 @@ public class AccionesArticulos extends HttpServlet {
                     }
                     filecontent = filePart.getInputStream();
                     filename = UtilidadesServlet.getFilename(filePart);
-                    formatter = new SimpleDateFormat("dd-mm-yyyy");
+                    formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    System.out.println(fechainiciooperacion);
                     date = new java.sql.Date(formatter.parse(fechainiciooperacion).getTime());
+                    System.out.println("ahora si " + fechainiciooperacion + date.toGMTString());
 
                     ///VALIDAR SI LOS CAMPOS REQUERIDOS SON VALIDOS O NO (NULOS) y que la imagen sea png o jpg
                     //validar que la placa no este registrada en base de datos.
@@ -280,11 +296,23 @@ public class AccionesArticulos extends HttpServlet {
 
                 case ActualizarActivoArticulo:
                     filePart = request.getPart("fileimagenactivo"); // Retrieves <input type="file" name="file">                  
-                    if (filePart != null) {
+                    System.out.println("veamooooooooos  " + filePart.getSize());
+                    if (filePart != null && filePart.getSize() > 0) {
                         filecontent = filePart.getInputStream();
                         filename = UtilidadesServlet.getFilename(filePart);
+                        //instanciamos para las imagenes
+                        imagenactivo = new imagenActivo();
+                        imagenactivo.setPa_nombreArchivo(filename);
+                        imagenactivo.setStreamarchivo(filecontent);
+                        listadoimagen = new ArrayList<imagenActivo>();
+                        listadoimagen.add(imagenactivo);
+                        activoarticulo.setPo_imagenActivo(listadoimagen);
+
                     }
-                    formatter = new SimpleDateFormat("dd-mm-yyyy");
+                    else{
+                        activoarticulo.setPo_imagenActivo(null);
+                    }
+                    formatter = new SimpleDateFormat("yyyy-MM-dd");
                     date = new java.sql.Date(formatter.parse(fechainiciooperacion).getTime());
 
                     ///VALIDAR SI LOS CAMPOS REQUERIDOS SON VALIDOS O NO (NULOS) y que la imagen sea png o jpg
@@ -300,14 +328,6 @@ public class AccionesArticulos extends HttpServlet {
                     depto = new Departamento();
                     depto.setPn_codigo(Integer.parseInt(iddepto));
                     activoarticulo.setPo_depto(depto);
-
-                    //instanciamos para las imagenes
-                    imagenactivo = new imagenActivo();
-                    imagenactivo.setPa_nombreArchivo(filename);
-                    imagenactivo.setStreamarchivo(filecontent);
-                    listadoimagen = new ArrayList<imagenActivo>();
-                    listadoimagen.add(imagenactivo);
-                    activoarticulo.setPo_imagenActivo(listadoimagen);
 
                     //hacer validaciones si es entero.
                     date = new java.sql.Date(formatter.parse(fechacompraactivo).getTime());
@@ -341,6 +361,7 @@ public class AccionesArticulos extends HttpServlet {
                     String codigoactivo = request.getParameter("codigoactivo");
                     if (manejadoractivos.desactivarActivoArticulo(codigoactivo)) {
                         //redirigir a una pagina de exito
+                        System.out.println(codigoactivo);
                         disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito_asinc.jsp?id=" + codigoactivo + "&msg=3");
                         disp.forward(request, response);
 
@@ -387,7 +408,7 @@ public class AccionesArticulos extends HttpServlet {
                         paginacion = 7;
                         request.getSession().setAttribute("paginacion", paginacion);
                     }
-                     int desplazamiento=((npagina-1)*paginacion);
+                    int desplazamiento = ((npagina - 1) * paginacion);
                     articulos = manejadoractivos.getListaArticulos(desplazamiento, paginacion);
                     disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=1");
                     deptos = manejadordeptos.getListaDepartamentos();
@@ -467,6 +488,8 @@ public class AccionesArticulos extends HttpServlet {
             return OpcionesDo.BusquedaArticulo;
         } else if (key.equals("hacerreporteactivoparticular")) {
             return OpcionesDo.HacerReporteActivoArticuloParticular;
+        } else if (key.equals("obtenerimagenesactivo")) {
+            return OpcionesDo.ObtenerImagenesActivoAsinc;
         }
         return OpcionesDo.AccionDefault;
     }
