@@ -57,6 +57,17 @@ public class ManejadorProveedores {
             return null;
         }
     }
+    public ArrayList<ProveedorFisico> getListaProveedoresFisicos() {
+        try{
+            ManejadorDatosProveedores p= new ManejadorDatosProveedores();
+            ArrayList<ProveedorFisico> proveedorfisico = p.getListaProveedoresFisicos();
+            UtilidadesServlet.registrarProcesoSistema("getListaProveedoresFisicos", "Se obtuvo la lista de los proveedores Fisicos");
+            return proveedorfisico ;
+        }catch(Exception ex){
+            UtilidadesServlet.registrarErrorSistema("getListaProveedoresFisicos", ex.getMessage()); //registrar error
+            return null;
+        }
+    }
 
     public ProveedorFisico getProveedorFisico(String tn_codigoproveedorfisico) {
         try{
