@@ -18,7 +18,64 @@
         activo = new Activos_Articulos();
     }
 %>
-        <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/jquery-registroactivos.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/jquery-registroactivos.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+          setEventoSeleccionarProveedor_b();
+    });
+    
+
+    function setEventoSeleccionarProveedor_b() {
+        $("#txtbtnseleccionarproveedor").click(function() {
+
+            seleccionarProveedor_b();
+
+        });
+    }
+
+    function mostrarventanamodal_b() {
+        $("#sm_body_ventanamodal_b").show('slow');
+        $("#sm_body_ventanamodal_b").dialog({
+            modal: true,
+            width: "70%",
+            position: {my: "left-10 top", at: "left top", of: sm_formembebido_actualizacionarticulos},
+            maxWidth: "768px"});
+
+
+    }
+
+    function seleccionarProveedor_b() {
+
+        $.ajax({
+            url: "/SIMUNI/modulos/proveedores?proceso=obtenerregistroproveedor",
+            cache: false
+        })
+                .done(function(html) {
+                    $("#sm_body_ventanamodal_b").html(html);
+                    mostrarventanamodal_b();
+                    setManejadorSeleccionProveedor();
+                });
+
+
+    }
+
+
+    function setManejadorSeleccionProveedor() {
+        $(".sm_popup_identificadorproveedor").click(function() {
+            $("input[name=hiddenidProveedor]").val($(this).text());
+
+
+            $("#txtProveedor").val($(this).text());
+            // alert(   $("input[name=hiddenidProveedor]").val())
+            $("#sm_body_ventanamodal_b").dialog('close');
+
+        });
+    }
+
+
+</script>
 <div id="sm_formembebido_actualizacionarticulos">
     <form id="sm_div_formulario" method="POST" action="/SIMUNI/modulos/activos?proceso=modificacionarticulo" enctype="multipart/form-data">
         <fieldset id="sm_fs_articulos">
@@ -26,26 +83,12 @@
             <h1>Activo <%out.print(activo.getPa_identificadorActivo());%></h1>
             <div id="sm_form_registroinformacion">
                 <table id="sm_tb_campos">
-                    <!-- <tr>
-                         <td>
-                             <label>Tipo del activo </label>
-                         </td>
-                         <td>
-                             <select name="cmbTipoActivos">
-                                 <option>-- Seleccionar --</option>
-                                 <option>Transporte</option>
-                                 <option>Tecnológico</option>
-                                 <option>Muebles</option>
-                             </select>
-                         </td>
-                     </tr>-->
                     <tr>
                         <td>
                             <label>Número de placa </label>
                         </td>
                         <td>
                             <span><% out.print(activo.getPa_identificadorActivo()); %></span>
-                            <!--<input type="text" required="required" value="" oninvalid="this.setCustomValidity('Este campo es requerido')" name="txtNumeroPlaca">-->
                         </td>
                     </tr>    
                     <tr>
@@ -70,36 +113,21 @@
                         </td>
                         <td>
                             <select name="cmbCategoria">
-                                <option value="-1">-- Seleccionar --</option>
                                 <%
                                     if (tiposactivos != null) {
                                         Iterator<TipoActivo> iter = tiposactivos.iterator();
                                         while (iter.hasNext()) {
                                             TipoActivo tactivo = iter.next();
-                                            out.print("option ");
+                                            out.print("<option ");
                                             out.print(activo.getPa_tipoActivo() == tactivo.getCodigoTipoActivo() ? " selected" : "");
-                                            out.print("value'");
+                                            out.print("value='");
                                             out.print(tactivo.getCodigoTipoActivo());
                                             out.print("'>");
                                             out.print(tactivo.getNombreTipoActivo());
-                                            out.print("</option");
+                                            out.print("</option>");
                                         }
                                     }
                                 %>
-                                <!--    <option>Edificios</option>
-                                    <option>Multimedia</option>
-                                    <option>Computación</option>
-                                    <option>Impresión</option>
-                                    <option>Telefonía</option>
-                                    <option>Máquinaria</option>
-                                    <option>Máquinaria pesada</option>
-                                    <option>Oficina</option>
-                                    <option>Recolección de basura</option>
-                                    <option>Refrigeración</option>
-                                    <option>Transporte</option>
-                                    <option>Herramientas de trabajo</option>
-                                    <option>Muebles</option>
-                                    <option>Otros (Sin clasificación)</option>-->
                             </select>
                         </td>
                     </tr>
@@ -116,7 +144,8 @@
                             <label>Nombre del proveedor </label>
                         </td>
                         <td>
-                            <input type="text" value="<% out.print(activo.getPa_nombreproveedor()); %>"  name="txtProveedor"><input type="button" value="Seleccionar">
+                            <input type="text" value="<% out.print(activo.getPa_codigoProveedor()); %>"  name="txtProveedor">
+                            <input type="button" id="txtbtnseleccionarproveedor" value="Seleccionar">
                         </td>
                     </tr>
                     <tr>
@@ -125,20 +154,19 @@
                         </td>
                         <td>
                             <!--<input type="text" name="txtDescripción">-->
-                            <select name="cmbDepartamento">
-                                <option value="-1">-- Seleccionar --</option>                                
+                            <select name="cmbDepartamento">                            
                                 <%
                                     if (deptos != null) {
                                         Iterator<Departamento> iter = deptos.iterator();
                                         while (iter.hasNext()) {
                                             Departamento depto = iter.next();
-                                            out.print("option ");
+                                            out.print("<option ");
                                             out.print(activo.getPo_depto().getPn_codigo() == depto.getPn_codigo() ? " selected" : "");
-                                            out.print(" value'");
+                                            out.print(" value='");
                                             out.print(depto.getPn_codigo());
                                             out.print("'>");
                                             out.print(depto.getPa_nombre());
-                                            out.print("</option");
+                                            out.print("</option>");
                                         }
 
                                     }
@@ -159,7 +187,7 @@
                             <label>Precio de compra </label>
                         </td>
                         <td>
-                            <input type="text" value="<% out.print(activo.getPd_precioCompra()); %>" name="txtPrecioCompra">
+                            <input type="number" value="<% out.print(activo.getPd_precioCompra()); %>" name="txtPrecioCompra">
                         </td>
                     </tr>
                     <tr>
@@ -184,28 +212,21 @@
                         </td>
                         <td>
                             <select name="cmbTipoPago">
-                                <option value="-1">-- Seleccionar --</option>
                                 <%
                                     if (tipospago != null) {
                                         Iterator<TipoPago> iter = tipospago.iterator();
                                         while (iter.hasNext()) {
                                             TipoPago tpago = iter.next();
-                                            out.print("option ");
+                                            out.print("<option ");
                                             out.print(activo.getPa_tipoPago() == tpago.getCodigoTipoPago() ? " selected" : "");
-                                            out.print(" value'");
+                                            out.print(" value='");
                                             out.print(tpago.getCodigoTipoPago());
                                             out.print("'>");
                                             out.print(tpago.getNombreTipoPago());
-                                            out.print("</option");
+                                            out.print("</option>");
                                         }
                                     }
                                 %>                                    
-
-                                <!-- <option>Efectivo</option>
-                                 <option>Crédito</option>
-                                 <option>Debito</option>
-                                 <option >Cheque</option>
-                                 <option>Fiado</option>-->
                             </select>
                         </td>
                     </tr>
@@ -215,36 +236,21 @@
                         </td>
                         <td>
                             <select name="cmbEstadoActivo">
-                                <option value="-1">-- Seleccionar --</option>
                                 <%
                                     if (tiposestadoactivo != null) {
                                         Iterator<EstadoActivo> iter = tiposestadoactivo.iterator();
                                         while (iter.hasNext()) {
                                             EstadoActivo testadoactivo = iter.next();
-                                            out.print("option ");
+                                            out.print("<option ");
                                             out.print(activo.getPa_Estado() == testadoactivo.getNombreEstado() ? " selected" : "");
-                                            out.print(" value'");
+                                            out.print(" value='");
                                             out.print(testadoactivo.getNombreEstado());
                                             out.print("'>");
                                             out.print(testadoactivo.getNombreEstado());
-                                            out.print("</option");
+                                            out.print("</option>");
                                         }
                                     }
                                 %>                                    
-                                <!--
-                                <option>Excelente</option>
-                                <option>Bueno</option>
-                                <option>Regular</option>
-                                <option>Malo</option>
-                                <option>Irreparable</option>
-                                <option>Alquilado</option>
-                                <option>Depreciado</option>
-                                <option>Desechado</option>
-                                <option>Donado</option>
-                                <option>Préstado</option>
-                                <option>En reparación</option>
-                                <option>Robado</option>-->
-
                             </select>
                         </td>
                     </tr>                        
@@ -286,9 +292,8 @@
                                     if (img != null) {
                                         imagenActivo imagen = img.get(0);
                                         urlimagen = imagen.getPa_url() + "/" + imagen.getPa_nombreArchivo();
-                                    }
-                                    else{
-                                        out.print("noup"+img);
+                                    } else {
+                                        out.print("noup" + img);
                                     }
                                 %>
                                 <img id="imgImagenCargada" src="<% out.print(urlimagen);%>" height="218" width="218" alt="Fotografía de activo">
@@ -308,7 +313,8 @@
             <input type="hidden"  value="<% out.print(activo.getPa_tipoActivo()); %>"name="hiddenidCategoria">
             <input type="hidden"  value="<% out.print(activo.getPa_tipoPago()); %>"name="hiddenidTipoPago">
             <input type="hidden"  value="<% out.print(activo.getPo_depto().getPn_codigo()); %>" name="hiddenidDepartamento">
-            <input type='hidden'  value="<% out.print(activo.getPa_identificadorActivo()); %>" name="txtNumeroPlaca">
+            <input type='hidden'  value="<% out.print(activo.getPa_identificadorActivo());%>" name="txtNumeroPlaca">
         </div>
     </form>
+    <div id='sm_body_ventanamodal_b'>&nbsp;</div>
 </div>

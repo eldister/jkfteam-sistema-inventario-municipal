@@ -49,3 +49,54 @@ function verificarSiPlacaYaRegistrada() {
     });
 
 }
+
+
+/* para registrar  lo de*/
+
+function setEventoSeleccionarProveedor() {
+    $("#txtbtnseleccionarproveedor").click(function() {
+
+        seleccionarProveedor();
+
+    });
+}
+
+function mostrarventanamodal() {
+    $("#sm_body_ventanamodal").show('slow');
+    $("#sm_body_ventanamodal").dialog({
+        modal: true,
+        width: "70%",
+        position: {my: "left-10 top", at: "left top", of: sm_body_mainsection},
+        maxWidth: "768px"});
+
+
+}
+
+function seleccionarProveedor() {
+
+    $.ajax({
+        url: "/SIMUNI/modulos/proveedores?proceso=obtenerregistroproveedor",
+        cache: false
+    })
+            .done(function(html) {
+                $("#sm_body_ventanamodal").html(html);
+                mostrarventanamodal();
+                setManejadorSeleccionProveedor();
+            });
+
+
+}
+
+
+function setManejadorSeleccionProveedor() {
+    $(".sm_popup_identificadorproveedor").click(function() {
+       $("input[name=hiddenidProveedor]").val($(this).text());
+       
+       
+       $("#txtProveedor").val($(this).text());
+      // alert(   $("input[name=hiddenidProveedor]").val())
+       $("#sm_body_ventanamodal").dialog('close');
+
+    });
+}
+

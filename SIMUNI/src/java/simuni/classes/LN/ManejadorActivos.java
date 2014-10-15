@@ -16,7 +16,7 @@ public class ManejadorActivos {
     public boolean agregarActivoArticulo(Activos_Articulos to_articulo) throws Exception {
         try {
             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
-           
+
             manejadordatosactivos.agregarActivoArticulo(to_articulo);
             UtilidadesServlet.registrarProcesoSistema("agregarActivoArticulo", "Se inserto con éxito el activo");
         } catch (Exception e) {
@@ -50,6 +50,7 @@ public class ManejadorActivos {
             UtilidadesServlet.registrarProcesoSistema("desactivarActivoArticulo", "Se desactivo con éxito el activo");
         } catch (Exception e) {
             UtilidadesServlet.registrarErrorSistema("desactivarActivoArticulo", e.getMessage());
+            e.printStackTrace();
         }
         return true;
     }
@@ -69,10 +70,9 @@ public class ManejadorActivos {
 
     public int getCantidadRegistrosActivosArticulos() {
         try {
-           
+
             return new ManejadorDatosActivos().getCantidadRegistrosActivosArticulos();
 
-            
         } catch (Exception ex) {
             //registrar error
             return 0;
@@ -91,14 +91,16 @@ public class ManejadorActivos {
         return null;
     }
 
-    public ArrayList<imagenActivo> getListaImagenesActivo(int tn_codigoactivo) {
+    public ArrayList<imagenActivo> getListaImagenesActivo(String tn_codigoactivo) {
         try {
+
             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
-            ArrayList<imagenActivo> articulos = manejadordatosactivos.getListaImagenesActivo(tn_codigoactivo);
+            // ArrayList<imagenActivo> articulos = manejadordatosactivos.getListaImagenesActivo(tn_codigoactivo);
             UtilidadesServlet.registrarProcesoSistema("getListaImagenesActivo", "Se obtuvo la lista de Imagenes");
-            return articulos;
+            return manejadordatosactivos.getListaImagenesActivo(tn_codigoactivo);
         } catch (Exception e) {
             UtilidadesServlet.registrarErrorSistema("getListaImagenesActivo", e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }

@@ -30,3 +30,15 @@ and open the template in the editor.
     width: 55%;
 }
 
+
+/*visualizar imagense*/
+
+.sm_fieldset_itemimgcontainer{
+    display: inline-block;
+    width: 250px;
+    padding: 25px;
+    box-shadow: 5px 7px 45px lightskyblue;
+}
+.sm_fieldset_generalimgcontainer{
+    padding: 25px;
+}
