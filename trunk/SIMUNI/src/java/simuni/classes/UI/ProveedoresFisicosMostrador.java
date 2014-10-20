@@ -22,7 +22,7 @@ public class ProveedoresFisicosMostrador {
 
     public ProveedoresFisicosMostrador() {
         criteriofiltros = new Object[]{};
-        encabezados = new Object[]{"Cédula Proveedor", "Nombre", "Primer Apellido", "Segundo Apellido", "Fecha de registro", "Estado"};
+        encabezados = new Object[]{"Cédula Proveedor", "Nombre", "Primer Apellido", "Segundo Apellido", "Correo", "Tel. Celular"};
 
     }
 
@@ -32,23 +32,25 @@ public class ProveedoresFisicosMostrador {
             to_proveedores=new ArrayList<ProveedorFisico>();
         }
         Iterator<ProveedorFisico> iter = to_proveedores.iterator();
-        String estadoproveedorfisico ="" ;
+     
         while (iter.hasNext()) {
             ProveedorFisico proveedorfisico = iter.next();
-            estadoproveedorfisico=proveedorfisico.getPa_estadoprovedor();
             Object[] obj = new Object[]{
                 proveedorfisico.getPa_cedula(),
                 proveedorfisico.getPa_nombre(),
                 proveedorfisico.getPa_primerApellido(),
                 proveedorfisico.getPa_segundoApellido(),
-                proveedorfisico.getPd_fecharegistro(),
-                estadoproveedorfisico
+                proveedorfisico.getPa_correoElectronico(),
+                proveedorfisico.getPa_telefonoMovil()
             };
             filas.add(obj);
         }
         GrillaBase gril = new GrillaBase();
         gril.setOpciommostrarfiltro(false);
-        gril.setUrlagregaropcionagregar("registro.jsp");
+        gril.setOpcionver(false);
+      gril.setUrlpaginacionlink("http://localhost:8080/SIMUNI/modulos/proveedores?proceso=verproveedoresfisicos");
+
+        gril.setUrlagregaropcionagregar("/SIMUNI/modulos/proveedores?proceso=registroproveedorfisico");
         gril.setBusquedalabel("Buscar Proveedor");
         return gril.renderizar(criteriofiltros, encabezados, filas, cantidadpaginas);
     }
@@ -74,7 +76,9 @@ public class ProveedoresFisicosMostrador {
         }
         GrillaBase gril = new GrillaBase();
         gril.setOpciommostrarfiltro(false);
-        gril.setUrlagregaropcionagregar("registro.jsp");
+        gril.setOpcionver(false);
+        gril.setUrlpaginacionlink("http://localhost:8080/SIMUNI/modulos/proveedores?proceso=verproveedoresfisicos");
+        gril.setUrlagregaropcionagregar("/SIMUNI/modulos/proveedores?proceso=registroproveedorfisico");
         return gril.renderizarSoloCuerpoTabla(encabezados, filas, cantidadpaginas);
     }    
 }

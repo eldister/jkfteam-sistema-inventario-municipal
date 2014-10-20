@@ -18,7 +18,11 @@
             $(document).ready(function() {
                 var desplazado = 220;
                 var duracion = 500;
+<<<<<<< .mine
+                 $("#volverTop").fadeOut(0);
+=======
                 $("#volverTop").fadeOut(0);
+>>>>>>> .r47
                 $(window).scroll(function() {
                     if ($(this).scrollTop() > desplazado) {
                         $("#volverTop").fadeIn(duracion);
@@ -46,7 +50,7 @@
                         <a href="http://www.nandayure.go.cr/"><div id="sm_div_logomuni">&nbsp;</div></a> 
                     </div>
                     <div id="sm_div_logosimunicontainer">
-                        <a href="#" id="enlaceInicio"><div id="sm_div_logosimuni">
+                        <a href="/SIMUNI" id="enlaceInicio"><div id="sm_div_logosimuni">
                             <span id="sm_div_simunislogan">Sistema de Información para el Control de Inventario Municipal&nbsp;</span>
                         </div></a>
 
@@ -244,7 +248,7 @@
             </div>            
 
         </footer>
-        <a href="#" id="volverTop" style="display: inline;"><img border="0" id="imgVolverArriba" src="../../../recursos/imagenes/sistema/sm_volver_arriba.png" title="Ir arriba"/></a>
+        <a href="#" id="volverTop" style="display: inline;"><img border="0" id="imgVolverArriba" src="<%=request.getContextPath()%>/recursos/imagenes/sistema/sm_volver_arriba.png" title="Ir arriba"/></a>
     </body>
 </html>
 

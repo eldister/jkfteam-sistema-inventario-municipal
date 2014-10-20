@@ -1,3 +1,4 @@
+<%@page import="simuni.classes.LN.UtilidadesServlet"%>
 <%@page import="simuni.classes.UI.ProveedoresFisicosMostrador"%>
 <%@page import="simuni.classes.EN.ProveedorFisico"%>
 <%@page import="java.util.ArrayList"%>
@@ -20,10 +21,14 @@
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <%
             
-            
+         String pagaux=request.getAttribute("paginacion")!=null?request.getAttribute("paginacion").toString():"1";
+        int paginacion=0;
+       if( UtilidadesServlet.tryParseInt(pagaux)){
+           paginacion=Integer.parseInt(pagaux);
+       }           
             ArrayList<ProveedorFisico> to_proveedores = (ArrayList<ProveedorFisico>)request.getAttribute("listadoproveedoresfisicos");
            
-            out.write(new ProveedoresFisicosMostrador().RenderizarProveedoresFisicos(to_proveedores, 10));
+            out.write(new ProveedoresFisicosMostrador().RenderizarProveedoresFisicos(to_proveedores, paginacion));
 
         %>
        <div id="sm_body_ventanamodal">55555</div>

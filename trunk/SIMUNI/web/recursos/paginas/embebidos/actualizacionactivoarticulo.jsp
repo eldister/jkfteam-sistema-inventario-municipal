@@ -65,6 +65,7 @@
     function setManejadorSeleccionProveedor() {
         $(".sm_popup_identificadorproveedor").click(function() {
             $("input[name=hiddenidProveedor]").val($(this).text());
+            $("input[name=txtProveedor]").val($(this).text());
 
 
             $("#txtProveedor").val($(this).text());
