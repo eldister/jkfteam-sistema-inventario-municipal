@@ -1,9 +1,11 @@
 
 function addEventosACamposDeTexto() {
     $('input[name=codigoproveedor]').change(verificarsiproveedorYaRegistrado);
+   
 }
 
 function verificarsiproveedorYaRegistrado() {
+   
     $.ajax({
         url: "/SIMUNI/modulos/proveedores?proceso=verificarsiproveedorexiste&codigoproveedor=" + $(this).val(),
         cache: false

@@ -77,9 +77,16 @@ public class AccionesProveedoresF extends HttpServlet {
                     //colocar los valores por defecto 
                     paginacion = 7;
                 }
-                proveedores = manejador.getListaProveedoresFisicos(npagina, paginacion);
+                int desplazamiento = ((npagina - 1) * paginacion);
+                System.out.println("Desplazamiento  " + desplazamiento);
+                System.out.println("Limite  " + paginacion);
+
+                proveedores = manejador.getListaProveedoresFisicos(desplazamiento, paginacion);
                 disp = request.getRequestDispatcher("/modulos/proveedores/fisicos/mantenimiento.jsp");
                 request.setAttribute("listadoproveedoresfisicos", proveedores);
+                request.setAttribute("paginacion", ((int) manejador.getNumeroProveedoresRegistrados() / paginacion) + 1);
+                System.out.println("El valor de la cantidad pag "+((int) manejador.getNumeroProveedoresRegistrados() / paginacion) + 1);
+
                 disp.forward(request, response);
 
                 break;
@@ -87,6 +94,7 @@ public class AccionesProveedoresF extends HttpServlet {
             case ActualizarProveedorFisico:
                 String codigoproveedor = request.getParameter("codigoproveedor");
                 proveedor = manejador.getProveedorFisico(codigoproveedor);
+                System.out.println("Codigo de proveedor "+codigoproveedor);
                 disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizacionproveedorfisico.jsp");
                 request.setAttribute("proveedor", proveedor);
                 disp.forward(request, response);
@@ -106,11 +114,11 @@ public class AccionesProveedoresF extends HttpServlet {
                 }
                 break;
             case ObtenerProveedoresParaSeleccionAsinc:
-                manejador=new ManejadorProveedores();
-                proveedores=manejador.getListaProveedoresFisicos();
+                manejador = new ManejadorProveedores();
+                proveedores = manejador.getListaProveedoresFisicos();
                 disp = request.getRequestDispatcher("/recursos/paginas/embebidos/listadoproveedoresregistrados.jsp");
                 request.setAttribute("listadoproveedoresfisicos", proveedores);
-                disp.forward(request, response);                
+                disp.forward(request, response);
                 break;
 
         }
@@ -151,6 +159,9 @@ public class AccionesProveedoresF extends HttpServlet {
                         documentos.setPa_nombreArchivo(filename);
                         docs.add(documentos);
                         proveedor.setPo_documentos(docs);
+                    } else {
+                        System.out.println("No hay documentos");
+                        proveedor.setPo_documentos(null);
                     }
 
                     manejadorproveedores = new ManejadorProveedores();
@@ -214,7 +225,7 @@ public class AccionesProveedoresF extends HttpServlet {
                 case ActualizarPropiedadPaginacionAsinc:
                     //vamos por aqui
                     try {
-                        paginacion = 5;
+                        paginacion = 7;
                         String valorpaginacion = request.getParameter("valorpaginacion");
                         if (valorpaginacion != null) {
                             paginacion = Integer.parseInt(valorpaginacion);
@@ -224,7 +235,7 @@ public class AccionesProveedoresF extends HttpServlet {
 
                     } catch (Exception ex) {
                         //registrar error en base de datos
-                        request.getSession().setAttribute("paginacion", 5);
+                        request.getSession().setAttribute("paginacion", 7);
                         System.out.println(ex.getMessage());
                     }
                     break;
@@ -232,26 +243,27 @@ public class AccionesProveedoresF extends HttpServlet {
                 case ObtenerProveedoresFisicosAsinc:
                     try {
                         npagina = Integer.parseInt(request.getParameter("pag"));
-
                     } catch (NumberFormatException ex) {
                         //registrar en bitacora el error
                         //colocar los valores por defecto 
                         npagina = 1;
-
                     }
                     try {
                         paginacion = Integer.parseInt(request.getSession().getAttribute("paginacion").toString());
-
-                    } catch (NumberFormatException ex) {
+                    } catch (Exception ex) {
                         //registrar en bitacora el error
                         //colocar los valores por defecto 
-
-                        paginacion = 5;
-                        request.getSession().setAttribute("paginacion", paginacion);
+                        paginacion = 7;
                     }
+                    int desplazamiento = ((npagina - 1) * paginacion);
+                    System.out.println("Desplazamiento  " + desplazamiento);
+                    System.out.println("Limite  " + paginacion);
+
                     manejadorproveedores = new ManejadorProveedores();
-                    proveedores = manejadorproveedores.getListaProveedoresFisicos(npagina, paginacion);
+                    proveedores = manejadorproveedores.getListaProveedoresFisicos(desplazamiento, paginacion);
                     request.setAttribute("proveedores", proveedores);
+                    request.setAttribute("paginacion", ((int) manejadorproveedores.getNumeroProveedoresRegistrados() / paginacion) + 1);
+
                     disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=2");
                     disp.forward(request, response);
                     break;

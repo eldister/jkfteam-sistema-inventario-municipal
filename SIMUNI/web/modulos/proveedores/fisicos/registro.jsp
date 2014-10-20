@@ -18,9 +18,10 @@
                      $("#btnSubirArchivo").on("click", function(){
                          $("#btnArchivo").click();
                          setInterval(intervalo, 1);
-                         $("#check").html('<img src="../../../recursos/imagenes/sistema/sm_check.png" height="20" width="20"/>');
+                         $("#check").html('<img src="<%=request.getContextPath()%>/recursos/imagenes/sistema/sm_check.png" height="20" width="20"/>');
                          return false;
                      });
+                     addEventosACamposDeTexto();
              });
              </script>
         </decorator:content>
@@ -35,7 +36,7 @@
                                 <label>Número de indentificación: </label>
                             </td>
                             <td>
-                                <input type="text" id="txtID" required="required" name="txtIdentificadorProveedor" placeholder="Cédula #-####-####"/>
+                                <input type="text" id="txtID" required="required" name="codigoproveedor" placeholder="Cédula #-####-####"/>
                                 <div id="mensaje"></div>
                                 <span id="codigoproveedorinfo" class="lblinfocontainer">&nbsp;</span>
                             </td>                            
@@ -45,7 +46,7 @@
                                 <label>Nombre: </label>
                             </td>
                             <td>
-                                <input type="text" id="txtNP" name="txtNombreProveedor" placeholder="Primer nombre">
+                                <input required="required" type="text" id="txtNP" name="txtNombreProveedor" placeholder="Primer nombre">
                             </td>
                         </tr>
                         <tr>
@@ -88,7 +89,7 @@
                                 <label>Teléfono móvil: </label>
                             </td>
                             <td>
-                                <input type="text" id="txtTM" name="txtTelefonoMovil" placeholder="formato: ####-####">
+                                <input type="text" required="required" id="txtTM" name="txtTelefonoMovil" placeholder="formato: ####-####">
                                 <div id="mensaje4"></div>
                             </td>
                         </tr>
@@ -106,7 +107,7 @@
                                 <label>Correo electrónico: </label>
                             </td>
                             <td>
-                                <input type="text" id="txtMail" name="txtEmail">
+                                <input type="text" required="required" id="txtMail" name="txtEmail">
                                 <div id="mensaje6"></div>
                             </td>
                         </tr>
@@ -173,7 +174,7 @@
                                 <label>Cargar documentos requeridos: </label>
                             </td>
                             <td>
-                                <input type="file" id="btnArchivo" name="btnArchivos" accept="application/pdf"/>
+                                <input type="file" required="required" id="btnArchivo" name="filearchivosproveedor" accept="application/pdf"/>
                                 <input type="button" id="btnSubirArchivo" value="Examinar" >
                                 <div id="check"></div>
                             </td>

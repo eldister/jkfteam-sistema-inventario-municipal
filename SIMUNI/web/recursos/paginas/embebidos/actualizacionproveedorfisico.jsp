@@ -97,7 +97,7 @@
                         <label>Apartado Postal: </label>
                     </td>
                     <td>
-                        <input type="text" id="txtAP" <%out.print(proveedor.getPn_apartadoPostal()); %> name="txtApartadoPostal">
+                        <input type="text" id="txtAP" value="<%out.print(proveedor.getPn_apartadoPostal()); %>" name="txtApartadoPostal">
                     </td>
                 </tr>
                 <tr>
@@ -105,7 +105,7 @@
                         <label>Nombre de la compañía: </label>
                     </td>
                     <td>
-                        <input type="text" id="txtNC" <%out.print(proveedor.getPa_nombreCompania()); %> name="txtNombreCompañia">
+                        <input type="text" id="txtNC" value="<%out.print(proveedor.getPa_nombreCompania()); %>" name="txtNombreCompañia">
                     </td>
                 </tr>
                 <tr>
@@ -118,22 +118,6 @@
                         </textarea>
                         <br/>
                         <div><label id="LetrasRestantes1">Letras restantes: </div><div id="contCaracteres"></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Nombre del representante legal: </label>
-                    </td>
-                    <td>
-                        <input type="text" value="" id="txtNR" name="txtNombreRepresentante">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Nombre del banco: </label>
-                    </td>
-                    <td>
-                        <input type="text" id="txtNB" value="<%out.print(proveedor.getPa_banco()); %>" name="txtNombreBanco">
                     </td>
                 </tr>
                 <tr>
