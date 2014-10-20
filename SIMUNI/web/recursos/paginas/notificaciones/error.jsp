@@ -28,7 +28,7 @@
         <br/>
         <div id="sm_div_contBotones">
             <div id="sm_div_reenvioInicio">
-                <a href="#">Ir a la pantalla de inicio &raquo;</a>
+                <a href="../../../index.jsp">Ir a la pantalla de inicio &raquo;</a>
             </div>
             <div id="sm_div_reenvioRegistroActivos">
                 <a href="#">Ir a la pantalla de registro de activos &raquo;</a>
