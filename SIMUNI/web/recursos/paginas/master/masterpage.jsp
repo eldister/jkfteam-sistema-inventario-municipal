@@ -72,13 +72,13 @@
             </div>
             <nav>
                 <ul id="sm_navmenuprincipal">
-                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="/SIMUNI" class="menulinks">Inicio</a></li>
+                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="/SIMUNI" class="menulinks" title="Información del usuario registrado en el sistema">Inicio</a></li>
                     <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks" title="Módulo para el manejo de Activos">Activos</a>
                         <ul class="submenu">
-                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="#" class="menulinks">Artículos</a>
+                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="#" class="menulinks" title="Acceso a la gestión de artículos">Artículos</a>
                                 <ul class="submenu">
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/activos?proceso=veractivosarticulos" class="menulinks">Mantenimiento</a></li>
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/activos?proceso=registroactivoarticulo" class="menulinks">Registro Nuevo Artículo</a></li>
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/activos?proceso=veractivosarticulos" class="menulinks" title="Configuración para: modificar,desactivar...un activo">Mantenimiento</a></li>
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/activos?proceso=registroactivoarticulo" class="menulinks" title="Ingreso de un nuevo articulo">Registro Nuevo Artículo</a></li>
                                 </ul>                                
                             </li>
                             <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Transporte</a>
@@ -95,12 +95,12 @@
                             </li>                                                      
                         </ul>                        
                     </li>
-                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Proveedores</a>
+                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks" title="Módulo para el manejo de Proveedores">Proveedores</a>
                         <ul class="submenu">
-                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="#" class="menulinks">Físicos</a>
+                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="#" class="menulinks" title="Acceso a la gestión de los proveedores Físicos">Físicos</a>
                                 <ul class="submenu">
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/proveedores?proceso=verproveedoresfisicos" class="menulinks">Mantenimiento</a></li>
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/proveedores?proceso=registroproveedorfisico" class="menulinks">Registrar Proveedor Físico</a></li>
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/proveedores?proceso=verproveedoresfisicos" class="menulinks" title="Configuración para: modificar,desactivar... un proveedor físico">Mantenimiento</a></li>
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/proveedores?proceso=registroproveedorfisico" class="menulinks" title="Ingreso al sistema de un nuevo proveedor físico">Registrar Proveedor Físico</a></li>
                                 </ul>                                
                             </li>
                             <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Jurídicos</a>
@@ -111,10 +111,10 @@
                             </li>                                                      
                         </ul>                        
                     </li>
-                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Reportes</a>
+                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks" title="Módulo para el manejo de Reportes">Reportes</a>
                                                     <ul class="submenu">
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Ver Tareas Programadas</a></li>
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Ingresar Nueva Tarea</a></li>
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks" title="Acceso a las tareas programas de los reportes">Ver Tareas Programadas</a></li>
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks" title="Programar una nueva tarea para los reportes">Ingresar Nueva Tarea</a></li>
                                 </ul>   
                     </li>
                     <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Ayuda</a>                   
