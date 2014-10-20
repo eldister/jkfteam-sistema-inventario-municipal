@@ -79,7 +79,8 @@ public class Servidor {
     }
     public static enum R {
 
-        LOGOSIMUNIURL("http://localhost:8080/SIMUNI/recursos/imagenes/sistema/logomuni.jpg");
+        LOGOSIMUNIURL("http://localhost:8080/SIMUNI/recursos/imagenes/sistema/logomuni.jpg"),
+        TITULOPRINCIPALACTIVOARTICULO("Módulo para el manejo de Activos");
 
         private final String texto;
 

@@ -13,16 +13,18 @@
         <script src="<%=request.getContextPath()%>/recursos/scripts/componentes/chesdev_userbox_v1.js"></script>
         <script src="<%=request.getContextPath()%>/recursos/scripts/js_paginas/script_main.js"></script>
         <link rel="stylesheet" href="<%=request.getContextPath()%>/recursos/estilos/style_main.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/recursos/estilos/style_menuprincipal.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/recursos/estilos/temas/jquery_smoothness/style_jquery-ui.css">
+
         <script>
             $(document).ready(function() {
                 var desplazado = 220;
                 var duracion = 500;
-<<<<<<< .mine
-                 $("#volverTop").fadeOut(0);
-=======
+
                 $("#volverTop").fadeOut(0);
->>>>>>> .r47
+
+                $("#volverTop").fadeOut(0);
+
                 $(window).scroll(function() {
                     if ($(this).scrollTop() > desplazado) {
                         $("#volverTop").fadeIn(duracion);
@@ -38,6 +40,7 @@
                 });
             });
         </script>
+
         <decorator:placeholder name='sm_section_estilosyscriptssectioncontainer'/>
     </head>
     <body>
@@ -51,11 +54,11 @@
                     </div>
                     <div id="sm_div_logosimunicontainer">
                         <a href="/SIMUNI" id="enlaceInicio"><div id="sm_div_logosimuni">
-                            <span id="sm_div_simunislogan">Sistema de Información para el Control de Inventario Municipal&nbsp;</span>
-                        </div></a>
+                                <span id="sm_div_simunislogan">Sistema de Información para el Control de Inventario Municipal&nbsp;</span>
+                            </div></a>
 
                     </div>
-                </div>
+                </div>          
                 <div id="sm_header_userprofilecontainer">
                     <div id="sm_div_userprofile">
                         <div class="sm_div_tablecontainer">
@@ -67,30 +70,57 @@
                     </div>
                 </div>                            
             </div>
-            <nav id="sm_header_menuprincipal">
-                <ul id="sm_nav_menuelementscontainer">
-                    <%
-                        if (session.getAttribute("username") == null) {
-                            session.setAttribute("username", "jajaj");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Inicio</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Activos</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Proveedores</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Reportes</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Soporte</a></li>");
-
-                        } else {
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Inicio</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Activos</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Usuarios</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Reportes</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Ayuda</a></li>");
-                            out.print("<li class='sm_ul_menuitem'><a href=''>Area Personal</a></li>");
-
-                        }
-                    %>
-
+            <nav>
+                <ul id="sm_navmenuprincipal">
+                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="/SIMUNI" class="menulinks">Inicio</a></li>
+                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks" title="Módulo para el manejo de Activos">Activos</a>
+                        <ul class="submenu">
+                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="#" class="menulinks">Artículos</a>
+                                <ul class="submenu">
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/activos?proceso=veractivosarticulos" class="menulinks">Mantenimiento</a></li>
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/activos?proceso=registroactivoarticulo" class="menulinks">Registro Nuevo Artículo</a></li>
+                                </ul>                                
+                            </li>
+                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Transporte</a>
+                                <ul class="submenu">
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Mantenimiento</a></li>
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Registrar Nuevo Vehiculo</a></li>
+                                </ul>                                
+                            </li> 
+                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Propiedades</a>
+                                <ul class="submenu">
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Mantenimiento</a></li>
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Actualizar Propiedades</a></li>
+                                </ul>                                
+                            </li>                                                      
+                        </ul>                        
+                    </li>
+                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Proveedores</a>
+                        <ul class="submenu">
+                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="#" class="menulinks">Físicos</a>
+                                <ul class="submenu">
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/proveedores?proceso=verproveedoresfisicos" class="menulinks">Mantenimiento</a></li>
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/proveedores?proceso=registroproveedorfisico" class="menulinks">Registrar Proveedor Físico</a></li>
+                                </ul>                                
+                            </li>
+                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Jurídicos</a>
+                                <ul class="submenu">
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Mantenimiento</a></li>
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Registrar Proveedor Juridico</a></li>
+                                </ul>                                
+                            </li>                                                      
+                        </ul>                        
+                    </li>
+                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Reportes</a>
+                                                    <ul class="submenu">
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Ver Tareas Programadas</a></li>
+                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Ingresar Nueva Tarea</a></li>
+                                </ul>   
+                    </li>
+                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Ayuda</a>                   
+                    </li>
                 </ul>
-            </nav>
+            </nav>               
         </header>  
         <aside id="sm_body_barralateral" >
             <div class="sm_aside_barralateralitem" id="sm_aside_barralateralitemnotificacion">
@@ -209,7 +239,7 @@
         <section id="sm_body_notificacion">
             <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Sesión iniciada : </span><% out.print(new Date().toLocaleString()); %></div>
             <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usuario:</span> user1</div>
-            <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usted se ha conectado desde</span> <% out.print(request.getRemoteAddr()); %> </div>
+            <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usted se ha conectado desde</span> <% out.print(request.getRemoteAddr());%> </div>
         </section>        
         <footer>
             <div class="sm_footer_tablecontainer">
