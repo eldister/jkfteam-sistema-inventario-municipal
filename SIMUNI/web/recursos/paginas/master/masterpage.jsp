@@ -1,6 +1,28 @@
+<%@page import="simuni.classes.LN.ManejadorUsuarios"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/" %>
+<%
+    String idusuario=request.getSession().getAttribute("USERNAME")==null?null:request.getSession().getAttribute("USERNAME").toString();
+    String tipousuario=request.getSession().getAttribute("TIPOUSUARIO")==null?null:request.getSession().getAttribute("TIPOUSUARIO").toString();
+String menuusuario="";
+    idusuario="fCoulon";
+        tipousuario="1";
+    if(idusuario==null){
+        //redigirigir a login
+      //response.sendRedirect("/SIMUNI/login.jsp");
+     
+         out.print("<script>window.location.replace('/SIMUNI/login.jsp');</script>");  
+    return;
+    
+    }
+    else{
+        ManejadorUsuarios manejadorusuarios=new ManejadorUsuarios();
+         menuusuario=manejadorusuarios.getMenuUsuario(idusuario);
+        
+    }
+  
+%>
 
 <!DOCTYPE HTML>
 
@@ -70,57 +92,7 @@
                     </div>
                 </div>                            
             </div>
-            <nav>
-                <ul id="sm_navmenuprincipal">
-                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="/SIMUNI" class="menulinks" title="Información del usuario registrado en el sistema">Inicio</a></li>
-                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks" title="Módulo para el manejo de Activos">Activos</a>
-                        <ul class="submenu">
-                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="#" class="menulinks" title="Acceso a la gestión de artículos">Artículos</a>
-                                <ul class="submenu">
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/activos?proceso=veractivosarticulos" class="menulinks" title="Configuración para: modificar,desactivar...un activo">Mantenimiento</a></li>
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/activos?proceso=registroactivoarticulo" class="menulinks" title="Ingreso de un nuevo articulo">Registro Nuevo Artículo</a></li>
-                                </ul>                                
-                            </li>
-                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Transporte</a>
-                                <ul class="submenu">
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Mantenimiento</a></li>
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Registrar Nuevo Vehiculo</a></li>
-                                </ul>                                
-                            </li> 
-                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Propiedades</a>
-                                <ul class="submenu">
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Mantenimiento</a></li>
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Actualizar Propiedades</a></li>
-                                </ul>                                
-                            </li>                                                      
-                        </ul>                        
-                    </li>
-                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks" title="Módulo para el manejo de Proveedores">Proveedores</a>
-                        <ul class="submenu">
-                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="#" class="menulinks" title="Acceso a la gestión de los proveedores Físicos">Físicos</a>
-                                <ul class="submenu">
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/proveedores?proceso=verproveedoresfisicos" class="menulinks" title="Configuración para: modificar,desactivar... un proveedor físico">Mantenimiento</a></li>
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="/SIMUNI/modulos/proveedores?proceso=registroproveedorfisico" class="menulinks" title="Ingreso al sistema de un nuevo proveedor físico">Registrar Proveedor Físico</a></li>
-                                </ul>                                
-                            </li>
-                            <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Jurídicos</a>
-                                <ul class="submenu">
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Mantenimiento</a></li>
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Registrar Proveedor Juridico</a></li>
-                                </ul>                                
-                            </li>                                                      
-                        </ul>                        
-                    </li>
-                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks" title="Módulo para el manejo de Reportes">Reportes</a>
-                                                    <ul class="submenu">
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks" title="Acceso a las tareas programas de los reportes">Ver Tareas Programadas</a></li>
-                                    <li class="sm_ulsubmenucontainer"><span class="icomenu"></span><a href="" class="menulinks" title="Programar una nueva tarea para los reportes">Ingresar Nueva Tarea</a></li>
-                                </ul>   
-                    </li>
-                    <li class="sm_ulmenucontainer"><span class="icomenu"></span><a href="" class="menulinks">Ayuda</a>                   
-                    </li>
-                </ul>
-            </nav>               
+            <%out.print(menuusuario); %>
         </header>  
         <aside id="sm_body_barralateral" >
             <div class="sm_aside_barralateralitem" id="sm_aside_barralateralitemnotificacion">
