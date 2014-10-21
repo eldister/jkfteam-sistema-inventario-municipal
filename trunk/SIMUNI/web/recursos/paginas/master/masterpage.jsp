@@ -1,27 +1,32 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="simuni.classes.LN.ManejadorNotificaciones"%>
+<%@page import="simuni.classes.EN.Notificacion"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="simuni.classes.LN.ManejadorUsuarios"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/" %>
 <%
-    String idusuario=request.getSession().getAttribute("USERNAME")==null?null:request.getSession().getAttribute("USERNAME").toString();
-    String tipousuario=request.getSession().getAttribute("TIPOUSUARIO")==null?null:request.getSession().getAttribute("TIPOUSUARIO").toString();
-String menuusuario="";
-    idusuario="fCoulon";
-        tipousuario="1";
-    if(idusuario==null){
+    String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+    String tipousuario = request.getSession().getAttribute("TIPOUSUARIO") == null ? null : request.getSession().getAttribute("TIPOUSUARIO").toString();
+    String loginpage = request.getSession().getAttribute("LOGINPAGE") == null ? null : request.getSession().getAttribute("LOGINPAGE").toString();
+    String menuusuario = "";
+    //   idusuario="fCoulon";
+    //    tipousuario="1";
+    if (idusuario == null && loginpage == null) {
         //redigirigir a login
-      //response.sendRedirect("/SIMUNI/login.jsp");
-     
-         out.print("<script>window.location.replace('/SIMUNI/login.jsp');</script>");  
-    return;
-    
+        //response.sendRedirect("/SIMUNI/login.jsp");
+
+        out.print("<script>window.location.replace('/SIMUNI/login.jsp');</script>");
+        return;
+
     }
-    else{
-        ManejadorUsuarios manejadorusuarios=new ManejadorUsuarios();
-         menuusuario=manejadorusuarios.getMenuUsuario(idusuario);
-        
+    if (loginpage == null) {
+        ManejadorUsuarios manejadorusuarios = new ManejadorUsuarios();
+        menuusuario = manejadorusuarios.getMenuUsuario(idusuario);
+
     }
-  
+
 %>
 
 <!DOCTYPE HTML>
@@ -80,89 +85,90 @@ String menuusuario="";
                             </div></a>
 
                     </div>
-                </div>          
+                </div>  
+                <%  if (loginpage == null) {%>
                 <div id="sm_header_userprofilecontainer">
                     <div id="sm_div_userprofile">
                         <div class="sm_div_tablecontainer">
                             <div class="sm_div_rowcontainer" id="sm_div_usersettings">
-                                <div class="sm_div_colcontainer">Nombre de Usuario Aqui</div>
+                                <div class="sm_div_colcontainer"><%out.print(idusuario);%></div>
                                 <div class="sm_div_colcontainer" id="sm_div_configuracion" >&nbsp;</div>           
                             </div>
                         </div>
                     </div>
                 </div>                            
             </div>
-            <%out.print(menuusuario); %>
+            <%out.print(menuusuario);
+                } %>
         </header>  
+        <%  if (loginpage == null) {%>
         <aside id="sm_body_barralateral" >
             <div class="sm_aside_barralateralitem" id="sm_aside_barralateralitemnotificacion">
                 <fieldset>
                     <legend>Notificaciones</legend>
-                    <div class="sm_fieldset_notificacionescontainer">
-                        <div class="sm_div_notificacion">
-                            <div class="sm_div_notificacionfechacontainer">
-                                <% out.print(new Date().toLocaleString()); %>
-                                <hr>
-                            </div>
-                            <b>User3</b> Se ha agregado un nuevo registro de activo con el codigo 62254454646.
-                        </div>  
-                        <hr>
-                        <div class="sm_div_notificacion">
-                            <div class="sm_div_notificacionfechacontainer">
-                                <% out.print(new Date().toLocaleString()); %>
-                                <hr>
-                            </div>
-                            <b>User2</b> Se ha agregado un nuevo registro de activo con el codigo 52254454646.
-                        </div>  
+                    <div class="sm_fieldset_notificacionescontainer" id="sm_notificacionescontainer">
+                        <%
+                            ManejadorNotificaciones manejadornotif = new ManejadorNotificaciones();
+                            ArrayList<Notificacion> notificaciones = manejadornotif.obtenerNotificacionesUsuario(idusuario);
+                            if (notificaciones == null) {
+                                out.print("<strong>No tiene notificaciones!</strong>");
+                            } else {
+                                Iterator<Notificacion> iter = notificaciones.iterator();
+                                if (iter.hasNext()) {
+                                    while (iter.hasNext()) {
+                                        Notificacion notificacion = iter.next();
+                                        out.print("<div class='sm_div_notificacion'>");
+                                        out.print("<div class='sm_div_notificacionfechacontainer'>");
+                                        out.print(notificacion.getFechaNotificacion().toGMTString());
+                                        out.print("        <hr>");
+                                        out.print("      </div>");
+                                        out.print("<strong>");
+                                        out.print(notificacion.getUsuarioOrigen());
+                                        out.print("</strong>");
+                                        out.print(notificacion.getDescripcionNotificacion());
+                                        out.print("</div> ");
+                                        out.print("<hr>");
+                                    }
+                                } else {
+                                    out.print("<strong>No tiene mensajes!</strong>");
+                                }
 
-                        <hr>
-                        <div class="sm_div_notificacion">
-                            <div class="sm_div_notificacionfechacontainer">
-                                <% out.print(new Date().toLocaleString()); %>
-                                <hr>
-                            </div>
-                            <b>User1</b> Se ha agregado un nuevo registro de activo con el codigo 52254454646.
-                        </div>                        
-
-                        <hr>
-                        <div class="sm_div_notificacion">
-                            <div class="sm_div_notificacionfechacontainer">
-                                <% out.print(new Date().toLocaleString()); %>
-                                <hr>
-                            </div>
-                            <b>User1</b> ha sido bloqueado
-                        </div>  
-
-                        <hr>
-                        <div class="sm_div_notificacion">
-                            <div class="sm_div_notificacionfechacontainer">
-                                <% out.print(new Date().toLocaleString()); %>
-                                <hr>
-                            </div>
-                            Reporte de activos proximo a realizarse.
-                        </div>                     
+                            }
+                        %>
                     </div>
                 </fieldset>
             </div>
             <div class="sm_aside_barralateralitem" id="sm_aside_barralateralitemmensaje">
                 <fieldset>
                     <legend>Mensajes</legend>
-                    <div class="sm_fieldset_notificacionescontainer">
-                        <div class="sm_div_mensaje">
-                            <div class="sm_div_notificacionfechacontainer">
-                                <% out.print(new Date().toLocaleString()); %>
-                                <hr>
-                            </div>
-                            Buenas, podria enviarme a alguien para revisar la compu
-                        </div>
-                        <hr>
-                        <div class="sm_div_mensaje">
-                            <div class="sm_div_notificacionfechacontainer">
-                                <% out.print(new Date().toLocaleString());%>
-                                <hr>
-                            </div>
-                            Buenas, podria enviarme a alguien para revisar la compu, rapido porfis
-                        </div>                                
+                    <div class="sm_fieldset_notificacionescontainer" id="sm_mensajescontainer">
+                        <%
+                            notificaciones = manejadornotif.obtenerMensajesUsuario(idusuario);
+                            if (notificaciones == null) {
+                                out.print("<strong>No tiene mensajes!</strong>");
+                            } else {
+                                Iterator<Notificacion> iter = notificaciones.iterator();
+                                if (iter.hasNext()) {
+                                    while (iter.hasNext()) {
+                                        Notificacion notificacion = iter.next();
+                                        out.print("<div class='sm_div_mensaje'>");
+                                        out.print("<div class='sm_div_notificacionfechacontainer'>");
+                                        out.print(notificacion.getFechaNotificacion().toGMTString());
+                                        out.print("        <hr>");
+                                        out.print("      </div>");
+                                        out.print("<strong>");
+                                        out.print(notificacion.getUsuarioOrigen());
+                                        out.print("</strong>");
+                                        out.print(notificacion.getDescripcionNotificacion());
+                                        out.print("</div> ");
+                                        out.print("<hr>");
+                                    }
+                                } else {
+                                    out.print("<strong>No tiene mensajes!</strong>");
+                                }
+
+                            }
+                        %>                                                           
                     </div>
                 </fieldset>
             </div>
@@ -183,6 +189,7 @@ String menuusuario="";
                 </fieldset>
             </div>
         </aside>
+
         <div id="sm_body_navegationbarmenu">
 
             <span class="sm_div_navmenuitem">
@@ -202,17 +209,20 @@ String menuusuario="";
                 /
             </span> 
             <hr id="sm_div_separadormenunavegacion">
-        </div>
+        </div> 
+        <% }%>
         <section id="sm_body_mainsection">
             <!--esta es la seccion prinicipal-->
             <decorator:placeholder name='sm_section_mainsectioncontainer'/>
 
         </section>
+        <% if (loginpage == null) {%>
         <section id="sm_body_notificacion">
             <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Sesión iniciada : </span><% out.print(new Date().toLocaleString()); %></div>
             <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usuario:</span> user1</div>
             <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usted se ha conectado desde</span> <% out.print(request.getRemoteAddr());%> </div>
-        </section>        
+        </section> 
+        <%}%>
         <footer>
             <div class="sm_footer_tablecontainer">
                 <div class="sm_div_rowcontainer">

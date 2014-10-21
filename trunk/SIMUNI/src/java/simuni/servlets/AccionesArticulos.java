@@ -17,12 +17,14 @@ import simuni.classes.AD.ManejadorDatosDepartamento;
 import simuni.classes.EN.Activos_Articulos;
 import simuni.classes.EN.Departamento;
 import simuni.classes.EN.EstadoActivo;
+import simuni.classes.EN.Notificacion;
 import simuni.classes.EN.TipoActivo;
 import simuni.classes.EN.TipoPago;
 import simuni.classes.EN.imagenActivo;
 import simuni.classes.LN.ManejadorActivos;
 import simuni.classes.LN.ManejadorDepartamentos;
 import simuni.classes.LN.ManejadorEstadoActivos;
+import simuni.classes.LN.ManejadorNotificaciones;
 import simuni.classes.LN.ManejadorTipoActivo;
 import simuni.classes.LN.ManejadorTipoPago;
 import simuni.classes.LN.UtilidadesServlet;
@@ -285,6 +287,7 @@ public class AccionesArticulos extends HttpServlet {
                     if (manejadoractivos.agregarActivoArticulo(activoarticulo)) {
                         //redirigir a una pagina de exito
                         disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito.jsp?id=" + activoarticulo.getPa_identificadorActivo() + "&msg=1");
+                        agregarNotificacion(request.getSession().getAttribute("USERNAME").toString(), "Activo "+activoarticulo.getPa_identificadorActivo()+" agregado a la base de datos");
                         disp.forward(request, response);
 
                     } else {
@@ -346,6 +349,7 @@ public class AccionesArticulos extends HttpServlet {
                     if (manejadoractivos.modificarActivoArticulo(activoarticulo)) {
                         //redirigir a una pagina de exito
                         disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito_asinc.jsp?id=" + activoarticulo.getPa_identificadorActivo() + "&msg=2");
+                                               agregarNotificacion(request.getSession().getAttribute("USERNAME").toString(), "Activo "+activoarticulo.getPa_identificadorActivo()+" modificado a la base de datos");
                         disp.forward(request, response);
 
                     } else {
@@ -363,6 +367,7 @@ public class AccionesArticulos extends HttpServlet {
                         //redirigir a una pagina de exito
                         System.out.println(codigoactivo);
                         disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito_asinc.jsp?id=" + codigoactivo + "&msg=3");
+                                               agregarNotificacion(request.getSession().getAttribute("USERNAME").toString(), "Activo "+activoarticulo.getPa_identificadorActivo()+" bajado de la base de datos");
                         disp.forward(request, response);
 
                     } else {
@@ -463,6 +468,15 @@ public class AccionesArticulos extends HttpServlet {
         }
     }
 
+    private void agregarNotificacion(String usuarioorigen,String descripcion){
+        Notificacion notificacion=new Notificacion();
+        notificacion.setDescripcionNotificacion(descripcion);
+        notificacion.setEstadoNotificacion("Activo");
+        notificacion.setUsuarioOrigen(usuarioorigen);
+        notificacion.setUsuarioObjetivo(1);
+        ManejadorNotificaciones manejadornotificaciones=new ManejadorNotificaciones();
+        manejadornotificaciones.agregarNotificacion(notificacion);
+    }
     private OpcionesDo getOpcion(String key) {
         if (key == null) {
             return OpcionesDo.AccionDefault;

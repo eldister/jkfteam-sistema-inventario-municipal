@@ -21,7 +21,7 @@ public class ManejadorDatosUsuario {
     public Usuario login(String usuario, String contrasena) throws SQLException {
         Usuario usuarioresp = null;
         Connection con = ConexionMYSQL.obtenerConexion();
-        PreparedStatement st=con.prepareCall("{CALL sp_login(?,?)");
+        PreparedStatement st=con.prepareCall("{CALL sp_login(?,?)}");
         st.setString(1, usuario);
         st.setString(2, contrasena);
         ResultSet rs=st.executeQuery();
