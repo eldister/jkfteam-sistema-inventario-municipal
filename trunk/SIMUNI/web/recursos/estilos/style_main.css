@@ -541,3 +541,19 @@ footer .sm_div_colcontainer ul{
 .lblcampowarning{
     background-image: url(../imagenes/sistema/warning.png);
 }
+
+.sm_div_configuracionlink{
+    font-style: none;
+    text-decoration: none;
+    font-size: 0.8em;
+    color:black;
+    padding: 10%;
+    padding-top: 10px;
+        padding-bottom: 10px;
+
+    
+}
+.sm_div_configuracionlink:hover{
+    color: lightblue;
+    text-decoration: underline;
+}

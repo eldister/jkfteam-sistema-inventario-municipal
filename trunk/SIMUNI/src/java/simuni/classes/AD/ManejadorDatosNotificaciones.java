@@ -26,7 +26,7 @@ public class ManejadorDatosNotificaciones {
         st.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
         st.setInt(2, notificacion.getUsuarioObjetivo());
         st.setString(3, notificacion.getUsuarioOrigen());
-        st.setString(4, "Activa");
+        st.setString(4, "Activo");
         st.setString(5, notificacion.getDescripcionNotificacion());
         st.setString(6, "Notificacion");
         st.executeUpdate();

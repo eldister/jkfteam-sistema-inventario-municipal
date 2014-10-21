@@ -107,10 +107,10 @@ public class ManejadorProveedores {
         return cantidad;
     }
 
-    public ArrayList<ProveedorFisico> buscarProveedoresFisicos(String query) {
+    public ArrayList<ProveedorFisico> buscarProveedoresFisicos(String query,int desplazamiento,int paginacion) {
         try {
             ManejadorDatosProveedores p = new ManejadorDatosProveedores();
-            ArrayList<ProveedorFisico> proveedor = p.buscarProveedoresFisicos(query);
+            ArrayList<ProveedorFisico> proveedor = p.buscarProveedoresFisicos(query,desplazamiento,paginacion);
             UtilidadesServlet.registrarProcesoSistema("buscarProveedoresFisicos", "Busqueda de Proveedor con exito");
             return proveedor;
         } catch (Exception ex) {

@@ -195,6 +195,7 @@ public class AccionesArticulos extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("entre al post"+getOpcion(request.getParameter("proceso")));
         Departamento depto = new Departamento();
         DateFormat formatter = null;
         InputStream filecontent = null;
@@ -287,7 +288,7 @@ public class AccionesArticulos extends HttpServlet {
                     if (manejadoractivos.agregarActivoArticulo(activoarticulo)) {
                         //redirigir a una pagina de exito
                         disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito.jsp?id=" + activoarticulo.getPa_identificadorActivo() + "&msg=1");
-                        agregarNotificacion(request.getSession().getAttribute("USERNAME").toString(), "Activo "+activoarticulo.getPa_identificadorActivo()+" agregado a la base de datos");
+                        agregarNotificacion(request.getSession().getAttribute("USERNAME").toString(), "Activo " + activoarticulo.getPa_identificadorActivo() + " agregado a la base de datos");
                         disp.forward(request, response);
 
                     } else {
@@ -311,8 +312,7 @@ public class AccionesArticulos extends HttpServlet {
                         listadoimagen.add(imagenactivo);
                         activoarticulo.setPo_imagenActivo(listadoimagen);
 
-                    }
-                    else{
+                    } else {
                         activoarticulo.setPo_imagenActivo(null);
                     }
                     formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -349,7 +349,7 @@ public class AccionesArticulos extends HttpServlet {
                     if (manejadoractivos.modificarActivoArticulo(activoarticulo)) {
                         //redirigir a una pagina de exito
                         disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito_asinc.jsp?id=" + activoarticulo.getPa_identificadorActivo() + "&msg=2");
-                                               agregarNotificacion(request.getSession().getAttribute("USERNAME").toString(), "Activo "+activoarticulo.getPa_identificadorActivo()+" modificado a la base de datos");
+                        agregarNotificacion(request.getSession().getAttribute("USERNAME").toString(), "Activo " + activoarticulo.getPa_identificadorActivo() + " modificado a la base de datos");
                         disp.forward(request, response);
 
                     } else {
@@ -367,7 +367,7 @@ public class AccionesArticulos extends HttpServlet {
                         //redirigir a una pagina de exito
                         System.out.println(codigoactivo);
                         disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito_asinc.jsp?id=" + codigoactivo + "&msg=3");
-                                               agregarNotificacion(request.getSession().getAttribute("USERNAME").toString(), "Activo "+activoarticulo.getPa_identificadorActivo()+" bajado de la base de datos");
+                        agregarNotificacion(request.getSession().getAttribute("USERNAME").toString(), "Activo " + activoarticulo.getPa_identificadorActivo() + " bajado de la base de datos");
                         disp.forward(request, response);
 
                     } else {
@@ -430,8 +430,30 @@ public class AccionesArticulos extends HttpServlet {
                     break;
 
                 case BusquedaArticulo:
+                    System.out.println("entre a la busqueda");
+                    try {
+                        npagina = Integer.parseInt(request.getParameter("pag"));
+
+                    } catch (NumberFormatException ex) {
+                        //registrar en bitacora el error
+                        //colocar los valores por defecto 
+                        npagina = 1;
+
+                    }
+                    try {
+                        paginacion = Integer.parseInt(request.getSession().getAttribute("paginacion").toString());
+
+                    } catch (Exception ex) {
+                        //registrar en bitacora el error
+                        //colocar los valores por defecto 
+
+                        paginacion = 7;
+                        request.getSession().setAttribute("paginacion", paginacion);
+                    }
+                   
                     String query = request.getParameter("query");
-                    articulos = manejadoractivos.buscarActivosArticulos(query);
+                     System.out.print(query);
+                     
 
                     disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=1");
                     deptos = manejadordeptos.getListaDepartamentos();
@@ -442,6 +464,7 @@ public class AccionesArticulos extends HttpServlet {
                     request.setAttribute("tiposactivo", tiposactivos);
                     request.setAttribute("tipospago", tipospago);
                     request.setAttribute("estadoactivos", estadoactivos);
+                    articulos = manejadoractivos.buscarActivosArticulos(query, npagina, paginacion);
                     request.setAttribute("listadoarticulos", articulos);
                     disp.forward(request, response);
                     break;
@@ -464,19 +487,21 @@ public class AccionesArticulos extends HttpServlet {
 
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.out.print(ex.getMessage());
         }
     }
 
-    private void agregarNotificacion(String usuarioorigen,String descripcion){
-        Notificacion notificacion=new Notificacion();
+    private void agregarNotificacion(String usuarioorigen, String descripcion) {
+        Notificacion notificacion = new Notificacion();
         notificacion.setDescripcionNotificacion(descripcion);
         notificacion.setEstadoNotificacion("Activo");
         notificacion.setUsuarioOrigen(usuarioorigen);
         notificacion.setUsuarioObjetivo(1);
-        ManejadorNotificaciones manejadornotificaciones=new ManejadorNotificaciones();
+        ManejadorNotificaciones manejadornotificaciones = new ManejadorNotificaciones();
         manejadornotificaciones.agregarNotificacion(notificacion);
     }
+
     private OpcionesDo getOpcion(String key) {
         if (key == null) {
             return OpcionesDo.AccionDefault;

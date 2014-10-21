@@ -69,8 +69,8 @@ public class ProveedoresFisicosMostrador {
                 proveedorfisico.getPa_nombre(),
                 proveedorfisico.getPa_primerApellido(),
                 proveedorfisico.getPa_segundoApellido(),
-                proveedorfisico.getPd_fecharegistro(),
-                estadoproveedorfisico
+                proveedorfisico.getPa_correoElectronico(),
+                proveedorfisico.getPa_telefonoMovil()
             };
             filas.add(obj);
         }

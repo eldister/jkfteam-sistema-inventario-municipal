@@ -268,9 +268,23 @@ public class AccionesProveedoresF extends HttpServlet {
                     disp.forward(request, response);
                     break;
                 case BuscarProveedor:
+                    try {
+                        npagina = Integer.parseInt(request.getParameter("pag"));
+                    } catch (NumberFormatException ex) {
+                        //registrar en bitacora el error
+                        //colocar los valores por defecto 
+                        npagina = 1;
+                    }
+                    try {
+                        paginacion = Integer.parseInt(request.getSession().getAttribute("paginacion").toString());
+                    } catch (Exception ex) {
+                        //registrar en bitacora el error
+                        //colocar los valores por defecto 
+                        paginacion = 7;
+                    }                    
                     manejadorproveedores = new ManejadorProveedores();
                     String query = request.getParameter("query");
-                    proveedores = manejadorproveedores.buscarProveedoresFisicos(query);
+                    proveedores = manejadorproveedores.buscarProveedoresFisicos(query,npagina,paginacion);
                     request.setAttribute("proveedores", proveedores);
                     disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=2");
                     disp.forward(request, response);
