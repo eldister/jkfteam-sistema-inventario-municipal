@@ -127,14 +127,15 @@ public class ManejadorActivos {
         return 0;
     }
 
-    public ArrayList<Activos_Articulos> buscarActivosArticulos(String query) {
+    public ArrayList<Activos_Articulos> buscarActivosArticulos(String query,int desplazamiento, int paginacion) {
         try {
             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
-            ArrayList<Activos_Articulos> activos = manejadordatosactivos.buscarActivosArticulos(query);
+            ArrayList<Activos_Articulos> activos = manejadordatosactivos.buscarActivosArticulos(query,desplazamiento,paginacion);
             UtilidadesServlet.registrarProcesoSistema("buscarActivosArticulos", "La busqueda ha sido exitosa");
             return activos;
         } catch (Exception e) {
             UtilidadesServlet.registrarErrorSistema("buscarActivosArticulos", e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }

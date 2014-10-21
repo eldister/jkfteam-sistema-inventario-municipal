@@ -280,23 +280,37 @@ public class ManejadorDatosActivos {
         return 0;
     }
 
-    public ArrayList<Activos_Articulos> buscarActivosArticulos(String query) {
+
+    public ArrayList<Activos_Articulos> buscarActivosArticulos(String query,int desplazamiento, int paginacion) throws Exception {
         ArrayList<Activos_Articulos> to_articulo = new ArrayList<Activos_Articulos>();
+        try {
+            Connection con = ConexionMYSQL.obtenerConexion();
+            PreparedStatement st = con.prepareCall("{CALL sp_busquedaactivoarticulos(?,?,?)}");
+            st.setString(1, query);
+            st.setInt(2, desplazamiento);
+            st.setInt(3, paginacion);
+            System.out.println("El query es "+query);
+            ResultSet rs = st.executeQuery();
 
-        for (int a = 0; a < 0; a++) {
-            Activos_Articulos articulo = new Activos_Articulos();
-            articulo.setPa_identificadorActivo(query);
-            articulo.setPa_tipoActivo(2);
-            articulo.setPa_marca("patito 1");
-            articulo.setPa_modelo("modelo a");
-            articulo.setPd_puestaOperacion(new Date());
-            articulo.setPa_Descripcion("Una descripcion rara");
-            to_articulo.add(articulo);
+            while (rs.next()) {
+                            System.out.println("Resultado El query es "+query);
 
+                Activos_Articulos activoarticulo = new Activos_Articulos();
+                activoarticulo.setPa_identificadorActivo(rs.getString("SM00IDAC"));
+                activoarticulo.setPa_tipoActivo(rs.getInt("SM00IDTA"));
+                activoarticulo.setPa_marca(rs.getString("SM01MAAR"));
+                activoarticulo.setPa_modelo(rs.getString("SM02MDAR"));
+                activoarticulo.setPd_puestaOperacion(rs.getDate("SM05FEIO"));
+                activoarticulo.setPa_Descripcion(rs.getString("SM04DEAC"));
+                to_articulo.add(activoarticulo);
+                System.out.println("Resultados de la busqueda");
+            }
+            ConexionMYSQL.cerrarConexion(con);
+        } catch (Exception ex) {
+            throw ex;
         }
         return to_articulo;
     }
-
     public int getCantidadRegistrosActivosArticulos() {
         int resp = 0;
         try {

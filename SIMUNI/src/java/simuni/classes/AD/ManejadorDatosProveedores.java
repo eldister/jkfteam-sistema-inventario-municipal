@@ -158,14 +158,14 @@ public class ManejadorDatosProveedores {
                 = con.prepareCall("{CALL sp_obtenerProveedor_fisico(?)}");
         sp_obtenerActivo_Articulo.setString(1, tn_codigoproveedorfisico);
         ResultSet rs = sp_obtenerActivo_Articulo.executeQuery();
-         ProveedorFisico proveedorfisico=null;
+        ProveedorFisico proveedorfisico = null;
         if (rs.next()) {
             System.out.println("Entro, si hay");
-             proveedorfisico = new ProveedorFisico();
-/*
-`SM00IDPR`,`SM01NOPR`,`SM02PAPR`,`SM03SAPR`,`SM04NUCU`,`SM05EMPR`,`SM06DIWB`,`SM07COPO`,`SM08NOCO`,`SM09DICO`,
-`SM10IDRL`,`SM11NORL`,`SM12PARL`,`SM13SARL`,`SM14ESPR`,`SM15FEPR`,`SM01NUHA`,`SM02NUFA`,`SM03NUCE`,`SM04NUOF`             
-             */           
+            proveedorfisico = new ProveedorFisico();
+            /*
+             `SM00IDPR`,`SM01NOPR`,`SM02PAPR`,`SM03SAPR`,`SM04NUCU`,`SM05EMPR`,`SM06DIWB`,`SM07COPO`,`SM08NOCO`,`SM09DICO`,
+             `SM10IDRL`,`SM11NORL`,`SM12PARL`,`SM13SARL`,`SM14ESPR`,`SM15FEPR`,`SM01NUHA`,`SM02NUFA`,`SM03NUCE`,`SM04NUOF`             
+             */
             proveedorfisico.setPa_cedula(rs.getString("SM00IDPR"));
             proveedorfisico.setPa_nombre(rs.getString("SM01NOPR"));
             proveedorfisico.setPa_primerApellido(rs.getString("SM02PAPR"));
@@ -183,7 +183,6 @@ public class ManejadorDatosProveedores {
             proveedorfisico.setPa_telefonoMovil(rs.getString("SM03NUCE"));
             proveedorfisico.setPa_telefonoOficina(rs.getString("SM04NUOF"));
         }
-         
 
         return proveedorfisico;
     }
@@ -222,27 +221,25 @@ public class ManejadorDatosProveedores {
         return resp;
     }
 
-    public ArrayList<ProveedorFisico> buscarProveedoresFisicos(String query) {
+    public ArrayList<ProveedorFisico> buscarProveedoresFisicos(String query, int desplazamiento, int paginacion) {
         try {
+            Connection con = ConexionMYSQL.obtenerConexion();
+            PreparedStatement st = con.prepareCall("{CALL sp_busquedaproveedorfisico(?,?,?)}");
+            st.setString(1, query);
+            st.setInt(2, 0);
+            st.setInt(3, paginacion);
+            System.out.println("El query es " + query);
+            ResultSet rs = st.executeQuery();
+
             ArrayList<ProveedorFisico> proveedores = new ArrayList<ProveedorFisico>();
-            for (int a = 0; a < 3; a++) {
+            while (rs.next()) {
                 ProveedorFisico proveedorfisico = new ProveedorFisico();
-                proveedorfisico.setPa_banco("nacional");
-                proveedorfisico.setPa_cedula("5042303" + a);
-                proveedorfisico.setPa_correoElectronico("uncorero@gmail.com");
-                proveedorfisico.setPa_direccionCompania("Nicoya nandayure");
-                proveedorfisico.setPa_fax("555555555");
-                proveedorfisico.setPa_nombre(query);
-                proveedorfisico.setPa_nombreCompania("Respuestos raros");
-                proveedorfisico.setPa_numeroCuenta("5555" + a);
-                proveedorfisico.setPa_primerApellido("Coulon");
-                proveedorfisico.setPa_segundoApellido("Ollivier");
-                proveedorfisico.setPa_sitioWeb("www.google.com");
-                proveedorfisico.setPa_telefonoFijo("8520236" + a);
-                proveedorfisico.setPa_telefonoMovil("8411" + a * 2);
-                proveedorfisico.setPa_estadoprovedor("0");
-                proveedorfisico.setPd_fecharegistro(new java.sql.Date(new java.util.Date().getTime()));
-                proveedorfisico.setPn_apartadoPostal(a * 100);
+            proveedorfisico.setPa_cedula(rs.getString("SM00IDPR"));
+            proveedorfisico.setPa_nombre(rs.getString("SM01NOPR"));
+            proveedorfisico.setPa_primerApellido(rs.getString("SM02PAPR"));
+            proveedorfisico.setPa_segundoApellido(rs.getString("SM03SAPR"));
+            proveedorfisico.setPa_correoElectronico(rs.getString("SM05EMPR"));
+            proveedorfisico.setPa_telefonoMovil(rs.getString("SM03NUCE"));
                 proveedores.add(proveedorfisico);
             }
             return proveedores;

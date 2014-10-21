@@ -177,13 +177,13 @@
                     <legend>Configuraciones</legend>
                     <div class="sm_fieldset_notificacionescontainer">
                         <div class="sm_div_edicionperfil">
-                            Actualizar datos de perfil.
+                            <a class="sm_div_configuracionlink" title="Editar tus datos" href="#">Actualizar datos de perfil.</a>
                         </div>
                         <div class="sm_div_ayudausuario">
-                            Acceder a la ayuda.
+                            <a class="sm_div_configuracionlink" title="Acceder a la ayuda" href="#"> Acceder a la ayuda.</a>
                         </div>
                         <div class="sm_div_cerrarsesion">
-                            Cerrar Sesión
+                            <a class="sm_div_configuracionlink" title="Cerrar Sesión actual"  href="/SIMUNI/AccionesUsuarios?proceso=logout">Cerrar Sesión</a>
                         </div>
                     </div>
                 </fieldset>
