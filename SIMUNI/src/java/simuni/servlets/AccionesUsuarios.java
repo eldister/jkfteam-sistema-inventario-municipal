@@ -13,7 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.classes.EN.Notificacion;
 import simuni.classes.EN.Usuario;
+import simuni.classes.LN.ManejadorNotificaciones;
 import simuni.classes.LN.ManejadorUsuarios;
 
 /**
@@ -22,6 +24,13 @@ import simuni.classes.LN.ManejadorUsuarios;
  */
 public class AccionesUsuarios extends HttpServlet {
 
+        enum OpcionesDo {
+
+        Login,
+        Logout,
+        AccionDefault
+
+    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -63,7 +72,19 @@ public class AccionesUsuarios extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String proceso=request.getParameter("proceso");
+        switch(getOpcion(proceso)){
+            case Logout:
+            agregarNotificacion( request.getSession().getAttribute("USERNAME")+"",  request.getSession().getAttribute("USERNAME")+" ha cerrado sesion");
+            request.getSession().setAttribute("USERNAME", null);
+            request.getSession().setAttribute("TIPOUSUARIO", null);
+            request.getSession().setAttribute("HORAINICIO", null); 
+             request.getSession().setAttribute("LOGINPAGE", null);
+            
+            response.sendRedirect("/SIMUNI");
+                break;
+        }
+        
     }
 
     /**
@@ -77,15 +98,14 @@ public class AccionesUsuarios extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String nombreusuario=request.getParameter("nombreusuario");
-       String contrasena=request.getParameter("contrasena");
+       String nombreusuario=request.getParameter("txtNombreUsuario");
+       String contrasena=request.getParameter("txtPassword");
         Usuario usuario=null;
-        nombreusuario="fCoulon";
-        contrasena="fCoulonpass";
         if(nombreusuario==null||contrasena==null){
             request.getSession().setAttribute("USERNAME", null);
             request.getSession().setAttribute("TIPOUSUARIO", null);
             request.getSession().setAttribute("HORAINICIO", null);
+             response.sendRedirect("/SIMUNI/login.jsp");
         }
         else{
             ManejadorUsuarios manejadorusuarios=new ManejadorUsuarios();
@@ -93,11 +113,15 @@ public class AccionesUsuarios extends HttpServlet {
             if(usuario==null){
             request.getSession().setAttribute("USERNAME", null);
             request.getSession().setAttribute("TIPOUSUARIO", null);
-            request.getSession().setAttribute("HORAINICIO", null);                
-            }else{
+            request.getSession().setAttribute("HORAINICIO", null);
+            response.sendRedirect("/SIMUNI/login.jsp");
+            }else{            
             request.getSession().setAttribute("USERNAME", usuario.getNombreusuario());
             request.getSession().setAttribute("TIPOUSUARIO", usuario.getTipousuario());
             request.getSession().setAttribute("HORAINICIO", new Date().toLocaleString());
+            request.getSession().setAttribute("LOGINPAGE", null);
+            agregarNotificacion(usuario.getNombreusuario(), usuario.getNombreusuario()+" ha iniciado sesion");
+            response.sendRedirect("/SIMUNI");
             }
             
         }
@@ -112,5 +136,25 @@ public class AccionesUsuarios extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    private OpcionesDo getOpcion(String key) {
+        if (key == null) {
+            return OpcionesDo.AccionDefault;
+        } else if (key.length() == 0) {
+            return OpcionesDo.AccionDefault;
+        } else if (key.equals("login")) {
+            return OpcionesDo.Login;
+        } else if(key.equals("logout")){
+            return OpcionesDo.Logout;  
+        }
+        return OpcionesDo.AccionDefault;
+    }
+    private void agregarNotificacion(String usuarioorigen,String descripcion){
+        Notificacion notificacion=new Notificacion();
+        notificacion.setDescripcionNotificacion(descripcion);
+        notificacion.setEstadoNotificacion("Activo");
+        notificacion.setUsuarioOrigen(usuarioorigen);
+        notificacion.setUsuarioObjetivo(1);
+        ManejadorNotificaciones manejadornotificaciones=new ManejadorNotificaciones();
+        manejadornotificaciones.agregarNotificacion(notificacion);
+    }    
 }

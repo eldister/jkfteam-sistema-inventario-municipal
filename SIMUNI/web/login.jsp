@@ -1,3 +1,4 @@
+<%  request.getSession().setAttribute("LOGINPAGE", "login"); %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/"%>
 <decorator:decorate filename='recursos/paginas/master/masterpage.jsp'>
@@ -22,7 +23,7 @@
 </script>
         </decorator:content>
         <decorator:content placeholder='sm_section_mainsectioncontainer'>
-            <form id="sm_form_login" action="login" method="POST">
+            <form id="sm_form_login" action="/SIMUNI/AccionesUsuarios" method="POST">
                 <div id="sm_body_IS">
                     <fieldset>
                         <legend>Identifícate</legend>
