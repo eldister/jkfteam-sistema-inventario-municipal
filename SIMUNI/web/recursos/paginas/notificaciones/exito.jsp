@@ -13,7 +13,6 @@
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <div>
         <%
-            out.print("siiiiiii"+request.getParameter("ayuda"));
             out.print("<div class='sm_body_contenedormensaje'>");
             out.print("Codigo de proceso :"+request.getParameter("id"));
             out.print("<hr>");
@@ -28,13 +27,13 @@
         <br/>
         <div id="sm_div_contBotones">
             <div id="sm_div_reenvioInicio">
-                <a href="#">Ir a la pantalla de inicio &raquo;</a>
+                <a href="/SIMUNI">Ir a la pantalla de inicio &raquo;</a>
             </div>
             <div id="sm_div_reenvioRegistroActivos">
-                <a href="#">Ir a la pantalla de registro de activos &raquo;</a>
+                <a href="/SIMUNI/modulos/activos?proceso=registroactivoarticulo">Ir a la pantalla de registro de activos &raquo;</a>
             </div>
             <div id="sm_div_reenvioGrilla">
-                <a href="#">Ir a la pantalla de listado de los activos &raquo;</a>
+                <a href="/SIMUNI/modulos/activos?proceso=veractivosarticulos">Ir a la pantalla de listado de los activos &raquo;</a>
             </div>
         </div>
     </decorator:content>
