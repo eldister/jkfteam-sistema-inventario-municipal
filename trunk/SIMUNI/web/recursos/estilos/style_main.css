@@ -50,7 +50,7 @@ header{
     background-color: white;
     height: 220px;
     border-bottom: 1px white solid;
-    
+
 }
 
 #sm_body_mainsection{
@@ -367,7 +367,11 @@ footer .sm_div_rowcontainer{
     vertical-align:top;
     height: 100%;
 
+
 } 
+footer .sm_div_rowcontainer:first-child{
+    background-color: lightblue;
+}
 footer .sm_div_rowcontainer:not(:first-child){
     margin-top: -15px;
 }
@@ -549,9 +553,9 @@ footer .sm_div_colcontainer ul{
     color:black;
     padding: 10%;
     padding-top: 10px;
-        padding-bottom: 10px;
+    padding-bottom: 10px;
 
-    
+
 }
 .sm_div_configuracionlink:hover{
     color: lightblue;

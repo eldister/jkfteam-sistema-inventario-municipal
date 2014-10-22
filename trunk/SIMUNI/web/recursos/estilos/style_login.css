@@ -1,8 +1,9 @@
-body{
-    display: block;
+#sm_body_mainsection{
+    display: block !important;
         margin-left: auto !important;
     margin-right: auto !important;
     text-align: center;
+    width: 100% !important;
 }
 
 #sm_form_login{

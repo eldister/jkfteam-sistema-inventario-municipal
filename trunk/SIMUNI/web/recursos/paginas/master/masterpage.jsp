@@ -10,7 +10,9 @@
     String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
     String tipousuario = request.getSession().getAttribute("TIPOUSUARIO") == null ? null : request.getSession().getAttribute("TIPOUSUARIO").toString();
     String loginpage = request.getSession().getAttribute("LOGINPAGE") == null ? null : request.getSession().getAttribute("LOGINPAGE").toString();
-    String menuusuario = "";
+   String horainicio = request.getSession().getAttribute("HORAINICIO") == null ? null : request.getSession().getAttribute("HORAINICIO").toString();
+
+     String menuusuario = "";
     //   idusuario="fCoulon";
     //    tipousuario="1";
     if (idusuario == null && loginpage == null) {
@@ -153,7 +155,7 @@
                                         Notificacion notificacion = iter.next();
                                         out.print("<div class='sm_div_mensaje'>");
                                         out.print("<div class='sm_div_notificacionfechacontainer'>");
-                                        out.print(notificacion.getFechaNotificacion().toGMTString());
+                                        out.print(notificacion.getFechaNotificacion().toLocaleString());
                                         out.print("        <hr>");
                                         out.print("      </div>");
                                         out.print("<strong>");
@@ -218,8 +220,8 @@
         </section>
         <% if (loginpage == null) {%>
         <section id="sm_body_notificacion">
-            <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Sesión iniciada : </span><% out.print(new Date().toLocaleString()); %></div>
-            <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usuario:</span> user1</div>
+            <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Sesión iniciada : </span><% out.print(horainicio); %></div>
+            <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usuario:</span> <%out.print(idusuario);%></div>
             <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usted se ha conectado desde</span> <% out.print(request.getRemoteAddr());%> </div>
         </section> 
         <%}%>
@@ -230,9 +232,9 @@
                     <div class="sm_div_colcontainer">
                         <b>Páginas</b>
                         <ul>
-                            <li><a href="">Acerca de</a></li>
-                            <li><a href="">Mapa del sitio</a></li>
-                            <li><a href="">Mantenimiento Activos</a></li>
+                            <li><a href="/SIMUNI/acercade.jsp">Acerca de</a></li>
+                            <li><a href="#" title="Ver el sistema desde arriba">Mapa del sitio</a></li>
+                            <li><a href="#" title="#">Mantenimiento Activos</a></li>
 
                         </ul>
                     </div>
@@ -240,17 +242,17 @@
                     <div class="sm_div_colcontainer">
                         <b>SIMUNI</b><br/>
                         <ul> 
-                            <li><a href="">Acerca del proyecto</a></li>
-                            <li><a href="">Desarrolladores</a></li>                     
+                            <li><a href="/SIMUNI/acercade.jsp" title="Información del proyecto">Acerca del proyecto</a></li>
+                            <li><a href="#" title="Creadores del sistema">Desarrolladores</a></li>                     
                         </ul>
                     </div>  
 
                     <div class="sm_div_colcontainer">
                         <b>Ayuda</b><br/>
                         <ul>
-                            <li><a href="">FAQ</a></li>
-                            <li><a href="">Manual de usuario</a></li>
-                            <li><a href="">Contacto</a></li>
+                            <li><a href="" title="Preguntas Frecuentes">FAQ</a></li>
+                            <li><a href="#" title="Ir al manual">Manual de usuario</a></li>
+                            <li><a href="/SIMUNI/contacto.jsp" title="Contactar al administrador">Contacto</a></li>
                         </ul>
                     </div>                     
                 </div>
