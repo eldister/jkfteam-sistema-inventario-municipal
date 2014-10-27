@@ -52,8 +52,6 @@ public class AccionesArticulos extends HttpServlet {
         ObtenerImagenesActivoAsinc
 
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -77,30 +75,22 @@ public class AccionesArticulos extends HttpServlet {
         ArrayList<TipoPago> tipospago = null;
         ArrayList<EstadoActivo> estadoactivos = null;
         ArrayList<Activos_Articulos> articulos = null;
+        ArrayList<imagenActivo> imagenes = null;
+        Activos_Articulos articulo = null;
+        RequestDispatcher disp = null;
         int npagina = 0;
         int paginacion = 0;//obtener la paginacion y pagina actual      
-        RequestDispatcher disp = null;
+        int desplazamiento = 0;
+        
         switch (getOpcion(request.getParameter("proceso"))) {
             /*parte uno es para los activos articulos*/
 
             case ObtenerActivosArticulos:
+                npagina = getNumeroDePagina(request.getParameter("pag"), 0);
+                paginacion = getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
 
-                try {
-                    npagina = Integer.parseInt(request.getParameter("pag"));
-                } catch (NumberFormatException ex) {
-                    //registrar en bitacora el error
-                    //colocar los valores por defecto 
-                    npagina = 1;
-                }
-                try {
-                    paginacion = Integer.parseInt(request.getSession().getAttribute("paginacion").toString());
-                } catch (Exception ex) {
-                    //registrar en bitacora el error
-                    //colocar los valores por defecto 
-                    paginacion = 7;
-                }
-                int desplazamiento = ((npagina - 1) * paginacion);
-                System.out.println("Desplazameitnto" + desplazamiento);
+                desplazamiento = ((npagina - 1) * paginacion);
+                System.out.println("Desplazamiento" + desplazamiento);
                 articulos = manejador.getListaArticulos(desplazamiento, paginacion);
                 tiposactivos = manejadortactivos.getListaTiposActivos();
                 disp = request.getRequestDispatcher("/modulos/activos/articulos/mantenimiento_1.jsp");
@@ -121,7 +111,7 @@ public class AccionesArticulos extends HttpServlet {
                 request.setAttribute("tipospago", tipospago);
                 request.setAttribute("estadoactivos", estadoactivos);
                 String codigoactivo = request.getParameter("codigoactivo");
-                Activos_Articulos articulo = manejador.getActivoArticulo(codigoactivo);
+                articulo = manejador.getActivoArticulo(codigoactivo);
                 //hay que crear la vista
                 disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizacionactivoarticulo.jsp");
                 request.setAttribute("articulo", articulo);
@@ -170,15 +160,15 @@ public class AccionesArticulos extends HttpServlet {
             case ObtenerImagenesActivoAsinc:
 
                 codigoactivo = request.getParameter("codigoactivo");
-                ArrayList<imagenActivo> imagenes = null;
-
                 imagenes = manejador.getListaImagenesActivo(codigoactivo);
-
                 //hay que crear la vista
                 disp = request.getRequestDispatcher("/recursos/paginas/embebidos/vistaimagenesactivos.jsp");
                 request.setAttribute("imagenes", imagenes);
                 request.setAttribute("codigoactivo", codigoactivo);
                 disp.forward(request, response);
+                break;
+            default:
+                //redirigir a pagina de error
                 break;
 
         }
@@ -195,7 +185,7 @@ public class AccionesArticulos extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("entre al post"+getOpcion(request.getParameter("proceso")));
+        System.out.println("entre al post" + getOpcion(request.getParameter("proceso")));
         Departamento depto = new Departamento();
         DateFormat formatter = null;
         InputStream filecontent = null;
@@ -450,10 +440,9 @@ public class AccionesArticulos extends HttpServlet {
                         paginacion = 7;
                         request.getSession().setAttribute("paginacion", paginacion);
                     }
-                   
+
                     String query = request.getParameter("query");
-                     System.out.print(query);
-                     
+                    System.out.print(query);
 
                     disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=1");
                     deptos = manejadordeptos.getListaDepartamentos();
@@ -532,4 +521,16 @@ public class AccionesArticulos extends HttpServlet {
         }
         return OpcionesDo.AccionDefault;
     }
+
+    private int getNumeroDePagina(Object str, int respaldo) {
+        if (str == null) {
+            return respaldo;
+        }
+        if (UtilidadesServlet.tryParseInt(str.toString())) {
+            return Integer.parseInt(str.toString());
+        } else {
+            return respaldo;
+        }
+    }
+
 }

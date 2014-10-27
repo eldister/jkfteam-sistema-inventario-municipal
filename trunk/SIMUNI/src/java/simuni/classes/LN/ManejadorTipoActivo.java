@@ -20,11 +20,7 @@ import simuni.classes.EN.TipoActivo;
 public class ManejadorTipoActivo {
 
     public ArrayList<TipoActivo> getListaTiposActivos() {
-        try {
-            return new ManejadorDatosTipoActivo().getListaTipoActivos();
-        } catch (SQLException ex) {
-            Logger.getLogger(ManejadorTipoActivo.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
             try{
                 ManejadorDatosTipoActivo manejadortipoactivo= new ManejadorDatosTipoActivo();
                 ArrayList<TipoActivo> tipoactivo = manejadortipoactivo.getListaTipoActivos();
@@ -33,6 +29,7 @@ public class ManejadorTipoActivo {
             }
             catch (Exception e){
                 UtilidadesServlet.registrarErrorSistema("getListaTiposActivos", e.getMessage());
+                e.printStackTrace();
             }
         return null;
     }
