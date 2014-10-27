@@ -7,7 +7,7 @@
 package simuni.classes.EN;
 
 /**
- *
+ * En esta clase estará los tipo de pagos en que se hará las cancelanción de la compra de nuevos activos 
  * @author FchescO
  */
 public class TipoPago {
@@ -15,6 +15,7 @@ public class TipoPago {
  private String nombreTipoPago;
 
     /**
+     * obtener el código de tipo de pago
      * @return the codigoTipoPago
      */
     public int getCodigoTipoPago() {
@@ -22,6 +23,7 @@ public class TipoPago {
     }
 
     /**
+     * poner el código de tipo de pago
      * @param codigoTipoPago the codigoTipoPago to set
      */
     public void setCodigoTipoPago(int codigoTipoPago) {
@@ -29,6 +31,7 @@ public class TipoPago {
     }
 
     /**
+     * obtener el nombre de tipo de pago
      * @return the nombreTipoPago
      */
     public String getNombreTipoPago() {
@@ -36,6 +39,7 @@ public class TipoPago {
     }
 
     /**
+     * el nombre de tipo de pago
      * @param nombreTipoPago the nombreTipoPago to set
      */
     public void setNombreTipoPago(String nombreTipoPago) {

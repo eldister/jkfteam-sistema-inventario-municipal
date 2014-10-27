@@ -7,14 +7,14 @@
 package simuni.classes.EN;
 
 /**
- *
+ * En esta clase estarán los diferentes tipos de activos existentes 
  * @author FchescO
  */
 public class TipoActivo {
     private int codigoTipoActivo;
     private String nombreTipoActivo;
 
-    /**
+    /** obtener el códido del tipo de activo
      * @return the codigoTipoActivo
      */
     public int getCodigoTipoActivo() {
@@ -22,6 +22,7 @@ public class TipoActivo {
     }
 
     /**
+     * poner el códido del tipo de activo
      * @param codigoTipoActivo the codigoTipoActivo to set
      */
     public void setCodigoTipoActivo(int codigoTipoActivo) {
@@ -29,6 +30,7 @@ public class TipoActivo {
     }
 
     /**
+     * obtener el nombre del tipo de activo
      * @return the nombreTipoActivo
      */
     public String getNombreTipoActivo() {
@@ -36,6 +38,7 @@ public class TipoActivo {
     }
 
     /**
+     * poner el nombre del tipo de activo
      * @param nombreTipoActivo the nombreTipoActivo to set
      */
     public void setNombreTipoActivo(String nombreTipoActivo) {

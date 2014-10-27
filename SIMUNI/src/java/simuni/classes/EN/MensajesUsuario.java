@@ -6,7 +6,7 @@
 package simuni.classes.EN;
 
 /**
- *
+ * La clase muestra los mensajes de exito o de error al momento de hacer el registro de un activo 
  * @author FchescO
  */
 public class MensajesUsuario {
