@@ -7,13 +7,13 @@
 package simuni.classes.EN;
 
 /**
- *
+ * En la clase EstadoActivo se va mostrar en que estado se encuentra el activo
  * @author FchescO
  */
 public class EstadoActivo {
     private String nombreEstado;
 
-    /**
+    /** Obtener el estado del activo
      * @return the nombreEstado
      */
     public String getNombreEstado() {
@@ -21,8 +21,9 @@ public class EstadoActivo {
     }
 
     /**
+     * poner el estado del activo
      * @param nombreEstado the nombreEstado to set
-     */
+     */ 
     public void setNombreEstado(String nombreEstado) {
         this.nombreEstado = nombreEstado;
     }

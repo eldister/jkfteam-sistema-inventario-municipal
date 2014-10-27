@@ -14,8 +14,8 @@ public class Servidor {
     public static enum BD {
 
         SERVIDORMYSQLFRANCISCO("Server=localhost;Port=3306;Database=myDataBase;Uid=chescosimuni;Pwd=chescosimuni;"),
-        SERVIDORMYSQLKEYLIN("jdbc:mysql://172.17.41.114:3306/simuni_v1?user=root&password=keylinperez23"),
-                SERVIDORMYSQLDEBIAN("jdbc:mysql://192.168.56.101:3306/simuni_v1?user=root&password=root");
+        SERVIDORMYSQLKEYLIN("jdbc:mysql://localhost:3306/simuni_v1?user=adminSIMUNI&password=adminpass"),
+                SERVIDORMYSQLDEBIA8N("jdbc:mysql://192.168.56.101:3306/simuni_v1?user=root&password=root");
 
 
         private final String texto;

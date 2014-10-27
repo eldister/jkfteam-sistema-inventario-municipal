@@ -7,7 +7,7 @@
 package simuni.classes.EN;
 
 /**
- *
+ * Se realizan las notificación que se le mostrarán a los usuarios. 
  * @author FchescO
  */
 public class Notificacion {
@@ -20,6 +20,7 @@ public class Notificacion {
     private String tipoNotificacion;
 
     /**
+     * Obtener el id de la notificación 
      * @return the idNotificacion
      */
     public int getIdNotificacion() {
@@ -27,13 +28,15 @@ public class Notificacion {
     }
 
     /**
+     * poner el id de la notificación 
      * @param idNotificacion the idNotificacion to set
      */
     public void setIdNotificacion(int idNotificacion) {
         this.idNotificacion = idNotificacion;
     }
 
-    /**
+    /** 
+     * obtener la fecha de la notificación
      * @return the fechaNotificacion
      */
     public java.sql.Date getFechaNotificacion() {
@@ -41,6 +44,7 @@ public class Notificacion {
     }
 
     /**
+     * pone la fecha de la notificación 
      * @param fechaNotificacion the fechaNotificacion to set
      */
     public void setFechaNotificacion(java.sql.Date fechaNotificacion) {
@@ -48,6 +52,7 @@ public class Notificacion {
     }
 
     /**
+     * obtener el usario que se le enviarán las notificaciones 
      * @return the usuarioObjetivo
      */
     public int getUsuarioObjetivo() {
@@ -55,6 +60,7 @@ public class Notificacion {
     }
 
     /**
+     * poner el usario que se le enviarán las notificaciones 
      * @param usuarioObjetivo the usuarioObjetivo to set
      */
     public void setUsuarioObjetivo(int usuarioObjetivo) {
@@ -62,6 +68,7 @@ public class Notificacion {
     }
 
     /**
+     * 
      * @return the usuarioOrigen
      */
     public String getUsuarioOrigen() {
@@ -76,6 +83,7 @@ public class Notificacion {
     }
 
     /**
+     * obtener el estado de la notificación 
      * @return the estadoNotificacion
      */
     public String getEstadoNotificacion() {
@@ -83,6 +91,7 @@ public class Notificacion {
     }
 
     /**
+     * poner el estado de notificación 
      * @param estadoNotificacion the estadoNotificacion to set
      */
     public void setEstadoNotificacion(String estadoNotificacion) {
@@ -90,6 +99,7 @@ public class Notificacion {
     }
 
     /**
+     * obtener la descripcion de de la notificación 
      * @return the descripcionNotificacion
      */
     public String getDescripcionNotificacion() {
@@ -97,6 +107,7 @@ public class Notificacion {
     }
 
     /**
+     * poner la descripción de la notificación 
      * @param descripcionNotificacion the descripcionNotificacion to set
      */
     public void setDescripcionNotificacion(String descripcionNotificacion) {
@@ -104,6 +115,7 @@ public class Notificacion {
     }
 
     /**
+     * obterner que tipo de notificación es 
      * @return the tipoNotificacion
      */
     public String getTipoNotificacion() {
@@ -111,6 +123,7 @@ public class Notificacion {
     }
 
     /**
+     * poner el tipo de notificación 
      * @param tipoNotificacion the tipoNotificacion to set
      */
     public void setTipoNotificacion(String tipoNotificacion) {

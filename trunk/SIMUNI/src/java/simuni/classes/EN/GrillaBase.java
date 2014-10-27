@@ -48,7 +48,7 @@ public class GrillaBase {
             resp.append("</select>");
             resp.append("</div> ");
         }
-        //SECCION DE BUSQEUDA POR TEXTO
+        //SECCION DE BUSQUEDA POR TEXTO
         resp.append(" <div class='sm_div_colsim'>");
 
         resp.append("    <div id='sm_div_busquedacontainer'> ");
