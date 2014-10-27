@@ -24,6 +24,11 @@
 <script>
     $(document).ready(function(){
           setEventoSeleccionarProveedor_b();
+          $("#cmbtipopago").change(function(){
+              $("#hiddenidTipoPago").val($(this).val());
+              
+          });
+          
     });
     
 
@@ -120,7 +125,7 @@
                                         while (iter.hasNext()) {
                                             TipoActivo tactivo = iter.next();
                                             out.print("<option ");
-                                            out.print(activo.getPa_tipoActivo() == tactivo.getCodigoTipoActivo() ? " selected" : "");
+                                            out.print(activo.getPa_tipoActivo() == tactivo.getCodigoTipoActivo() ? " selected='selected' " : "");
                                             out.print("value='");
                                             out.print(tactivo.getCodigoTipoActivo());
                                             out.print("'>");
@@ -212,14 +217,14 @@
                             <label>Tipo de pago </label>
                         </td>
                         <td>
-                            <select name="cmbTipoPago">
+                            <select name="cmbTipoPago" id="cmbtipopago">
                                 <%
                                     if (tipospago != null) {
                                         Iterator<TipoPago> iter = tipospago.iterator();
                                         while (iter.hasNext()) {
                                             TipoPago tpago = iter.next();
                                             out.print("<option ");
-                                            out.print(activo.getPa_tipoPago() == tpago.getCodigoTipoPago() ? " selected" : "");
+                                            out.print(activo.getPa_tipoPago() == tpago.getCodigoTipoPago() ? " selected='selected' " : "");
                                             out.print(" value='");
                                             out.print(tpago.getCodigoTipoPago());
                                             out.print("'>");
@@ -268,9 +273,7 @@
                             <label>Observaciones </label>
                         </td>
                         <td>
-                            <textarea type="text" name="txtObservaciones"  placeholder="Indique aspectos generales de los activos que considere necesario" maxlength="300">
-                                <%out.print(activo.getPa_Observaciones());%>
-                            </textarea>
+                            <textarea type="text" name="txtObservaciones"  placeholder="Indique aspectos generales de los activos que considere necesario" maxlength="300"><%out.print(activo.getPa_Observaciones());%></textarea>
                         </td>
                     </tr>                        
                     <tr>
@@ -312,7 +315,7 @@
         <div id="sm_form_extracontent">
             <input type="hidden"  value="<% out.print(activo.getPa_codigoProveedor()); %>" name="hiddenidProveedor">
             <input type="hidden"  value="<% out.print(activo.getPa_tipoActivo()); %>"name="hiddenidCategoria">
-            <input type="hidden"  value="<% out.print(activo.getPa_tipoPago()); %>"name="hiddenidTipoPago">
+            <input type="hidden"  value="<% out.print(activo.getPa_tipoPago()); %>" id="hiddenidTipoPago" name="hiddenidTipoPago">
             <input type="hidden"  value="<% out.print(activo.getPo_depto().getPn_codigo()); %>" name="hiddenidDepartamento">
             <input type='hidden'  value="<% out.print(activo.getPa_identificadorActivo());%>" name="txtNumeroPlaca">
         </div>

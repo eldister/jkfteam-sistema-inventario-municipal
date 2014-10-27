@@ -12,7 +12,7 @@ function validarMail()
     }
 }
 
-function validarCedula(){
+function validarCedula(cedula){
     var cedula = document.getElementById("txtID").value;
     var filtroExtrajera = /^\d{8}[A-Z]$/;
     var filtroNac = /^\d{1}-\d{4}-\d{4}$/;

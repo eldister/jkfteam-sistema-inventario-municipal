@@ -8,11 +8,20 @@ import simuni.classes.EN.Activos_Articulos;
 import simuni.classes.EN.imagenActivo;
 
 /**
- *
+ *estaclasde es una cosa de prueba
  * @author FchescO
+ * @since 1.0
+ * @version 1.0
  */
 public class ManejadorActivos {
 
+    /**
+     * Este metodo agrega bla bla bla
+     * @param to_articulo el articulo a ingresar
+     * @return verdadero si fue correcto, false si no fue correcto
+     * @throws Exception Si hay error se registra en bd 
+     * @since 1.0
+     */
     public boolean agregarActivoArticulo(Activos_Articulos to_articulo) throws Exception {
         try {
             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
@@ -39,7 +48,6 @@ public class ManejadorActivos {
         } catch (Exception e) {
             UtilidadesServlet.registrarErrorSistema("modificarActivoArticulo", e.getMessage());
         }
-
         return false;
     }
 
