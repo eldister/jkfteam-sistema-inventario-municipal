@@ -1,3 +1,4 @@
+var $001ERGLOB=false;
 function fnMostrarImagen(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -6,6 +7,7 @@ function fnMostrarImagen(input) {
                     .attr('src', e.target.result).width(300).height(300);
         };
         reader.readAsDataURL(input.files[0]);
+       
     }
 }
 
@@ -25,8 +27,8 @@ function verificarSiPlacaYaRegistrada() {
                     $("#txtnumplacainfo").removeClass('lblcampovalido');
                     $("#txtnumplacainfo").removeClass('lblcampowarning');
                     $("#txtnumplacainfo").attr('title', html);
-
                     $("#txtnumplaca").css('border', 'solid 1px red');
+                    $001ERGLOB=true;
                 }
                 else {
 //correcto
@@ -35,6 +37,8 @@ function verificarSiPlacaYaRegistrada() {
                     $("#txtnumplacainfo").removeClass('lblcampowarning');
                     $("#txtnumplaca").css('border', 'solid 1px green');
                     $("#txtnumplacainfo").attr('title', 'El identificador es Valido');
+                    $001ERGLOB=false;
+
 
                 }
             }
@@ -97,6 +101,16 @@ function setManejadorSeleccionProveedor() {
       // alert(   $("input[name=hiddenidProveedor]").val())
        $("#sm_body_ventanamodal").dialog('close');
 
+    });
+}
+
+
+function formularioRegistroSubmitEvent(){
+    $("#sm_div_formulario").submit(function(e){
+        if($001ERGLOB){
+            alert("Debes corregir los errores mostrados!")
+           e.preventDefault();     
+        }
     });
 }
 

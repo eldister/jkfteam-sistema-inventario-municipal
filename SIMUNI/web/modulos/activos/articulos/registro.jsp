@@ -7,9 +7,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/"%>
 <decorator:decorate filename='../../../recursos/paginas/master/masterpage.jsp'>
-    
-     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de activos</decorator:content>
-     
+
+    <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Registro de activos</decorator:content>
+
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
         <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodearticulos.css">
         <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/jquery-registroactivos.js"></script>
@@ -46,12 +46,14 @@
 
                 var today = now.getFullYear() + "-" + (month) + "-" + (day);
                 $('input[type=date]').attr('value', today);
-                
+
                 setEventoSeleccionarProveedor();
+                formularioRegistroSubmitEvent();
+
             });
         </script>
     </decorator:content>
-        
+
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <%
             ArrayList<Departamento> deptos = (ArrayList<Departamento>) request.getAttribute("departamentos");
@@ -289,6 +291,6 @@
                 <input type="hidden" value="1" name="hiddenidDepartamento">
             </div>
         </form>
-                                <div id='sm_body_ventanamodal'>&nbsp;</div>
+        <div id='sm_body_ventanamodal'>&nbsp;</div>
     </decorator:content>
 </decorator:decorate>

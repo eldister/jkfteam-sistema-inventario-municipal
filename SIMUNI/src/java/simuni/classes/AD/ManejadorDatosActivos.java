@@ -34,7 +34,6 @@ public class ManejadorDatosActivos {
                     imagen = iter.next();
                 };
             }
-            to_articulo.setPa_codigoProveedor("504230366");
             String sDate = "";
             if (imagen != null) {
                 nombreimagen = imagen.getPa_nombreArchivo();
@@ -136,6 +135,7 @@ public class ManejadorDatosActivos {
             sp_modificacionarticulo.setDouble(10, to_articulo.getPb_porcentajeRescate());
             sp_modificacionarticulo.setDate(11, new java.sql.Date(fechainiciooperacion.getYear(), fechainiciooperacion.getMonth(), fechainiciooperacion.getDate()));
             sp_modificacionarticulo.setInt(12, to_articulo.getPa_tipoActivo());
+            System.out.println("El tipo de activo es "+to_articulo.getPa_tipoActivo());
             sp_modificacionarticulo.setInt(13, to_articulo.getPo_depto().getPn_codigo());
             sp_modificacionarticulo.setInt(14, to_articulo.getPa_tipoPago());
 
@@ -215,6 +215,7 @@ public class ManejadorDatosActivos {
                 d.setPn_codigo(rs.getInt("SM00IDDP"));
                 articuloejemplo.setPo_depto(d);
                 articuloejemplo.setPa_tipoPago(rs.getInt("SM00IDTP"));
+                System.out.println("Nuevamente veamos que sale "+articuloejemplo.getPa_tipoPago() );
                 articuloejemplo.setPa_marca(rs.getString("SM01MAAR"));
                 articuloejemplo.setPa_modelo(rs.getString("SM02MDAR"));
                 articuloejemplo.setPb_porcentajeDepreciacion(rs.getDouble("SM03NUDR"));

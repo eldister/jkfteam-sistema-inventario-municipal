@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -52,6 +55,7 @@ public class AccionesArticulos extends HttpServlet {
         ObtenerImagenesActivoAsinc
 
     }
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -81,7 +85,7 @@ public class AccionesArticulos extends HttpServlet {
         int npagina = 0;
         int paginacion = 0;//obtener la paginacion y pagina actual      
         int desplazamiento = 0;
-        
+
         switch (getOpcion(request.getParameter("proceso"))) {
             /*parte uno es para los activos articulos*/
 
@@ -89,7 +93,7 @@ public class AccionesArticulos extends HttpServlet {
                 npagina = getNumeroDePagina(request.getParameter("pag"), 0);
                 paginacion = getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
 
-                desplazamiento = ((npagina - 1) * paginacion);
+                desplazamiento = ((npagina) * paginacion);
                 System.out.println("Desplazamiento" + desplazamiento);
                 articulos = manejador.getListaArticulos(desplazamiento, paginacion);
                 tiposactivos = manejadortactivos.getListaTiposActivos();
@@ -185,12 +189,9 @@ public class AccionesArticulos extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("entre al post" + getOpcion(request.getParameter("proceso")));
-        Departamento depto = new Departamento();
-        DateFormat formatter = null;
+        System.out.println("entre al post" + getOpcion(request.getParameter("proceso")));;
         InputStream filecontent = null;
         RequestDispatcher disp = null;
-        Date date = null;
         String filename = "";
         int npagina = 0;
         int paginacion = 0;//obtener la paginacion y pagina actual  
@@ -208,50 +209,16 @@ public class AccionesArticulos extends HttpServlet {
         ArrayList<Activos_Articulos> articulos = null;
 
         try {
-
-            String numeroplaca = request.getParameter("txtNumeroPlaca");
-            String modeloactivo = request.getParameter("txtModelo");
-            String marcaactivo = request.getParameter("txtMarca");
-            String categoriaactivo = request.getParameter("hiddenidCategoria");
-            String fechainiciooperacion = request.getParameter("dpPuestaOperacion");
-            String idproveedor = request.getParameter("hiddenidProveedor");//FALTAA
-            String iddepto = request.getParameter("hiddenidDepartamento");//FALTAA-
-            String fechacompraactivo = request.getParameter("dpFechaCompra");
-            String preciocompra = request.getParameter("txtPrecioCompra");
-            String porcentajedepreciacion = request.getParameter("txtPorcentajeDepreciacion");
-            String porcentajerescate = request.getParameter("txtPorcentajeRescate");
-            String idtipopago = request.getParameter("hiddenidTipoPago");//FALTAA-
-            String estadoactivo = request.getParameter("cmbEstadoActivo");
-            String descripcion = request.getParameter("txtDescripcion");
-            String observaciones = request.getParameter("txtObservaciones");
-
             switch (getOpcion(request.getParameter("proceso"))) {
 
                 case RegistrarActivoArticulo:
+                    activoarticulo = generarActivoArticulo(request);
                     filePart = request.getPart("fileimagenactivo"); // Retrieves <input type="file" name="file">
                     if (filePart != null) {
                         System.out.println("archivo presente ayuda nombres iii " + filePart.getSize());
-
                     }
                     filecontent = filePart.getInputStream();
                     filename = UtilidadesServlet.getFilename(filePart);
-                    formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    System.out.println(fechainiciooperacion);
-                    date = new java.sql.Date(formatter.parse(fechainiciooperacion).getTime());
-                    System.out.println("ahora si " + fechainiciooperacion + date.toGMTString());
-
-                    ///VALIDAR SI LOS CAMPOS REQUERIDOS SON VALIDOS O NO (NULOS) y que la imagen sea png o jpg
-                    //validar que la placa no este registrada en base de datos.
-                    //INSTANCIAR EL OBJETO
-                    activoarticulo.setPa_identificadorActivo(numeroplaca);
-                    activoarticulo.setPa_modelo(modeloactivo);
-                    activoarticulo.setPa_marca(marcaactivo);
-                    activoarticulo.setPd_puestaOperacion(date);
-                    activoarticulo.setPa_codigoProveedor(idproveedor);
-
-                    //instanciamos depto
-                    depto.setPn_codigo(Integer.parseInt(iddepto));
-                    activoarticulo.setPo_depto(depto);
 
                     //instanciamos para las imagenes
                     imagenActivo imagenactivo = new imagenActivo();
@@ -260,19 +227,6 @@ public class AccionesArticulos extends HttpServlet {
                     ArrayList<imagenActivo> listadoimagen = new ArrayList<imagenActivo>();
                     listadoimagen.add(imagenactivo);
                     activoarticulo.setPo_imagenActivo(listadoimagen);
-
-                    //hacer validaciones si es entero.
-                    date = new java.sql.Date(formatter.parse(fechacompraactivo).getTime());
-                    activoarticulo.setPd_fechaCompra(date);
-                    activoarticulo.setPd_precioCompra(Double.parseDouble(preciocompra));
-                    activoarticulo.setPb_porcentajeDepreciacion(Double.parseDouble(porcentajedepreciacion));
-                    activoarticulo.setPb_porcentajeRescate(Double.parseDouble(porcentajerescate));
-                    activoarticulo.setPa_tipoPago(Integer.parseInt(idtipopago));//corregir, aqui es int
-                    activoarticulo.setPa_tipoActivo(Integer.parseInt(categoriaactivo));//corregir, aqui es int
-                    activoarticulo.setPa_Estado(estadoactivo);
-                    activoarticulo.setPa_Descripcion(descripcion);
-                    activoarticulo.setPa_Observaciones(observaciones);
-
                     //falta imagen
                     //hacer el proceso de registro
                     if (manejadoractivos.agregarActivoArticulo(activoarticulo)) {
@@ -289,6 +243,7 @@ public class AccionesArticulos extends HttpServlet {
                     break;
 
                 case ActualizarActivoArticulo:
+                    activoarticulo = generarActivoArticulo(request);
                     filePart = request.getPart("fileimagenactivo"); // Retrieves <input type="file" name="file">                  
                     System.out.println("veamooooooooos  " + filePart.getSize());
                     if (filePart != null && filePart.getSize() > 0) {
@@ -305,34 +260,6 @@ public class AccionesArticulos extends HttpServlet {
                     } else {
                         activoarticulo.setPo_imagenActivo(null);
                     }
-                    formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    date = new java.sql.Date(formatter.parse(fechainiciooperacion).getTime());
-
-                    ///VALIDAR SI LOS CAMPOS REQUERIDOS SON VALIDOS O NO (NULOS) y que la imagen sea png o jpg
-                    //validar que la placa no este registrada en base de datos.
-                    //se debe hacer en la logica de negocios.
-                    activoarticulo.setPa_identificadorActivo(numeroplaca);
-                    activoarticulo.setPa_modelo(modeloactivo);
-                    activoarticulo.setPa_marca(marcaactivo);
-                    activoarticulo.setPd_puestaOperacion(date);
-                    activoarticulo.setPa_codigoProveedor(idproveedor);
-
-                    //instanciamos depto
-                    depto = new Departamento();
-                    depto.setPn_codigo(Integer.parseInt(iddepto));
-                    activoarticulo.setPo_depto(depto);
-
-                    //hacer validaciones si es entero.
-                    date = new java.sql.Date(formatter.parse(fechacompraactivo).getTime());
-                    activoarticulo.setPd_fechaCompra(date);
-                    activoarticulo.setPd_precioCompra(Double.parseDouble(preciocompra));
-                    activoarticulo.setPb_porcentajeDepreciacion(Double.parseDouble(porcentajedepreciacion));
-                    activoarticulo.setPb_porcentajeRescate(Double.parseDouble(porcentajerescate));
-                    activoarticulo.setPa_tipoPago(Integer.parseInt(idtipopago));//corregir, aqui es int
-                    activoarticulo.setPa_tipoActivo(Integer.parseInt(categoriaactivo));//corregir, aqui es int
-                    activoarticulo.setPa_Estado(estadoactivo);
-                    activoarticulo.setPa_Descripcion(descripcion);
-                    activoarticulo.setPa_Observaciones(observaciones);
 
                     //falta imagen
                     //hacer el proceso de registro
@@ -347,7 +274,6 @@ public class AccionesArticulos extends HttpServlet {
                         disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error_asinc.jsp?id=" + activoarticulo.getPa_identificadorActivo() + "&msg=2");
                         disp.forward(request, response);
                     }
-
                     break;
 
                 case BajarActivoArticuloAsinc:
@@ -359,7 +285,6 @@ public class AccionesArticulos extends HttpServlet {
                         disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito_asinc.jsp?id=" + codigoactivo + "&msg=3");
                         agregarNotificacion(request.getSession().getAttribute("USERNAME").toString(), "Activo " + activoarticulo.getPa_identificadorActivo() + " bajado de la base de datos");
                         disp.forward(request, response);
-
                     } else {
                         //redirigir a pagina de error y/o recargar el formulario
                         disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error_asinc.jsp?id=" + codigoactivo + "&msg=3");
@@ -368,41 +293,16 @@ public class AccionesArticulos extends HttpServlet {
                     break;
                 case ActualizarPropiedadPaginacionAsinc:
                     //vamos por aqui
-                    try {
-                        paginacion = 5;
-                        String valorpaginacion = request.getParameter("valorpaginacion");
-                        if (valorpaginacion != null) {
-                            paginacion = Integer.parseInt(valorpaginacion);
-                        }
-                        request.getSession().setAttribute("paginacion", paginacion);
-                        //modificar preferencias en base de datos.
+                    String valorpaginacion = request.getParameter("valorpaginacion");
+                    paginacion = getNumeroDePagina(valorpaginacion, 5);
+                    //registrar error en base de datos
+                    request.getSession().setAttribute("paginacion", paginacion);
 
-                    } catch (Exception ex) {
-                        //registrar error en base de datos
-                        request.getSession().setAttribute("paginacion", 5);
-                        System.out.println(ex.getMessage());
-                    }
                     break;
                 case ObtenerActivosArticulosAsinc:
-                    try {
-                        npagina = Integer.parseInt(request.getParameter("pag"));
-
-                    } catch (NumberFormatException ex) {
-                        //registrar en bitacora el error
-                        //colocar los valores por defecto 
-                        npagina = 1;
-
-                    }
-                    try {
-                        paginacion = Integer.parseInt(request.getSession().getAttribute("paginacion").toString());
-
-                    } catch (NumberFormatException ex) {
-                        //registrar en bitacora el error
-                        //colocar los valores por defecto 
-
-                        paginacion = 7;
-                        request.getSession().setAttribute("paginacion", paginacion);
-                    }
+                    npagina=getNumeroDePagina(request.getParameter("pag"), 0);
+                    paginacion=getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
+                    request.getSession().setAttribute("paginacion", paginacion);            
                     int desplazamiento = ((npagina - 1) * paginacion);
                     articulos = manejadoractivos.getListaArticulos(desplazamiento, paginacion);
                     disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=1");
@@ -420,26 +320,10 @@ public class AccionesArticulos extends HttpServlet {
                     break;
 
                 case BusquedaArticulo:
+                    npagina=getNumeroDePagina(request.getParameter("pag"), 0);
+                    paginacion=getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
                     System.out.println("entre a la busqueda");
-                    try {
-                        npagina = Integer.parseInt(request.getParameter("pag"));
-
-                    } catch (NumberFormatException ex) {
-                        //registrar en bitacora el error
-                        //colocar los valores por defecto 
-                        npagina = 1;
-
-                    }
-                    try {
-                        paginacion = Integer.parseInt(request.getSession().getAttribute("paginacion").toString());
-
-                    } catch (Exception ex) {
-                        //registrar en bitacora el error
-                        //colocar los valores por defecto 
-
-                        paginacion = 7;
-                        request.getSession().setAttribute("paginacion", paginacion);
-                    }
+                    request.getSession().setAttribute("paginacion", paginacion);         
 
                     String query = request.getParameter("query");
                     System.out.print(query);
@@ -473,12 +357,69 @@ public class AccionesArticulos extends HttpServlet {
                     request.setAttribute("articulo", articulo);
                     disp.forward(request, response);
                     break;
-
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.print(ex.getMessage());
         }
+    }
+
+    private Activos_Articulos generarActivoArticulo(HttpServletRequest request) {
+        //declarar e iniciar variables
+        Activos_Articulos activoarticulo = new Activos_Articulos();
+        java.sql.Date date = null;
+        String numeroplaca = request.getParameter("txtNumeroPlaca");
+        String modeloactivo = request.getParameter("txtModelo");
+        String marcaactivo = request.getParameter("txtMarca");
+        String categoriaactivo = request.getParameter("hiddenidCategoria");
+        String fechainiciooperacion = request.getParameter("dpPuestaOperacion");
+        String idproveedor = request.getParameter("hiddenidProveedor");//FALTAA
+        String iddepto = request.getParameter("hiddenidDepartamento");//FALTAA-
+        String fechacompraactivo = request.getParameter("dpFechaCompra");
+        String preciocompra = request.getParameter("txtPrecioCompra");
+        String porcentajedepreciacion = request.getParameter("txtPorcentajeDepreciacion");
+        String porcentajerescate = request.getParameter("txtPorcentajeRescate");
+        String idtipopago = request.getParameter("hiddenidTipoPago");//FALTAA-
+        String estadoactivo = request.getParameter("cmbEstadoActivo");
+        String descripcion = request.getParameter("txtDescripcion");
+        String observaciones = request.getParameter("txtObservaciones");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("El tipo de pago es "+idtipopago);
+        //darles las caracteristicas al activo articulo, exceptuando las imagenes qeu solo en agregar y en modificar
+        activoarticulo.setPa_Descripcion(descripcion);
+        activoarticulo.setPa_Estado(estadoactivo);
+        activoarticulo.setPa_Observaciones(observaciones);
+        activoarticulo.setPa_identificadorActivo(numeroplaca);
+        activoarticulo.setPa_modelo(modeloactivo);
+        activoarticulo.setPa_marca(marcaactivo);
+        activoarticulo.setPa_nombreproveedor("No definido");
+
+        activoarticulo.setPa_codigoProveedor(idproveedor);
+        activoarticulo.setPa_tipoActivo(Integer.parseInt(categoriaactivo));//corregir, aqui es int    
+        activoarticulo.setPa_tipoPago(Integer.parseInt(idtipopago));//corregir, aqui es int
+        
+        activoarticulo.setPb_porcentajeDepreciacion(Double.parseDouble(porcentajedepreciacion));
+        activoarticulo.setPb_depreciacion(Double.parseDouble(porcentajedepreciacion));
+        activoarticulo.setPb_porcentajeRescate(Double.parseDouble(porcentajerescate));
+
+        activoarticulo.setPd_precioCompra(Double.parseDouble(preciocompra));
+        Departamento depto = new Departamento();
+        //instanciamos depto
+        depto.setPn_codigo(Integer.parseInt(iddepto));
+        activoarticulo.setPo_depto(depto);
+        try {
+            //hacer validaciones si es entero.
+            date = new java.sql.Date(formatter.parse(fechacompraactivo).getTime());
+            activoarticulo.setPd_fechaCompra(date);
+            date = new java.sql.Date(formatter.parse(fechainiciooperacion).getTime());
+            activoarticulo.setPd_puestaOperacion(date);
+            activoarticulo.setPn_anioFabricacion(2013);
+            activoarticulo.setPn_aniosutilidadactivo(5);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        return activoarticulo;
     }
 
     private void agregarNotificacion(String usuarioorigen, String descripcion) {
