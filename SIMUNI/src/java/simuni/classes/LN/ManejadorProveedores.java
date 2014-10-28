@@ -10,6 +10,12 @@ import simuni.classes.EN.ProveedorFisico;
  */
 public class ManejadorProveedores {
 
+    /**
+     * Este método agrega a los registros de la base de datos a un nuevo proveedor físico
+     * @param to_proveedorfisico Proveedor nuevo a registrar
+     * @return verdadero en caso de que se halla ingresado correctamente o false si no lo fue 
+     * @since 1.0
+     */
     public boolean agregarProveedorFisico(ProveedorFisico to_proveedorfisico) {
         try {
             boolean agregarproveedor = new ManejadorDatosProveedores().agregarProveedorFisico(to_proveedorfisico);
@@ -22,6 +28,12 @@ public class ManejadorProveedores {
         }
     }
 
+    /**
+     *Este método es para la actualización de la información de los proveedores físicos almacenados en la base de datos
+     * @param to_proveedorfisico Proveedor al cual se le va a modificar la información
+     * @return true en caso de que el articulo halla sido actualizado con exito o false en caso de que no
+     * @since 1.0
+     */
     public boolean modificarProveedorFisico(ProveedorFisico to_proveedorfisico) {
         try {
             boolean modificarproveedor = new ManejadorDatosProveedores().modificarProveedorFisico(to_proveedorfisico);
@@ -34,6 +46,12 @@ public class ManejadorProveedores {
         }
     }
 
+    /**
+     * Este método desactiva un registro en la base de datos especificado por el código del proveedor físico
+     * @param tn_codigoproveedorfisico Código de identificación del proveedor físico
+     * @return true cuando el artículo activo ha sido desactivado con éxito o false en caso de que no
+     * @since 1.0
+     */
     public boolean desactivarProveedorFisico(String tn_codigoproveedorfisico) {
         try {
             boolean desactivarproveedor = new ManejadorDatosProveedores().desactivarProveedorFisico(tn_codigoproveedorfisico);
@@ -45,6 +63,14 @@ public class ManejadorProveedores {
         }
     }
 
+    /**
+     * Este método es utilizado para obtener una lista completa de los proveedores físicos registrados en la base de datos
+     * @param npagina
+     * @param npaginacion
+     * Los anteriores parámetros es para limitar el número de proveedores en la consulta a la base de datos
+     * @return un ArrayList con los artículos activos o nulo en caso de que no haya obtenido ninguno
+     * @since 1.0
+     */
     public ArrayList<ProveedorFisico> getListaProveedoresFisicos(int npagina, int npaginacion) {
         try {
             ManejadorDatosProveedores p = new ManejadorDatosProveedores();
@@ -58,6 +84,12 @@ public class ManejadorProveedores {
         }
     }
 
+    /**
+     * Este método es utilizado para obtener una lista completa de los proveedores físicos registrados en la base de datos
+     * sin ninguna restricción y ningún parámetro
+     * @return Un ArrayList con todos los proveedores físicos registrados o nulo en caso de que no los halla obtenido
+     * @since 1.0
+     */
     public ArrayList<ProveedorFisico> getListaProveedoresFisicos() {
         try {
             ManejadorDatosProveedores p = new ManejadorDatosProveedores();
@@ -70,6 +102,13 @@ public class ManejadorProveedores {
         }
     }
 
+    /**
+     * Este método obtiene un proveedor físico en especifico definido por el identificador o código de proveedor
+     * en otras palabras es una búsqueda de un proveedor físico en particular utilizando su código de identificación
+     * @param tn_codigoproveedorfisico Código de identificación del proveedor físico
+     * @return El proveedor físico especificado o un nulo en caso de que no se este registrado
+     * @since 1.0
+     */
     public ProveedorFisico getProveedorFisico(String tn_codigoproveedorfisico) {
         try {
             ManejadorDatosProveedores p = new ManejadorDatosProveedores();
@@ -83,6 +122,12 @@ public class ManejadorProveedores {
         }
     }
 
+    /**
+     * Este método hace una validación para comprobar si un proveedor físico existe actualmente en la base de datos
+     * @param codigoproveedor Código o identificación del proveedor
+     * @return verdadero en caso de que el activo exista o false en caso de que no
+     * @since 1.0
+     */
     public boolean isProveedorExistente(String codigoproveedor) {
         try {
             boolean proveedorExiste = new ManejadorDatosProveedores().isProveedorExistente(codigoproveedor);
@@ -94,6 +139,11 @@ public class ManejadorProveedores {
         return true;
     }
 
+    /**
+     * Este método obtiene el número total de los proveedores físicos registrados en la base de datos
+     * @return La cantidad total de los proveedores físicos registrados
+     * @since 1.0
+     */
     public int getNumeroProveedoresRegistrados() {
         int cantidad = 0;
         try {
@@ -107,6 +157,16 @@ public class ManejadorProveedores {
         return cantidad;
     }
 
+     /**
+     * Este método realiza una búsqueda de más de un proveedore físico
+     * @param query consulta de búsqueda para el LIKE en MySQL
+     * Los siguientes parámetros son para obtener y limitar el total de resultados obtenidos por la consulta 
+     * @param desplazamiento
+     * @param paginacion
+     * @return un ArrayList con todos los proveedores físicos encontrados, devuelve nulo en caso de que no 
+     * se halla encontrado nada
+     * @since 1.0
+     */
     public ArrayList<ProveedorFisico> buscarProveedoresFisicos(String query,int desplazamiento,int paginacion) {
         try {
             ManejadorDatosProveedores p = new ManejadorDatosProveedores();

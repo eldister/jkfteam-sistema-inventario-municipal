@@ -16,9 +16,9 @@ import simuni.classes.EN.imagenActivo;
 public class ManejadorActivos {
 
     /**
-     * Este metodo agrega bla bla bla
+     * Este método agrega un nuevo activo de articulo
      * @param to_articulo el articulo a ingresar
-     * @return verdadero si fue correcto, false si no fue correcto
+     * @return verdadero en caso de que se halla ingresado correctamente o false si no lo fue
      * @throws Exception Si hay error se registra en bd 
      * @since 1.0
      */
@@ -36,6 +36,12 @@ public class ManejadorActivos {
         return true;
     }
 
+    /**
+     *Este método es para la actualización de la información de los activos articulos almacenados en la base de datos
+     * @param to_articulo el artículo al cual se le va a modificar los datos
+     * @return true en caso de que el articulo halla sido actualizado con exito o false en caso de que no
+     * @since 1.0
+     */
     public boolean modificarActivoArticulo(Activos_Articulos to_articulo) {
         try {
             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
@@ -51,6 +57,12 @@ public class ManejadorActivos {
         return false;
     }
 
+    /**
+     * Este método desactiva un registro en la base de datos especificado por el código del activo
+     * @param ta_codigoactivo código de identificación del artículo activo
+     * @return true cuando el artículo activo ha sido desactivado con éxito o false en caso de que no
+     * @since 1.0
+     */
     public boolean desactivarActivoArticulo(String ta_codigoactivo) {
         try {
             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
@@ -63,6 +75,14 @@ public class ManejadorActivos {
         return true;
     }
 
+    /**
+     * Este método es utilizado para obtener una lista completa de los artículos activos registrados en la base de datos
+     * @param desplazamiento 
+     * @param paginacion 
+     * Los dos anteriores parametros son limitar el total de resultados obtenidos por la consulta a la base de datos
+     * @return un ArrayList con los artículos activos
+     * @since 1.0
+     */
     public ArrayList<Activos_Articulos> getListaArticulos(int desplazamiento, int paginacion) {
         try {
             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
@@ -76,6 +96,11 @@ public class ManejadorActivos {
         return null;
     }
 
+    /**
+     * Este método obtiene el total registros de los artículos activos contenidos en la base de datos
+     * @return el número total de registros
+     * @since 1.0
+     */
     public int getCantidadRegistrosActivosArticulos() {
         try {
 
@@ -87,6 +112,13 @@ public class ManejadorActivos {
         }
     }
 
+    /**
+     * Este método obtiene un activo articulo en especifico definido por el identificador del activo
+     * en otras palabras es una busqueda de un activo articulo en particular utilizando su codigo
+     * @param ta_codigoactivo es el codigo del activo articulo
+     * @return el articulo especificado o un nulo en caso de que no se este registrado
+     * @since 1.0
+     */
     public Activos_Articulos getActivoArticulo(String ta_codigoactivo) {
         try {
             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
@@ -99,6 +131,13 @@ public class ManejadorActivos {
         return null;
     }
 
+    /**
+     * Este método obtiene una lista de las fotografías o imagenes de todos los activos registrados en la base de datos
+     * @param tn_codigoactivo codigo del artículo
+     * @return un ArrayList con todas las urls y nombres de las imagenes contenidos en la base de datos
+     * retorna nulo en caso de que no halla podido obtener las imagenes
+     * @since 1.0
+     */
     public ArrayList<imagenActivo> getListaImagenesActivo(String tn_codigoactivo) {
         try {
 
@@ -113,6 +152,12 @@ public class ManejadorActivos {
         return null;
     }
 
+    /**
+     * Este método hace una validación para comprobar si un artículo activo existe actualmente en la base de datos
+     * @param ta_codigoactivo código del artículo activo
+     * @return verdadero en caso de que el activo exista o false en caso de que no
+     * @since 1.0
+     */
     public boolean isActivoExistente(String ta_codigoactivo) {
         try {
             boolean ActivoExiste = new ManejadorDatosActivos().isActivoExistente(ta_codigoactivo);
@@ -124,6 +169,11 @@ public class ManejadorActivos {
         return false;
     }
 
+    /**
+     * Este método obtiene un numero entero positivo del total de los activos registrados en la base de datos
+     * @return siempre va a retornar 0
+     * @since 1.0
+     */
     public int getNumeroActivosRegistrados() {
         try {
             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
@@ -135,6 +185,16 @@ public class ManejadorActivos {
         return 0;
     }
 
+    /**
+     * Este método realiza una búsqueda de más de un artículo activo
+     * @param query consulta de búsqueda para el LIKE en MySQL
+     * Los siguientes parámetros son para obtener y limitar el total de resultados obtenidos por la consulta 
+     * @param desplazamiento
+     * @param paginacion
+     * @return un ArrayList con todos los artículos activos encontrados, devuelve nulo en caso de que no 
+     * se halla encontrado nada
+     * @since 1.0
+     */
     public ArrayList<Activos_Articulos> buscarActivosArticulos(String query,int desplazamiento, int paginacion) {
         try {
             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();

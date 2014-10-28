@@ -79,9 +79,12 @@
             <div id="sm_header_bannerandusercontainer">
                 <div class="sm_header_bannercontainer">
                     <div id="sm_div_logomunicontainer">&nbsp;
-                        <a href="http://www.nandayure.go.cr/"><div id="sm_div_logomuni">&nbsp;</div></a> 
+                        <a href="http://www.nandayure.go.cr/" target="_blank"><div id="sm_div_logomuni">&nbsp;</div></a> 
                     </div>
                     <div id="sm_div_logosimunicontainer">
+                        <a href="../../../index.jsp" id="enlaceInicio"><div id="sm_div_logosimuni">
+                            <span id="sm_div_simunislogan">Sistema de Información para el Control de Inventario Municipal&nbsp;</span>
+                        </div></a>
                         <a href="/SIMUNI" id="enlaceInicio"><div id="sm_div_logosimuni">
                                 <span id="sm_div_simunislogan">Sistema de Información para el Control de Inventario Municipal&nbsp;</span>
                             </div></a>
