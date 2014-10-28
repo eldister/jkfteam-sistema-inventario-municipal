@@ -18,6 +18,13 @@ import simuni.classes.EN.TipoPago;
  */
 public class ManejadorTipoPago {
 
+    /**
+     * Este método es para obtener todos los tipos de pagos en las que puede pagar un comprador de 
+     * alguno de los artículos activos o servicios que ofrezca la municipalidad, de los cuales puede
+     * pagar ya sea a crédito, contado etc
+     * @return Un ArrayList con todos los tipos de pagos o nulo en caso de que no halla podido obtenerlos
+     * @since 1.0
+     */
     public ArrayList<TipoPago> getListaTipoPago() {
         try {
             return new ManejadorDatosTipoPago().getListaTipoPago();

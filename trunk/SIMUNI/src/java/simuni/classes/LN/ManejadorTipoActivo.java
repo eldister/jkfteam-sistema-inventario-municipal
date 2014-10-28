@@ -19,6 +19,11 @@ import simuni.classes.EN.TipoActivo;
  */
 public class ManejadorTipoActivo {
 
+    /**
+     * Este método es para obtener todos los tipos de activos que tienen en la municipalidad
+     * @return Un ArrayList con todos los tipos de pagos o nulo en caso de que no halla podido obtenerlos
+     * @since 1.0
+     */
     public ArrayList<TipoActivo> getListaTiposActivos() {
 
             try{

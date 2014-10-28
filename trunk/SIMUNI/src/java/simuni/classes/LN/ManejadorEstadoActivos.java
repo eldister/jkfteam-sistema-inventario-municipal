@@ -15,6 +15,12 @@ import simuni.classes.EN.EstadoActivo;
  * @author FchescO
  */
 public class ManejadorEstadoActivos {
+    /**
+     * Este método es para obtener los tipos de estados en los que se puede encontrar 
+     * un artículo activoya sea bueno, malo, excelente etc
+     * @return Un ArrayList con todos los estados o nulo en caso de que no halla podido obtenerlos
+     * @since 1.0
+     */
         public ArrayList<EstadoActivo> getListadoEstadosActivos(){
             try{
             ManejadorDatosEstadoActivo manejadorestadosactivos = new ManejadorDatosEstadoActivo();

@@ -15,6 +15,12 @@ import simuni.classes.EN.Departamento;
  * @author FchescO
  */
 public class ManejadorDepartamentos {
+    
+       /**
+       *Este método obtiene todos los departamentes que se encuentran registrados en la base de datos 
+       * @return Un ArrayList de todos los departamentos registrados o nulo en caso de que no halla ninguno
+       * @since 1.0
+       */
        public ArrayList<Departamento> getListaDepartamentos() {
 
            try{ 
