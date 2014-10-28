@@ -5,22 +5,6 @@
         <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Inicio de sesión</decorator:content>    
         <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
             <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/recursos/estilos/style_login.css">
-            <script type="text/javascript">
-                $(document).ready(function() {
-                    $("#txtNombreUsuario").focus(function() {
-                        $("#imgIconoUsuario").css("right","12px");
-                            });
-                        $("#txtNombreUsuario").blur(function() {
-                            $("#imgIconoUsuario").css("right","186px");
-                        });
-                        $("#txtPassword").focus(function() {
-                            $("#imgIconoPassword").css("right","12px");
-                        });
-                        $("#txtPassword").blur(function() {
-                            $("#imgIconoPassword").css("right","186px");
-                        });
-                });
-</script>
         </decorator:content>
         <decorator:content placeholder='sm_section_mainsectioncontainer'>
             <form id="sm_form_login" action="/SIMUNI/AccionesUsuarios" method="POST">
