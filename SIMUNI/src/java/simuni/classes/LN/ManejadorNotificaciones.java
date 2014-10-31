@@ -7,7 +7,9 @@
 package simuni.classes.LN;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import simuni.classes.AD.ManejadorDatosNotificaciones;
@@ -29,6 +31,27 @@ public class ManejadorNotificaciones {
         boolean resp=false;
         try {
            resp=manejadornotificaciones.agregarNotificacion(notificacion);
+       if(notificacion == null){
+       return false;  
+       }
+       
+       if(notificacion == null)
+        {
+            return false;
+        } else if (notificacion.getFechaNotificacion() != null){
+         
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            formatoFecha.setLenient(false);
+            formatoFecha.format(notificacion.getFechaNotificacion());      
+        }
+       
+       if(notificacion == null)
+       {
+           return false;
+       }else if (notificacion.getUsuarioOrigen() == null)
+       {
+           return false;
+       }          
         } catch (SQLException ex) {
            ex.printStackTrace();
         }

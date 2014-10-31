@@ -59,6 +59,7 @@ public class ManejadorProveedores {
             return desactivarproveedor;
         } catch (Exception ex) {
             UtilidadesServlet.registrarErrorSistema("desactivarProveedorFisico", ex.getMessage());//registrar error
+            ex.printStackTrace();
             return false;
         }
     }
@@ -98,6 +99,7 @@ public class ManejadorProveedores {
             return proveedorfisico;
         } catch (Exception ex) {
             UtilidadesServlet.registrarErrorSistema("getListaProveedoresFisicos", ex.getMessage()); //registrar error
+            ex.printStackTrace();
             return null;
         }
     }
@@ -135,7 +137,9 @@ public class ManejadorProveedores {
             return proveedorExiste;
         } catch (Exception e) {
             UtilidadesServlet.registrarErrorSistema("isProveedorExistente", e.getMessage());
+            
         }
+        
         return true;
     }
 

@@ -1,6 +1,9 @@
 package simuni.classes.LN;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import simuni.classes.AD.ManejadorDatosActivos;
@@ -28,6 +31,38 @@ public class ManejadorActivos {
 
             manejadordatosactivos.agregarActivoArticulo(to_articulo);
             UtilidadesServlet.registrarProcesoSistema("agregarActivoArticulo", "Se inserto con éxito el activo");
+       
+        if(to_articulo == null)
+        {
+        return false;
+        }else if(to_articulo.getPa_identificadorActivo()==null){
+        return false;
+        }
+            //porcentaje
+        if(to_articulo == null){
+        return false;
+        }else if(to_articulo.getPb_porcentajeDepreciacion() >= 0 && to_articulo.getPb_porcentajeDepreciacion()<=100)
+        {
+        return false;
+        }
+        
+        //formato de la fecha 
+        if(to_articulo == null)
+        {
+            return false;
+        } else if (to_articulo.getPd_fechaCompra() != null){
+         
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            formatoFecha.setLenient(false);
+            formatoFecha.format(to_articulo.getPd_fechaCompra());      
+        }
+         
+        if(to_articulo == null)
+        {
+        return false;
+        } else if (to_articulo.getPo_imagenActivo() == null){
+        return false;
+        }
         } catch (Exception e) {
             UtilidadesServlet.registrarErrorSistema("agregarActivoArticulo", e.getMessage());
             e.printStackTrace();
@@ -45,7 +80,39 @@ public class ManejadorActivos {
     public boolean modificarActivoArticulo(Activos_Articulos to_articulo) {
         try {
             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
-            try {
+            try {        
+        if(to_articulo == null)
+        {
+        return false;
+        }else if(to_articulo.getPa_identificadorActivo()==null){
+        return false;
+        }
+            //porcentaje
+        if(to_articulo == null){
+        return false;
+        }else if(to_articulo.getPb_porcentajeDepreciacion() >= 0 && to_articulo.getPb_porcentajeDepreciacion()<=100)
+        {
+        return false;
+        }
+        
+        //formato de la fecha 
+        if(to_articulo == null)
+        {
+            return false;
+        } else if (to_articulo.getPd_fechaCompra() != null){
+         
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            formatoFecha.setLenient(false);
+            formatoFecha.format(to_articulo.getPd_fechaCompra());      
+        }
+         
+        if(to_articulo == null)
+        {
+        return false;
+        } else if (to_articulo.getPo_imagenActivo() == null){
+        return false;
+        }
+                
                 return manejadordatosactivos.modificarActivoArticulo(to_articulo);
             } catch (Exception ex) {
                 Logger.getLogger(ManejadorActivos.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,6 +132,12 @@ public class ManejadorActivos {
      */
     public boolean desactivarActivoArticulo(String ta_codigoactivo) {
         try {
+            
+            if(ta_codigoactivo == null)
+            {
+            return false;
+            } 
+            
             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
             manejadordatosactivos.desactivarActivoArticulo(ta_codigoactivo);
             UtilidadesServlet.registrarProcesoSistema("desactivarActivoArticulo", "Se desactivo con éxito el activo");
@@ -103,7 +176,6 @@ public class ManejadorActivos {
      */
     public int getCantidadRegistrosActivosArticulos() {
         try {
-
             return new ManejadorDatosActivos().getCantidadRegistrosActivosArticulos();
 
         } catch (Exception ex) {
@@ -121,6 +193,11 @@ public class ManejadorActivos {
      */
     public Activos_Articulos getActivoArticulo(String ta_codigoactivo) {
         try {
+            if(ta_codigoactivo == null){
+             return null;   
+            }
+            
+            
             ManejadorDatosActivos manejadordatosactivos = new ManejadorDatosActivos();
             Activos_Articulos articulo = manejadordatosactivos.getActivoArticulo(ta_codigoactivo);
             UtilidadesServlet.registrarProcesoSistema("getActivoArticulo", "Se obtuvo el Articulo del Activo");
@@ -160,6 +237,9 @@ public class ManejadorActivos {
      */
     public boolean isActivoExistente(String ta_codigoactivo) {
         try {
+            if(ta_codigoactivo == null){
+            return false;
+            }   
             boolean ActivoExiste = new ManejadorDatosActivos().isActivoExistente(ta_codigoactivo);
             UtilidadesServlet.registrarProcesoSistema("isActivoExistente", "ActivoExistente");
             return ActivoExiste;

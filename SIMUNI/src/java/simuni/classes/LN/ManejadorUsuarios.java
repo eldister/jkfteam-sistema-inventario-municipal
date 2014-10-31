@@ -30,6 +30,9 @@ public class ManejadorUsuarios {
         ManejadorDatosUsuario manejadordatosusuarios=new ManejadorDatosUsuario();
          usuarioresp=manejadordatosusuarios.login(usuario, contrasena);
         
+         if(usuario == null || contrasena == null){
+             return null;
+         }     
         }catch(Exception ex){
             //registrar error
             ex.printStackTrace();
@@ -50,7 +53,9 @@ public class ManejadorUsuarios {
         try{
         ManejadorDatosUsuario manejadordatosusuarios=new ManejadorDatosUsuario();
          resp=manejadordatosusuarios.getMenuUsuario(idusuario);
-        
+        if(idusuario == null){
+        return null;
+        }    
         }catch(Exception ex){
             //registrar error
             ex.printStackTrace();
