@@ -96,7 +96,7 @@
                                 <label>Categoría </label>
                             </td>
                             <td>
-                                <select name="cmbCategoria">
+                                <select name="cmbCategoria" id="cmbCategoria">
                                     <%
                                         if (tiposactivos != null) {
                                             Iterator<TipoActivo> iter = tiposactivos.iterator();
@@ -136,7 +136,7 @@
                             </td>
                             <td>
                                 <!--<input type="text" name="txtDescripción">-->
-                                <select name="cmbDepartamento">                            
+                                <select name="cmbDepartamento" id="cmbDepartamento">                            
                                     <%
                                         if (deptos != null) {
                                             Iterator<Departamento> iter = deptos.iterator();
@@ -190,7 +190,7 @@
                                 <label>Tipo de pago </label>
                             </td>
                             <td>
-                                <select name="cmbTipoPago">
+                                <select name="cmbTipoPago" id="cmbTipoPago">
                                     <%
                                         if (tipospago != null) {
                                             Iterator<TipoPago> iter = tipospago.iterator();

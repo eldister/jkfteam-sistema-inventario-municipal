@@ -66,6 +66,8 @@ public class ManejadorDatosActivos {
             sp_ingresoarticulo.setInt(7, to_articulo.getPa_tipoActivo());
             sp_ingresoarticulo.setInt(8, to_articulo.getPo_depto().getPn_codigo());
             sp_ingresoarticulo.setInt(9, to_articulo.getPa_tipoPago());
+            System.out.println("Tipo activo,depto y tipo pago respectivamente "
+            +to_articulo.getPa_tipoActivo()+"  "+to_articulo.getPa_tipoPago()+"  "+ to_articulo.getPo_depto().getPn_codigo());
             sp_ingresoarticulo.setString(10, to_articulo.getPa_marca());
             sp_ingresoarticulo.setString(11, to_articulo.getPa_modelo());
             sp_ingresoarticulo.setDouble(12, to_articulo.getPb_porcentajeDepreciacion());
@@ -76,6 +78,7 @@ public class ManejadorDatosActivos {
             sp_ingresoarticulo.setDate(16, new java.sql.Date(new Date().getTime()));
             sp_ingresoarticulo.setString(17, Servidor.SSI.ARCHIVOSACTIVOSCONTEXT + to_articulo.getPa_identificadorActivo() + "/" + sDate);
             sp_ingresoarticulo.setString(18, nombreimagen);
+            System.out.println("El tipo de pago es ");
             sp_ingresoarticulo.executeUpdate();
             ConexionMYSQL.cerrarConexion(con);
         } catch (Exception ex) {

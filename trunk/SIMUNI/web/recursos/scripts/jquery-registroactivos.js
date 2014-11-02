@@ -107,6 +107,9 @@ function setManejadorSeleccionProveedor() {
 
 function formularioRegistroSubmitEvent(){
     $("#sm_div_formulario").submit(function(e){
+        $("#hiddenidCategoria").val($("#cmbCategoria").val());
+        $("#hiddenidTipoPago").val($("#cmbTipoPago").val());
+        $("#hiddenidDepartamento").val($("#cmbDepartamento").val());
         if($001ERGLOB){
             alert("Debes corregir los errores mostrados!")
            e.preventDefault();     
