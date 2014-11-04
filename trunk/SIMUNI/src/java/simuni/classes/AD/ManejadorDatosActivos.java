@@ -45,18 +45,26 @@ public class ManejadorDatosActivos {
                 manejadorarchivos.guardarArchivo(ruta, imagen.getPa_nombreArchivo(), imagen.getStreamarchivo());
                 //registrarlo en bd
             } else {
+                imagen=new imagenActivo();
                 //registrar imagien "sin foto"
+                imagen.setStreamarchivo(manejadorarchivos.obtenerArchivo(Servidor.SSA.CARPETARAIZARCHIVOSDEFAULT.toString() + "\\sinimagen.png"));
+                if (imagen.getStreamarchivo() != null) {
+                    imagen.setPa_nombreArchivo("defaultimage.png");
+                    nombreimagen=imagen.getPa_nombreArchivo();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                    Date date = new Date();
+                    sDate = sdf.format(date);
+                    sDate += ("-" + date.getHours() + "-" + date.getMinutes());
+                    String ruta = Servidor.SSA.CARPETARAIZARCHIVOSACTIVOS.toString() + to_articulo.getPa_identificadorActivo() + "\\" + sDate;
+                    manejadorarchivos.guardarArchivo(ruta, imagen.getPa_nombreArchivo(), imagen.getStreamarchivo());
+                    //registrarlo en bd       
+                }
             }
             //registramos activo en bd
             Connection con = ConexionMYSQL.obtenerConexion();
             CallableStatement sp_ingresoarticulo
                     = con.prepareCall("{CALL sp_registrarActivo_Articulo(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             java.util.Date fechainiciooperacion = to_articulo.getPd_puestaOperacion();
-            System.out.println("añooooo  " + fechainiciooperacion.getYear());
-            System.out.println("mes  " + fechainiciooperacion.getMonth());
-
-            System.out.println("dia  ");
-
             sp_ingresoarticulo.setString(1, to_articulo.getPa_identificadorActivo());
             sp_ingresoarticulo.setString(2, to_articulo.getPa_Observaciones());
             sp_ingresoarticulo.setDouble(3, to_articulo.getPd_precioCompra());
@@ -67,7 +75,8 @@ public class ManejadorDatosActivos {
             sp_ingresoarticulo.setInt(8, to_articulo.getPo_depto().getPn_codigo());
             sp_ingresoarticulo.setInt(9, to_articulo.getPa_tipoPago());
             System.out.println("Tipo activo,depto y tipo pago respectivamente "
-            +to_articulo.getPa_tipoActivo()+"  "+to_articulo.getPa_tipoPago()+"  "+ to_articulo.getPo_depto().getPn_codigo());
+                    + to_articulo.getPa_tipoActivo() + "  " + to_articulo.getPa_tipoPago() + "  " + to_articulo.getPo_depto().getPn_codigo());
+            System.out.println(to_articulo.getPa_Estado());
             sp_ingresoarticulo.setString(10, to_articulo.getPa_marca());
             sp_ingresoarticulo.setString(11, to_articulo.getPa_modelo());
             sp_ingresoarticulo.setDouble(12, to_articulo.getPb_porcentajeDepreciacion());
@@ -98,7 +107,7 @@ public class ManejadorDatosActivos {
                 Iterator<imagenActivo> iter = imagenes.iterator();
                 if (iter.hasNext()) {
                     imagen = iter.next();
-                    System.out.println("Siempre ubo imagen");
+                    System.out.println("Siempre hubo imagen");
                 }
             }
             if (imagen != null) {
@@ -127,6 +136,7 @@ public class ManejadorDatosActivos {
             CallableStatement sp_modificacionarticulo
                     = con.prepareCall("{CALL sp_actualizarActivo_Articulo(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             sp_modificacionarticulo.setString(1, to_articulo.getPa_identificadorActivo());
+            System.out.println("´El identificador es " + to_articulo.getPa_identificadorActivo());
             sp_modificacionarticulo.setString(2, to_articulo.getPa_Observaciones());
             sp_modificacionarticulo.setDouble(3, to_articulo.getPd_precioCompra());
             sp_modificacionarticulo.setDate(4, new java.sql.Date(fechacompra.getYear(), fechacompra.getMonth(), fechacompra.getDate()));
@@ -138,11 +148,11 @@ public class ManejadorDatosActivos {
             sp_modificacionarticulo.setDouble(10, to_articulo.getPb_porcentajeRescate());
             sp_modificacionarticulo.setDate(11, new java.sql.Date(fechainiciooperacion.getYear(), fechainiciooperacion.getMonth(), fechainiciooperacion.getDate()));
             sp_modificacionarticulo.setInt(12, to_articulo.getPa_tipoActivo());
-            System.out.println("El tipo de activo es "+to_articulo.getPa_tipoActivo());
+            System.out.println("El tipo de activo es " + to_articulo.getPa_tipoActivo());
             sp_modificacionarticulo.setInt(13, to_articulo.getPo_depto().getPn_codigo());
             sp_modificacionarticulo.setInt(14, to_articulo.getPa_tipoPago());
 
-            sp_modificacionarticulo.executeUpdate();
+            System.out.println(sp_modificacionarticulo.executeUpdate());
             ConexionMYSQL.cerrarConexion(con);
 
         } catch (Exception ex) {
@@ -178,12 +188,13 @@ public class ManejadorDatosActivos {
                 Activos_Articulos activoarticulo = new Activos_Articulos();
                 activoarticulo.setPa_identificadorActivo(rs.getString("SM00IDAC"));
                 activoarticulo.setPa_tipoActivo(rs.getInt("SM00IDTA"));
+                System.out.println("Tipo de activo " + activoarticulo.getPa_tipoActivo());
                 activoarticulo.setPa_marca(rs.getString("SM01MAAR"));
                 activoarticulo.setPa_modelo(rs.getString("SM02MDAR"));
                 activoarticulo.setPd_puestaOperacion(rs.getDate("SM05FEIO"));
                 activoarticulo.setPa_Descripcion(rs.getString("SM04DEAC"));
                 to_articulo.add(activoarticulo);
-                System.out.println("ENTREE Y SIRVOO");
+                System.out.println("ENTREE Y SIRVOO agregando activo");
             }
             ConexionMYSQL.cerrarConexion(con);
         } catch (Exception ex) {
@@ -202,10 +213,7 @@ public class ManejadorDatosActivos {
             sp_obtenerActivo_Articulo.setString(1, ta_codigoactivo);
             ResultSet rs = sp_obtenerActivo_Articulo.executeQuery();
             if (rs.next()) {
-                /*
-                 sm_08activo.SM00IDAC,SM01OBAC,SM02MOCO,SM03FECO,SM05ESAC,SM04DEAC,SM00IDTA,
-                 SM00IDDP,SM00IDTP,SM00IDAR,SM01MAAR,SM02MDAR,SM03NUDR,SM04NURS,SM05FEIO,SM00IDPR                
-                 */
+
                 articuloejemplo.setPa_identificadorActivo(rs.getString("SM00IDAC"));
                 articuloejemplo.setPa_Observaciones(rs.getString("SM01OBAC"));
                 articuloejemplo.setPd_precioCompra(rs.getDouble("SM02MOCO"));
@@ -217,8 +225,9 @@ public class ManejadorDatosActivos {
                 Departamento d = new Departamento();
                 d.setPn_codigo(rs.getInt("SM00IDDP"));
                 articuloejemplo.setPo_depto(d);
+                System.out.println(articuloejemplo.getPo_depto().getPn_codigo()+" << codigo depto");
                 articuloejemplo.setPa_tipoPago(rs.getInt("SM00IDTP"));
-                System.out.println("Nuevamente veamos que sale "+articuloejemplo.getPa_tipoPago() );
+                System.out.println("Nuevamente veamos que sale " + articuloejemplo.getPa_tipoPago());
                 articuloejemplo.setPa_marca(rs.getString("SM01MAAR"));
                 articuloejemplo.setPa_modelo(rs.getString("SM02MDAR"));
                 articuloejemplo.setPb_porcentajeDepreciacion(rs.getDouble("SM03NUDR"));
@@ -244,21 +253,21 @@ public class ManejadorDatosActivos {
     }
 
     public ArrayList<imagenActivo> getListaImagenesActivo(String tn_codigoactivo) throws Exception { // cambiar tipo a string 
-        ArrayList<imagenActivo> imagenes=new ArrayList<imagenActivo>();
+        ArrayList<imagenActivo> imagenes = new ArrayList<imagenActivo>();
         try {
             Connection con = ConexionMYSQL.obtenerConexion();
-            PreparedStatement st = con.prepareCall("SELECT SM02DIUR,SM04NOAR FROM sm_07imagenes WHERE SM00IDAC='"+tn_codigoactivo+"'");
+            PreparedStatement st = con.prepareCall("SELECT SM02DIUR,SM04NOAR FROM sm_07imagenes WHERE SM00IDAC='" + tn_codigoactivo + "'");
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-              imagenActivo imagen=new imagenActivo();
-              imagen.setPa_nombreArchivo(rs.getString("SM04NOAR"));
-              imagen.setPa_url(rs.getString("SM02DIUR"));
-              imagenes.add(imagen);
+                imagenActivo imagen = new imagenActivo();
+                imagen.setPa_nombreArchivo(rs.getString("SM04NOAR"));
+                imagen.setPa_url(rs.getString("SM02DIUR"));
+                imagenes.add(imagen);
             }
             ConexionMYSQL.cerrarConexion(con);
         } catch (Exception ex) {
-            throw  ex;
-        }        
+            throw ex;
+        }
         return imagenes;
     }
 
@@ -280,12 +289,7 @@ public class ManejadorDatosActivos {
         return resp > 0;
     }
 
-    public int getNumeroActivosRegistrados() {
-        return 0;
-    }
-
-
-    public ArrayList<Activos_Articulos> buscarActivosArticulos(String query,int desplazamiento, int paginacion) throws Exception {
+    public ArrayList<Activos_Articulos> buscarActivosArticulos(String query, int desplazamiento, int paginacion) throws Exception {
         ArrayList<Activos_Articulos> to_articulo = new ArrayList<Activos_Articulos>();
         try {
             Connection con = ConexionMYSQL.obtenerConexion();
@@ -293,11 +297,11 @@ public class ManejadorDatosActivos {
             st.setString(1, query);
             st.setInt(2, desplazamiento);
             st.setInt(3, paginacion);
-            System.out.println("El query es "+query);
+            System.out.println("El query es " + query);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-                            System.out.println("Resultado El query es "+query);
+                System.out.println("Resultado El query es " + query);
 
                 Activos_Articulos activoarticulo = new Activos_Articulos();
                 activoarticulo.setPa_identificadorActivo(rs.getString("SM00IDAC"));
@@ -315,6 +319,7 @@ public class ManejadorDatosActivos {
         }
         return to_articulo;
     }
+
     public int getCantidadRegistrosActivosArticulos() {
         int resp = 0;
         try {

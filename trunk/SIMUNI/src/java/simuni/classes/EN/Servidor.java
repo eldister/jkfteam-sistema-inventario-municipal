@@ -15,7 +15,7 @@ public class Servidor {
 
         SERVIDORMYSQLFRANCISCO("Server=localhost;Port=3306;Database=myDataBase;Uid=chescosimuni;Pwd=chescosimuni;"),
         SERVIDORMYSQLKEYLIN("jdbc:mysql://localhost:3306/simuni_v1?user=adminSIMUNI&password=adminpass"),
-                SERVIDORMYSQLDEBIA8N("jdbc:mysql://192.168.56.101:3306/simuni_v1?user=root&password=root");
+        SERVIDORMYSQLDEBIAN("jdbc:mysql://192.168.56.101:3306/simuni_v1?user=root&password=root&connectTimeout=30000&socketTimeout=30000");
 
 
         private final String texto;
@@ -38,6 +38,7 @@ public class Servidor {
 
         CARPETABASE("C:\\Users\\FchescO\\Downloads\\pruebas\\"),
         CARPETARAIZARCHIVOSACTIVOS(CARPETABASE + "Activos\\"),
+        CARPETARAIZARCHIVOSDEFAULT(CARPETABASE + "Default\\"),
         CARPETAPROVEEDORES(CARPETABASE + "Proveedores\\");
 
         private final String texto;
@@ -60,6 +61,7 @@ public class Servidor {
 
         ARCHIVOSBASECONTEXT("/archivos/"),
         ARCHIVOSACTIVOSCONTEXT(ARCHIVOSBASECONTEXT + "Activos/"),
+        REMOTOARCHIVOSACTIVOSCONTEXT("http://localhost:8080"),
         ARCHIVOSPROVEEDORESCONTEXT(ARCHIVOSBASECONTEXT + "Proveedores/");
 
         private final String texto;

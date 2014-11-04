@@ -13,23 +13,15 @@
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
         <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodearticulos.css">
         <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/jquery-registroactivos.js"></script>
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodearticulos.css">
-        <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/jquery-registroactivos.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/script_plugins/maxLength/maxLength.js"></script>
         <script src="<%=request.getContextPath()%>/recursos/scripts/script_plugins/webShim/minified/polyfiller.js"></script>
         <script>
-            webshims.setOptions('waitReady', false);
-            webshims.setOptions('forms-ext', {types: 'date'});
-            webshims.polyfill('forms forms-ext');
-        </script>
-        <script>
-            $(function() {
-                $("#txtDes").maxLength(300, {showNumber: "#contadorCaracteres1"});
-            });
-            $(function() {
-                $("#txtOb").maxLength(300, {showNumber: "#contadorCaracteres2"});
-            });
             $(document).ready(function() {
+                webshims.setOptions('waitReady', false);
+                webshims.setOptions('forms-ext', {types: 'date'});
+                webshims.polyfill('forms forms-ext');
+                $("#txtDes").maxLength(300, {showNumber: "#contadorCaracteres1"});
+                $("#txtOb").maxLength(300, {showNumber: "#contadorCaracteres2"});
                 var intervalo = function() {
                     $("#btnImagenActivo").html($("#btnImagenActivo").val());
                 };
@@ -38,7 +30,7 @@
                     setInterval(intervalo, 1);
                     return false;
                 });
-                addEventosACamposDeTexto();
+               
                 var now = new Date();
 
                 var day = ("0" + now.getDate()).slice(-2);
@@ -49,11 +41,29 @@
 
                 setEventoSeleccionarProveedor();
                 formularioRegistroSubmitEvent();
+                addEventosACamposDeTexto();
 
             });
         </script>
     </decorator:content>
-
+    <decorator:content placeholder='sm_div_navegationbarmenuitems'>
+        <span class="sm_div_navmenuitem">
+            <a href="/SIMUNI">
+                Inicio
+            </a>
+        </span>
+        <span class="sm_div_navmenuseparator">
+            /
+        </span>
+        <span class="sm_div_navmenuitem">
+            <a href="/SIMUNI/modulos/activos?proceso=registroactivoarticulo">
+                Registro de Artículos
+            </a>
+        </span>
+        <span class="sm_div_navmenuseparator">
+            /
+        </span>        
+    </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <%
             ArrayList<Departamento> deptos = (ArrayList<Departamento>) request.getAttribute("departamentos");
@@ -71,7 +81,7 @@
                                 <label>Número de placa </label>
                             </td>
                             <td>
-                                <input type="text" id="txtnumplaca" required="required" oninvalid="this.setCustomValidity('Este campo es requerido')" name="txtNumeroPlaca">
+                                <input type="text" id="txtnumplaca" required="required"  name="txtNumeroPlaca">
                                 <span id="txtnumplacainfo" class="lblinfocontainer">&nbsp;</span>
                             </td>
                         </tr>    
@@ -118,7 +128,7 @@
                                 <label>Fecha inicio operación </label>
                             </td>
                             <td>
-                                <input type="date" name="dpPuestaOperacion" id="dpPO" value="">
+                                <input required="required" type="date" name="dpPuestaOperacion" id="dpPO" value="">
                             </td>
                         </tr>
                         <tr>
@@ -126,7 +136,7 @@
                                 <label>Nombre del proveedor </label>
                             </td>
                             <td>
-                                <input type="text" name="txtProveedor" id="txtProveedor" readonly="readonly" required="required" placeholder="Nombre completo">&nbsp;&nbsp;
+                                <input type="text" name="txtProveedor" id="txtProveedor" readonly="readonly" required="required" placeholder="Identificador">&nbsp;&nbsp;
                                 <input type="button" id='txtbtnseleccionarproveedor' value="Seleccionar">
                             </td>
                         </tr>
@@ -163,26 +173,26 @@
                         </tr>
                         <tr>
                             <td>
-                                <label>Precio de compra </label>
+                                <label title="El precio que se ingresa es en colones">Precio de compra  &#8353;</label>
                             </td>
                             <td>
-                                <input required="required" type="number" step="any" name="txtPrecioCompra">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label>Porcentaje Depreciación </label>
-                            </td>
-                            <td>
-                                <input required="required" type="number" step="any" min="0" max="100" name="txtPorcentajeDepreciacion">
+                                <input id="txtPrecioCompra" required="required" min="0" type="number" step="any" name="txtPrecioCompra">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label>Porcentaje Rescate</label>
+                                <label>Porcentaje Depreciación (1-100)</label>
                             </td>
                             <td>
-                                <input required="required" type="number" step="any" min="0" max="100" name="txtPorcentajeRescate">
+                                <input id="txtPorcentajeDepreciacion" required="required" type="number" step="any" min="0" max="100" name="txtPorcentajeDepreciacion">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Porcentaje Rescate (1-100)</label>
+                            </td>
+                            <td>
+                                <input id="txtPorcentajeRescate" required="required" type="number" step="any" min="0" max="100" name="txtPorcentajeRescate">
                             </td>
                         </tr>                        
                         <tr>
@@ -204,12 +214,6 @@
                                             }
                                         }
                                     %>                                    
-
-                                    <!-- <option>Efectivo</option>
-                                     <option>Crédito</option>
-                                     <option>Debito</option>
-                                     <option >Cheque</option>
-                                     <option>Fiado</option>-->
                                 </select>
                             </td>
                         </tr>
@@ -267,7 +271,7 @@
                 </div>
                 <div id="sm_div_registerImage">
                     <fieldset id="sm_fs_imagen">
-                        <legend>Fotografía</legend>
+                        <legend>Fotografía (Recomendado 500 x 500 )</legend>
                         <table id="sm_tb_imagen">
                             <tr>
                                 <td>
@@ -276,7 +280,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="file" id="btnImagenActivo" required="required" name="fileimagenactivo" accept="image/*" onchange="fnMostrarImagen(this);">
+                                    <input type="file" id="btnImagenActivo"  name="fileimagenactivo" accept="image/*" onchange="fnMostrarImagen(this);">
                                     <input type="button" id="btnsubirImagen" value="Examinar">
                                 </td>
                             </tr>
@@ -285,10 +289,10 @@
                 </div>
             </fieldset>
             <div id="sm_form_extracontent">
-                <input type="hidden" value="1" name="hiddenidProveedor">
-                <input type="hidden" value="1" name="hiddenidCategoria">
-                <input type="hidden" value="1" name="hiddenidTipoPago">
-                <input type="hidden" value="1" name="hiddenidDepartamento">
+                <input type="hidden" value="1" id="hiddenidProveedor" name="hiddenidProveedor">
+                <input type="hidden" value="1" id="hiddenidCategoria" name="hiddenidCategoria">
+                <input type="hidden" value="1" id="hiddenidTipoPago" name="hiddenidTipoPago">
+                <input type="hidden" value="1" id="hiddenidDepartamento" name="hiddenidDepartamento">
             </div>
         </form>
         <div id='sm_body_ventanamodal'>&nbsp;</div>

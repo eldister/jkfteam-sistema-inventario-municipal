@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package simuni.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,13 +24,14 @@ import simuni.classes.LN.ManejadorUsuarios;
  */
 public class AccionesUsuarios extends HttpServlet {
 
-        enum OpcionesDo {
+    enum OpcionesDo {
 
         Login,
         Logout,
         AccionDefault
 
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,7 +50,7 @@ public class AccionesUsuarios extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AccionesUsuarios</title>");            
+            out.println("<title>Servlet AccionesUsuarios</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AccionesUsuarios at " + request.getContextPath() + "</h1>");
@@ -72,19 +73,19 @@ public class AccionesUsuarios extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String proceso=request.getParameter("proceso");
-        switch(getOpcion(proceso)){
+        String proceso = request.getParameter("proceso");
+        switch (getOpcion(proceso)) {
             case Logout:
-            agregarNotificacion( request.getSession().getAttribute("USERNAME")+"",  request.getSession().getAttribute("USERNAME")+" ha cerrado sesion");
-            request.getSession().setAttribute("USERNAME", null);
-            request.getSession().setAttribute("TIPOUSUARIO", null);
-            request.getSession().setAttribute("HORAINICIO", null); 
-             request.getSession().setAttribute("LOGINPAGE", null);
-            
-            response.sendRedirect("/SIMUNI");
+                agregarNotificacion(request.getSession().getAttribute("USERNAME") + "", request.getSession().getAttribute("USERNAME") + " ha cerrado sesion");
+                request.getSession().setAttribute("USERNAME", null);
+                request.getSession().setAttribute("TIPOUSUARIO", null);
+                request.getSession().setAttribute("HORAINICIO", null);
+                request.getSession().setAttribute("LOGINPAGE", null);
+
+                response.sendRedirect("/SIMUNI");
                 break;
         }
-        
+
     }
 
     /**
@@ -98,32 +99,39 @@ public class AccionesUsuarios extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String nombreusuario=request.getParameter("txtNombreUsuario");
-       String contrasena=request.getParameter("txtPassword");
-        Usuario usuario=null;
-        if(nombreusuario==null||contrasena==null){
-            request.getSession().setAttribute("USERNAME", null);
-            request.getSession().setAttribute("TIPOUSUARIO", null);
-            request.getSession().setAttribute("HORAINICIO", null);
-             response.sendRedirect("/SIMUNI/login.jsp");
-        }
-        else{
-            ManejadorUsuarios manejadorusuarios=new ManejadorUsuarios();
-            usuario=manejadorusuarios.login(nombreusuario, contrasena);
-            if(usuario==null){
-            request.getSession().setAttribute("USERNAME", null);
-            request.getSession().setAttribute("TIPOUSUARIO", null);
-            request.getSession().setAttribute("HORAINICIO", null);
-            response.sendRedirect("/SIMUNI/login.jsp");
-            }else{            
-            request.getSession().setAttribute("USERNAME", usuario.getNombreusuario());
-            request.getSession().setAttribute("TIPOUSUARIO", usuario.getTipousuario());
-            request.getSession().setAttribute("HORAINICIO", new Date().toLocaleString());
-            request.getSession().setAttribute("LOGINPAGE", null);
-            agregarNotificacion(usuario.getNombreusuario(), usuario.getNombreusuario()+" ha iniciado sesion");
-            response.sendRedirect("/SIMUNI");
+        try {
+            String nombreusuario = request.getParameter("txtNombreUsuario");
+            String contrasena = request.getParameter("txtPassword");
+            Usuario usuario = null;
+            if (nombreusuario == null || contrasena == null) {
+                request.getSession().setAttribute("USERNAME", null);
+                request.getSession().setAttribute("TIPOUSUARIO", null);
+                request.getSession().setAttribute("HORAINICIO", null);
+                response.sendRedirect("/SIMUNI/login.jsp");
+            } else {
+                ManejadorUsuarios manejadorusuarios = new ManejadorUsuarios();
+                usuario = manejadorusuarios.login(nombreusuario, contrasena);
+                if (usuario == null) {
+                    request.getSession().setAttribute("USERNAME", null);
+                    request.getSession().setAttribute("TIPOUSUARIO", null);
+                    request.getSession().setAttribute("HORAINICIO", null);
+                    response.sendRedirect("/SIMUNI/login.jsp");
+                } else {
+                    request.getSession().setAttribute("USERNAME", usuario.getNombreusuario());
+                    request.getSession().setAttribute("TIPOUSUARIO", usuario.getTipousuario());
+                    request.getSession().setAttribute("HORAINICIO", new Date().toLocaleString());
+                    request.getSession().setAttribute("LOGINPAGE", null);
+                    agregarNotificacion(usuario.getNombreusuario(), usuario.getNombreusuario() + " ha iniciado sesion");
+                    response.sendRedirect("/SIMUNI");
+                }
+
             }
-            
+        } catch (Exception ex) {
+                    ex.printStackTrace();
+                    System.out.print(ex.getMessage());
+                    
+                   RequestDispatcher disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error.jsp?id=" + ex.getMessage() + "&msg=4");
+                    disp.forward(request, response);
         }
     }
 
@@ -136,6 +144,7 @@ public class AccionesUsuarios extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
     private OpcionesDo getOpcion(String key) {
         if (key == null) {
             return OpcionesDo.AccionDefault;
@@ -143,18 +152,19 @@ public class AccionesUsuarios extends HttpServlet {
             return OpcionesDo.AccionDefault;
         } else if (key.equals("login")) {
             return OpcionesDo.Login;
-        } else if(key.equals("logout")){
-            return OpcionesDo.Logout;  
+        } else if (key.equals("logout")) {
+            return OpcionesDo.Logout;
         }
         return OpcionesDo.AccionDefault;
     }
-    private void agregarNotificacion(String usuarioorigen,String descripcion){
-        Notificacion notificacion=new Notificacion();
+
+    private void agregarNotificacion(String usuarioorigen, String descripcion) {
+        Notificacion notificacion = new Notificacion();
         notificacion.setDescripcionNotificacion(descripcion);
         notificacion.setEstadoNotificacion("Activo");
         notificacion.setUsuarioOrigen(usuarioorigen);
         notificacion.setUsuarioObjetivo(1);
-        ManejadorNotificaciones manejadornotificaciones=new ManejadorNotificaciones();
+        ManejadorNotificaciones manejadornotificaciones = new ManejadorNotificaciones();
         manejadornotificaciones.agregarNotificacion(notificacion);
-    }    
+    }
 }

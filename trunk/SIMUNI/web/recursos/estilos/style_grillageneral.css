@@ -74,10 +74,10 @@ td{
 
 .sm_div_grillamodificar{
     background-image: url(../imagenes/grilla/sm_grilla_editar.png);
-    background-size: 40px 40px;
-    width: 40px;
-    height: 40px; 
-    margin: 5px;
+    background-size: 25px 25px;
+    width: 25px;
+    height: 25px; 
+    margin: 1px;
 }
 
 .sm_div_grillamodificar:hover{
@@ -88,10 +88,10 @@ td{
 
 .sm_div_grillaimprimir{
     background-image: url(../imagenes/grilla/sm_grilla_imprimir.png);
-    background-size: 40px 40px;
-    width: 40px;
-    height: 40px; 
-    margin: 5px;
+    background-size: 25px 25px;
+    width: 25px;
+    height: 25px; 
+    margin: 1px;
 }
 
 .sm_div_grillaimprimir:hover{
@@ -103,10 +103,10 @@ td{
 
 .sm_div_grillaeliminar{
     background-image: url(../imagenes/grilla/sm_grilla_eliminar.png);
-    background-size: 40px 40px;
-    width: 40px;
-    height: 40px; 
-    margin: 5px;
+    background-size: 25px 25px;
+    width: 25px;
+    height: 25px; 
+    margin: 1px;
 }
 
 .sm_div_grillaeliminar:hover{
@@ -117,10 +117,10 @@ td{
 
 .sm_div_grillaverimagen{
     background-image: url(../imagenes/grilla/sm_grilla_verimagenes.png);
-    background-size: 40px 40px;
-    width: 40px;
-    height: 40px; 
-    margin: 5px;
+    background-size: 25px 25px;
+    width: 25px;
+    height: 25px; 
+    margin: 1px;
 }
 
 .sm_div_grillaverimagen:hover{

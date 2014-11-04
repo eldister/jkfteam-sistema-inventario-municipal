@@ -22,7 +22,11 @@ public class ActivosMostrador {
 
     public String RenderizarActivos(ArrayList<TipoActivo> tiposactivo, ArrayList<Activos_Articulos> to_articulo, int cantidadpaginas) {
         if (tiposactivo == null) {
+            System.out.println("Era nul");
             tiposactivo = new ArrayList<TipoActivo>();
+        }
+        else{
+            System.out.println("Ahora si" +tiposactivo.get(1).getNombreTipoActivo());
         }
         if (to_articulo == null) {
             to_articulo = new ArrayList<Activos_Articulos>();
@@ -36,13 +40,15 @@ public class ActivosMostrador {
             Iterator<TipoActivo> iteradortipos = tiposactivo.iterator();
             while (iteradortipos.hasNext()) {
                 TipoActivo tipo = iteradortipos.next();
-                if (tipo.getCodigoTipoActivo() == articulo.getPa_tipoActivo()) {
+                System.out.println("El tipo actual analizado es "+articulo.getPa_tipoActivo()+" vs "
+                +tipo.getCodigoTipoActivo());
+                if (tipo.getCodigoTipoActivo()== articulo.getPa_tipoActivo()) {
                     nombretipo = tipo.getNombreTipoActivo();
                 }
 
             }
             if (nombretipo.length() == 0) {
-                nombretipo = "Sin clasificacion";
+                nombretipo = "Sin clasificacion2";
             }
             Object[] obj = new Object[]{
                 articulo.getPa_identificadorActivo(),
@@ -58,7 +64,7 @@ public class ActivosMostrador {
         }
         GrillaBase gril = new GrillaBase();
   gril.setUrlpaginacionlink("http://localhost:8080/SIMUNI/modulos/activos?proceso=veractivosarticulos");
-        gril.setUrlagregaropcionagregar("registro.jsp");
+        gril.setUrlagregaropcionagregar("/SIMUNI/modulos/activos?proceso=registroactivoarticulo");
         return gril.renderizar(criteriofiltros, encabezados, filas, cantidadpaginas);
     }
 
@@ -99,7 +105,7 @@ public class ActivosMostrador {
         }
         GrillaBase gril = new GrillaBase();
         gril.setUrlpaginacionlink("http://localhost:8080/SIMUNI/modulos/activos?proceso=veractivosarticulos");
-        gril.setUrlagregaropcionagregar("registro.jsp");//por mejorar
+        gril.setUrlagregaropcionagregar("/SIMUNI/modulos/activos?proceso=registroactivoarticulo");//por mejorar
         return gril.renderizarSoloCuerpoTabla(encabezados, filas, cantidadpaginas);
     }
 
