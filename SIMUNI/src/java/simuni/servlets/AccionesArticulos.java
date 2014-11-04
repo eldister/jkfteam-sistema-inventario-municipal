@@ -2,13 +2,9 @@ package simuni.servlets;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -85,97 +81,140 @@ public class AccionesArticulos extends HttpServlet {
         int npagina = 0;
         int paginacion = 0;//obtener la paginacion y pagina actual      
         int desplazamiento = 0;
-
+        String codigoactivo = "";
         switch (getOpcion(request.getParameter("proceso"))) {
             /*parte uno es para los activos articulos*/
 
             case ObtenerActivosArticulos:
-                npagina = getNumeroDePagina(request.getParameter("pag"), 0);
-                paginacion = getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
+                try {
+                    npagina = getNumeroDePagina(request.getParameter("pag"), 0);
+                    paginacion = getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
 
-                desplazamiento = ((npagina) * paginacion);
-                System.out.println("Desplazamiento" + desplazamiento);
-                articulos = manejador.getListaArticulos(desplazamiento, paginacion);
-                tiposactivos = manejadortactivos.getListaTiposActivos();
-                disp = request.getRequestDispatcher("/modulos/activos/articulos/mantenimiento_1.jsp");
-                request.setAttribute("listadoarticulos", articulos);
-                request.setAttribute("listadotiposactivo", tiposactivos);
-                request.setAttribute("paginacion", ((int) manejador.getCantidadRegistrosActivosArticulos() / paginacion) + 1);
+                    desplazamiento = ((npagina) * paginacion);
+                    System.out.println("Desplazamiento" + desplazamiento);
+                    articulos = manejador.getListaArticulos(desplazamiento, paginacion);
+                    tiposactivos = manejadortactivos.getListaTiposActivos();
+                    disp = request.getRequestDispatcher("/modulos/activos/articulos/mantenimiento_1.jsp");
+                    request.setAttribute("listadoarticulos", articulos);
+                    request.setAttribute("listadotiposactivo", tiposactivos);
+                    request.setAttribute("paginacion", ((int) manejador.getCantidadRegistrosActivosArticulos() / paginacion) + 1);
 
-                disp.forward(request, response);
+                    disp.forward(request, response);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    System.out.print(ex.getMessage());
+                    disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error.jsp?id=" + ex.getMessage() + "&msg=4");
+                    disp.forward(request, response);
+                }
                 break;
 
             case ActualizarActivoArticulo:
-                deptos = manejadordeptos.getListaDepartamentos();
-                tiposactivos = manejadortactivos.getListaTiposActivos();
-                tipospago = manejadortpago.getListaTipoPago();
-                estadoactivos = manejadorestadoactivo.getListadoEstadosActivos();
-                request.setAttribute("departamentos", deptos);
-                request.setAttribute("tiposactivo", tiposactivos);
-                request.setAttribute("tipospago", tipospago);
-                request.setAttribute("estadoactivos", estadoactivos);
-                String codigoactivo = request.getParameter("codigoactivo");
-                articulo = manejador.getActivoArticulo(codigoactivo);
-                //hay que crear la vista
-                disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizacionactivoarticulo.jsp");
-                request.setAttribute("articulo", articulo);
-                disp.forward(request, response);
+                try {
+                    deptos = manejadordeptos.getListaDepartamentos();
+                    tiposactivos = manejadortactivos.getListaTiposActivos();
+                    tipospago = manejadortpago.getListaTipoPago();
+                    estadoactivos = manejadorestadoactivo.getListadoEstadosActivos();
+                    request.setAttribute("departamentos", deptos);
+                    request.setAttribute("tiposactivo", tiposactivos);
+                    request.setAttribute("tipospago", tipospago);
+                    request.setAttribute("estadoactivos", estadoactivos);
+                    codigoactivo = request.getParameter("codigoactivo");
+                    articulo = manejador.getActivoArticulo(codigoactivo);
+                    //hay que crear la vista
+                    disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizacionactivoarticulo.jsp");
+                    request.setAttribute("articulo", articulo);
+                    disp.forward(request, response);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    System.out.print(ex.getMessage());
+                    disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error.jsp?id=" + ex.getMessage() + "&msg=4");
+                    disp.forward(request, response);
+                }
                 break;
 
             case RegistrarActivoArticulo:
-                //carga formulario
-                //obtener departamentos
-                //obtener tipos de pago
-                //obtener clasificaciones de activos
-                deptos = manejadordeptos.getListaDepartamentos();
-                tipospago = manejadortpago.getListaTipoPago();
-                tiposactivos = manejadortactivos.getListaTiposActivos();
-                estadoactivos = manejadorestadoactivo.getListadoEstadosActivos();
-                request.setAttribute("departamentos", deptos);
-                request.setAttribute("tiposactivo", tiposactivos);
-                request.setAttribute("tipospago", tipospago);
-                request.setAttribute("estadoactivos", estadoactivos);
-                disp = request.getRequestDispatcher("/modulos/activos/articulos/registro.jsp");
-                disp.forward(request, response);
+                try {
+                    //carga formulario
+                    //obtener departamentos
+                    //obtener tipos de pago
+                    //obtener clasificaciones de activos
+                    deptos = manejadordeptos.getListaDepartamentos();
+                    tipospago = manejadortpago.getListaTipoPago();
+                    tiposactivos = manejadortactivos.getListaTiposActivos();
+                    estadoactivos = manejadorestadoactivo.getListadoEstadosActivos();
+                    request.setAttribute("departamentos", deptos);
+                    request.setAttribute("tiposactivo", tiposactivos);
+                    request.setAttribute("tipospago", tipospago);
+                    request.setAttribute("estadoactivos", estadoactivos);
+                    disp = request.getRequestDispatcher("/modulos/activos/articulos/registro.jsp");
+                    disp.forward(request, response);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    System.out.print(ex.getMessage());
+                    disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error.jsp?id=" + ex.getMessage() + "&msg=4");
+                    disp.forward(request, response);
+                }
                 break;
             case VerificarSiArticuloYaRegistrado:
-                manejador = new ManejadorActivos();
-                codigoactivo = request.getParameter("codigoactivo");
-                if (manejador.isActivoExistente(codigoactivo)) {
-                    response.getOutputStream().print("Si Existe");
+                try {
+                    manejador = new ManejadorActivos();
+                    codigoactivo = request.getParameter("codigoactivo");
+                    if (manejador.isActivoExistente(codigoactivo)) {
+                        response.getOutputStream().print("Si Existe");
+
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    System.out.print(ex.getMessage());
+                    disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error.jsp?id=" + ex.getMessage() + "&msg=4");
+                    disp.forward(request, response);
                 }
                 break;
             case HacerReporteActivoArticuloParticular:
-                deptos = manejadordeptos.getListaDepartamentos();
-                tiposactivos = manejadortactivos.getListaTiposActivos();
-                tipospago = manejadortpago.getListaTipoPago();
-                estadoactivos = manejadorestadoactivo.getListadoEstadosActivos();
-                request.setAttribute("departamentos", deptos);
-                request.setAttribute("tiposactivo", tiposactivos);
-                request.setAttribute("tipospago", tipospago);
-                request.setAttribute("estadoactivos", estadoactivos);
-                codigoactivo = request.getParameter("codigoactivo");
-                articulo = manejador.getActivoArticulo(codigoactivo);
-                //hay que crear la vista
-                disp = request.getRequestDispatcher("/recursos/paginas/embebidos/reportesgeneral_asinc.jsp?mod=1");
-                request.setAttribute("articulo", articulo);
-                disp.forward(request, response);
+                try {
+                    deptos = manejadordeptos.getListaDepartamentos();
+                    tiposactivos = manejadortactivos.getListaTiposActivos();
+                    tipospago = manejadortpago.getListaTipoPago();
+                    estadoactivos = manejadorestadoactivo.getListadoEstadosActivos();
+                    request.setAttribute("departamentos", deptos);
+                    request.setAttribute("tiposactivo", tiposactivos);
+                    request.setAttribute("tipospago", tipospago);
+                    request.setAttribute("estadoactivos", estadoactivos);
+                    codigoactivo = request.getParameter("codigoactivo");
+                    articulo = manejador.getActivoArticulo(codigoactivo);
+                    //hay que crear la vista
+                    disp = request.getRequestDispatcher("/recursos/paginas/embebidos/reportesgeneral_asinc.jsp?mod=1");
+                    request.setAttribute("articulo", articulo);
+                    disp.forward(request, response);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    System.out.print(ex.getMessage());
+                    disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error.jsp?id=" + ex.getMessage() + "&msg=4");
+                    disp.forward(request, response);
+                }
                 break;
             case ObtenerImagenesActivoAsinc:
-
-                codigoactivo = request.getParameter("codigoactivo");
-                imagenes = manejador.getListaImagenesActivo(codigoactivo);
-                //hay que crear la vista
-                disp = request.getRequestDispatcher("/recursos/paginas/embebidos/vistaimagenesactivos.jsp");
-                request.setAttribute("imagenes", imagenes);
-                request.setAttribute("codigoactivo", codigoactivo);
-                disp.forward(request, response);
-                break;
+                try {
+                    codigoactivo = request.getParameter("codigoactivo");
+                    imagenes = manejador.getListaImagenesActivo(codigoactivo);
+                    //hay que crear la vista
+                    disp = request.getRequestDispatcher("/recursos/paginas/embebidos/vistaimagenesactivos.jsp");
+                    request.setAttribute("imagenes", imagenes);
+                    request.setAttribute("codigoactivo", codigoactivo);
+                    disp.forward(request, response);
+                    break;
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    System.out.print(ex.getMessage());
+                    disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error_asinc.jsp?id=" + ex.getMessage() + "&msg=4");
+                    disp.forward(request, response);
+                }
             default:
                 //redirigir a pagina de error
                 break;
 
         }
+
     }
 
     /**
@@ -212,21 +251,26 @@ public class AccionesArticulos extends HttpServlet {
             switch (getOpcion(request.getParameter("proceso"))) {
 
                 case RegistrarActivoArticulo:
-                    activoarticulo = generarActivoArticulo(request);
-                    filePart = request.getPart("fileimagenactivo"); // Retrieves <input type="file" name="file">
-                    if (filePart != null) {
-                        System.out.println("archivo presente ayuda nombres iii " + filePart.getSize());
-                    }
-                    filecontent = filePart.getInputStream();
-                    filename = UtilidadesServlet.getFilename(filePart);
-
-                    //instanciamos para las imagenes
                     imagenActivo imagenactivo = new imagenActivo();
-                    imagenactivo.setPa_nombreArchivo(filename);
-                    imagenactivo.setStreamarchivo(filecontent);
                     ArrayList<imagenActivo> listadoimagen = new ArrayList<imagenActivo>();
-                    listadoimagen.add(imagenactivo);
-                    activoarticulo.setPo_imagenActivo(listadoimagen);
+                    activoarticulo = generarActivoArticulo(request);
+                    filePart = request.getPart("fileimagenactivo"); // Retrieves <input type="file" name="file">                  
+                    System.out.println("veamooooooooos  " + filePart.getSize());
+                    if (filePart != null && filePart.getSize() > 0) {
+                        filecontent = filePart.getInputStream();
+                        filename = UtilidadesServlet.getFilename(filePart);
+                        //instanciamos para las imagenes
+                        imagenactivo = new imagenActivo();
+                        imagenactivo.setPa_nombreArchivo(filename);
+                        imagenactivo.setStreamarchivo(filecontent);
+                        listadoimagen = new ArrayList<imagenActivo>();
+                        listadoimagen.add(imagenactivo);
+                        activoarticulo.setPo_imagenActivo(listadoimagen);
+
+                    } else {
+                        activoarticulo.setPo_imagenActivo(null);
+                    }
+
                     //falta imagen
                     //hacer el proceso de registro
                     if (manejadoractivos.agregarActivoArticulo(activoarticulo)) {
@@ -265,11 +309,13 @@ public class AccionesArticulos extends HttpServlet {
                     //hacer el proceso de registro
                     if (manejadoractivos.modificarActivoArticulo(activoarticulo)) {
                         //redirigir a una pagina de exito
+                        System.out.println("Entre almenos");
                         disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/exito_asinc.jsp?id=" + activoarticulo.getPa_identificadorActivo() + "&msg=2");
                         agregarNotificacion(request.getSession().getAttribute("USERNAME").toString(), "Activo " + activoarticulo.getPa_identificadorActivo() + " modificado a la base de datos");
                         disp.forward(request, response);
 
                     } else {
+                        System.out.println("Algo paso");
                         //redirigir a pagina de error y/o recargar el formulario
                         disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error_asinc.jsp?id=" + activoarticulo.getPa_identificadorActivo() + "&msg=2");
                         disp.forward(request, response);
@@ -300,9 +346,9 @@ public class AccionesArticulos extends HttpServlet {
 
                     break;
                 case ObtenerActivosArticulosAsinc:
-                    npagina=getNumeroDePagina(request.getParameter("pag"), 0);
-                    paginacion=getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
-                    request.getSession().setAttribute("paginacion", paginacion);            
+                    npagina = getNumeroDePagina(request.getParameter("pag"), 0);
+                    paginacion = getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
+                    request.getSession().setAttribute("paginacion", paginacion);
                     int desplazamiento = ((npagina - 1) * paginacion);
                     articulos = manejadoractivos.getListaArticulos(desplazamiento, paginacion);
                     disp = request.getRequestDispatcher("/recursos/paginas/embebidos/actualizaciongrillaasinc.jsp?mod=1");
@@ -320,10 +366,10 @@ public class AccionesArticulos extends HttpServlet {
                     break;
 
                 case BusquedaArticulo:
-                    npagina=getNumeroDePagina(request.getParameter("pag"), 0);
-                    paginacion=getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
+                    npagina = getNumeroDePagina(request.getParameter("pag"), 0);
+                    paginacion = getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
                     System.out.println("entre a la busqueda");
-                    request.getSession().setAttribute("paginacion", paginacion);         
+                    request.getSession().setAttribute("paginacion", paginacion);
 
                     String query = request.getParameter("query");
                     System.out.print(query);
@@ -361,6 +407,8 @@ public class AccionesArticulos extends HttpServlet {
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.print(ex.getMessage());
+            disp = request.getRequestDispatcher("/recursos/paginas/notificaciones/error_asinc.jsp?id=" + ex.getMessage() + "&msg=4");
+            disp.forward(request, response);
         }
     }
 
@@ -384,7 +432,7 @@ public class AccionesArticulos extends HttpServlet {
         String descripcion = request.getParameter("txtDescripcion");
         String observaciones = request.getParameter("txtObservaciones");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println("El tipo de pago es "+idtipopago);
+        System.out.println("El tipo de pago es " + idtipopago);
         //darles las caracteristicas al activo articulo, exceptuando las imagenes qeu solo en agregar y en modificar
         activoarticulo.setPa_Descripcion(descripcion);
         activoarticulo.setPa_Estado(estadoactivo);
@@ -397,7 +445,7 @@ public class AccionesArticulos extends HttpServlet {
         activoarticulo.setPa_codigoProveedor(idproveedor);
         activoarticulo.setPa_tipoActivo(Integer.parseInt(categoriaactivo));//corregir, aqui es int    
         activoarticulo.setPa_tipoPago(Integer.parseInt(idtipopago));//corregir, aqui es int
-        
+
         activoarticulo.setPb_porcentajeDepreciacion(Double.parseDouble(porcentajedepreciacion));
         activoarticulo.setPb_depreciacion(Double.parseDouble(porcentajedepreciacion));
         activoarticulo.setPb_porcentajeRescate(Double.parseDouble(porcentajerescate));

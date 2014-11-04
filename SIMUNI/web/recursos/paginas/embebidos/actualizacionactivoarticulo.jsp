@@ -18,20 +18,41 @@
         activo = new Activos_Articulos();
     }
 %>
-<script type="text/javascript" src="<%=request.getContextPath()%>/recursos/scripts/jquery-registroactivos.js"></script>
 
 
 <script>
-    $(document).ready(function(){
-          setEventoSeleccionarProveedor_b();
-          $("#cmbtipopago").change(function(){
-              $("#hiddenidTipoPago").val($(this).val());
-              
-          });
-          
-    });
-    
+    $(document).ready(function() {
+        setEventoSeleccionarProveedor_b();
+        $("#cmbtipopago").change(function() {
+            // alert("listo");
+            $("#hiddenidTipoPago").val($(this).val());
 
+        });
+        $("#cmbCategoria").change(function() {
+            //           alert("listo2");
+
+            $("#hiddenidCategoria").val($(this).val());
+
+        });
+        $("#cmbDepartamento").change(function() {
+            //            alert("listo5");
+
+            $("#hiddenidDepartamento").val($(this).val());
+
+        });
+    });
+
+    function fnMostrarImagen(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#imgImagenCargada')
+                        .attr('src', e.target.result).width(300).height(300);
+            };
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    }
     function setEventoSeleccionarProveedor_b() {
         $("#txtbtnseleccionarproveedor").click(function() {
 
@@ -82,11 +103,31 @@
 
 
 </script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/recursos/estilos/style_resgistrodearticulos.css">
+<style>
+    #txtObservaciones, #txtDescripcion{
+        width: 350px;
+        height: 90px;
+    }
+    input[type=text],input[type=number],input[type=date],select,textarea{
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -o-border-radius: 5px;
+        -ms-border-radius: 5px;
+    }
+    #titularactivo1{
+        text-align: center;
+        color:blue;
+    }
+    #btnImagenActivo{
+        display: block;
+    }
+</style>
 <div id="sm_formembebido_actualizacionarticulos">
     <form id="sm_div_formulario" method="POST" action="/SIMUNI/modulos/activos?proceso=modificacionarticulo" enctype="multipart/form-data">
         <fieldset id="sm_fs_articulos">
             <legend>Modificación de Activo</legend>
-            <h1>Activo <%out.print(activo.getPa_identificadorActivo());%></h1>
+            <h1 id="titularactivo1">Activo <%out.print(activo.getPa_identificadorActivo());%></h1>
             <div id="sm_form_registroinformacion">
                 <table id="sm_tb_campos">
                     <tr>
@@ -118,7 +159,7 @@
                             <label>Categoría </label>
                         </td>
                         <td>
-                            <select name="cmbCategoria">
+                            <select name="cmbCategoria" id="cmbCategoria">
                                 <%
                                     if (tiposactivos != null) {
                                         Iterator<TipoActivo> iter = tiposactivos.iterator();
@@ -160,7 +201,7 @@
                         </td>
                         <td>
                             <!--<input type="text" name="txtDescripción">-->
-                            <select name="cmbDepartamento">                            
+                            <select name="cmbDepartamento" id="cmbDepartamento">                            
                                 <%
                                     if (deptos != null) {
                                         Iterator<Departamento> iter = deptos.iterator();
@@ -241,7 +282,7 @@
                             <label>Estado Actual </label>
                         </td>
                         <td>
-                            <select name="cmbEstadoActivo">
+                            <select name="cmbEstadoActivo" id="cmbEstadoActivo">
                                 <%
                                     if (tiposestadoactivo != null) {
                                         Iterator<EstadoActivo> iter = tiposestadoactivo.iterator();
@@ -265,7 +306,7 @@
                             <label>Descripción </label>
                         </td>
                         <td>
-                            <textarea type="text" name="txtDescripcion"  maxlength="300"><%out.print(activo.getPa_Descripcion()); %></textarea>
+                            <textarea type="text" name="txtDescripcion"  id="txtDescripcion"  maxlength="300"><%out.print(activo.getPa_Descripcion()); %></textarea>
                         </td>
                     </tr>                  
                     <tr>
@@ -273,7 +314,7 @@
                             <label>Observaciones </label>
                         </td>
                         <td>
-                            <textarea type="text" name="txtObservaciones"  placeholder="Indique aspectos generales de los activos que considere necesario" maxlength="300"><%out.print(activo.getPa_Observaciones());%></textarea>
+                            <textarea type="text" name="txtObservaciones" id="txtObservaciones"  placeholder="Indique aspectos generales de los activos que considere necesario" maxlength="300"><%out.print(activo.getPa_Observaciones());%></textarea>
                         </td>
                     </tr>                        
                     <tr>
@@ -313,11 +354,11 @@
             </div>
         </fieldset>
         <div id="sm_form_extracontent">
-            <input type="hidden"  value="<% out.print(activo.getPa_codigoProveedor()); %>" name="hiddenidProveedor">
-            <input type="hidden"  value="<% out.print(activo.getPa_tipoActivo()); %>"name="hiddenidCategoria">
+            <input type="hidden"  value="<% out.print(activo.getPa_codigoProveedor()); %>" id="hiddenidProveedor" name="hiddenidProveedor">
+            <input type="hidden"  value="<% out.print(activo.getPa_tipoActivo()); %>" id="hiddenidCategoria" name="hiddenidCategoria">
             <input type="hidden"  value="<% out.print(activo.getPa_tipoPago()); %>" id="hiddenidTipoPago" name="hiddenidTipoPago">
-            <input type="hidden"  value="<% out.print(activo.getPo_depto().getPn_codigo()); %>" name="hiddenidDepartamento">
-            <input type='hidden'  value="<% out.print(activo.getPa_identificadorActivo());%>" name="txtNumeroPlaca">
+            <input type="hidden"  value="<% out.print(activo.getPo_depto().getPn_codigo()); %>" id="hiddenidDepartamento"  name="hiddenidDepartamento">
+            <input type='hidden'  value="<% out.print(activo.getPa_identificadorActivo());%>" id="txtNumeroPlaca"  name="txtNumeroPlaca">
         </div>
     </form>
     <div id='sm_body_ventanamodal_b'>&nbsp;</div>

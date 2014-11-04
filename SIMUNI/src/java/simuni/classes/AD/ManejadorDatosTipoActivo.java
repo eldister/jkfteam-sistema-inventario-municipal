@@ -29,7 +29,7 @@ public class ManejadorDatosTipoActivo {
             tactivo.setCodigoTipoActivo(rs.getInt("SM00IDTA"));
             tactivo.setNombreTipoActivo(rs.getString("SM01NOTA"));
             tipoactivo.add(tactivo);
-            System.out.println("ENTREE Y SIRVOO");
+            System.out.println("ENTREE Y SIRVOO Tipos de activo");
         }
         ConexionMYSQL.cerrarConexion(con);
         return tipoactivo;

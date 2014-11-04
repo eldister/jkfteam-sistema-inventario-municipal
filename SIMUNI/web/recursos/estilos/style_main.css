@@ -231,8 +231,9 @@ header{
 */
 #sm_body_barralateral{
     background-color: white;
-    padding: 15px;
-    border-right: 1px solid lightblue;
+    padding: 5px;
+    border-right: 2px dotted lightblue;
+    max-width: 220px;
 }
 
 #sm_body_barralateral,#sm_body_mainsection{
@@ -241,12 +242,18 @@ header{
 
 }
 #sm_body_mainsection{
-    width: 1100px;
+    width: 900px;
     margin-top: 50px;
     margin-left: 10px;
     padding: 10px;
 }
 
+#sm_notificacionescontainer{
+    max-height: 250px;
+    overflow-y: auto;
+    width: 100%;
+    font-size: 0.9em;
+}
 #sm_body_notificacion{
     clear: both;
 }
@@ -257,7 +264,8 @@ header{
 
 #sm_aside_barralateralitemnotificacion,#sm_aside_barralateralitemmensaje{
     max-height: 300px;
-    overflow-y: auto;
+   
+  
 
 }
 
@@ -288,16 +296,24 @@ footer{
 .sm_div_notificacion{
     padding: 5px;
     max-width: 200px;
-    padding-left: 60px;
+    padding-top:15px;
     background-image: url(../imagenes/sistema/sm_notificacion_usuario.png);
-    background-size: 30px 30px;
+    background-size: 15px 15px;
     background-repeat: no-repeat;
+    box-shadow: 0px 0px 5px black;
+   margin-left: 3px;
+    width: 90%;
 
 
 }
 .sm_div_notificacion:not(:first-child){
     margin-top: 8px;
 
+}
+/*el formato de la fecha*/
+.sm_div_notificacionfechacontainer{
+    color: captiontext;
+    font-size: 0.8em;
 }
 
 .sm_div_mensaje{
@@ -388,6 +404,7 @@ footer .sm_div_colcontainer:not(:first-child){
 #sm_body_navegationbarmenu{
     background-color: white;
     height: 35px;
+    border-bottom: 2px dotted lightblue;
 }
 
 
@@ -560,4 +577,19 @@ footer .sm_div_colcontainer ul{
 .sm_div_configuracionlink:hover{
     color: lightblue;
     text-decoration: underline;
+}
+
+/*para el tema de jquery principal*/
+.ui-widget-header{
+    background: lightblue  !important ;
+    background-color: lightblue !important;
+}
+.ui-dialog{
+    border: 2px lightblue solid;
+}
+
+#maincontainer{
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }

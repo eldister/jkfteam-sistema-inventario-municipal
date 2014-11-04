@@ -22,8 +22,8 @@
     padding: 4px;
 }
 #txtDes, #txtOb{
-    height: 10em;
-    width: 300px;
+    height: 50px;
+    width: 200px;
 }
 #LetrasRestantes1, #LetrasRestantes2{
     font-size: 80%;

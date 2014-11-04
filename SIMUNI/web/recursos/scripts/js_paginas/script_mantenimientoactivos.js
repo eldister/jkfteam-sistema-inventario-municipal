@@ -26,7 +26,7 @@ function mostrarventanamodal2() {
     $("#sm_body_ventanamodal").show('slow');
     $("#sm_body_ventanamodal").dialog({
         width: "70%",
-        minHeight:'600px',
+        minHeight: '600px',
         position: {my: "left-10 top-20", at: "left top", of: sm_body_mainsection},
         maxWidth: "768px"});
 
@@ -42,7 +42,7 @@ function  sm_grilla_proceso_modificaractivo(sm_grilla_item_id) {
             .done(function(html) {
                 $("#sm_body_ventanamodal").html(html);
                 setManejadorFormularioActualizacion();
-              
+
             });
 
     mostrarventanamodal();
@@ -68,20 +68,26 @@ function setManejadorFormularioActualizacion() {
             processData: false,
             success: function(data) {
                 alert(data);
+                $("#sm_body_ventanamodal").dialog('close');
+                $("#sm_body_ventanamodal").html('');
             },
             complete: function(xhr, data) {
-              //  console.log(xhr.status);
-               // $("#sm_respuesta").html($("#sm_respuesta").html() + "completooo" + data + xhr.responseText);
+                //  console.log(xhr.status);
+                // $("#sm_respuesta").html($("#sm_respuesta").html() + "completooo" + data + xhr.responseText);
+                $("#sm_body_ventanamodal").dialog('close');
+                $("#sm_body_ventanamodal").html('');
             },
             error: function(data) {
                 //alert(data.responseText);
-            //    $("#sm_respuesta").html($("#sm_respuesta").html() + data.responseText);
-              alert(data);
+                //    $("#sm_respuesta").html($("#sm_respuesta").html() + data.responseText);
+                alert(data);
+                $("#sm_body_ventanamodal").dialog('close');
+                $("#sm_body_ventanamodal").html('');
             }
         });
 
         ev.preventDefault(); //Prevent Default action. 
-       // ev.unbind();
+        // ev.unbind();
     });
 
 
@@ -126,10 +132,10 @@ function sm_grilla_cambiarpaginacion(valorpaginacion) {
     });
 
 }
-function sm_grilla_busqueda(sm_grillageneral_query){
- //alert(sm_grillageneral_query); 
- sm_grilla_actualizargrillageneral("busquedaarticulo&query="+sm_grillageneral_query);
- 
+function sm_grilla_busqueda(sm_grillageneral_query) {
+    //alert(sm_grillageneral_query); 
+    sm_grilla_actualizargrillageneral("busquedaarticulo&query=" + sm_grillageneral_query);
+
 }
 
 
@@ -137,7 +143,7 @@ function sm_grilla_busqueda(sm_grillageneral_query){
 function sm_grilla_actualizargrillageneral(proceso) {
     $.ajax({
         type: 'POST',
-        url: "/SIMUNI/modulos/activos?proceso="+proceso,
+        url: "/SIMUNI/modulos/activos?proceso=" + proceso,
         contentType: ' charset=utf-8',
         success: function(data) {
             //console.info("correcto" +data);
@@ -147,11 +153,11 @@ function sm_grilla_actualizargrillageneral(proceso) {
         },
         beforeSend: function() {
             $("#sm_div_puratablecontainertarget").addClass('sm_div_grillageneralloading');
-           // $('#sm_respuesta').css('font-size','3em');
+            // $('#sm_respuesta').css('font-size','3em');
         },
         complete: function() {
-             // $('#sm_respuesta').css('font-size','0.51em');
-               $("#sm_div_puratablecontainertarget").removeClass('sm_div_grillageneralloading');
+            // $('#sm_respuesta').css('font-size','0.51em');
+            $("#sm_div_puratablecontainertarget").removeClass('sm_div_grillageneralloading');
         },
         error: function(data) {
             console.info(data);
@@ -163,24 +169,24 @@ function sm_grilla_actualizargrillageneral(proceso) {
 
 }
 
-function  sm_grilla_proceso_imprimirreporteactivo(sm_grilla_item_id){
-     $("#sm_body_ventanamodal").html('');
-     var newelement=$("<object>");
-     newelement.attr('type','application/pdf');
-    newelement.attr('data','/SIMUNI/modulos/activos?proceso=hacerreporteactivoparticular&codigoactivo='+sm_grilla_item_id);
-    newelement.attr('width','100%');
-    newelement.attr('height','100%');
+function  sm_grilla_proceso_imprimirreporteactivo(sm_grilla_item_id) {
+    $("#sm_body_ventanamodal").html('');
+    var newelement = $("<object>");
+    newelement.attr('type', 'application/pdf');
+    newelement.attr('data', '/SIMUNI/modulos/activos?proceso=hacerreporteactivoparticular&codigoactivo=' + sm_grilla_item_id);
+    newelement.attr('width', '100%');
+    newelement.attr('height', '100%');
     $("#sm_body_ventanamodal").append(newelement);
     $("#sm_body_ventanamodal").height('600px')
-     mostrarventanamodal2();
-         
-    
-    
+    mostrarventanamodal2();
+
+
+
 }
 
 
-function sm_grilla_proceso_verimagen(sm_grilla_item_id){
-        $.ajax({
+function sm_grilla_proceso_verimagen(sm_grilla_item_id) {
+    $.ajax({
         url: "/SIMUNI/modulos/activos?proceso=obtenerimagenesactivo&codigoactivo=" + sm_grilla_item_id,
         cache: false
     })

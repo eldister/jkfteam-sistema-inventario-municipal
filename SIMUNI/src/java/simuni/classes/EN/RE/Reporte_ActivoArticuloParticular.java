@@ -1,21 +1,28 @@
 package simuni.classes.EN.RE;
 
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import simuni.classes.EN.Activos_Articulos;
 import simuni.classes.EN.Departamento;
 import simuni.classes.EN.EstadoActivo;
+import simuni.classes.EN.Servidor;
 import simuni.classes.EN.TipoActivo;
 import simuni.classes.EN.TipoPago;
+import simuni.classes.EN.imagenActivo;
 
 /**
  *
@@ -31,7 +38,7 @@ public class Reporte_ActivoArticuloParticular {
     private String nombreTipoPago;
     private String nombreEstadoActivo;
 
-    public boolean generarReporte(String usuario, Activos_Articulos activoarticulo,
+    public boolean generarReporte(String equipo, String usuario, Activos_Articulos activoarticulo,
             ArrayList<Departamento> deptos, ArrayList<TipoActivo> tiposactivo,
             ArrayList<TipoPago> tipopago, ArrayList<EstadoActivo> tiposestadoactivo,
             OutputStream responsestream) throws Exception {
@@ -40,9 +47,11 @@ public class Reporte_ActivoArticuloParticular {
             return false;
         }
         usuariocreador = usuario;
-        fechaReporte = new Date(new java.util.Date().getTime());
-        nombreDepartamento = activoarticulo.getPo_depto() != null ? activoarticulo.getPo_depto().getPa_nombre() : "";
+        java.util.Date fechaactual = new java.util.Date();
 
+        fechaReporte = new Date(fechaactual.getTime());
+        String sfechareporte = fechaReporte + " a las " + fechaactual.getHours() + ":" + fechaactual.getMinutes() + ":" + fechaactual.getSeconds();
+        setNombreDepartamento(deptos, activoarticulo.getPo_depto() != null ? activoarticulo.getPo_depto().getPn_codigo() : 0);
         setNombreTipoActivo(tiposactivo, activoarticulo.getPa_tipoActivo());
         setNombreTipoPago(tipopago, activoarticulo.getPa_tipoPago());
         nombreEstadoActivo = activoarticulo.getPa_Estado();
@@ -56,10 +65,15 @@ public class Reporte_ActivoArticuloParticular {
 
             HTMLWorker worker = new HTMLWorker(document);
             StringBuilder sb = new StringBuilder();
-            String creador = "Emitido el " + fechaReporte + " por " + usuariocreador;
+            String creador = "Emitido el " + sfechareporte + " por " + usuariocreador;
+            String sequipo = "Informacion del equipo " + equipo;
             Paragraph parrafo0 = new Paragraph();
             Paragraph parrafo = new Paragraph(titulo);
             Paragraph parrafo2 = new Paragraph(creador);
+            Paragraph parrafo3 = new Paragraph(sequipo);
+            Paragraph parrafo4 = new Paragraph("Identificador Único: SIMUNI-RE#" + fechaactual.getTime());
+            parrafo3.setAlignment(Rectangle.ALIGN_CENTER);
+            parrafo4.setAlignment(Rectangle.ALIGN_CENTER);
             parrafo.setAlignment(Element.ALIGN_CENTER);
             parrafo2.setAlignment(Element.ALIGN_CENTER);
             document.add(parrafo0);
@@ -68,14 +82,16 @@ public class Reporte_ActivoArticuloParticular {
 
             document.add(parrafo);
             document.add(parrafo2);
+            document.add(parrafo3);
+            document.add(parrafo4);
             document.add(parrafo0);
             document.add(parrafo0);
 
             sb.append("<table border1>");
             sb.append("	<tr>");
-            sb.append("		<th colspan='2' style='text-align:center;'><span >Activo ");
+            sb.append("		<th colspan='2' style='text-align:center;'><strong size=5>Activo ");
             sb.append(activoarticulo.getPa_identificadorActivo());
-            sb.append("</span></th>");
+            sb.append("</strong></th>");
             sb.append("		<tr >");
             sb.append("	</tr>");
             sb.append("	<tr> ");
@@ -83,7 +99,7 @@ public class Reporte_ActivoArticuloParticular {
             sb.append("			<strong><span>Numero de placa</span></strong>");
             sb.append("		</td>");
             sb.append("		<td>");
-            sb.append("			<span>");
+            sb.append("			<span color=blue size=5>");
             sb.append(activoarticulo.getPa_identificadorActivo());
             sb.append("</span>");
             sb.append("		</td>");
@@ -135,7 +151,7 @@ public class Reporte_ActivoArticuloParticular {
             sb.append("		<td>");
             sb.append("			<span>");
             sb.append(nombreDepartamento);
-            sb.append("</span>");
+            sb.append(" <sub size=2>(Nombre*)</sub></span>");
             sb.append("		</td>");
             sb.append("	</tr>");
             sb.append("	<tr>");
@@ -155,7 +171,7 @@ public class Reporte_ActivoArticuloParticular {
             sb.append("		<td>");
             sb.append("			<span>");
             sb.append(activoarticulo.getPd_precioCompra());
-            sb.append("</span>");
+            sb.append(" Colones</span>");
             sb.append("		</td>	");
             sb.append("	</tr>	");
             sb.append("	<tr>");
@@ -165,7 +181,7 @@ public class Reporte_ActivoArticuloParticular {
             sb.append("		<td>");
             sb.append("			<span>");
             sb.append(activoarticulo.getPb_porcentajeDepreciacion());
-            sb.append("</span>");
+            sb.append("%</span>");
             sb.append("		</td>");
             sb.append("	</tr>	");
             sb.append("	<tr>");
@@ -175,7 +191,7 @@ public class Reporte_ActivoArticuloParticular {
             sb.append("		<td>");
             sb.append("			<span>");
             sb.append(activoarticulo.getPb_porcentajeRescate());
-            sb.append("</span>");
+            sb.append("%</span>");
             sb.append("		</td>");
             sb.append("	</tr>");
             sb.append("	<tr>");
@@ -193,9 +209,9 @@ public class Reporte_ActivoArticuloParticular {
             sb.append("			<strong><span>Estado Actual</span></strong>");
             sb.append("		</td>");
             sb.append("		<td>");
-            sb.append("			<span>");
+            sb.append("			<strong color=red>");
             sb.append(nombreEstadoActivo);
-            sb.append("</span>");
+            sb.append("</strong>");
             sb.append("		</td>	");
             sb.append("	</tr>	");
             sb.append("	<tr>");
@@ -224,6 +240,46 @@ public class Reporte_ActivoArticuloParticular {
             worker.newLine();
 
             worker.parse(new StringReader(code));
+
+            /*la iamgen del activo*/
+            String urlimagen = "";
+            ArrayList<imagenActivo> img = activoarticulo.getPo_imagenActivo();
+            Image imagenactivo = null;
+            document.newPage();
+            try {
+
+                if (img != null) {
+                    imagenActivo imagen = img.get(0);
+                    urlimagen = Servidor.SSI.REMOTOARCHIVOSACTIVOSCONTEXT + imagen.getPa_url() + "/" + imagen.getPa_nombreArchivo();
+                    imagenactivo = Image.getInstance(urlimagen);
+                    imagenactivo.setAlignment(Rectangle.ALIGN_CENTER);
+                } else {
+                    urlimagen = "#";
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                urlimagen = null;
+                imagenactivo = null;
+            }
+            if (imagenactivo != null) {
+                System.out.println("La url es " + urlimagen);
+                Font f = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
+                Paragraph parrafo5 = new Paragraph("Imagen del activo", f);
+                parrafo5.setAlignment(Rectangle.ALIGN_CENTER);
+                document.add(new Paragraph(Chunk.NEWLINE));
+                document.add(new Paragraph(Chunk.NEWLINE));
+                document.add(new Paragraph(Chunk.NEWLINE));
+                document.add(new Paragraph(Chunk.NEWLINE));;
+                document.add(parrafo5);
+                document.add(new Paragraph(Chunk.NEWLINE));
+                document.add(new Paragraph(Chunk.NEWLINE));
+                document.add(new Paragraph(Chunk.NEWLINE));
+                document.add(imagenactivo);
+            } else {
+                System.out.println("No se agregara la iamgen");
+            }
+
         } catch (Exception e) {
             throw e;
         } finally {

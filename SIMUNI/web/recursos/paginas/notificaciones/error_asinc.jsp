@@ -11,6 +11,11 @@
             out.print("Codigo de proceso :"+request.getParameter("id"));
             out.print(new Date().toString());
             break;
+        case 4:
+            out.print("El sistema ha presentado una falla inesperada");
+            out.print("Razón  :"+request.getParameter("id"));
+            out.print(new Date().toString());            
+            break;
         
     }
 %>

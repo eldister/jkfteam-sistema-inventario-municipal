@@ -9,6 +9,7 @@
 <%
 
     String cod = request.getParameter("mod");
+    String usuario=request.getSession().getAttribute("USERNAME")!=null?request.getSession().getAttribute("USERNAME").toString():"No autenticado";
     int modo = 0;
     if (UtilidadesServlet.tryParseInt(cod)) {
          
@@ -27,8 +28,8 @@
                 }
                 Reporte_ActivoArticuloParticular re = new Reporte_ActivoArticuloParticular();
                 response.reset();
-
-                re.generarReporte(" jef0143 ",activo,deptos,tiposactivos,tipospago,tiposestadoactivo, response.getOutputStream());
+                String sequipo="IP: "+request.getRemoteAddr()+ " Sesión: "+request.getRequestedSessionId();
+                re.generarReporte(sequipo,usuario,activo,deptos,tiposactivos,tipospago,tiposestadoactivo, response.getOutputStream());
 
                 break;//reporte de activo articulo particular fin
         }
