@@ -31,8 +31,7 @@ public class Activos {
     /**
      * 
      * poner el identificador de activo
-     * @param pa_identificadorActivo 
-     * @return el identificador del activo
+     * @param pa_identificadorActivo
      * @since 1.0 
      */
     public void setPa_identificadorActivo(String pa_identificadorActivo) {
