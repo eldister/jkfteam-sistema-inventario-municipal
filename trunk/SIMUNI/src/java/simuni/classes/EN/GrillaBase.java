@@ -94,7 +94,8 @@ public class GrillaBase {
 
         //SECCION CUERPO DE LA GRILLA.. LAS FILAS
         Iterator<Object[]> iter = filas.iterator();
-        while (iter.hasNext()) {
+        if (iter.hasNext()) {
+            do{
             resp.append("<tr class='sm_tbody_filadatos'>");
             Object[] row = iter.next();
             for (int a = 0; a < row.length; a++) {
@@ -152,7 +153,12 @@ public class GrillaBase {
                 }
 
             }
-
+            }while(iter.hasNext());
+        }else{
+            resp.append("<tr class='sm_tbody_filadatos'>");
+            resp.append("<div style='text-align:center;'>No se encontró nada!!</div>");
+            
+             resp.append("</tr>");
         }
 
         resp.append("    </tbody>  ");
@@ -360,7 +366,8 @@ public class GrillaBase {
 
         //SECCION CUERPO DE LA GRILLA.. LAS FILAS
         Iterator<Object[]> iter = filas.iterator();
-        while (iter.hasNext()) {
+        if (iter.hasNext()) {
+            do{
             resp.append("<tr class='sm_tbody_filadatos'>");
             Object[] row = iter.next();
             for (int a = 0; a < row.length; a++) {
@@ -418,7 +425,12 @@ public class GrillaBase {
                 }
 
             }
-
+            }while(iter.hasNext());
+        }else{
+                resp.append("<tr class='alguna'>");
+                resp.append("No se encontró nada aquí!!");
+            
+             resp.append("</tr>");
         }
 
         resp.append("    </tbody>  ");

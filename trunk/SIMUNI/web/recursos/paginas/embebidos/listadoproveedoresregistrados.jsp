@@ -12,7 +12,6 @@
                 out.print("<table>");
                 out.print("<tr>"
                         + "<th>Identificador de Proveedor</th>"
-                        + "<th>Nombre Proveedor</th>"
                         + "<th>Primer Apellido</th>"
                         + "<th>Segundo Apellido</th>"
                         + "<th>Email </th>"
