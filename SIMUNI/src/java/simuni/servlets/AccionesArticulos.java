@@ -516,7 +516,7 @@ public class AccionesArticulos extends HttpServlet {
             return respaldo;
         }
         if (UtilidadesServlet.tryParseInt(str.toString())) {
-            return Integer.parseInt(str.toString());
+            return Integer.parseInt(str.toString())-1;
         } else {
             return respaldo;
         }

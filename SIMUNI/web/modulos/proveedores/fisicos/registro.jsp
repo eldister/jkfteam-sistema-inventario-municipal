@@ -54,7 +54,7 @@
                                 <label>Primer apellido: </label>
                             </td>
                             <td>
-                                <input type="text" id="txtPAP" name="txtApellido1Proveedor">
+                                <input type="text" required="required" id="txtPAP" name="txtApellido1Proveedor">
                             </td>
                         </tr>
                         <tr>
@@ -107,7 +107,7 @@
                                 <label>Correo electrónico: </label>
                             </td>
                             <td>
-                                <input type="text" required="required" id="txtMail" name="txtEmail">
+                                <input type="email" accept="" required="required" id="txtMail" name="txtEmail">
                                 <div id="mensaje6"></div>
                             </td>
                         </tr>
