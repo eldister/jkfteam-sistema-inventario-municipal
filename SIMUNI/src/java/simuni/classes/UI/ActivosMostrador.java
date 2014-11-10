@@ -63,8 +63,9 @@ public class ActivosMostrador {
             nombretipo = "";
         }
         GrillaBase gril = new GrillaBase();
-  gril.setUrlpaginacionlink("http://localhost:8080/SIMUNI/modulos/activos?proceso=veractivosarticulos");
+  gril.setUrlpaginacionlink("/SIMUNI/modulos/activos?proceso=veractivosarticulos");
         gril.setUrlagregaropcionagregar("/SIMUNI/modulos/activos?proceso=registroactivoarticulo");
+        gril.setOpciommostrarfiltro(false);
         return gril.renderizar(criteriofiltros, encabezados, filas, cantidadpaginas);
     }
 

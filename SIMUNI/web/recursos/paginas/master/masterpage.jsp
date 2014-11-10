@@ -32,6 +32,7 @@
 
 <html>
     <head>
+        <meta charset="utf-8">
         <link rel="icon" type="image/png" href="<%=request.getContextPath()%>/recursos/imagenes/favico/favicon.ico"/>
         <title> <decorator:placeholder name='sm_section_titulodepagina'/></title>
         <script src="<%=request.getContextPath()%>/recursos/scripts/jquery-2.1.1.min.js"></script>

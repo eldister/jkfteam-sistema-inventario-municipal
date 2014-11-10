@@ -21,9 +21,14 @@
                 <fieldset id="sm_fs_fs">
                     <legend id="sm_lg_leyeda">INFORMACIÓN DE: </legend>
                     <div id="sm_div_informacionUsuario">
-                        <h1>Coulon Ollivier Francisco</h1>
+                        <h1>Has iniciado como 
+                            <%
+                            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+                            out.print(idusuario);
+                            %>
+                        </h1>
                         <br/>
-                        <div id="contenedorTabla">
+                  <!--      <div id="contenedorTabla">
                             <table id="sm_tb_usuario">
                                 <tr>
                                     <td><label>Puesto: </label></td>
@@ -51,6 +56,7 @@
                                 </tr>
                             </table>
                         </div>
+                  -->
                     </div>   
                 </fieldset>
             </div>

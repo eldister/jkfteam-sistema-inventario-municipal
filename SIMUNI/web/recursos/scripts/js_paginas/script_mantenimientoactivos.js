@@ -146,7 +146,7 @@ function sm_grilla_actualizargrillageneral(proceso) {
         url: "/SIMUNI/modulos/activos?proceso=" + proceso,
         contentType: ' charset=utf-8',
         success: function(data) {
-            //console.info("correcto" +data);
+            console.info("correcto" +data);
             $("#sm_div_puratablecontainertarget").html(data);
             sm_grillageneral_refrescareventosgrilla();
             //actualizar grilla
