@@ -1,14 +1,20 @@
 
 #sm_grilla_maincontainer{
     display: block;
-    width: available;   
+    border-radius: 10px 10px 10px 10px ;
+    border-top: 2px solid darkblue;
+     border-bottom:  2px solid darkblue;
+    padding: 10px;
+    box-shadow: 0 0 4px black;
+    
 }
+
 tr{
     padding: 0px;
 }
 
 #sm_grilla_maincontainer .sm_div_operacionesbusquedacontainer .sm_div_colsim{
-    width:fit-content;
+    
     
 }
 #sm_grilla_maincontainer .sm_div_operacionesbusquedacontainer .sm_div_colsim:not(:first-child){
@@ -24,8 +30,9 @@ tr{
     width: 100%; 
 
 }
+
 #sm_grilla_maincontainer .sm_div_tablemain th{
-    background-color: #00CCFF;
+    background-color: rgba(0,150,255,0.1);
 }
 
 .sm_td_operacionescontainer .sm_div_rowsim{
@@ -55,8 +62,10 @@ tr{
 
 #sm_grilla_maincontainer .sm_div_tablemain td{
 
-    border: 3px inset #0033FF;
-    padding: 5px;
+    border: 1px groove #0033FF;
+    padding-top:  2px;
+    padding-bottom:   2px;
+    padding-left:   2px;
    
 }
 td{
@@ -159,8 +168,11 @@ td{
 
 /*parte de arriba*/
 
-#sm_div_busquedacontainer:not(:nth-child(n-1)){
+#sm_div_busquedacontainer{
     margin-top: 5px;
+    width: 850px;
+
+    text-align: center;
 }
 
 .sm_div_operacionesbusquedacontainer .sm_div_label{
@@ -235,4 +247,38 @@ td{
     background-color: rgba(126,230,128,0.5);
     background-position:center;
     background-repeat:no-repeat;
+}
+
+
+#sm_div_puratablecontainertarget{
+    padding: 5px;
+      border-radius: 10px 10px 10px 10px ;
+    border-top: 5px #4d8bd6 solid ;
+     border-bottom:  5px solid #4d8bd6;
+    padding: 10px;
+    box-shadow: 0 0 8px lightblue;
+}
+
+#sm_div_txtcriteriobusquedagrilla{
+    padding: 5px;
+    border-radius: 5px;
+    width: 450px;
+}
+.sm_tbody_filadatos{ 
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-o-user-select: none;
+user-select: none;
+}
+.sm_tbody_filadatos:hover{
+    background-color: rgba(0,150,255,0.4);
+    cursor: pointer;
+    border: solid 2px #ffffff;
+    color:black;
+    
+}
+
+.sm_tbody_filadatos_seleccionado{
+     background-color: rgba(200,150,255,0.4);
 }

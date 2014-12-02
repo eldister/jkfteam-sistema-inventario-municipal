@@ -26,13 +26,12 @@
                         Notificacion notificacion = iter.next();
                         out.print("<div class='sm_div_notificacion'>");
                         out.print("<div class='sm_div_notificacionfechacontainer'>");
-                        out.print(notificacion.getFechaNotificacion().toGMTString());
+                        out.print(notificacion.getFechaNotificacion().toLocaleString());
                         out.print("        <hr>");
                         out.print("      </div>");
-                        out.print("<strong>");
-                        out.print(notificacion.getUsuarioOrigen());
-                        out.print("</strong>");
+                        out.print("<p class='sm_div_textonotificacion'>");
                         out.print(notificacion.getDescripcionNotificacion());
+                        out.print("</p>");
                         out.print("</div> ");
                         out.print("<hr>");
                     }
@@ -50,13 +49,15 @@
                         Notificacion notificacion = iter.next();
                         out.print("<div class='sm_div_mensaje'>");
                         out.print("<div class='sm_div_notificacionfechacontainer'>");
-                        out.print(notificacion.getFechaNotificacion().toGMTString());
+                        out.print(notificacion.getFechaNotificacion().toLocaleString());
                         out.print("        <hr>");
                         out.print("      </div>");
                         out.print("<strong>");
                         out.print(notificacion.getUsuarioOrigen());
                         out.print("</strong>");
+                        out.print("<p class='sm_div_textomensaje'>");
                         out.print(notificacion.getDescripcionNotificacion());
+                        out.print("</p>");
                         out.print("</div> ");
                         out.print("<hr>");
                     }

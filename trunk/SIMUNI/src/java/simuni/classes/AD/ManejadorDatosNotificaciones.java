@@ -43,7 +43,8 @@ public class ManejadorDatosNotificaciones {
         while (rs.next()) {
             Notificacion notificacion = new Notificacion();
             notificacion.setIdNotificacion(rs.getInt("SM00IDNO"));
-            notificacion.setFechaNotificacion(rs.getDate("SM01FENO"));
+            java.util.Date fecha=rs.getTimestamp("SM01FENO");
+            notificacion.setFechaNotificacion(new java.sql.Date(fecha.getTime()));
             notificacion.setUsuarioOrigen(rs.getString("SM03USOR"));
             notificacion.setEstadoNotificacion(rs.getString("SM04ESNO"));
             notificacion.setDescripcionNotificacion(rs.getString("SM05DENO"));
