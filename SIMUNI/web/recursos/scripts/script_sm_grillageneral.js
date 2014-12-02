@@ -5,16 +5,63 @@
  */
 var sm_grillageneral_txtbusquedahandler;
 var sm_grillageneral_txtcambiopaginacion;
+var sm_grillageneral_pulsoteclaCTRL = false;
 
 function sm_grillageneral_inicializar() {
     agregarTodosEventosGrilla();
-  //  sm_grillageneral_refrescareventosgrilla();
+    //  sm_grillageneral_refrescareventosgrilla();
+
+
+
+
+
+
 }
 
-function sm_grillageneral_refrescareventosgrilla(){
-     removerTodosLosEventosGrilla();  
-     agregarTodosEventosGrilla();
-    
+function sm_grillageneral_eventoseleccionarfila(){
+      $(".sm_tbody_filadatos").click(function(){
+         $(".sm_tbody_filadatos").removeClass("sm_tbody_filadatos_seleccionado");
+        $(this).addClass("sm_tbody_filadatos_seleccionado");
+       // alert("si");
+    });  
+}
+function sm_grillageneral_eventodobleclickctrl(){
+     $(".sm_tbody_filadatos").dblclick(function() {
+        var sm_grilla_item_id = $(this).children(".sm_tr_columnadatos:first-child").find("input[type=hidden]").val();
+        if (sm_grillageneral_pulsoteclaCTRL) {
+            if (typeof sm_grilla_proceso_imprimirreporteactivo === 'function') {
+                //llamar la funcion
+                sm_grilla_proceso_imprimirreporteactivo(sm_grilla_item_id);
+            }
+
+        } else {
+            if (typeof sm_grilla_proceso_modificaractivo === 'function') {
+                //llamar la funcion
+                sm_grilla_proceso_modificaractivo(sm_grilla_item_id);
+            }
+        }
+
+    });   
+}
+function sm_grillageneral_eventokeyupdocumento(){
+        $(document).keyup(function(e) {
+        sm_grillageneral_pulsoteclaCTRL = false;
+
+    });
+}
+function sm_grillageneral_eventokeydowndocumento(){
+        $(document).keydown(function(e) {
+        if (e.keyCode == 17) {
+            sm_grillageneral_pulsoteclaCTRL = true;
+        }
+
+    });
+}
+
+function sm_grillageneral_refrescareventosgrilla() {
+    removerTodosLosEventosGrilla();
+    agregarTodosEventosGrilla();
+
 }
 function agregarTodosEventosGrilla() {
     agregarEventosProcesosActivos();
@@ -23,6 +70,10 @@ function agregarTodosEventosGrilla() {
     agregarEventosacmbFiltro();
     agregarEventosPaginacion();
     sm_grilla_div_txtpaginacionKeyDownListener();
+    sm_grillageneral_eventodobleclickctrl();
+    sm_grillageneral_eventokeydowndocumento();
+    sm_grillageneral_eventokeyupdocumento();
+    sm_grillageneral_eventoseleccionarfila();
 }
 function agregarEventosProcesosActivos() {
     $(".sm_div_grillaverimagen").click({sm_grilla_proceso: "verimagenactivo"}, sm_grilla_manejadoreventos_procesos);
@@ -205,7 +256,7 @@ function sm_grilla_paginacioncambio(event) {
             break;
         case 'poner':
             console.info('poniendo pagevent');
-          //  console.info(sm_grillageneral_txtcambiopaginacion);
+            //  console.info(sm_grillageneral_txtcambiopaginacion);
             if (typeof sm_grilla_manejadorcambiopaginacion === 'function') {
                 //  alert("siii")
                 sm_grillageneral_txtcambiopaginacion = setTimeout(function() {

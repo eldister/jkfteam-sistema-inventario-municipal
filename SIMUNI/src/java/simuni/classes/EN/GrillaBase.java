@@ -55,7 +55,7 @@ public class GrillaBase {
         resp.append("       <span class='sm_div_label'>");
         resp.append(busquedalabel);
         resp.append("</span>");
-        resp.append("      <input type='text' placeholder='");
+        resp.append("      <input id='sm_div_txtcriteriobusquedagrilla' type='text' placeholder='");
         resp.append(getMensajeplaceholderbusqueda());
         resp.append("'>");
 

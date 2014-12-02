@@ -73,179 +73,192 @@
     </head>
     <body>
         <div id="maincontainer">
-            <a name="sm_body_headanchor"></a>
-            <header>
-                <div id="sm_header_bannerandusercontainer">
-                    <div class="sm_header_bannercontainer">
-                        <div id="sm_div_logomunicontainer">&nbsp;
-                            <a href="http://www.nandayure.go.cr/" target="_blank"><div id="sm_div_logomuni">&nbsp;</div></a> 
-                        </div>
-                        <div id="sm_div_logosimunicontainer">
-                            <a href="/SIMUNI" id="enlaceInicio"><div id="sm_div_logosimuni">
-                                    <span id="sm_div_simunislogan">Sistema de Información para el Control de Inventario Municipal&nbsp;</span>
-                                </div></a>
+            <div class="SIMUNI_ROW">
+                <a name="sm_body_headanchor"></a>
 
-                        </div>
-                    </div>  
-                    <%  if (loginpage == null && error == null) {%>
-                    <div id="sm_header_userprofilecontainer">
-                        <div id="sm_div_userprofile">
-                            <div class="sm_div_tablecontainer">
-                                <div class="sm_div_rowcontainer" id="sm_div_usersettings">
-                                    <div class="sm_div_colcontainer"><%out.print(idusuario);%></div>
-                                    <div class="sm_div_colcontainer" id="sm_div_configuracion" >&nbsp;</div>           
+                <header>
+                    <div id="sm_header_bannerandusercontainer">
+                        <div class="sm_header_bannercontainer">
+                            <div id="sm_div_logomunicontainer">&nbsp;
+                                <a href="http://www.nandayure.go.cr/" target="_blank"><div id="sm_div_logomuni">&nbsp;</div></a> 
+                            </div>
+                            <div id="sm_div_logosimunicontainer">
+                                <a href="/SIMUNI" id="enlaceInicio"><div id="sm_div_logosimuni">
+                                        <span id="sm_div_simunislogan">Sistema de Información para el Control de Inventario Municipal&nbsp;</span>
+                                    </div></a>
+
+                            </div>
+                        </div>  
+                        <%  if (loginpage == null && error == null) {%>
+                        <div id="sm_header_userprofilecontainer">
+                            <div id="sm_div_userprofile">
+                                <div class="sm_div_tablecontainer">
+                                    <div class="sm_div_rowcontainer" id="sm_div_usersettings">
+                                        <div class="sm_div_colcontainer"><%out.print(idusuario);%></div>
+                                        <div class="sm_div_colcontainer" id="sm_div_configuracion" >&nbsp;</div>           
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>                            
-                </div>
-                <%out.print(menuusuario);
-                } %>
-            </header>  
-            <%  if (loginpage == null && error == null) {%>
-            <aside id="sm_body_barralateral" >
-                <div class="sm_aside_barralateralitem" id="sm_aside_barralateralitemnotificacion">
-                    <fieldset>
-                        <legend>Notificaciones</legend>
-                        <div class="sm_fieldset_notificacionescontainer" id="sm_notificacionescontainer">
-                            <%
-                                ManejadorNotificaciones manejadornotif = new ManejadorNotificaciones();
-                                ArrayList<Notificacion> notificaciones = manejadornotif.obtenerNotificacionesUsuario(idusuario);
-                                if (notificaciones == null) {
-                                    out.print("<strong>No tiene notificaciones!</strong>");
-                                } else {
-                                    Iterator<Notificacion> iter = notificaciones.iterator();
-                                    if (iter.hasNext()) {
-                                        while (iter.hasNext()) {
-                                            Notificacion notificacion = iter.next();
-                                            out.print("<div class='sm_div_notificacion'>");
-                                            out.print("<div class='sm_div_notificacionfechacontainer'>");
-                                            out.print(notificacion.getFechaNotificacion().toGMTString());
-                                            out.print("        <hr>");
-                                            out.print("      </div>");
-                                            out.print("<strong>");
-                                            out.print(notificacion.getUsuarioOrigen());
-                                            out.print("</strong>");
-                                            out.print(notificacion.getDescripcionNotificacion());
-                                            out.print("</div> ");
-                                            out.print("<hr>");
+                        </div>                            
+                    </div>
+                    <%out.print(menuusuario);
+                        } %>
+                </header>  
+            </div>
+            <div class="SIMUNI_ROW SIMUNI_MAINROW"> 
+                <%  if (loginpage == null && error == null) {%>
+                <div class="SIMUNI_COL SIMUNI_LATERALMENU">
+                    <aside id="sm_body_barralateral" >
+                        <div class="sm_aside_barralateralitem" id="sm_aside_barralateralitemnotificacion">
+                            <fieldset>
+                                <legend>Notificaciones</legend>
+                                <div class="sm_fieldset_notificacionescontainer" id="sm_notificacionescontainer">
+                                    <%
+                                        ManejadorNotificaciones manejadornotif = new ManejadorNotificaciones();
+                                        ArrayList<Notificacion> notificaciones = manejadornotif.obtenerNotificacionesUsuario(idusuario);
+                                        if (notificaciones == null) {
+                                            out.print("<strong>No tiene notificaciones!</strong>");
+                                        } else {
+                                            Iterator<Notificacion> iter = notificaciones.iterator();
+                                            if (iter.hasNext()) {
+                                                while (iter.hasNext()) {
+                                                    Notificacion notificacion = iter.next();
+                                                    out.print("<div class='sm_div_notificacion'>");
+                                                    out.print("<div class='sm_div_notificacionfechacontainer'>");
+                                                    out.print(notificacion.getFechaNotificacion().toLocaleString());
+                                                    out.print("        <hr>");
+                                                    out.print("      </div>");
+                                                    out.print("<p class='sm_div_textonotificacion'>");
+                                                    out.print(notificacion.getDescripcionNotificacion());
+                                                    out.print("</p>");
+                                                    out.print("</div> ");
+                                                    out.print("<hr>");
+                                                }
+                                            } else {
+                                                out.print("<strong>No tiene mensajes!</strong>");
+                                            }
+
                                         }
-                                    } else {
-                                        out.print("<strong>No tiene mensajes!</strong>");
-                                    }
-
-                                }
-                            %>
+                                    %>
+                                </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
-                </div>
-                <div class="sm_aside_barralateralitem" id="sm_aside_barralateralitemmensaje">
-                    <fieldset>
-                        <legend>Mensajes</legend>
-                        <div class="sm_fieldset_notificacionescontainer" id="sm_mensajescontainer">
-                            <%
-                                notificaciones = manejadornotif.obtenerMensajesUsuario(idusuario);
-                                if (notificaciones == null) {
-                                    out.print("<strong>No tiene mensajes!</strong>");
-                                } else {
-                                    Iterator<Notificacion> iter = notificaciones.iterator();
-                                    if (iter.hasNext()) {
-                                        while (iter.hasNext()) {
-                                            Notificacion notificacion = iter.next();
-                                            out.print("<div class='sm_div_mensaje'>");
-                                            out.print("<div class='sm_div_notificacionfechacontainer'>");
-                                            out.print(notificacion.getFechaNotificacion().toLocaleString());
-                                            out.print("        <hr>");
-                                            out.print("      </div>");
-                                            out.print("<strong>");
-                                            out.print(notificacion.getUsuarioOrigen());
-                                            out.print("</strong>");
-                                            out.print(notificacion.getDescripcionNotificacion());
-                                            out.print("</div> ");
-                                            out.print("<hr>");
+                                <hr class="sm_body_barralateralseparador"/>
+                        <div class="sm_aside_barralateralitem" id="sm_aside_barralateralitemmensaje">
+                            <fieldset>
+                                <legend>Mensajes</legend>
+                                <div class="sm_fieldset_notificacionescontainer" id="sm_mensajescontainer">
+                                    <%
+                                        notificaciones = manejadornotif.obtenerMensajesUsuario(idusuario);
+                                        if (notificaciones == null) {
+                                            out.print("<strong>No tiene mensajes!</strong>");
+                                        } else {
+                                            Iterator<Notificacion> iter = notificaciones.iterator();
+                                            if (iter.hasNext()) {
+                                                while (iter.hasNext()) {
+                                                    Notificacion notificacion = iter.next();
+                                                    out.print("<div class='sm_div_mensaje'>");
+                                                    out.print("<div class='sm_div_notificacionfechacontainer'>");
+                                                    out.print(notificacion.getFechaNotificacion().toLocaleString());
+                                                    out.print("        <hr>");
+                                                    out.print("      </div>");
+                                                    out.print("<strong>");
+                                                    out.print(notificacion.getUsuarioOrigen());
+                                                    out.print("</strong>");
+                                                    out.print("<p class='sm_div_textomensaje'>");
+                                                    out.print(notificacion.getDescripcionNotificacion());
+                                                    out.print("</p>");
+                                                    out.print("</div> ");
+                                                    out.print("<hr>");
+                                                }
+                                            } else {
+                                                out.print("<strong>No tiene mensajes!</strong>");
+                                            }
+
                                         }
-                                    } else {
-                                        out.print("<strong>No tiene mensajes!</strong>");
-                                    }
-
-                                }
-                            %>                                                           
+                                    %>                                                           
+                                </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
-                </div>
-                <div class="sm_aside_barralateralitem">
-                    <fieldset>
-                        <legend>Configuraciones</legend>
-                        <div class="sm_fieldset_notificacionescontainer">
-                            <div class="sm_div_edicionperfil">
-                                <a class="sm_div_configuracionlink" title="Editar tus datos" href="#">Actualizar datos de perfil.</a>
-                            </div>
-                            <div class="sm_div_ayudausuario">
-                                <a class="sm_div_configuracionlink" title="Acceder a la ayuda" href="#"> Acceder a la ayuda.</a>
-                            </div>
-                            <div class="sm_div_cerrarsesion">
-                                <a class="sm_div_configuracionlink" title="Cerrar Sesión actual"  href="/SIMUNI/AccionesUsuarios?proceso=logout">Cerrar Sesión</a>
-                            </div>
+                                <hr class="sm_body_barralateralseparador"/>
+                        <div class="sm_aside_barralateralitem">
+                            <fieldset>
+                                <legend>Configuraciones</legend>
+                                <div class="sm_fieldset_notificacionescontainer">
+                                    <div class="sm_div_edicionperfil">
+                                        <a class="sm_div_configuracionlink" title="Editar tus datos" href="#">Perfil</a>
+                                    </div>
+                                    <div class="sm_div_ayudausuario">
+                                        <a class="sm_div_configuracionlink" title="Acceder a la ayuda" href="#">Ayuda.</a>
+                                    </div>
+                                    <div class="sm_div_cerrarsesion">
+                                        <a class="sm_div_configuracionlink" title="Cerrar Sesión actual"  href="/SIMUNI/AccionesUsuarios?proceso=logout">Cerrar Sesión</a>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </div>
-                    </fieldset>
+                                
+                    </aside>
                 </div>
-            </aside>
 
-            <div id="sm_body_navegationbarmenu">
-                <decorator:placeholder name='sm_div_navegationbarmenuitems'/>
+                <% }%>
+                <div class="SIMUNI_COL SIMUNI_PRINCIPAL">
+                    <div id="sm_body_navegationbarmenu"><decorator:placeholder name='sm_div_navegationbarmenuitems'/></div>                     <section id="sm_body_mainsection">
+                        <!--esta es la seccion prinicipal-->
+                        <decorator:placeholder name='sm_section_mainsectioncontainer'/>
 
-            </div> 
-            <% }%>
-            <section id="sm_body_mainsection">
-                <!--esta es la seccion prinicipal-->
-                <decorator:placeholder name='sm_section_mainsectioncontainer'/>
-
-            </section>
+                    </section>
+                </div>
+            </div>
             <% if (loginpage == null && error == null) {%>
-            <section id="sm_body_notificacion">
-                <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Sesión iniciada : </span><% out.print(horainicio); %></div>
-                <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usuario:</span> <%out.print(idusuario);%></div>
-                <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usted se ha conectado desde</span> <% out.print(request.getRemoteAddr());%> </div>
-            </section> 
+            <div class="SIMUNI_ROW">
+                <section id="sm_body_notificacion">
+                    <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Sesión iniciada : </span><% out.print(horainicio); %></div>
+                    <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usuario:</span> <%out.print(idusuario);%></div>
+                    <div class="sm_section_notificacioncontainer"><span class="sm_div_notiftag">Usted se ha conectado desde</span> <% out.print(request.getRemoteAddr());%> </div>
+                </section> 
+            </div>
             <%}%>
-            <footer>
-                <div class="sm_footer_tablecontainer">
-                    <div class="sm_div_rowcontainer">
+            <div class="SIMUNI_ROW">
+                <footer>
+                    <div class="sm_footer_tablecontainer">
+                        <div class="sm_div_rowcontainer">
 
-                        <div class="sm_div_colcontainer">
-                            <b>Páginas</b>
-                            <ul>
-                                <li><a href="/SIMUNI/acercade.jsp">Acerca de</a></li>
-                                <li><a href="#" title="Ver el sistema desde arriba">Mapa del sitio</a></li>
-                                <li><a href="#" title="#">Mantenimiento Activos</a></li>
+                            <div class="sm_div_colcontainer">
+                                <b>Páginas</b>
+                                <ul>
+                                    <li><a href="/SIMUNI/acercade.jsp">Acerca de</a></li>
+                                    <li><a href="#" title="Ver el sistema desde arriba">Mapa del sitio</a></li>
+                                    <li><a href="#" title="#">Mantenimiento Activos</a></li>
 
-                            </ul>
+                                </ul>
+                            </div>
+
+                            <div class="sm_div_colcontainer">
+                                <b>SIMUNI</b><br/>
+                                <ul> 
+                                    <li><a href="/SIMUNI/acercade.jsp" title="Información del proyecto">Acerca del proyecto</a></li>
+                                    <li><a href="#" title="Creadores del sistema">Desarrolladores</a></li>                     
+                                </ul>
+                            </div>  
+
+                            <div class="sm_div_colcontainer">
+                                <b>Ayuda</b><br/>
+                                <ul>
+                                    <li><a href="" title="Preguntas Frecuentes">FAQ</a></li>
+                                    <li><a href="#" title="Ir al manual">Manual de usuario</a></li>
+                                    <li><a href="/SIMUNI/contacto.jsp" title="Contactar al administrador">Contacto</a></li>
+                                </ul>
+                            </div>                     
                         </div>
-
-                        <div class="sm_div_colcontainer">
-                            <b>SIMUNI</b><br/>
-                            <ul> 
-                                <li><a href="/SIMUNI/acercade.jsp" title="Información del proyecto">Acerca del proyecto</a></li>
-                                <li><a href="#" title="Creadores del sistema">Desarrolladores</a></li>                     
-                            </ul>
-                        </div>  
-
-                        <div class="sm_div_colcontainer">
-                            <b>Ayuda</b><br/>
-                            <ul>
-                                <li><a href="" title="Preguntas Frecuentes">FAQ</a></li>
-                                <li><a href="#" title="Ir al manual">Manual de usuario</a></li>
-                                <li><a href="/SIMUNI/contacto.jsp" title="Contactar al administrador">Contacto</a></li>
-                            </ul>
-                        </div>                     
-                    </div>
-                    <div class="sm_div_rowcontainer" id="sm_div_copyrigth_container">
-                        <p>Copyright &#169 2015 SIMUNI<span id="sm_div_footerprojecticon">&nbsp;</span></p>
-                    </div>
-                </div>            
-            </footer>
-            <a href="#" id="volverTop" style="display: inline;"><img border="0" id="imgVolverArriba" src="<%=request.getContextPath()%>/recursos/imagenes/sistema/sm_volver_arriba.png" title="Ir arriba"/></a>
-        </div>   
+                        <div class="sm_div_rowcontainer" id="sm_div_copyrigth_container">
+                            <p>Copyright &#169 2015 SIMUNI<span id="sm_div_footerprojecticon">&nbsp;</span></p>
+                        </div>
+                    </div>            
+                </footer>
+                <a href="#" id="volverTop" style="display: inline;"><img border="0" id="imgVolverArriba" src="<%=request.getContextPath()%>/recursos/imagenes/sistema/sm_volver_arriba.png" title="Ir arriba"/></a>
+            </div>   
+        </div>
     </body>
 </html>
 <%  request.getSession().setAttribute("ERROR", null);%>

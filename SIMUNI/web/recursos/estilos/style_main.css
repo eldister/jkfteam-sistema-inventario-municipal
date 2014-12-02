@@ -78,7 +78,7 @@ header{
 }
 
 #sm_div_logomunicontainer{
-    border-right: 3px black solid;
+    border-right: 3px lightblue solid;
 } 
 
 #sm_div_logosimunicontainer{
@@ -182,7 +182,7 @@ header{
 #sm_nav_menuelementscontainer{
     margin: 0px;
     padding: 0px;
-    border-top:   solid 3px top;
+    border-top:   solid 3px ;
     border-bottom:    solid 3px white;
 }
 #sm_nav_menuelementscontainer .sm_ul_menuitem:first-child{
@@ -235,12 +235,12 @@ header{
     border-right: 2px dotted lightblue;
     max-width: 220px;
 }
-
+/*
 #sm_body_barralateral,#sm_body_mainsection{
     float: left;
     display: inline-block;
 
-}
+}*/
 #sm_body_mainsection{
     width: 900px;
     margin-top: 50px;
@@ -248,7 +248,7 @@ header{
     padding: 10px;
 }
 
-#sm_notificacionescontainer{
+#sm_notificacionescontainer,#sm_mensajescontainer{
     max-height: 250px;
     overflow-y: auto;
     width: 100%;
@@ -264,13 +264,34 @@ header{
 
 #sm_aside_barralateralitemnotificacion,#sm_aside_barralateralitemmensaje{
     max-height: 300px;
-   
-  
 
+
+
+}
+#sm_body_barralateral {
+    padding: 0px;
+}
+#sm_body_barralateral .sm_aside_barralateralitem fieldset{
+    border: 0px rgba(0,0,0,0);
+    padding: 0px;
+    font-size: 1.2em;
+   
+}
+#sm_body_barralateral .sm_aside_barralateralitem > fieldset legend{
+    margin-bottom: 5px;
+     color:lightgray;
+}
+
+#sm_body_barralateral .sm_aside_barralateralitem {
+    margin-bottom: 30px;
 }
 
 
-
+.sm_body_barralateralseparador{
+    border: solid 1px rgba(0,0,0,0.3);
+    width: 60%;
+    height: 1px;
+}
 footer{
     clear: both;
     border-top:1px solid lightblue;
@@ -301,10 +322,15 @@ footer{
     background-size: 15px 15px;
     background-repeat: no-repeat;
     box-shadow: 0px 0px 5px black;
-   margin-left: 3px;
+    margin-left: 3px;
     width: 90%;
+    -webkit-transition: all ease-in-out 0.5s;
 
 
+    
+}
+.sm_div_notificacion:hover{
+    background-color: rgba(0,125,255,0.2);
 }
 .sm_div_notificacion:not(:first-child){
     margin-top: 8px;
@@ -312,18 +338,45 @@ footer{
 }
 /*el formato de la fecha*/
 .sm_div_notificacionfechacontainer{
-    color: captiontext;
-    font-size: 0.8em;
+    color: black;
+    font-size: 0.7em;
+}
+.sm_div_notificacionfechacontainer hr{
+    width: 50%;
+    border:1px dotted lightblue;
 }
 
+.sm_div_textonotificacion{
+    font-style: italic;
+}
 .sm_div_mensaje{
     padding: 5px;
     max-width: 200px;
-    padding-left: 60px;
+        padding-top:15px;
     background-image: url(../imagenes/sistema/sm_mensaje_usuario.png);
-    background-size: 30px 30px;
+    background-size: 15px 15px;
     background-repeat: no-repeat;  
 
+        box-shadow: 0px 0px 5px black;
+    margin-left: 3px;
+    width: 90%;
+    -webkit-transition: all ease-in-out 0.5s;
+
+
+
+    
+}
+.sm_div_textomensaje{
+    font-style: italic;
+}
+.sm_div_textomensaje:before{
+    content: '"';
+}
+.sm_div_textomensaje:after{
+    content: '"';
+}
+.sm_div_mensaje:hover{
+    background-color: rgba(0,125,255,0.2);
 }
 .sm_div_mensaje:not(:first-child){
     margin-top: 8px;
@@ -404,7 +457,8 @@ footer .sm_div_colcontainer:not(:first-child){
 #sm_body_navegationbarmenu{
     background-color: white;
     height: 35px;
-    border-bottom: 2px dotted lightblue;
+    /*  border-bottom: 2px dotted lightblue;*/
+
 }
 
 
@@ -564,7 +618,7 @@ footer .sm_div_colcontainer ul{
 }
 
 .sm_div_configuracionlink{
-    font-style: none;
+
     text-decoration: none;
     font-size: 0.8em;
     color:black;
@@ -588,8 +642,57 @@ footer .sm_div_colcontainer ul{
     border: 2px lightblue solid;
 }
 
+
+
+
+/*esot para pruebas*/
+
 #maincontainer{
-    max-width: 1200px;
+
     margin-left: auto;
     margin-right: auto;
+    width: 1330px;
+    padding: 5px;
+
+    box-shadow: 0 0 5px black;
+    background-color: white;
+
+
+}
+
+#sm_body_mainsection
+{
+    width: 100%;
+    margin: 0px;
+    padding: 10px;
+}
+
+#sm_grilla_maincontainer{
+    width: 100%;
+    margin: 5px;
+}
+
+.SIMUNI_ROW{
+    width: 1325px;
+}
+.SIMUNI_COL{
+
+    display: inline-block;
+    display: table-cell;
+
+
+}
+
+.SIMUNI_PRINCIPAL{
+    width: 1050PX;
+}
+
+body{
+
+    background-color: rgba(0,150,255,0.1);
+}
+
+.SIMUNI_MAINROW{
+    margin-bottom: 20px;
+    margin-top: 10px;
 }
