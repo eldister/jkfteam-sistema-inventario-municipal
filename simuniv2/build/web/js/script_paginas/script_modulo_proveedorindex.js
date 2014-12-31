@@ -128,15 +128,3 @@ function sm_grilla_proceso_mostrarinactivos(i) {
     window.location.assign(cururl);
 
 }
-
-function sm_grilla_irapagina_paginacioneventhandler() {
-    $(".sm_div_elementlinkpag").click(function(e) {
-
-        var link = $(this).attr('href');
-
-        link += sm_grillageneral_mostrarinactivos;
-
-        $(this).attr('href', link);
-       
-    });
-}

@@ -36,7 +36,7 @@ public class Recursos {
     public static enum Servers {
 
         MAINSERVER("/simuniv2"),
-        SERVER_ARCHIVOS("/archivos");
+        SERVER_ARCHIVOS("http://localhost:8080/archivos");
         
         private final String texto;
 

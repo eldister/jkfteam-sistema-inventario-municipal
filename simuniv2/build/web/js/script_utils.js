@@ -4,7 +4,7 @@
 function obtenerFechaString() {
 	var fechahoy = new Date();
 	var dia = fechahoy.getDate();
-	var mes = fechahoy.getMonth();
+	var mes = fechahoy.getMonth()+1;
 	var anio = fechahoy.getFullYear();
 	var result = anio + '-' + (mes < 10 ? ('0' + mes) : mes) + '-' + (dia < 10 ? ('0' + dia) : dia);
 	return result;
@@ -22,6 +22,7 @@ function setFechaDatePicker(idselector){
 function setFechaDatePicker(idselector,value){
 	document.getElementById(idselector).value=value;
 }
+
 
 
 function isFechaValida(fecha) {

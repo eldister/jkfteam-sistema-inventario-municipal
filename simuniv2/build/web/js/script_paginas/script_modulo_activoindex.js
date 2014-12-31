@@ -3,7 +3,7 @@ $(document).ready(function() {
     sm_grillageneral_inicializar();
     sm_grilla_irapagina_paginacioneventhandler();
 
-    //  alert(window.location);
+  // alert(window.location);
     // inicializarpaginamantenimiento();
 });
 
@@ -11,7 +11,7 @@ $(document).ready(function() {
 function  sm_grilla_proceso_modificar(sm_grilla_item_id) {
 
     //   alert(sm_grilla_item_id);
-    var sm_form = $('<form  method="get" action="' + SIMUNI_SERVER + '/proveedor">');
+    var sm_form = $('<form  method="get" action="' + SIMUNI_SERVER + '/activo">');
     sm_form.appendTo('body');
     sm_form.append('<input type="hidden" value="' + sm_grilla_item_id + '" name="registro">');
     sm_form.append('<input type="hidden" value="actualizar" name="proceso">');
@@ -20,16 +20,9 @@ function  sm_grilla_proceso_modificar(sm_grilla_item_id) {
 
 
 }
-function sm_grilla_proceso_uploadoc(sm_grilla_item_id){
-    var sm_form = $('<form  method="get" action="' + SIMUNI_SERVER + '/proveedor/documentos">');
-    sm_form.appendTo('body');
-    sm_form.append('<input type="hidden" value="' + sm_grilla_item_id + '" name="registro">');
-    sm_form.append('<input type="hidden" value="listado" name="proceso">');
 
-    sm_form.submit();    
-}
 function  sm_grilla_proceso_eliminar(sm_grilla_item_id) {
-    var sm_form = $('<form  method="get" action="' + SIMUNI_SERVER + '/proveedor">');
+    var sm_form = $('<form  method="get" action="' + SIMUNI_SERVER + '/activo">');
     sm_form.appendTo('body');
     sm_form.append('<input type="hidden" value="' + sm_grilla_item_id + '" name="registro">');
     sm_form.append('<input type="hidden" value="eliminar" name="proceso">');
@@ -40,7 +33,7 @@ function  sm_grilla_proceso_eliminar(sm_grilla_item_id) {
 
 function sm_grilla_proceso_agregarnuevo() {
     $.ajax({
-        url: SIMUNI_SERVER + "/proveedor?proceso=nuevo",
+        url: SIMUNI_SERVER + "/activo?proceso=nuevo",
         cache: false
     })
             .done(function(html) {
@@ -62,7 +55,7 @@ function sm_grilla_busqueda(sm_grillageneral_query) {
 function sm_grilla_actualizargrillageneral(proceso) {
     $.ajax({
         type: 'POST',
-        url: SIMUNI_SERVER + "/proveedor?proceso=" + proceso,
+        url: SIMUNI_SERVER + "/activo?proceso=" + proceso,
         contentType: ' charset=utf-8',
         success: function(data) {
             console.info("correcto" + data);
@@ -92,12 +85,14 @@ function sm_grilla_actualizargrillageneral(proceso) {
 
 function sm_grilla_irapagina_paginacioneventhandler() {
     $(".sm_div_elementlinkpag").click(function(e) {
-
+       // alert('entree')
         var link = $(this).attr('href');
         var searchvalue = $(this).parents('#sm_grilla_maincontainer').children().find('#sm_div_txtcriteriobusquedagrilla').val();
         if (searchvalue) {
+          //    alert('entre4e')
             link += '&query=' + searchvalue;
         }
+        link+=sm_grillageneral_mostrarinactivos;
         $(this).attr('href', link);
     });
 }
@@ -117,7 +112,7 @@ function sm_grilla_proceso_mostrarinactivos(i) {
     var cururl = window.location.toString();
 
     if (i) {
-        if (cururl.indexOf(sm_grillageneral_mostrarinactivos) < 0) {
+        if (cururl.indexOf(sm_grillageneral_mostrarinactivos) < 0) {  
             cururl += sm_grillageneral_mostrarinactivos
         }
     } else {
