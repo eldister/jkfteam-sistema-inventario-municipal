@@ -1,0 +1,35 @@
+function validarMail(correo)  
+{  
+    var filtro = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!filtro.test(correo)) {
+        document.getElementById("mensaje").innerHTML = "Introduzca un correo v\u00e1lido";
+        correo.focus;
+        return false;       
+    }
+    else{
+        document.getElementById("mensaje").innerHTML = "";
+    }
+}
+
+function validarCedula(cedula){
+    var filtroExtrajera = /^\d{8}[A-Z]$/;
+    var filtroNac = /^\d{1}-\d{4}-\d{4}$/;
+    if(!filtroExtrajera.test(cedula) && !filtroNac.test(cedula)) {
+        document.getElementById("mensaje").innerHTML = "Introduzca una c\u00e9dula v\u00e1lida";
+        return false;
+    }
+    else {
+         document.getElementById("mensaje").innerHTML = "";
+    }
+}
+
+function validarTelefono(telefono){
+    var filtroTelefono = /^\d{4}-\d{4}$/;
+    if(!filtroTelefono.test(telefono)) {
+        document.getElementById("mensaje2").innerHTML = "Introduzca un tel\u00e9fono v\u00e1lido";
+        return false;
+    }
+    else{
+        document.getElementById("mensaje2").innerHTML = "";
+    }
+}
