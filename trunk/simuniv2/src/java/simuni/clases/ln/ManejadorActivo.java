@@ -5,9 +5,12 @@
  */
 package simuni.clases.ln;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import simuni.clases.ad.ManejadorDatosActivo;
 import simuni.entidades.Activo;
 import simuni.entidades.ActivoArticulo;
@@ -22,6 +25,7 @@ import simuni.entidades.mantenimientos.TipoBateria;
 import simuni.entidades.mantenimientos.TipoLlanta;
 import simuni.entidades.mantenimientos.TipoPago;
 import simuni.enums.Recursos;
+import simuni.utils.UtilidadesServlet;
 
 /**
  *
@@ -225,9 +229,9 @@ public class ManejadorActivo {
         }
         return resp;
     }
-   
+
     public boolean existePlacaActivo(String placaactivo) {
-       boolean resp=false;
+        boolean resp = false;
         ManejadorDatosActivo mdactivo = new ManejadorDatosActivo();
         try {
             resp = mdactivo.existePlacaActivo(placaactivo);
@@ -237,8 +241,9 @@ public class ManejadorActivo {
         }
         return resp;
     }
+
     public boolean existePlacaVehiculo(String placavehiculo) {
-       boolean resp=false;
+        boolean resp = false;
         ManejadorDatosActivo mdactivo = new ManejadorDatosActivo();
         try {
             resp = mdactivo.existePlacaVehiculo(placavehiculo);
@@ -247,9 +252,45 @@ public class ManejadorActivo {
             ex.printStackTrace();
         }
         return resp;
-    }    
+    }
+
+    public boolean isRegistroArticulo(String codigoRegistro) {
+        boolean resp = false;
+        ManejadorDatosActivo mdactivo = new ManejadorDatosActivo();
+        try {
+            resp = mdactivo.isRegistroArticulo(codigoRegistro);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+
+    public boolean isRegistroTransporte(String codigoRegistro) {
+        boolean resp = false;
+        ManejadorDatosActivo mdactivo = new ManejadorDatosActivo();
+        try {
+            resp = mdactivo.isRegistroTransporte(codigoRegistro);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+
+    public ArrayList<ImagenActivo> getImagenesActivo(String codigoRegistro) {
+        ManejadorDatosActivo mdactivo = new ManejadorDatosActivo();
+        ArrayList<ImagenActivo> resp = null;
+        try {
+            resp = mdactivo.getImagenesActivo(codigoRegistro);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+
     public boolean existeConsecutivoTipoVehiculo(String consecutivotipovehiculo) {
-       boolean resp=false;
+        boolean resp = false;
         ManejadorDatosActivo mdactivo = new ManejadorDatosActivo();
         try {
             resp = mdactivo.existeConsecutivoTipoVehiculo(consecutivotipovehiculo);
@@ -258,5 +299,76 @@ public class ManejadorActivo {
             ex.printStackTrace();
         }
         return resp;
-    }  
+    }
+
+    /**
+     * Realiza una busqueda en la base de datos. No lanza excepciones, y si las
+     * hay, las registra en bitácora.
+     *
+     * @param query El criterio a buscar.
+     * @param desplazamiento Cantidad de registros que se deben de pasar.
+     * @param paginacion La cantidad de registros a devolver.
+     * @return Un ResultSet con los resultados de la busqueda
+     * @since 1.0
+     */
+    public ResultSet busquedaActivo(String query, int desplazamiento, int paginacion, boolean ocultos) {
+        ResultSet resp = null;
+        ManejadorDatosActivo mdActivo = new ManejadorDatosActivo();
+        try {
+            resp = mdActivo.busquedaActivo(query, desplazamiento, paginacion, ocultos);
+
+        } catch (SQLException ex) {
+
+            System.out.println("Debes registrar algo");
+        }
+
+        return resp;
+
+    }
+
+    /**
+     * Obtiene la cantidad de registros que hay en la base de datos, con el
+     * criterio qeu se pasa por parámetro. No lanza excepciones, y si las hay,
+     * las registra en bitácora.
+     *
+     * @param query La cadena con la busqueda a evaluar.
+     * @param ocultos
+     * @return Un entero con la cantidad de registros.
+     * @since 1.0
+     */
+    public int getCantidadRegistros(String query, boolean ocultos) {
+        int resp = 0;
+        try {
+            ManejadorDatosActivo mdproveedor = new ManejadorDatosActivo();
+            resp = mdproveedor.getCantidadFilas(query, ocultos);
+
+        } catch (SQLException ex) {
+            UtilidadesServlet.registrarErrorSistema("getCantidadRegistrosActivosArticulos", ex.getMessage());
+            ex.printStackTrace();
+
+        }
+        return resp;
+    }
+
+    public ActivoArticulo getActivoArticulo(String codigoRegistro) {
+        ActivoArticulo resp = null;
+        ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
+        try {
+            resp = mactivo.getActivoArticulo(codigoRegistro);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+
+    public ActivoTransporte getActivoTransporte(String codigoRegistro) {
+        ActivoTransporte resp = null;
+        ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
+        try {
+            resp = mactivo.getActivoTransporte(codigoRegistro);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
 }

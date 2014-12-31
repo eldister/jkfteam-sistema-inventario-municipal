@@ -38,7 +38,7 @@ public class AccionesActivo extends HttpServlet {
 
     enum OpcionesDo {
 
-        Listado, Existe_Activo, Existe_Placa, Existe_Consecutivo, Nuevo, Eliminar, Modificar, Query, AccionDefault
+        Listado, Existe_Activo, Existe_Placa, Existe_Consecutivo, Nuevo, Eliminar, Modificar, Modificar_Articulo, Query, AccionDefault
     }
 
     /**
@@ -58,16 +58,28 @@ public class AccionesActivo extends HttpServlet {
             Respuesta respuesta = null;//objeto respuesta al usuario
             int desplazamiento = 0;//movimiento hacia adelante en los queries
             int npagina = 0;//para la paginacion
-            int registro = 0;//codigo de registro a buscar
+            String registro = "";//codigo de registro a buscar
             int paginacion = 0;//obtener la paginacion y pagina actual  
             String nombreactivo = "";//campo txt
             ResultSet resultset = null;
             ManejadorActivo mactivo = new ManejadorActivo();
-
+            boolean mostrar_inactivos = request.getParameter("mostrar_inactivos") != null;
             String query = request.getParameter("query");
             query = query == null ? "" : query;
-
+            Activo activo_registro = null;
             switch (getOpcion(request.getParameter("proceso"))) {
+                case Listado:
+                    npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
+                    paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
+                    desplazamiento = ((npagina) * paginacion);
+                    //falta la solicitud
+                    resultset = mactivo.busquedaActivo(query, desplazamiento, paginacion, mostrar_inactivos);
+                    request.setAttribute("listado", resultset);
+                    disp = request.getRequestDispatcher("/modulos/activos/index.jsp");
+                    request.setAttribute("paginacion", ((int) mactivo.getCantidadRegistros(query, mostrar_inactivos) / paginacion) + 1);
+                    request.setAttribute("mostrar_inactivos", mostrar_inactivos ? "checked" : "");
+                    request.setAttribute("query", query);
+                    break;
                 case Nuevo:
 
                     request.setAttribute("departamentos", mactivo.listadoDepartamento());
@@ -78,6 +90,29 @@ public class AccionesActivo extends HttpServlet {
                     request.setAttribute("tiposllanta", mactivo.listadoTipoLlanta());
 
                     disp = request.getRequestDispatcher("/modulos/activos/nuevo.jsp");
+                    break;
+                case Modificar:
+                    registro = request.getParameter("registro");
+                    if (mactivo.isRegistroArticulo(registro)) {
+                        activo_registro = mactivo.getActivoArticulo(registro);
+                        activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
+                        request.setAttribute("registro", ((ActivoArticulo) activo_registro));
+                        disp = request.getRequestDispatcher("/modulos/activos/editar_articulo.jsp");
+                    }//el else debe tener su if
+                    else if (mactivo.isRegistroTransporte(registro)) {
+                        activo_registro = mactivo.getActivoTransporte(registro);
+                        activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
+                        request.setAttribute("registro", ((ActivoTransporte) activo_registro));
+                        request.setAttribute("tiposbateria", mactivo.listadoTipoBateria());
+                        request.setAttribute("tiposllanta", mactivo.listadoTipoLlanta());
+                        disp = request.getRequestDispatcher("/modulos/activos/editar_transporte.jsp");
+                    }
+
+                    request.setAttribute("departamentos", mactivo.listadoDepartamento());
+                    request.setAttribute("tipospago", mactivo.listadoTipoPago());
+                    request.setAttribute("estados", mactivo.listadoEstado());
+                    request.setAttribute("tiposactivo", mactivo.listadoTipoActivo());
+
                     break;
             }
             disp.forward(request, response);
@@ -109,6 +144,8 @@ public class AccionesActivo extends HttpServlet {
             return OpcionesDo.Existe_Placa;
         } else if (key.equals("chequeo_consecutivo")) {
             return OpcionesDo.Existe_Consecutivo;
+        } else if (key.equals("actualizar_articulo")) {
+            return OpcionesDo.Modificar_Articulo;
         }
 
         return OpcionesDo.AccionDefault;
@@ -127,7 +164,7 @@ public class AccionesActivo extends HttpServlet {
             throws ServletException, IOException {
         RequestDispatcher disp = null;
         try {
-
+            boolean mostrar_inactivos = request.getParameter("mostrar_inactivos") != null;
             Respuesta respuesta = null;//objeto respuesta al usuario
             int desplazamiento = 0;//movimiento hacia adelante en los queries
             int npagina = 0;//para la paginacion
@@ -142,33 +179,33 @@ public class AccionesActivo extends HttpServlet {
 
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
-                    Activo nuevoregistro = null;
+                    Activo activo_registro = null;
                     boolean esVehiculo = false;
                     int tipo_registro = UtilidadesServlet.getInt(request.getParameter("sm_registroactivo_tipoproceso"), 0);
                     System.out.println("tipo de registro " + tipo_registro);
                     switch (tipo_registro) {
                         case 1:
-                            nuevoregistro = generarActivoArticulo(request);
+                            activo_registro = generarActivoArticulo(request);
                             break;
                         case 2:
-                            nuevoregistro = null;
+                            activo_registro = null;
                             break;
                         case 3:
-                            nuevoregistro = generarActivoTransporte(request, response);
+                            activo_registro = generarActivoTransporte(request, response);
                             esVehiculo = true;
                             break;
                         case 4:
-                            nuevoregistro = generarActivoTransporte(request, response);
+                            activo_registro = generarActivoTransporte(request, response);
                             esVehiculo = true;
                             break;
                         default:
-                            nuevoregistro = null;
+                            activo_registro = null;
                             break;
                     }
-                    respuetas = mactivo.registrarActivo(nuevoregistro, tipo_registro);
+                    respuetas = mactivo.registrarActivo(activo_registro, tipo_registro);
 
                     request.setAttribute("respuesta", respuetas);//resultado de las operaciones
-                    request.setAttribute("registro", nuevoregistro);//el nuevo registro.
+                    request.setAttribute("registro", activo_registro);//el nuevo registro.
                     request.setAttribute("tipo_registro", tipo_registro);//dici si es carro, moto, normal
 
                     request.setAttribute("departamentos", mactivo.listadoDepartamento());
@@ -180,7 +217,7 @@ public class AccionesActivo extends HttpServlet {
 
                     if (request.getAttribute("consecutivovehiculo") == null && esVehiculo) {
                         System.out.println("Lo pondre entonces ");
-                        request.setAttribute("consecutivovehiculo", nuevoregistro != null ? ((ActivoTransporte) nuevoregistro).getCodigoActivoTransporte() : 0);
+                        request.setAttribute("consecutivovehiculo", activo_registro != null ? ((ActivoTransporte) activo_registro).getCodigoActivoTransporte() : 0);
 
                     }
                     disp = request.getRequestDispatcher("/modulos/activos/nuevo.jsp");
@@ -204,6 +241,28 @@ public class AccionesActivo extends HttpServlet {
                     if (mactivo.existeConsecutivoTipoVehiculo(registro)) {
                         response.getWriter().print("Existe " + registro);
                     }
+                    break;
+
+                case Query:
+                    npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
+                    paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
+                    desplazamiento = ((npagina) * paginacion);
+                    resultset = mactivo.busquedaActivo(query, desplazamiento, paginacion, mostrar_inactivos);
+                    request.setAttribute("listado", resultset);
+                    disp = request.getRequestDispatcher("/modulos/activos/_asinc/_asinc_listar.jsp");
+                    request.setAttribute("paginacion", ((int) mactivo.getCantidadRegistros(query, mostrar_inactivos) / paginacion) + 1);
+                    request.setAttribute("mostrar_inactivos", mostrar_inactivos ? "checked" : "");
+                    disp.forward(request, response);
+                    break;
+                case Modificar_Articulo:
+                    registro = request.getParameter("registro");
+                    if (mactivo.isRegistroArticulo(registro)) {
+                        activo_registro = generarActivoArticulo(request);
+                       //hacer la actualizacion***
+                        request.setAttribute("registro", ((ActivoArticulo) activo_registro));
+                        disp = request.getRequestDispatcher("/modulos/activos/editar_articulo.jsp");
+                    }//el else debe tener su if
+                    disp.forward(request, response);
                     break;
             }
 
@@ -253,7 +312,7 @@ public class AccionesActivo extends HttpServlet {
                             //se le indica el nombre de el archivo imagen. esto para colocar el path y el url.
                             long fechaActual = System.currentTimeMillis();
                             String ruta = Recursos.SSA.CARPETARAIZARCHIVOSACTIVOS.toString() + activo_articulo.getPlacaActivo() + "\\" + fechaActual;
-                            String url = Recursos.SSI.ARCHIVOSACTIVOSCONTEXT.toString() + activo_articulo.getPlacaActivo() + "/" + fechaActual;
+                            String url = Recursos.SSI.ARCHIVOSACTIVOSCONTEXT.toString() + activo_articulo.getPlacaActivo() + "/" + fechaActual + "/";
                             doc.setPathDocumento(ruta);
                             doc.setUrldocumento(url);
                             doc.setCodigoActivo(activo_articulo.getPlacaActivo());//la placa del activo o su id
@@ -325,7 +384,7 @@ public class AccionesActivo extends HttpServlet {
                             doc.setFechaSubida(new Date());
                             long fechaActual = System.currentTimeMillis();
                             String ruta = Recursos.SSA.CARPETARAIZARCHIVOSACTIVOS.toString() + activo_transporte.getPlacaActivo() + "\\" + fechaActual;
-                            String url = Recursos.SSI.ARCHIVOSACTIVOSCONTEXT.toString() + activo_transporte.getPlacaActivo() + "/" + fechaActual;
+                            String url = Recursos.SSI.ARCHIVOSACTIVOSCONTEXT.toString() + activo_transporte.getPlacaActivo() + "/" + fechaActual + "/";
                             doc.setPathDocumento(ruta);
                             doc.setUrldocumento(url);
                             doc.setCodigoActivo(activo_transporte.getPlacaActivo());//la placa del activo o su id

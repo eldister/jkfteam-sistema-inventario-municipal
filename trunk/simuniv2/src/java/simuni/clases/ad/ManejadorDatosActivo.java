@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import simuni.entidades.bd.Conexionmysql;
 import simuni.entidades.Activo;
 import simuni.entidades.ActivoArticulo;
@@ -439,6 +440,25 @@ public class ManejadorDatosActivo {
         return resp;
     }
     
+    public ArrayList<ImagenActivo> getImagenesActivo(String codigoRegistro) throws SQLException{
+        ArrayList<ImagenActivo> resp=null;
+                Connection con = Conexionmysql.obtenerConexion();
+        PreparedStatement st = con.prepareCall("{ call simuni_sp_obtener_imagenesactivo(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        st.setString(1, codigoRegistro);
+         ResultSet rs = st.executeQuery();
+        if(rs.next()){
+            resp=new ArrayList<ImagenActivo>();
+            do{
+                ImagenActivo imaux=new ImagenActivo();
+                imaux.setCodigoActivo(rs.getString(1));
+                imaux.setCodigoImagen(rs.getInt(2));
+                imaux.setFechaSubida(rs.getDate(3));
+                imaux.setUrldocumento(rs.getString(4));
+                resp.add(imaux);
+            }while(rs.next());
+        }
+        return resp;
+    }
     
     public ActivoTransporte getActivoTransporte(String codigoRegistro) throws SQLException {
         ActivoTransporte resp = null;
@@ -498,7 +518,33 @@ public class ManejadorDatosActivo {
         }
         return false;
     }
+    public boolean isRegistroArticulo(String codigoRegistro) throws SQLException {
 
+        Connection con = Conexionmysql.obtenerConexion();
+        PreparedStatement st = con.prepareCall("{ call simuni_sp_chequear_esarticulo(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        st.setString(1, codigoRegistro);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            rs.close();
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean isRegistroTransporte(String codigoRegistro) throws SQLException {
+
+        Connection con = Conexionmysql.obtenerConexion();
+        PreparedStatement st = con.prepareCall("{ call simuni_sp_chequear_estransporte(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        st.setString(1, codigoRegistro);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            rs.close();
+            return true;
+        }
+        return false;
+    }    
+    
+    
     /**
      * Obtiene la cantidad de registros que hay en la base de datos, con el
      * criterio qeu se pasa por parámetro
@@ -546,7 +592,6 @@ public class ManejadorDatosActivo {
             resp = st.executeQuery();
 
         } catch (SQLException ex) {
-
             throw ex;
         }
         return resp;
