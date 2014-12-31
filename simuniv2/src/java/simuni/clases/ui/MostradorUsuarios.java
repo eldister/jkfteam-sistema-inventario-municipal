@@ -1,0 +1,109 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package simuni.clases.ui;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import simuni.entidades.Usuario;
+
+/**
+ *
+ * @author FchescO
+ */
+public class MostradorUsuarios{
+ /*       Object[] criteriofiltros;
+    Object[] encabezados;
+
+    public MostradorUsuarios() {
+        criteriofiltros = new Object[]{"Muebles", "Tecnológicos"};
+        encabezados = new Object[]{"Identificador Activo", "Tipo de Activo", "Marca", "Modelo", "Puesta en Operación", "Descripción"};
+    }
+
+    public String RenderizarActivos(ArrayList<Usuario> tiposactivo, ArrayList<Usuario> to_articulo, int cantidadpaginas) {
+        if (tiposactivo == null) {
+            System.out.println("Era nul");
+            tiposactivo = new ArrayList<Usuario>();
+        }
+        if (to_articulo == null) {
+            to_articulo = new ArrayList<Usuario>();
+        }
+
+        ArrayList<Object[]> filas = new ArrayList<Object[]>();
+        Iterator<Usuario> iter = to_articulo.iterator();
+        String nombretipo = "";
+        while (iter.hasNext()) {
+            Usuario articulo = iter.next();
+            Iterator<Usuario> iteradortipos = tiposactivo.iterator();
+            while (iteradortipos.hasNext()) {
+                Usuario tipo = iteradortipos.next();
+    
+
+            }
+            if (nombretipo.length() == 0) {
+                nombretipo = "Sin clasificacion2";
+            }
+            Object[] obj = new Object[]{
+                articulo.getPa_identificadorActivo(),
+                nombretipo,
+                articulo.getPa_marca(),
+                articulo.getPa_modelo(),
+                articulo.getPd_puestaOperacion(),
+                articulo.getPa_Descripcion()
+            };
+
+            filas.add(obj);
+            nombretipo = "";
+        }
+        GrillaBase gril = new GrillaBase();
+  gril.setUrlpaginacionlink("/SIMUNI/modulos/activos?proceso=veractivosarticulos");
+        gril.setUrlagregaropcionagregar("/SIMUNI/modulos/activos?proceso=registroactivoarticulo");
+        gril.setOpciommostrarfiltro(false);
+        return gril.renderizar(criteriofiltros, encabezados, filas, cantidadpaginas);
+    }
+
+    public String RenderizarActualizacionArticulos(ArrayList<TipoActivo> tiposactivo, ArrayList<Activos_Articulos> to_articulo, int cantidadpaginas) {
+        ArrayList<Object[]> filas = new ArrayList<Object[]>();
+        if (to_articulo == null) {
+            to_articulo = new ArrayList<Activos_Articulos>();
+        }
+        if (tiposactivo == null) {
+            tiposactivo = new ArrayList<TipoActivo>();
+        }       
+        Iterator<Activos_Articulos> iter = to_articulo.iterator();
+        String nombretipo = "";
+
+        while (iter.hasNext()) {
+            Activos_Articulos articulo = iter.next();
+            Iterator<TipoActivo> iteradortipos = tiposactivo.iterator();
+            while (iteradortipos.hasNext()) {
+                TipoActivo tipo = iteradortipos.next();
+                if (tipo.getCodigoTipoActivo() == articulo.getPa_tipoActivo()) {
+                    nombretipo = tipo.getNombreTipoActivo();
+                }
+
+            }
+            if (nombretipo.length() == 0) {
+                nombretipo = "Sin clasificacion";
+            }
+            Object[] obj = new Object[]{
+                articulo.getPa_identificadorActivo(),
+                nombretipo,
+                articulo.getPa_marca(),
+                articulo.getPa_modelo(),
+                articulo.getPd_puestaOperacion(),
+                articulo.getPa_Descripcion()
+            };
+            filas.add(obj);
+            nombretipo = "";
+        }
+        GrillaBase gril = new GrillaBase();
+        gril.setUrlpaginacionlink("http://localhost:8080/SIMUNI/modulos/activos?proceso=veractivosarticulos");
+        gril.setUrlagregaropcionagregar("/SIMUNI/modulos/activos?proceso=registroactivoarticulo");//por mejorar
+        return gril.renderizarSoloCuerpoTabla(encabezados, filas, cantidadpaginas);
+    }
+*/
+}
