@@ -16,14 +16,14 @@
     //evaluamos si viene de un prceso en curso para ver si fue correcto y si podemos guardar el estado.
     ActivoArticulo activo = null;
     ArrayList<Respuesta> respuesta = null;
-    int tipo_registro = 0;
     boolean error = false;
     boolean proceso = false;
 
+    
     try {
         activo = (ActivoArticulo) request.getAttribute("registro");
         respuesta = (ArrayList<Respuesta>) request.getAttribute("respuesta");
-        tipo_registro = UtilidadesServlet.getInt(request.getAttribute("tipo_registro"), 0);//1 articulo
+
         // 2 propiedades 3 moto 4 es el resto
 
         if (respuesta != null && activo != null) {
@@ -40,7 +40,6 @@
         }
         if (activo == null) {
             activo = new ActivoArticulo();
-            tipo_registro = 1;
         }
     } catch (Exception ex) {
         ex.printStackTrace();
@@ -326,7 +325,7 @@
                                             <td colspan="3">
                                                 <div class="form-group">
                                                     <label  class="control-label"for="txtobservaciones">Observaciones</label>
-                                                    <textarea class="form-control" name="txtobservaciones" id="txtobservaciones" placeholder="Ej. Activo de Segunda"><%out.print((tipo_registro != 2 && proceso && activo != null) ? activo.getObservaciones() : "");%></textarea>
+                                                    <textarea class="form-control" name="txtobservaciones" id="txtobservaciones" placeholder="Ej. Activo de Segunda"><%out.print((activo != null) ? activo.getObservaciones() : "");%></textarea>
                                                 </div>
                                             </td>  
                                             <td>
@@ -378,7 +377,7 @@
                                                             while (iterador_imagenes.hasNext()) {
                                                                 ImagenActivo imgaux = iterador_imagenes.next();
                                                     %>  
-                                                    <img class='sm_imgcontainer_item' width='300' height='300'  src='<%out.print(imgaux.getUrldocumento());%>' title='Vista Previa imagen del activo <%out.print(imgaux.getCodigoActivo());%>, Subido el <%out.print(imgaux.getFechaSubida());%>'/>";
+                                                    <img class='sm_imgcontainer_item' width='300' height='300'  src='<%out.print(imgaux.getUrldocumento());%>' title='Vista Previa imagen del activo <%out.print(imgaux.getCodigoActivo());%>, Subido el <%out.print(imgaux.getFechaSubida());%>'/>
                                                     <%
                                                         }
                                                     } else {
@@ -461,7 +460,7 @@
                             <%}%>
                         </tr>
                         <tr id="sm_contenedor_controles">
-                            <td>&nbsp;<input type="hidden" name="sm_registroactivo_tipoproceso" value="<%out.print(tipo_registro);%>" id="sm_registroactivo_tipoproceso"></td>
+                            <td>&nbsp;</td>
 
                             <td  class="btn_controles_sinprocesocontainer">
                                 <div class="form-group">
@@ -474,11 +473,6 @@
                                     <button id="sm_btn_reporte" class="form-control btn-success">Generar Reporte Activo</button>
                                 </div>
                             </td>
-                            <td>
-                                <div class="form-group">
-                                    <button id="sm_btn_registrarnuevo" class="form-control btn-info">Ingresar Nuevo</button>
-                                </div>
-                            </td> 
                             <td>
                                 <div class="form-group">
                                     <button id="sm_btn_iractivos" class="form-control btn-info">Ir a  Activos</button>
@@ -494,7 +488,8 @@
                     </table>
                 </div>
             </fieldset>
-            <input type="hidden" id="registro" value="<%out.print((activo != null) ? activo.getPlacaActivo() : "");%>">
+            <input type="hidden" id="registro" name="registro"  value="<%out.print((activo != null) ? activo.getPlacaActivo() : "");%>">
+            <input type="hidden" id="registro_articulo" name="registro_articulo"  value="<%out.print((activo != null) ? activo.getCodigoActivoArticulo(): "");%>">
         </form>
         <div id="sm_body_ventanamodal">
             &nbsp;

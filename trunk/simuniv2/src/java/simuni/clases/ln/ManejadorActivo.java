@@ -140,6 +140,69 @@ public class ManejadorActivo {
         return resp;
     }
 
+    public ArrayList<Respuesta> actualizarActivoArticulo(ActivoArticulo activoarticulo) {
+        ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
+        ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
+        try {
+            //actualizar activo articulo
+            Respuesta ractualizarActivo = new Respuesta();
+            String msg = mactivo.actualizarActivoArticulo(activoarticulo);//es actualizar
+            if (msg != null && msg.startsWith("2")) {
+                ractualizarActivo.setNivel(2);
+            } else {
+                ractualizarActivo.setNivel(1);
+            }
+            ractualizarActivo.setMensaje(msg);
+            resp.add(ractualizarActivo);
+            msg = "";
+            if (activoarticulo.getCodigoActivoArticulo() > 0 && ractualizarActivo.getNivel() == 1) {
+                if (activoarticulo.getImagenes() != null) {
+                    Iterator<ImagenActivo> iteradorimagenes = activoarticulo.getImagenes().iterator();
+                    if (iteradorimagenes != null && iteradorimagenes.hasNext()) {
+                        System.out.println("Entreee imagens");
+                        //eliminar imagenes actuales del activo
+                        Respuesta reliminacionImagenes = new Respuesta();
+                        msg = mactivo.eliminarImagenActivo(activoarticulo.getPlacaActivo());
+                        if (msg != null && msg.startsWith("2")) {
+                            reliminacionImagenes.setNivel(2);
+                        } else {
+                            reliminacionImagenes.setNivel(1);
+                        }
+                        reliminacionImagenes.setMensaje(msg);
+                        resp.add(reliminacionImagenes);
+                        
+                        ImagenActivo imaux = iteradorimagenes.next();
+                        Respuesta ringresoImagen=new Respuesta();
+                        msg = mactivo.registrarImagenActivo(imaux);
+                        if (msg != null && msg.startsWith("2")) {
+                            ringresoImagen.setNivel(2);
+                        } else {
+                            ringresoImagen.setNivel(1);
+                        }
+                        ringresoImagen.setMensaje(msg);
+                        resp.add(ringresoImagen);
+                        
+                        System.out.println("La placa rara es esta " + imaux.toString());
+                        if (imaux.getCodigoImagen() > 0) {
+                            msg += "<br>Proceso de guardado de imagen " + mactivo.guardarImagenActivo(imaux);
+                        } else {
+                            System.out.println("No se puede registrar :D");
+                        }
+                    }
+                }
+            }
+           
+        } catch (SQLException ex) {
+            Respuesta rerror=new Respuesta();
+            
+            rerror.setNivel(2);
+            rerror.setMensaje("Error: " + ex.getMessage());
+            resp.add(rerror);
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+
     private ArrayList<Respuesta> registrarActivoTransporte(ActivoTransporte activoTransporte) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorArchivos marchivos = new ManejadorArchivos();

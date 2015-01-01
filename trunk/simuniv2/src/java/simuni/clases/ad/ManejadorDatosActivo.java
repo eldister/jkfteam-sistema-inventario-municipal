@@ -81,7 +81,51 @@ public class ManejadorDatosActivo {
             Conexionmysql.cerrarConexion(con);
         } catch (SQLException ex) {
             resp = ex.getMessage();
-              System.out.println("Error  "+ex.getMessage());
+            System.out.println("Error  " + ex.getMessage());
+            throw ex;
+        }
+        return resp;
+    }
+
+    public String actualizarActivoArticulo(ActivoArticulo activoarticulo) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{call simuni_sp_actualizacion_activoarticulo(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+//16
+            cs.setString(1, activoarticulo.getPlacaActivo());
+            cs.setString(2, activoarticulo.getObservaciones());
+            cs.setDouble(3, activoarticulo.getPrecio());
+            /*   java.sql.Date fecha = new java.sql.Date(activoarticulo.getFechaAdquisicion() == null
+             ? null : activoarticulo.getFechaAdquisicion().getTime());*/
+            java.sql.Date fecha = activoarticulo.getFechaAdquisicion() != null ? new java.sql.Date(activoarticulo.getFechaAdquisicion().getTime()) : null;
+
+            cs.setDate(4, fecha);
+            cs.setInt(5, activoarticulo.getCodigoEstado());
+            cs.setInt(6, activoarticulo.getCodigoTipoActivo());
+            cs.setInt(7, activoarticulo.getCodigoDepto());
+            cs.setInt(8, activoarticulo.getCodigoTipoPago());
+            cs.setString(9, activoarticulo.getDenominacion());
+            cs.setString(10, activoarticulo.getMarca());
+            cs.setString(11, activoarticulo.getModelo());
+            cs.setDouble(12, activoarticulo.getPorcentajeDepreciacion());
+            cs.setDouble(13, activoarticulo.getPorcentajeRescate());
+            /* java.sql.Date fechainicio = new java.sql.Date(activoarticulo.getFechaInicioOperacion() == null
+             ? null : activoarticulo.getFechaInicioOperacion().getTime());*/
+            java.sql.Date fechainicio = activoarticulo.getFechaAdquisicion() != null ? new java.sql.Date(activoarticulo.getFechaAdquisicion().getTime()) : null;
+
+            cs.setDate(14, fechainicio);
+            cs.setString(15, activoarticulo.getCodigoProveedor());
+            cs.setInt(16, activoarticulo.getCodigoActivoArticulo());
+            cs.registerOutParameter(17, java.sql.Types.VARCHAR);
+            cs.execute();
+
+
+            resp = cs.getString(17);
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            System.out.println("Error  " + ex.getMessage());
             throw ex;
         }
         return resp;
@@ -100,7 +144,7 @@ public class ManejadorDatosActivo {
     public String registrarActivoTransporte(ActivoTransporte activotransporte) throws SQLException {
         String resp = "";
         int id_transporte = 0;
-        String codigo_acttransporte="";
+        String codigo_acttransporte = "";
         try {
             Connection con = Conexionmysql.obtenerConexion();
             CallableStatement cs = con.prepareCall("{call simuni_sp_registro_activotransporte(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
@@ -136,14 +180,14 @@ public class ManejadorDatosActivo {
             ResultSet rs = cs.executeQuery();
             if (rs.next()) {
                 id_transporte = rs.getInt(1);
-                codigo_acttransporte=rs.getString(2);
+                codigo_acttransporte = rs.getString(2);
             }
-            System.out.println("poniendo el nuevo valor  aver  "+id_transporte);
+            System.out.println("poniendo el nuevo valor  aver  " + id_transporte);
             activotransporte.setCodigoActivoTransporte(id_transporte);
             activotransporte.setTipoVehiculo(codigo_acttransporte);
 
             resp = cs.getString(23);
-            System.out.println("Directo de la bae de datos "+resp);
+            System.out.println("Directo de la bae de datos " + resp);
             Conexionmysql.cerrarConexion(con);
         } catch (SQLException ex) {
             resp = ex.getMessage();
@@ -188,12 +232,30 @@ public class ManejadorDatosActivo {
         } catch (SQLException ex) {
             resp = ex.getMessage();
             ex.printStackTrace();
-            System.out.println("Error  "+ex.getMessage());
+            System.out.println("Error  " + ex.getMessage());
             throw ex;
         }
         return resp;
     }
 
+        public String eliminarImagenActivo(String activo) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{call simuni_sp_eliminacion_imagenesactivo(?,?)}");
+            //1 fecha
+            cs.setString(1, activo);
+            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
+             cs.execute();
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            ex.printStackTrace();
+            System.out.println("Error  " + ex.getMessage());
+            throw ex;
+        }
+        return resp;
+    }
     public String registrarLlantaActivo(TipoLlanta tipollanta, int codigoVehiculo) throws SQLException {
         String resp = "";
         try {
@@ -205,7 +267,7 @@ public class ManejadorDatosActivo {
             cs.setString(3, tipollanta.getDescripcion());
             cs.registerOutParameter(4, java.sql.Types.VARCHAR);
             cs.execute();
-            System.out.println("Registrando en "+codigoVehiculo+" "+tipollanta.getIdtipollanta()+ tipollanta.getDescripcion());
+            System.out.println("Registrando en " + codigoVehiculo + " " + tipollanta.getIdtipollanta() + tipollanta.getDescripcion());
             resp = cs.getString(4);
 
             Conexionmysql.cerrarConexion(con);
@@ -230,50 +292,45 @@ public class ManejadorDatosActivo {
         return resp;
     }
 
-    
     public boolean existePlacaActivo(String placactivo) throws SQLException {
-       
+
         Connection con = Conexionmysql.obtenerConexion();
         PreparedStatement st = con.prepareCall("{ call simuni_sp_existe_placaactivo(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         st.setString(1, placactivo);
         ResultSet rs = st.executeQuery();
-        if (rs.next()) {       
+        if (rs.next()) {
             rs.close();
             return true;
         }
         return false;
     }
-    
+
     public boolean existePlacaVehiculo(String placavehiculo) throws SQLException {
-       
+
         Connection con = Conexionmysql.obtenerConexion();
         PreparedStatement st = con.prepareCall("{ call simuni_sp_existe_placavehiculo(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         st.setString(1, placavehiculo);
         ResultSet rs = st.executeQuery();
-        if (rs.next()) {       
+        if (rs.next()) {
             rs.close();
             return true;
         }
         return false;
-    }    
+    }
+
     public boolean existeConsecutivoTipoVehiculo(String consecutivotipovehiculo) throws SQLException {
-       
+
         Connection con = Conexionmysql.obtenerConexion();
         PreparedStatement st = con.prepareCall("{ call simuni_sp_existe_consecutivotipovehiculo(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         st.setString(1, consecutivotipovehiculo);
         ResultSet rs = st.executeQuery();
-        if (rs.next()) {       
+        if (rs.next()) {
             rs.close();
             return true;
         }
         return false;
-    }     
-    
-    
-    
-    
-    
-    
+    }
+
     /**
      * Operación que se encarga de realizar modificación del
      * <strong>Activo</strong>.
@@ -410,6 +467,7 @@ public class ManejadorDatosActivo {
         }
         return resp;
     }
+
     public ActivoArticulo getActivoArticulo(String codigoRegistro) throws SQLException {
         ActivoArticulo resp = null;
         Connection con = Conexionmysql.obtenerConexion();
@@ -417,7 +475,7 @@ public class ManejadorDatosActivo {
         st.setString(1, codigoRegistro);
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
-            resp=new ActivoArticulo();
+            resp = new ActivoArticulo();
             resp.setPlacaActivo(rs.getString(1));
             resp.setObservaciones(rs.getString(2));
             resp.setPrecio(rs.getDouble(3));
@@ -427,7 +485,7 @@ public class ManejadorDatosActivo {
             resp.setCodigoDepto(rs.getInt(7));
             resp.setCodigoTipoPago(rs.getInt(8));
             resp.setDenominacion(rs.getString(9));
-            
+
             resp.setCodigoActivoArticulo(rs.getInt(10));
             resp.setMarca(rs.getString(11));
             resp.setModelo(rs.getString(12));
@@ -439,27 +497,27 @@ public class ManejadorDatosActivo {
         }
         return resp;
     }
-    
-    public ArrayList<ImagenActivo> getImagenesActivo(String codigoRegistro) throws SQLException{
-        ArrayList<ImagenActivo> resp=null;
-                Connection con = Conexionmysql.obtenerConexion();
+
+    public ArrayList<ImagenActivo> getImagenesActivo(String codigoRegistro) throws SQLException {
+        ArrayList<ImagenActivo> resp = null;
+        Connection con = Conexionmysql.obtenerConexion();
         PreparedStatement st = con.prepareCall("{ call simuni_sp_obtener_imagenesactivo(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         st.setString(1, codigoRegistro);
-         ResultSet rs = st.executeQuery();
-        if(rs.next()){
-            resp=new ArrayList<ImagenActivo>();
-            do{
-                ImagenActivo imaux=new ImagenActivo();
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            resp = new ArrayList<ImagenActivo>();
+            do {
+                ImagenActivo imaux = new ImagenActivo();
                 imaux.setCodigoActivo(rs.getString(1));
                 imaux.setCodigoImagen(rs.getInt(2));
                 imaux.setFechaSubida(rs.getDate(3));
                 imaux.setUrldocumento(rs.getString(4));
                 resp.add(imaux);
-            }while(rs.next());
+            } while (rs.next());
         }
         return resp;
     }
-    
+
     public ActivoTransporte getActivoTransporte(String codigoRegistro) throws SQLException {
         ActivoTransporte resp = null;
         Connection con = Conexionmysql.obtenerConexion();
@@ -467,7 +525,7 @@ public class ManejadorDatosActivo {
         st.setString(1, codigoRegistro);
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
-            resp=new ActivoTransporte();
+            resp = new ActivoTransporte();
             resp.setPlacaActivo(rs.getString(1));
             resp.setObservaciones(rs.getString(2));
             resp.setPrecio(rs.getDouble(3));
@@ -477,7 +535,7 @@ public class ManejadorDatosActivo {
             resp.setCodigoDepto(rs.getInt(7));
             resp.setCodigoTipoPago(rs.getInt(8));
             resp.setDenominacion(rs.getString(9));
-            
+
             resp.setCodigoActivoTransporte(rs.getInt(10));
             resp.setTipoVehiculo(rs.getString(11));
             resp.setPlaca(rs.getString(12));
@@ -495,7 +553,8 @@ public class ManejadorDatosActivo {
             rs.close();
         }
         return resp;
-    }    
+    }
+
     /**
      * Funcion que se encarga de traer un registro específico de la base de
      * datos, recibe como parámetro el identificador del registro y con eso hace
@@ -518,6 +577,7 @@ public class ManejadorDatosActivo {
         }
         return false;
     }
+
     public boolean isRegistroArticulo(String codigoRegistro) throws SQLException {
 
         Connection con = Conexionmysql.obtenerConexion();
@@ -530,7 +590,7 @@ public class ManejadorDatosActivo {
         }
         return false;
     }
-    
+
     public boolean isRegistroTransporte(String codigoRegistro) throws SQLException {
 
         Connection con = Conexionmysql.obtenerConexion();
@@ -542,9 +602,8 @@ public class ManejadorDatosActivo {
             return true;
         }
         return false;
-    }    
-    
-    
+    }
+
     /**
      * Obtiene la cantidad de registros que hay en la base de datos, con el
      * criterio qeu se pasa por parámetro

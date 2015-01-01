@@ -1,19 +1,44 @@
-var sm_tamanioprevisualizacionimagen = 300;
+var sm_tamanioprevisualizacionimagen = 0;
 var sm_registroactivo_tipoproceso = 0;
-var Error_Existente=false;
 //inicio del formulario, esta parte es lo qeu se ejecutara en el inicio.
 $(document).ready(function() {
+    $("#sm_idvehiculoautogenerado").click(function() {
+        if ($(this).is(':checked')) {
+            $("#txtconsecutivovehiculo").attr('disabled', 'disabled');
+            $("#txtconsecutivovehiculo").removeAttr('required');
+        } else {
+            $("#txtconsecutivovehiculo").attr('required', 'required');
+            $("#txtconsecutivovehiculo").removeAttr('disabled');
+        }
+    });
+
     iniciarCamposFechas();
     eventoSeleccionarArchivos();
-    setEventoSeleccionarProveedorButton();
+    setEventosComoBoxes();
     iniciarCamposCMB();
     adaptar_controlesbotonformulario(TipoBotones);
     setEventosBotonesFormulario();
     addEventoSubmitFormulario();
-    
+
+    $("#cmbtipovehiculo").trigger('change');
     $("#cmbtipoactivo").trigger('change');
 
+
+
 });
+
+//para respectivamente el tiop de activo y tipo de vehiculo.
+function setEventosComoBoxes() {
+
+
+    $("#cmbtipovehiculo").change(function() {
+        var valor_cmbtipovehiculo = $(this).children(':selected').text();//$(this).val();
+        actualizarVistaClasificacionLlantas(valor_cmbtipovehiculo)
+        $("#txtconsecutivovehiculo").trigger('change');
+    });
+
+}
+
 //Esta funcion lo qeu hace es mostrar/ocultar los botones de la parte inferior de 
 //acuerdo al estado. Puede ser sin proceso, proceso correcto o incorrecto.
 function adaptar_controlesbotonformulario(val) {
@@ -65,26 +90,58 @@ function setEventosBotonesFormulario() {
 
 //carga iniciar de valores para loq eu son fechas, y camops de algunos comboboxes como 
 //el de tiop de vehiculo, denominacion. .
-function inicializarValores(fechacompra, fechainicio, denominacion, tipo_botones_requeridos) {
+function inicializarValores(fechacompra, fechainicio, fechafabricacion, denominacion, tipovehiculo, tipo_botones_requeridos) {
     fechaCompra = isFechaValida(fechacompra) ? fechacompra : obtenerFechaString();
     fechaInicio = isFechaValida(fechainicio) ? fechainicio : obtenerFechaString();
+    fechaFabrica = isFechaValida(fechafabricacion) ? fechafabricacion : obtenerFechaString();
     Denominacion = denominacion;
+    TipoVehiculo = tipovehiculo;
     TipoBotones = tipo_botones_requeridos;
+
+
+
 }
 //asignacion de valors de comboxes requeridos
 function iniciarCamposCMB() {
     $("#cmbdenominacion").val(Denominacion);
+    $("#cmbtipovehiculo").val(TipoVehiculo);
 }
 
 //asignacion de valores iniciales a los campos fecha.
 function iniciarCamposFechas() {
     setFechaDatePicker('txtfechacompra', fechaCompra);
     setFechaDatePicker('txtfechainicio', fechaInicio);
+    setFechaDatePicker('txtfechafabricacion', fechaFabrica);
 
 
 }
+/*para la parte de actualizacion de llantas.*/
+function actualizarVistaClasificacionLlantas(val) {
+    var error = false;
+    if (!val) {
+        error = true;
+    }
+    if (!error) {
+        if (val.search(new RegExp("moto", "i")) >= 0) {//encontrado moto
+            $("#tipollantas_vehiculo").fadeOut('slow');
+            $("#tipollantas_moto").fadeIn('slow');
+            set_tipooperacion(3);
+        }
+        else {
+            $("#tipollantas_vehiculo").fadeIn('slow');
+            $("#tipollantas_moto").fadeOut('slow');
+            set_tipooperacion(4);
+        }
+    }
+}
 
 
+
+//tipo de operacion a realizar, es decir si es activo articulo o transporte
+function set_tipooperacion(val) {
+    sm_registroactivo_tipoproceso = val;
+    $("#sm_registroactivo_tipoproceso").val(sm_registroactivo_tipoproceso);
+}
 //parte de la funcionalidad de la imagen de activo.
 function set_tamanioimagethumbnail(size) {
     // alert($("#sm_imgcontainer img").attr('width'))
@@ -102,7 +159,32 @@ function set_multiplesinglefileinput(multiple) {
     else {
         $("#filearchivos").removeAttr('multiple');
     }
+
 }
+
+
+function adaptar_formularioTransporte() {
+    $("#sm_contenedor_propiedades").fadeOut('slow');
+    $("#sm_contenedor_activoarticulo").fadeOut('slow');
+    $("#sm_contenedor_controles").fadeIn('slow');
+    $("#sm_contenedor_transporte").fadeIn('slow');
+    $("#sm_contenedor_imagenes").fadeIn('slow');
+    $("#sm_contenedor_activo").fadeIn('slow');
+    //requrido o no ene el formulario
+    $("#txtplacaactivo").attr('required', 'required');
+    $("#hddproveedor").removeAttr('required');
+    $("#txtplacavehiculo").attr('required', 'required');
+    $("#txtnumerochasis").attr('required', 'required');
+    $("#cmbdepartamento").removeAttr('required');
+    $("#sm_idvehiculoautogenerado").trigger('click');
+    $("#sm_idvehiculoautogenerado").trigger('click');
+
+
+
+}
+
+
+
 
 function eventoSeleccionarArchivos() {
 //Check File API support
@@ -150,49 +232,9 @@ function eventoSeleccionarArchivos() {
 
 
 
-/*seccion de la ventana modal para seleccionar proveedor*/
-function setEventoSeleccionarProveedorButton() {
-    $("#btnseleccionarproveedor").click(function(e) {
-        e.preventDefault();
-        $("#sm_body_ventanamodal").empty();
-        $('<iframe id="sm_iframe_listadoasincproveedores" width="1000" height="500" src="/simuniv2/proveedor?proceso=listado_asinc"></iframe>')
-                .on('load', function() {
-                    setEventosGrillaOnLoad();
-                }).appendTo('#sm_body_ventanamodal');
-        mostrarventanamodal();
-    });
-}
 
-function mostrarventanamodal() {
-    $("#sm_body_ventanamodal").show('slow');
-    $("#sm_body_ventanamodal").dialog({
-        width: "60%",
-        minHeight: '600px',
-        height: 530,
-        position: {my: "left-10 top-20", at: "left top", of: sm_body_mainsection},
-        maxWidth: "768px"});
-}
 
-//*eventos dentro de grilla*/
-function setEventosGrillaOnLoad() {
 
-    $('#sm_iframe_listadoasincproveedores').contents().find(".table .sm_tbody_filadatos td.sm_tr_columnadatos:first-child").each(function(index, element) {
-        $(this).hover(function() {
-            $(this).css('cursor', 'normal');
-        });
-        $(this).click(function() {
-            var cedulaproveedor = $(this).parent().find('td.sm_tr_columnadatos:nth-child(1) input[type=hidden]').val();
-            var nombreproveedor_completo = $(this).parent().find('td.sm_tr_columnadatos:nth-child(2)').text();
-            nombreproveedor_completo += " " + $(this).parent().find('td.sm_tr_columnadatos:nth-child(3)').text();
-            nombreproveedor_completo += " " + $(this).parent().find('td.sm_tr_columnadatos:nth-child(4)').text();
-            $("#lbl_inforproveedor").text(nombreproveedor_completo);
-            $("#hddproveedor").val(cedulaproveedor);
-            //$("#cantidadestu").val(cantidadestu);
-            alert("Seleccionaste a " + nombreproveedor_completo + "\n" + "Cédula: " + cedulaproveedor);
-
-        });
-    });
-}
 
 
 /*seccion validacion de formulario, antes de enviar y confirmacion*/
@@ -204,12 +246,19 @@ function addEventoSubmitFormulario() {
         //validamos    
         var element = null;
         switch (parseInt(sm_registroactivo_tipoproceso)) {
-            case 1:
+            case 3:
                 element = $(this).children().find('#txtplacaactivo');
                 isformulariovalido = (isformulariovalido && campoValido(element));
-                element = $(this).children().find('#hddproveedor');
+                element = $(this).children().find('#txtplacavehiculo');
                 isformulariovalido = (isformulariovalido && campoValido(element));
-                break;//normal
+                element = $(this).children().find('#txtnumerochasis');
+                isformulariovalido = (isformulariovalido && campoValido(element));
+                //validar formulario campos que ocupen validar online
+                element = $(this).children().find('#txtplacaactivo');
+                element.trigger('change');
+                element = $(this).children().find('#txtplacavehiculo');
+                element.trigger('change');
+                break;//vehiculo
         }
 
         //campos qeu no son requeridos pero que se recomienda llenar
@@ -223,10 +272,16 @@ function addEventoSubmitFormulario() {
         (campoValido(element, 'warning'));
         element = $(this).children().find('#txtrescate');
         (campoValido(element, 'warning'));
+        element = $(this).children().find('#txtnumeromotor');
+        (campoValido(element, 'warning'));
+        element = $(this).children().find('#txtcilindros');
+        (campoValido(element, 'warning'));
+        element = $(this).children().find('#txtobservacionestecnicas');
+        (campoValido(element, 'warning'));
 
         isformulariovalido = (isformulariovalido && !Error_Existente);
         if (isformulariovalido) {
-            if (confirm("Esta a punto de modificar un Artículo, ¿Desea continuar?")) {
+            if (confirm("Esta a punto de actualizar un registro, ¿Desea continuar?")) {
                 $(this).unbind();
                 $(this).submit();
             }
@@ -280,3 +335,13 @@ function setEstadoCampo(element, value) {
 
     }
 }
+
+
+
+
+
+
+
+
+
+
