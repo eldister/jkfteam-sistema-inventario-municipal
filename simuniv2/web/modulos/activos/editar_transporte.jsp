@@ -1,5 +1,5 @@
 <%@page import="simuni.entidades.ImagenActivo"%>
-<%@page import="simuni.entidades.ActivoArticulo"%>
+<%@page import="simuni.entidades.ActivoTransporte"%>
 <%@page import="simuni.utils.UtilidadesServlet"%>
 <%@page import="simuni.entidades.Activo"%>
 <%@page import="simuni.entidades.Respuesta"%>
@@ -14,17 +14,16 @@
 <%@page import="simuni.enums.Recursos"%>
 <%
     //evaluamos si viene de un prceso en curso para ver si fue correcto y si podemos guardar el estado.
-    ActivoArticulo activo = null;
+    ActivoTransporte activo = null;
     ArrayList<Respuesta> respuesta = null;
+
+    
     boolean error = false;
     boolean proceso = false;
 
-    
     try {
-        activo = (ActivoArticulo) request.getAttribute("registro");
+        activo = (ActivoTransporte) request.getAttribute("registro");
         respuesta = (ArrayList<Respuesta>) request.getAttribute("respuesta");
-
-        // 2 propiedades 3 moto 4 es el resto
 
         if (respuesta != null && activo != null) {
             proceso = true;
@@ -38,9 +37,6 @@
                 }
             }
         }
-        if (activo == null) {
-            activo = new ActivoArticulo();
-        }
     } catch (Exception ex) {
         ex.printStackTrace();
     }
@@ -50,14 +46,17 @@
     ArrayList<TipoPago> tipospago = (ArrayList<TipoPago>) request.getAttribute("tipospago");
     ArrayList<Estado> estados = (ArrayList<Estado>) request.getAttribute("estados");
     ArrayList<TipoActivo> tiposactivo = (ArrayList<TipoActivo>) request.getAttribute("tiposactivo");
+    ArrayList<TipoBateria> tiposbateria = (ArrayList<TipoBateria>) request.getAttribute("tiposbateria");
+    ArrayList<TipoLlanta> tiposllanta = (ArrayList<TipoLlanta>) request.getAttribute("tiposllanta");
 
     //tratamos de transofrmarlos en iterators
     Iterator<Departamento> iterador_departamento = null;
     Iterator<TipoPago> iterador_tipospago = null;
     Iterator<Estado> iterador_estado = null;
     Iterator<TipoActivo> iterador_tipoactivo = null;
+    Iterator<TipoBateria> iterador_tipobateria = null;
+    Iterator<TipoLlanta> iterador_tipollanta = null;
     Iterator<ImagenActivo> iterador_imagenes = null;
-
     try {
         if (departamentos != null) {
             iterador_departamento = departamentos.iterator();
@@ -70,6 +69,12 @@
         }
         if (tiposactivo != null) {
             iterador_tipoactivo = tiposactivo.iterator();
+        }
+        if (tiposbateria != null) {
+            iterador_tipobateria = tiposbateria.iterator();
+        }
+        if (tiposllanta != null) {
+            iterador_tipollanta = tiposllanta.iterator();
         }
         if (activo != null && activo.getImagenes() != null) {
             iterador_imagenes = activo.getImagenes().iterator();
@@ -85,23 +90,46 @@
     String modelo = "";
     String txtdepreciacion = "";
     String txtrescate = "";
-
+    int tipollanta_delantera = 0;
+    int tipollanta_trasera = 0;
+    int tipollanta_delanterade = 0;
+    int tipollanta_delanteraiz = 0;
+    int tipollanta_traserade = 0;
+    int tipollanta_traseraiz = 0;
     String fechaCompra = "";
     String fechaInicioOperacion = "";
-
+    String fechaFabricacion = "";
     String denominacion = "";
-
+    String tipoVehiculo = "A";
+    String consecutivoVehiculo = "";
     int tipo_botones_requeridos = 4;
     try {
 
         //iniciar algunas variables para mayor facilidad
-        marca = (activo != null) ? ((ActivoArticulo) activo).getMarca() : "";
-        modelo = (activo != null) ? ((ActivoArticulo) activo).getModelo() : "";
-        txtdepreciacion = (activo != null) ? ((ActivoArticulo) activo).getPorcentajeDepreciacion() + "" : "";
-        txtrescate = (activo != null) ? ((ActivoArticulo) activo).getPorcentajeRescate() + "" : "";
-        fechaCompra = (activo != null) ? (UtilidadesServlet.getFechaString(((ActivoArticulo) activo).getFechaAdquisicion())) : "";
-        fechaInicioOperacion = (activo != null) ? (UtilidadesServlet.getFechaString(((ActivoArticulo) activo).getFechaInicioOperacion())) : "";
+        marca = (activo != null) ? ((ActivoTransporte) activo).getMarca() : "";
+        modelo = (activo != null) ? ((ActivoTransporte) activo).getModelo() : "";
+        txtdepreciacion = (activo != null) ? ((ActivoTransporte) activo).getPorcentajeDepreciacion() + "" : "";
+        txtrescate = (activo != null) ? ((ActivoTransporte) activo).getPorcentajeRescate() + "" : "";
+
+        fechaCompra = (activo != null) ? (UtilidadesServlet.getFechaString(((ActivoTransporte) activo).getFechaAdquisicion())) : "";
+        fechaInicioOperacion = (activo != null) ? (UtilidadesServlet.getFechaString(((ActivoTransporte) activo).getFechaInicio())) : "";
         denominacion = (activo != null) ? activo.getDenominacion() : "Colones";
+
+    //para los tipos de llantas en caso de que sea un vehiculo o moto
+        //moto
+        tipollanta_delantera = UtilidadesServlet.getInt(request.getParameter("cmbtipollantad"), 0);
+        tipollanta_trasera = UtilidadesServlet.getInt(request.getParameter("cmbtipollantat"), 0);
+        //vehiculo
+        tipollanta_delanterade = UtilidadesServlet.getInt(request.getParameter("cmbtipollantadd"), 0);
+        tipollanta_delanteraiz = UtilidadesServlet.getInt(request.getParameter("cmbtipollantadi"), 0);
+        tipollanta_traserade = UtilidadesServlet.getInt(request.getParameter("cmbtipollantatd"), 0);
+        tipollanta_traseraiz = UtilidadesServlet.getInt(request.getParameter("cmbtipollantati"), 0);
+
+        //inicializar las fecha de frabricacion
+        fechaFabricacion = UtilidadesServlet.getFechaString(((ActivoTransporte) activo).getAnioFabrica());
+        tipoVehiculo = ((ActivoTransporte) activo).getTipoVehiculo();
+        consecutivoVehiculo = request.getAttribute("consecutivovehiculo") != null ? request.getAttribute("consecutivovehiculo").toString() : "";
+        System.out.println(consecutivoVehiculo);
 
         if (proceso && error) {
             tipo_botones_requeridos = 2;
@@ -116,9 +144,9 @@
 <%@ page language='java' contentType='text/html; charset=ISO-8859-1' pageEncoding='ISO-8859-1'%>
 <%@ taglib prefix='decorator' uri='http://claudiushauptmann.com/jsp-decorator/'%>
 <decorator:decorate filename='../../recursos/paginas/master/masterpage.jsp'>
-    <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | Modificación de Activos </decorator:content>    
+    <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | Activos </decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
-        <script src="<%=request.getContextPath()%>/js/script_paginas/script_editar_activo_articulo.js" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/script_paginas/script_editar_activo_transporte.js" charset="utf-8"></script>
 
         <style>
             #sm_tb_campos td .form-group{
@@ -152,7 +180,7 @@
         </style>
         <script>
             //se inicializan fechas
-            inicializarValores(<%out.print("'" + fechaCompra + "','" + fechaInicioOperacion + "','" + denominacion + "','" + tipo_botones_requeridos + "'");%>);
+            inicializarValores(<%out.print("'" + fechaCompra + "','" + fechaInicioOperacion + "','" + fechaFabricacion + "','" + denominacion + "','" + tipoVehiculo + "','" + tipo_botones_requeridos + "'");%>);
 
 
         </script>
@@ -160,18 +188,18 @@
     <decorator:content placeholder='sm_div_navegationbarmenuitems'>
         <ol class="breadcrumb">
             <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/">Inicio</a></li>   
-            <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/activo?proceso=listado">Activos</a></li>
-            <li class="active">Modificación de Activos</li>
+            <li class="active">Activos***</li>
         </ol>
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
-        <form class="form" enctype="multipart/form-data" id="formulario" action="<%out.print(Recursos.Servers.MAINSERVER);%>/activo?proceso=actualizar_articulo" method="POST">
+
+        <form class="form" enctype="multipart/form-data" id="formulario" action="<%out.print(Recursos.Servers.MAINSERVER);%>/activo?proceso=actualizar_transporte" method="POST">
             <fieldset id="activos">
-                <legend style="<%out.print((error && proceso) ? "color:red;" : "");%>">Modificación de registro Artículo <small><sup>* Campos requeridos</sup></small></legend>
+                <legend style="<%out.print((error && proceso) ? "color:red;" : "");%>">Registro de activos <small><sup>* Campos requeridos</sup></small></legend>
                 <div id="registerInformation">
                     <table id="sm_tb_campos">
                         <tr>
-                            <td><label  class="control-label"for="cmbtipoactivo">Seleccione tipo de Activo </label></td> 
+                            <td><label  class="control-label"for="cmbtipoactivo">Seleccione tipo de Activo</label></td> 
                             <td>
                                 <div class="form-group">
                                     <select class="form-control" name="cmbtipoactivo" id="cmbtipoactivo">
@@ -180,7 +208,7 @@
                                                 do {
                                                     TipoActivo tipoactivo = iterador_tipoactivo.next();
                                         %>
-                                        <option <% out.print((activo != null && activo.getCodigoTipoActivo() == tipoactivo.getIdtipoactivo()) ? "selected='selected'" : "");%> value="<%out.print(tipoactivo.getIdtipoactivo());%>"><%out.print(tipoactivo.getNombretipoactivo());%></option>
+                                        <option <%out.print((activo != null && activo.getCodigoTipoActivo() == tipoactivo.getIdtipoactivo()) ? "selected='selected'" : "");%> value="<%out.print(tipoactivo.getIdtipoactivo());%>"><%out.print(tipoactivo.getNombretipoactivo());%></option>
                                         <%
                                                 } while (iterador_tipoactivo.hasNext());
                                             }
@@ -188,7 +216,7 @@
                                     </select>
                                 </div>
                             </td>  
-                            <td>*<small>Cambiar tipo, no cambiará formulario</small></td>
+                            <td>*<small>Formulario se adapta segun tipo</small></td>
 
                             <td>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -209,8 +237,8 @@
                                         <tr>
                                             <td>
                                                 <div class="form-group">
-                                                    <label  class="control-label"for="txtplacaactivo">Placa del Activo</label>
-                                                    <input type="text" value="<%out.print((activo != null) ? activo.getPlacaActivo() : "");%>" class="form-control" name="txtplacaactivo" required="required" readonly="readonly" id="txtplacaactivo" placeholder="Ej. 505550555-112qa">
+                                                    <label  class="control-label"for="txtplacaactivo">Placa del Activo *</label>
+                                                    <input type="text" value="<%out.print((activo != null) ? activo.getPlacaActivo() : "");%>" class="form-control" name="txtplacaactivo" required="required" id="txtplacaactivo" placeholder="Ej. 505550555-112qa">
                                                 </div>
                                             </td>                                              
                                             <td >
@@ -327,25 +355,228 @@
                                                     <label  class="control-label"for="txtobservaciones">Observaciones</label>
                                                     <textarea class="form-control" name="txtobservaciones" id="txtobservaciones" placeholder="Ej. Activo de Segunda"><%out.print((activo != null) ? activo.getObservaciones() : "");%></textarea>
                                                 </div>
-                                            </td>  
-                                            <td>
-                                                <div class="form-group" id="sm_contenedor_activoarticulo">
-                                                    <label  class="control-label"for="txtrescate">Seleccionar Proveedor *</label><br>
-                                                    <button class="btn  btn-primary glyphicon glyphicon-search" id="btnseleccionarproveedor"> Seleccionar</button>
-                                                    <label id="lbl_inforproveedor"><%out.print((activo != null) ? (activo).getCodigoProveedor() + "Seleccionado" : "No seleccionado");%></label>
-                                                    <input type="hidden" required="required" value="<%out.print((activo != null) ? (activo).getCodigoProveedor() : "");%>" name="hddproveedor" id="hddproveedor">
-                                                </div>
                                             </td>                                              
                                         </tr>                                            
                                     </table>
                                 </fieldset>                               
                             </td>                              
                         </tr>
+                        <!--Información de el equipo de transporte-->
+                        <tr id="sm_contenedor_transporte">
+                            <td colspan="5">
+                                <fieldset >
+                                    <legend>
+                                        Información detallada del Equipo de Transporte
+                                    </legend>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="txtplacavehiculo">Placa del Vehículo *</label>
+                                                    <input  value="<%out.print((activo != null) ? ((ActivoTransporte) activo).getPlaca() : "");%>" type="text"  class="form-control" name="txtplacavehiculo" required="required" id="txtplacavehiculo" placeholder="Ej. 505550555-112qa">
+                                                </div>
+                                            </td>                                              
+                                            <td >
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="cmbtipovehiculo">Tipo de Vehículo</label>
+                                                    <select class="form-control" name="cmbtipovehiculo" id="cmbtipovehiculo">
+                                                        <option value="A">Carro</option>
+                                                        <option value="B">Moto</option>
+                                                        <option value="C">Maquinaria</option>
+                                                    </select>
+                                                </div> 
+                                            </td>
+                                            <td >
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="txtnumerochasis">Número de Chasis *</label>
+                                                    <input type="text"  value="<%out.print((activo != null) ? ((ActivoTransporte) activo).getNumeroChasis() : "");%>" class="form-control" name="txtnumerochasis" required="required" id="txtnumerochasis" placeholder="11122545444">
+                                                </div>
+                                            </td> 
+                                            <td>
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="txtnumeromotor">Número de Motor</label>
+                                                    <input type="text"  value="<%out.print((activo != null) ? ((ActivoTransporte) activo).getNumeroMotor() : "");%>" class="form-control" name="txtnumeromotor"  id="txtnumeromotor" placeholder="123486">
+                                                </div> 
+                                            </td>                                              
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="txtfechafabricacion">Fecha Fabricación</label>
+                                                    <input type="date" value="" class="form-control" name="txtfechafabricacion" id="txtfechafabricacion" placeholder="12-05-2014">
+                                                </div>
+                                            </td>                                                
+                                            <td>
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="txtcilindros">Cilindros</label>
+                                                    <input type="number" value="<%out.print((activo != null) ? ((ActivoTransporte) activo).getCilindros() : "");%>" min="1" class="form-control" name="txtcilindros"  id="txtcilindros" placeholder="Ej. 12">
+                                                </div>
+                                            </td>   
+                                            <td>
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="cmbtipobateria">Tipo de Baterías</label>
+                                                    <select class="form-control" name="cmbtipobateria" id="cmbtipobateria">
+                                                        <%
+                                                            if (iterador_tipobateria != null && iterador_tipobateria.hasNext()) {
+                                                                do {
+                                                                    TipoBateria tipobateria = iterador_tipobateria.next();
+                                                        %>
+                                                        <option value="<%out.print(tipobateria.getIdtipobateria());%>"><%out.print(tipobateria.getNombretipobateria());%></option>
+                                                        <%
+                                                                } while (iterador_tipoactivo.hasNext());
+                                                            }
+                                                        %>
+                                                    </select>
+                                                </div> 
+                                            </td>  
+                                            <td>
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="txtconsecutivovehiculo">Consecutivo<small> *Autogenerado<input type="checkbox" id="sm_idvehiculoautogenerado"  name="sm_idvehiculoautogenerado"  class="checkbox-inline"></small></label>
+                                                    <input type="number" min="0" required="required" value="<%out.print(consecutivoVehiculo);%>" min="1" class="form-control" name="txtconsecutivovehiculo"  id="txtconsecutivovehiculo">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr id="tipollantas_vehiculo">
+                                            <td>
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="cmbtipollantadd">Tipo de Llanta Delantera Derecha</label>
+                                                    <select class="form-control" name="cmbtipollantadd" id="cmbtipollantadd">
+                                                        <%
+                                                            if (iterador_tipollanta != null && iterador_tipollanta.hasNext()) {
+                                                                do {
+                                                                    TipoLlanta tipollanta = iterador_tipollanta.next();
+                                                        %>
+                                                        <option <%out.print(tipollanta_delanterade == tipollanta.getIdtipollanta() ? "selected='selected'" : "");%> value="<%out.print(tipollanta.getIdtipollanta());%>"><%out.print(tipollanta.getNombretipollanta());%></option>
+                                                        <%
+                                                                } while (iterador_tipollanta.hasNext());
+                                                            }
+                                                            if (tiposllanta != null) {
+                                                                iterador_tipollanta = tiposllanta.iterator();
+                                                            }
+                                                        %>
+                                                    </select>
+                                                </div> 
+                                            </td>  
+                                            <td>
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="cmbtipollantadi">Tipo de Llanta Delantera Izquierda</label>
+                                                    <select class="form-control" name="cmbtipollantadi" id="cmbtipollantadi">
+                                                        <%
+                                                            if (iterador_tipollanta != null && iterador_tipollanta.hasNext()) {
+                                                                do {
+                                                                    TipoLlanta tipollanta = iterador_tipollanta.next();
+                                                        %>
+                                                        <option  <%out.print(tipollanta_delanteraiz == tipollanta.getIdtipollanta() ? "selected='selected'" : "");%> value="<%out.print(tipollanta.getIdtipollanta());%>"><%out.print(tipollanta.getNombretipollanta());%></option>
+                                                        <%
+                                                                } while (iterador_tipollanta.hasNext());
+                                                            }
+                                                            if (tiposllanta != null) {
+                                                                iterador_tipollanta = tiposllanta.iterator();
+                                                            }
+                                                        %>
+                                                    </select>
+                                                </div> 
+                                            </td>  
+                                            <td>
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="cmbtipollantatd">Tipo de Llanta Trasera Derecha</label>
+                                                    <select class="form-control" name="cmbtipollantatd" id="cmbtipollantatd">
+                                                        <%
+                                                            if (iterador_tipollanta != null && iterador_tipollanta.hasNext()) {
+                                                                do {
+                                                                    TipoLlanta tipollanta = iterador_tipollanta.next();
+                                                        %>
+                                                        <option <%out.print(tipollanta_traserade == tipollanta.getIdtipollanta() ? "selected='selected'" : "");%> value="<%out.print(tipollanta.getIdtipollanta());%>"><%out.print(tipollanta.getNombretipollanta());%></option>
+                                                        <%
+                                                                } while (iterador_tipollanta.hasNext());
+                                                            }
+                                                            if (tiposllanta != null) {
+                                                                iterador_tipollanta = tiposllanta.iterator();
+                                                            }
+                                                        %>
+                                                    </select>
+                                                </div> 
+                                            </td>                                              
+                                            <td>
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="cmbtipollantati">Tipo de Llanta Trasera Izquierda</label>
+                                                    <select class="form-control" name="cmbtipollantati" id="cmbtipollantati">
+                                                        <%
+                                                            if (iterador_tipollanta != null && iterador_tipollanta.hasNext()) {
+                                                                do {
+                                                                    TipoLlanta tipollanta = iterador_tipollanta.next();
+                                                        %>
+                                                        <option  <%out.print(tipollanta_traseraiz == tipollanta.getIdtipollanta() ? "selected='selected'" : "");%> value="<%out.print(tipollanta.getIdtipollanta());%>"><%out.print(tipollanta.getNombretipollanta());%></option>
+                                                        <%
+                                                                } while (iterador_tipollanta.hasNext());
+                                                            }
+                                                            if (tiposllanta != null) {
+                                                                iterador_tipollanta = tiposllanta.iterator();
+                                                            }
+                                                        %>
+                                                    </select>
+                                                </div> 
+                                            </td>                                              
+                                        </tr>  
+                                        <tr id="tipollantas_moto">
+                                            <td>
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="cmbtipollantad">Tipo de Llanta Delantera </label>
+                                                    <select class="form-control" name="cmbtipollantad" id="cmbtipollantad">
+                                                        <%
+                                                            if (iterador_tipollanta != null && iterador_tipollanta.hasNext()) {
+                                                                do {
+                                                                    TipoLlanta tipollanta = iterador_tipollanta.next();
+                                                        %>
+                                                        <option  <%out.print(tipollanta_delantera == tipollanta.getIdtipollanta() ? "selected='selected'" : "");%> value="<%out.print(tipollanta.getIdtipollanta());%>"><%out.print(tipollanta.getNombretipollanta());%></option>
+                                                        <%
+                                                                } while (iterador_tipollanta.hasNext());
+                                                            }
+                                                            if (tiposllanta != null) {
+                                                                iterador_tipollanta = tiposllanta.iterator();
+                                                            }
+                                                        %>
+                                                    </select>
+                                                </div> 
+                                            </td>                                              
+                                            <td>
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="cmbtipollantat">Tipo de Llanta Trasera </label>
+                                                    <select class="form-control" name="cmbtipollantat" id="cmbtipollantat">
+                                                        <%
+                                                            if (iterador_tipollanta != null && iterador_tipollanta.hasNext()) {
+                                                                do {
+                                                                    TipoLlanta tipollanta = iterador_tipollanta.next();
+                                                        %>
+                                                        <option  <%out.print(tipollanta_trasera == tipollanta.getIdtipollanta() ? "selected='selected'" : "");%> value="<%out.print(tipollanta.getIdtipollanta());%>"><%out.print(tipollanta.getNombretipollanta());%></option>
+                                                        <%
+                                                                } while (iterador_tipollanta.hasNext());
+                                                            }
+                                                            if (tiposllanta != null) {
+                                                                iterador_tipollanta = tiposllanta.iterator();
+                                                            }
+                                                        %>
+                                                    </select>
+                                                </div> 
+                                            </td>                                              
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <div class="form-group">
+                                                    <label  class="control-label"for="txtobservacionestecnicas">Observaciones Técnicas Extras</label>
+                                                    <textarea class="form-control" name="txtobservacionestecnicas" id="txtobservacionestecnicas" placeholder="Ej. Utiliza Diesel"><%out.print((activo != null) ? ((ActivoTransporte) activo).getObservacionesTecnicas() : "");%></textarea>
+                                                </div>
+                                            </td>                                              
+                                        </tr>                                            
+                                    </table>
+                                </fieldset>                               
+                            </td>                              
+                        </tr> 
                         <tr id="sm_contenedor_imagenes">
                             <td colspan="5">
                                 <fieldset >
                                     <legend>
-                                        Modificar Fotografía del activo
+                                        Fotografías del activo
                                     </legend>
                                     <table>
                                         <tr>
@@ -383,9 +614,9 @@
                                                     } else {
                                                     %>
                                                     <center><strong>No tiene imagenes registradas.</strong></center>
-                                                            <%
-                                                                }
-                                                            %>
+                                                        <%
+                                                            }
+                                                        %>                                                    
 
                                                 </div>
                                             </td>
@@ -461,14 +692,14 @@
                         </tr>
                         <tr id="sm_contenedor_controles">
                             <td>&nbsp;</td>
-
-                            <td  class="btn_controles_sinprocesocontainer">
+                            <td class="btn_controles_sinprocesocontainer">
                                 <div class="form-group">
                                     <input type="submit" value="Actualizar Activo" class="form-control btn-info">
                                 </div>
-                            </td>  
-                            <%if (proceso) {%>     
-                            <td id="btn_controles_procesocorrecto">      
+                            </td> 
+                            <%if (proceso) {//falta campo hidden con el codigo activo%>     
+                            <td id="btn_controles_procesocorrecto">
+                                <input type="hidden" id="sm_hidden_codigoactivo" value="<%out.print(( activo != null) ? activo.getPlacaActivo() : "");%>">
                                 <div class="form-group">
                                     <button id="sm_btn_reporte" class="form-control btn-success">Generar Reporte Activo</button>
                                 </div>
@@ -489,8 +720,10 @@
                 </div>
             </fieldset>
             <input type="hidden" id="registro" name="registro"  value="<%out.print((activo != null) ? activo.getPlacaActivo() : "");%>">
-            <input type="hidden" id="registro_articulo" name="registro_articulo"  value="<%out.print((activo != null) ? activo.getCodigoActivoArticulo(): "");%>">
+            <input type="hidden" id="registro_transporte" name="registro_articulo"  value="<%out.print((activo != null) ?activo.getCodigoActivoTransporte() : "");%>">
+                               
         </form>
+
         <div id="sm_body_ventanamodal">
             &nbsp;
         </div>
