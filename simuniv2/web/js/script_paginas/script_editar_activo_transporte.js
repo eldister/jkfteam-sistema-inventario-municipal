@@ -1,5 +1,6 @@
-var sm_tamanioprevisualizacionimagen = 0;
+var sm_tamanioprevisualizacionimagen = 200;
 var sm_registroactivo_tipoproceso = 0;
+var Error_Existente=false;
 //inicio del formulario, esta parte es lo qeu se ejecutara en el inicio.
 $(document).ready(function() {
     $("#sm_idvehiculoautogenerado").click(function() {

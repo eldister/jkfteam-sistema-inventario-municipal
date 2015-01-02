@@ -170,9 +170,9 @@ public class ManejadorActivo {
                         }
                         reliminacionImagenes.setMensaje(msg);
                         resp.add(reliminacionImagenes);
-                        
+
                         ImagenActivo imaux = iteradorimagenes.next();
-                        Respuesta ringresoImagen=new Respuesta();
+                        Respuesta ringresoImagen = new Respuesta();
                         msg = mactivo.registrarImagenActivo(imaux);
                         if (msg != null && msg.startsWith("2")) {
                             ringresoImagen.setNivel(2);
@@ -181,7 +181,7 @@ public class ManejadorActivo {
                         }
                         ringresoImagen.setMensaje(msg);
                         resp.add(ringresoImagen);
-                        
+
                         System.out.println("La placa rara es esta " + imaux.toString());
                         if (imaux.getCodigoImagen() > 0) {
                             msg += "<br>Proceso de guardado de imagen " + mactivo.guardarImagenActivo(imaux);
@@ -191,10 +191,10 @@ public class ManejadorActivo {
                     }
                 }
             }
-           
+
         } catch (SQLException ex) {
-            Respuesta rerror=new Respuesta();
-            
+            Respuesta rerror = new Respuesta();
+
             rerror.setNivel(2);
             rerror.setMensaje("Error: " + ex.getMessage());
             resp.add(rerror);
@@ -283,6 +283,104 @@ public class ManejadorActivo {
 
             }
 
+        } catch (Exception ex) {
+            Respuesta resperror = new Respuesta();
+            resperror.setNivel(2);
+            resperror.setMensaje("Error: " + ex.getMessage());
+            resp.add(resperror);
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+
+    public ArrayList<Respuesta> actualizarActivoTransporte(ActivoTransporte activoTransporte) {
+        ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
+        ManejadorArchivos marchivos = new ManejadorArchivos();
+        ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
+
+        try {
+            //registrar lo de transporte
+            String msg = mactivo.actualizarActivoTransporte(activoTransporte);
+            Respuesta respregtran = new Respuesta();
+            if (msg != null && msg.startsWith("2")) {
+                respregtran.setNivel(2);
+            } else {
+                respregtran.setNivel(1);
+            }
+            respregtran.setMensaje(msg);
+            resp.add(respregtran);
+
+            System.out.println("upss el respondio " + respregtran.getNivel()+";"+activoTransporte.getCodigoActivoTransporte());
+            //si fue correcto entonces registrar las llantas
+            if (activoTransporte.getCodigoActivoTransporte() > 0 && respregtran.getNivel() == 1) {
+                System.out.println("Pase primer nivel" + activoTransporte.getCodigoActivoTransporte());
+                if (activoTransporte.getLlantas() != null) {
+                    System.out.println("Pase segundo  nivel");
+
+                    Iterator<TipoLlanta> iteradortipollanta = activoTransporte.getLlantas().iterator();
+                    if (iteradortipollanta != null) {
+                        if (iteradortipollanta.hasNext()) {
+                            //eliminar llantas activo
+                            mactivo.eliminarLlantaVehiculo(activoTransporte.getCodigoActivoTransporte());
+                            do {
+                                TipoLlanta tllantaux = iteradortipollanta.next();
+                                Respuesta respuesta_registrollanta = new Respuesta();
+                                msg = mactivo.registrarLlantaActivo(tllantaux, activoTransporte.getCodigoActivoTransporte());
+                                if (msg != null && msg.startsWith("2")) {
+                                    respuesta_registrollanta.setNivel(2);
+                                } else {
+                                    respuesta_registrollanta.setNivel(1);
+                                }
+                                respuesta_registrollanta.setMensaje(tllantaux.getDescripcion() + "   " + msg);
+                                resp.add(respuesta_registrollanta);
+
+                            } while (iteradortipollanta.hasNext());
+                        }
+                    }
+                }
+                /*empezamos con el registro de llantas e imagenes*/
+                if (activoTransporte.getCodigoActivoTransporte() > 0 && respregtran.getNivel() == 1) {
+                    if (activoTransporte.getImagenes() != null) {
+                        Iterator<ImagenActivo> iteradorimagenes = activoTransporte.getImagenes().iterator();
+                        if (iteradorimagenes != null) {
+                            if (iteradorimagenes.hasNext()) {
+                                //eliminar imagenes
+                                mactivo.eliminarImagenActivo(activoTransporte.getPlacaActivo());
+                                do {
+                                    //registrar en base de datos las imagenes
+                                    Respuesta respaux = new Respuesta();
+                                    ImagenActivo imaux = iteradorimagenes.next();
+                                    imaux.setCodigoActivo(activoTransporte.getPlacaActivo());
+                                    msg = mactivo.registrarImagenActivo(imaux);
+                                    if (msg != null && msg.startsWith("2")) {
+                                        respaux.setNivel(2);
+                                    } else {
+                                        respaux.setNivel(1);
+                                    }
+                                    respaux.setMensaje(msg);
+                                    resp.add(respaux);
+
+                                    //registrar la imagen en el disco si se realizo de manera correcta
+                                    if (imaux.getCodigoImagen() > 0) {
+                                        Respuesta resparchivos = new Respuesta();
+                                        if (marchivos.guardarArchivo(imaux.getPathDocumento(), imaux.getNombreArchivo(), imaux.getStreamArchivo())) {
+                                            resparchivos.setNivel(1);
+                                            resparchivos.setMensaje("Imagen " + imaux.getNombreArchivo() + ", guardado correctamente");
+                                        } else {
+                                            resparchivos.setNivel(2);
+                                            resparchivos.setMensaje("Imagen " + imaux.getNombreArchivo() + ", no guardado. Ocurrio un error");
+                                        }
+                                        resp.add(resparchivos);
+                                    }
+                                } while (iteradorimagenes.hasNext());
+
+                            }
+                        }
+                    }
+
+                }
+
+            }
         } catch (Exception ex) {
             Respuesta resperror = new Respuesta();
             resperror.setNivel(2);

@@ -37,7 +37,7 @@ public class AccionesActivo extends HttpServlet {
 
     enum OpcionesDo {
 
-        Listado, Existe_Activo, Existe_Placa, Existe_Consecutivo, Nuevo, Eliminar, Modificar, Modificar_Articulo,Modificar_Transporte, Query, AccionDefault
+        Listado, Existe_Activo, Existe_Placa, Existe_Consecutivo, Nuevo, Eliminar, Modificar, Modificar_Articulo, Modificar_Transporte, Query, AccionDefault
     }
 
     /**
@@ -171,7 +171,7 @@ public class AccionesActivo extends HttpServlet {
             int npagina = 0;//para la paginacion
             String registro = "";//codigo de registro a buscar
             int paginacion = 0;//obtener la paginacion y pagina actual  
-            int registro_activo=0;
+            int registro_activo = 0;
             String nombreactivo = "";//campo txt
             ResultSet resultset = null;
             ManejadorActivo mactivo = new ManejadorActivo();
@@ -259,7 +259,7 @@ public class AccionesActivo extends HttpServlet {
                 case Modificar_Articulo:
                     registro = request.getParameter("registro");
                     registro_activo = UtilidadesServlet.getInt(request.getParameter("registro_articulo"), 0);
-                    System.out.println(registro+" <<< este es");
+                    System.out.println(registro + " <<< este es");
                     if (mactivo.isRegistroArticulo(registro)) {
                         System.out.println("Entreeee");
                         activo_registro = generarActivoArticulo(request);
@@ -267,6 +267,7 @@ public class AccionesActivo extends HttpServlet {
                         ((ActivoArticulo) activo_registro).setCodigoActivoArticulo(registro_activo);
                         //hacer la actualizacion***
                         respuetas = mactivo.actualizarActivoArticulo(((ActivoArticulo) activo_registro));
+                        activo_registro=mactivo.getActivoArticulo(registro);
                         activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
                         request.setAttribute("registro", ((ActivoArticulo) activo_registro));
                         request.setAttribute("respuesta", respuetas);//resultado de las operaciones
@@ -275,10 +276,11 @@ public class AccionesActivo extends HttpServlet {
                         request.setAttribute("tipospago", mactivo.listadoTipoPago());
                         request.setAttribute("estados", mactivo.listadoEstado());
                         request.setAttribute("tiposactivo", mactivo.listadoTipoActivo());
+
                         disp = request.getRequestDispatcher("/modulos/activos/editar_articulo.jsp");
                         disp.forward(request, response);
                     }//el else debe tener su if
-                    else{
+                    else {
                         System.out.println("`No entreeee");
                     }
 
@@ -286,23 +288,25 @@ public class AccionesActivo extends HttpServlet {
                 case Modificar_Transporte:
                     registro = request.getParameter("registro");
                     registro_activo = UtilidadesServlet.getInt(request.getParameter("registro_transporte"), 0);
-  System.out.println(registro+" <<< este es");
+                    System.out.println(registro + " <<< este es");
                     if (mactivo.isRegistroTransporte(registro)) {
                         System.out.println("Entreeee");
-                        activo_registro = generarActivoTransporte(request,response);
+                        activo_registro = generarActivoTransporte(request, response);
                         activo_registro.setPlacaActivo(registro);
                         ((ActivoTransporte) activo_registro).setCodigoActivoTransporte(registro_activo);
                         //hacer la actualizacion*** cambiar
-                        respuetas = mactivo.actualizarActivoArticulo(((ActivoArticulo) activo_registro));
-                       
+                        respuetas = mactivo.actualizarActivoTransporte(((ActivoTransporte) activo_registro));
+                        activo_registro=mactivo.getActivoTransporte(registro);
                         activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
-                        request.setAttribute("registro", ((ActivoArticulo) activo_registro));
+                        request.setAttribute("registro", ((ActivoTransporte) activo_registro));
                         request.setAttribute("respuesta", respuetas);//resultado de las operaciones
 
                         request.setAttribute("departamentos", mactivo.listadoDepartamento());
                         request.setAttribute("tipospago", mactivo.listadoTipoPago());
                         request.setAttribute("estados", mactivo.listadoEstado());
                         request.setAttribute("tiposactivo", mactivo.listadoTipoActivo());
+                        request.setAttribute("tiposbateria", mactivo.listadoTipoBateria());
+                        request.setAttribute("tiposllanta", mactivo.listadoTipoLlanta());
                         disp = request.getRequestDispatcher("/modulos/activos/editar_transporte.jsp");
                         disp.forward(request, response);
                     }//el else debe tener su if                                     
