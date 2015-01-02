@@ -120,7 +120,6 @@ public class ManejadorDatosActivo {
             cs.registerOutParameter(17, java.sql.Types.VARCHAR);
             cs.execute();
 
-
             resp = cs.getString(17);
             Conexionmysql.cerrarConexion(con);
         } catch (SQLException ex) {
@@ -197,6 +196,55 @@ public class ManejadorDatosActivo {
         return resp;
     }
 
+    public String actualizarActivoTransporte(ActivoTransporte activotransporte) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{call simuni_sp_actualizacion_activotransporte(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+//16
+            cs.setString(1, activotransporte.getPlacaActivo());
+            cs.setString(2, activotransporte.getObservaciones());
+            cs.setDouble(3, activotransporte.getPrecio());
+            java.sql.Date fecha = activotransporte.getFechaAdquisicion() != null ? new java.sql.Date(activotransporte.getFechaAdquisicion().getTime()) : null;
+            cs.setDate(4, fecha);
+            cs.setInt(5, activotransporte.getCodigoEstado());
+            cs.setInt(6, activotransporte.getCodigoTipoActivo());
+            cs.setInt(7, activotransporte.getCodigoDepto());
+            cs.setInt(8, activotransporte.getCodigoTipoPago());
+            cs.setString(9, activotransporte.getDenominacion());
+
+            cs.setString(10, activotransporte.getTipoVehiculo());
+            cs.setString(11, activotransporte.getPlaca());
+            cs.setString(12, activotransporte.getModelo());
+            cs.setString(13, activotransporte.getMarca());
+            java.sql.Date fechainicio = activotransporte.getFechaInicio() != null ? new java.sql.Date(activotransporte.getFechaInicio().getTime()) : null;
+
+            cs.setDate(14, fechainicio);
+            cs.setDouble(15, activotransporte.getPorcentajeRescate());
+            cs.setDouble(16, activotransporte.getPorcentajeDepreciacion());
+            cs.setString(17, activotransporte.getNumeroChasis());
+            cs.setString(18, activotransporte.getNumeroMotor());
+            java.sql.Date fechafabricacion = activotransporte.getAnioFabrica() != null ? new java.sql.Date(activotransporte.getAnioFabrica().getTime()) : null;
+            cs.setDate(19, fechafabricacion);
+            cs.setString(20, activotransporte.getCilindros());
+            cs.setInt(21, activotransporte.getCodigoBipoBateria());
+            cs.setString(22, activotransporte.getObservacionesTecnicas());
+            cs.setInt(23, activotransporte.getCodigoActivoTransporte());
+            cs.registerOutParameter(24, java.sql.Types.VARCHAR);
+            cs.execute();
+            System.out.println("valoooor es " + activotransporte.getCodigoActivoTransporte());
+
+            resp = cs.getString(24);
+            System.out.println("Directo de la bae de datos " + resp);
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            ex.printStackTrace();
+            throw ex;
+        }
+        return resp;
+    }
+
     /**
      * Operación que se encarga de realizar el ingreso / registro de
      * <strong>Documento</strong>.
@@ -238,7 +286,7 @@ public class ManejadorDatosActivo {
         return resp;
     }
 
-        public String eliminarImagenActivo(String activo) throws SQLException {
+    public String eliminarImagenActivo(String activo) throws SQLException {
         String resp = "";
         try {
             Connection con = Conexionmysql.obtenerConexion();
@@ -246,7 +294,26 @@ public class ManejadorDatosActivo {
             //1 fecha
             cs.setString(1, activo);
             cs.registerOutParameter(2, java.sql.Types.VARCHAR);
-             cs.execute();
+            cs.execute();
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            ex.printStackTrace();
+            System.out.println("Error  " + ex.getMessage());
+            throw ex;
+        }
+        return resp;
+    }
+    
+    public String eliminarLlantaVehiculo(int vehiculo) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{call simuni_sp_eliminacion_llantasvehiculo(?,?)}");
+            //1 fecha
+            cs.setInt(1, vehiculo);
+            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
+            cs.execute();
             Conexionmysql.cerrarConexion(con);
         } catch (SQLException ex) {
             resp = ex.getMessage();

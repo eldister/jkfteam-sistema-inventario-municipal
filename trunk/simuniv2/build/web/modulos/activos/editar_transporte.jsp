@@ -127,7 +127,7 @@
 
         //inicializar las fecha de frabricacion
         fechaFabricacion = UtilidadesServlet.getFechaString(((ActivoTransporte) activo).getAnioFabrica());
-        tipoVehiculo = ((ActivoTransporte) activo).getTipoVehiculo();
+        tipoVehiculo = (activo).getTipoVehiculo()!=null?activo.getTipoVehiculo().charAt(0)+"":('A'+"");
         consecutivoVehiculo = request.getAttribute("consecutivovehiculo") != null ? request.getAttribute("consecutivovehiculo").toString() : "";
         System.out.println(consecutivoVehiculo);
 
@@ -188,7 +188,8 @@
     <decorator:content placeholder='sm_div_navegationbarmenuitems'>
         <ol class="breadcrumb">
             <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/">Inicio</a></li>   
-            <li class="active">Activos***</li>
+            <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/activo?proceso=listado">Activos</a></li>
+            <li class="active">Modificación de Activos</li>
         </ol>
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
@@ -216,7 +217,7 @@
                                     </select>
                                 </div>
                             </td>  
-                            <td>*<small>Formulario se adapta segun tipo</small></td>
+                            <td>*<small> Cambiar el tipo, no variará el formulario </small></td>
 
                             <td>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -237,8 +238,8 @@
                                         <tr>
                                             <td>
                                                 <div class="form-group">
-                                                    <label  class="control-label"for="txtplacaactivo">Placa del Activo *</label>
-                                                    <input type="text" value="<%out.print((activo != null) ? activo.getPlacaActivo() : "");%>" class="form-control" name="txtplacaactivo" required="required" id="txtplacaactivo" placeholder="Ej. 505550555-112qa">
+                                                    <label  class="control-label"for="txtplacaactivo">Placa del Activo</label>
+                                                    <input type="text" readonly="readonly" value="<%out.print((activo != null) ? activo.getPlacaActivo() : "");%>" class="form-control" name="txtplacaactivo" required="required" id="txtplacaactivo" placeholder="Ej. 505550555-112qa">
                                                 </div>
                                             </td>                                              
                                             <td >
@@ -373,13 +374,13 @@
                                             <td>
                                                 <div class="form-group">
                                                     <label  class="control-label"for="txtplacavehiculo">Placa del Vehículo *</label>
-                                                    <input  value="<%out.print((activo != null) ? ((ActivoTransporte) activo).getPlaca() : "");%>" type="text"  class="form-control" name="txtplacavehiculo" required="required" id="txtplacavehiculo" placeholder="Ej. 505550555-112qa">
+                                                    <input  value="<%out.print((activo != null) ? ((ActivoTransporte) activo).getPlaca() : "");%>" type="text"  class="form-control" name="txtplacavehiculo" readonly="readonly" required="required" id="txtplacavehiculo" placeholder="Ej. 505550555-112qa">
                                                 </div>
                                             </td>                                              
                                             <td >
                                                 <div class="form-group">
                                                     <label  class="control-label"for="cmbtipovehiculo">Tipo de Vehículo</label>
-                                                    <select class="form-control" name="cmbtipovehiculo" id="cmbtipovehiculo">
+                                                    <select class="form-control"  name="cmbtipovehiculo" id="cmbtipovehiculo">
                                                         <option value="A">Carro</option>
                                                         <option value="B">Moto</option>
                                                         <option value="C">Maquinaria</option>
@@ -388,8 +389,8 @@
                                             </td>
                                             <td >
                                                 <div class="form-group">
-                                                    <label  class="control-label"for="txtnumerochasis">Número de Chasis *</label>
-                                                    <input type="text"  value="<%out.print((activo != null) ? ((ActivoTransporte) activo).getNumeroChasis() : "");%>" class="form-control" name="txtnumerochasis" required="required" id="txtnumerochasis" placeholder="11122545444">
+                                                    <label  class="control-label"for="txtnumerochasis">Número de Chasis</label>
+                                                    <input type="text" readonly="readonly"  value="<%out.print((activo != null) ? ((ActivoTransporte) activo).getNumeroChasis() : "");%>" class="form-control" name="txtnumerochasis" required="required" id="txtnumerochasis" placeholder="11122545444">
                                                 </div>
                                             </td> 
                                             <td>
@@ -409,7 +410,7 @@
                                             <td>
                                                 <div class="form-group">
                                                     <label  class="control-label"for="txtcilindros">Cilindros</label>
-                                                    <input type="number" value="<%out.print((activo != null) ? ((ActivoTransporte) activo).getCilindros() : "");%>" min="1" class="form-control" name="txtcilindros"  id="txtcilindros" placeholder="Ej. 12">
+                                                    <input type="number" value="<%out.print((activo != null) ? ((ActivoTransporte) activo).getCilindros() : "");%>" min="0" class="form-control" name="txtcilindros"  id="txtcilindros" placeholder="Ej. 12">
                                                 </div>
                                             </td>   
                                             <td>
@@ -431,8 +432,8 @@
                                             </td>  
                                             <td>
                                                 <div class="form-group">
-                                                    <label  class="control-label"for="txtconsecutivovehiculo">Consecutivo<small> *Autogenerado<input type="checkbox" id="sm_idvehiculoautogenerado"  name="sm_idvehiculoautogenerado"  class="checkbox-inline"></small></label>
-                                                    <input type="number" min="0" required="required" value="<%out.print(consecutivoVehiculo);%>" min="1" class="form-control" name="txtconsecutivovehiculo"  id="txtconsecutivovehiculo">
+                                                    <label  class="control-label"for="txtconsecutivovehiculo">Consecutivo</label>
+                                                    <input type="text" min="0" required="required" readonly="readonly" value="<%out.print((activo!=null)?activo.getTipoVehiculo():"");%>" min="1" class="form-control" name="txtconsecutivovehiculo"  id="txtconsecutivovehiculo">
                                                 </div>
                                             </td>
                                         </tr>
@@ -608,7 +609,7 @@
                                                             while (iterador_imagenes.hasNext()) {
                                                                 ImagenActivo imgaux = iterador_imagenes.next();
                                                     %>  
-                                                    <img class='sm_imgcontainer_item' width='300' height='300'  src='<%out.print(imgaux.getUrldocumento());%>' title='Vista Previa imagen del activo <%out.print(imgaux.getCodigoActivo());%>, Subido el <%out.print(imgaux.getFechaSubida());%>'/>
+                                                    <img class='sm_imgcontainer_item' width='200' height='200'  src='<%out.print(imgaux.getUrldocumento());%>' title='Vista Previa imagen del activo <%out.print(imgaux.getCodigoActivo());%>, Subido el <%out.print(imgaux.getFechaSubida());%>'/>
                                                     <%
                                                         }
                                                     } else {
@@ -720,7 +721,7 @@
                 </div>
             </fieldset>
             <input type="hidden" id="registro" name="registro"  value="<%out.print((activo != null) ? activo.getPlacaActivo() : "");%>">
-            <input type="hidden" id="registro_transporte" name="registro_articulo"  value="<%out.print((activo != null) ?activo.getCodigoActivoTransporte() : "");%>">
+            <input type="hidden" id="registro_transporte" name="registro_transporte"  value="<%out.print((activo != null) ?activo.getCodigoActivoTransporte() : "");%>">
                                
         </form>
 
