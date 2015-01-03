@@ -37,7 +37,9 @@ public class AccionesActivo extends HttpServlet {
 
     enum OpcionesDo {
 
-        Listado, Existe_Activo, Existe_Placa, Existe_Consecutivo, Nuevo, Eliminar, Modificar, Modificar_Articulo, Modificar_Transporte, Query, AccionDefault
+        Listado, Existe_Activo, Existe_Placa, Existe_Consecutivo,
+        Nuevo, Eliminar, Modificar, Modificar_Articulo,
+        Modificar_Transporte, Query, Ver_Imagenes, Subida_Imagenes, AccionDefault
     }
 
     /**
@@ -147,6 +149,10 @@ public class AccionesActivo extends HttpServlet {
             return OpcionesDo.Modificar_Articulo;
         } else if (key.equals("actualizar_transporte")) {
             return OpcionesDo.Modificar_Transporte;
+        } else if (key.equals("ver_imagen")) {
+            return OpcionesDo.Ver_Imagenes;
+        } else if (key.equals("subida_imagen")) {
+            return OpcionesDo.Subida_Imagenes;
         }
 
         return OpcionesDo.AccionDefault;
@@ -267,7 +273,7 @@ public class AccionesActivo extends HttpServlet {
                         ((ActivoArticulo) activo_registro).setCodigoActivoArticulo(registro_activo);
                         //hacer la actualizacion***
                         respuetas = mactivo.actualizarActivoArticulo(((ActivoArticulo) activo_registro));
-                        activo_registro=mactivo.getActivoArticulo(registro);
+                        activo_registro = mactivo.getActivoArticulo(registro);
                         activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
                         request.setAttribute("registro", ((ActivoArticulo) activo_registro));
                         request.setAttribute("respuesta", respuetas);//resultado de las operaciones
@@ -296,7 +302,7 @@ public class AccionesActivo extends HttpServlet {
                         ((ActivoTransporte) activo_registro).setCodigoActivoTransporte(registro_activo);
                         //hacer la actualizacion*** cambiar
                         respuetas = mactivo.actualizarActivoTransporte(((ActivoTransporte) activo_registro));
-                        activo_registro=mactivo.getActivoTransporte(registro);
+                        activo_registro = mactivo.getActivoTransporte(registro);
                         activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
                         request.setAttribute("registro", ((ActivoTransporte) activo_registro));
                         request.setAttribute("respuesta", respuetas);//resultado de las operaciones
@@ -311,6 +317,24 @@ public class AccionesActivo extends HttpServlet {
                         disp.forward(request, response);
                     }//el else debe tener su if                                     
                     break;
+                case Ver_Imagenes:
+                    registro = request.getParameter("registro");
+                    request.setAttribute("imagenes", mactivo.getImagenesActivo(registro));
+                    request.setAttribute("registro", registro);
+                    disp = request.getRequestDispatcher("/modulos/activos/_asinc/_asinc_verimagenes.jsp");
+                    disp.forward(request, response);
+                    break;
+                case Subida_Imagenes:
+
+                    activo_registro = generarActivo(request);
+                    respuetas = mactivo.agregarImagenesActivo(activo_registro);
+                    registro = activo_registro.getPlacaActivo();
+                    request.setAttribute("respuesta", respuetas);//resultado de las operaciones
+                    request.setAttribute("registro", registro);
+                    request.setAttribute("imagenes", mactivo.getImagenesActivo(registro));
+                    disp = request.getRequestDispatcher("/modulos/activos/_asinc/_asinc_verimagenes.jsp");
+                    disp.forward(request, response);
+                    break;
             }
 
         } catch (Exception ex) {
@@ -320,6 +344,48 @@ public class AccionesActivo extends HttpServlet {
             //redirigir a pagian de error de sistema
         }
 
+    }
+
+    private Activo generarActivo(HttpServletRequest request) {
+        Activo activo = new Activo();
+        try {
+
+            activo.setPlacaActivo(request.getParameter("registro"));
+
+            //parte de los archivos
+            Collection<Part> parts = request.getParts();
+            if (parts != null) {
+                Iterator<Part> iteradorparts = parts.iterator();
+                if (iteradorparts != null) {
+                    long fechaActual = System.currentTimeMillis();
+                    while (iteradorparts.hasNext()) {
+                        Part parte = iteradorparts.next();
+                        String nombrearchivo = UtilidadesServlet.getFilename(parte);
+                        if (parte != null && nombrearchivo != null && nombrearchivo.length() > 1) {
+                            ImagenActivo doc = new ImagenActivo();
+                            doc.setNombreArchivo(nombrearchivo);
+                            doc.setServerArchivo(Recursos.Servers.SERVER_ARCHIVOS.toString());
+                            doc.setStreamArchivo(parte.getInputStream());
+                            doc.setFechaSubida(new Date());
+                            //se le indica el nombre de el archivo imagen. esto para colocar el path y el url.
+
+                            String ruta = Recursos.SSA.CARPETARAIZARCHIVOSACTIVOS.toString() + activo.getPlacaActivo() + "\\" + fechaActual;
+                            String url = Recursos.SSI.ARCHIVOSACTIVOSCONTEXT.toString() + activo.getPlacaActivo() + "/" + fechaActual + "/";
+                            doc.setPathDocumento(ruta);
+                            doc.setUrldocumento(url);
+                            doc.setCodigoActivo(activo.getPlacaActivo());//la placa del activo o su id
+                            //se agrega la imagen a la coleccion
+                            activo.agregarImagenActivo(doc);
+                            System.out.println("Uno a ver si entre" + nombrearchivo);
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return activo;
     }
 
     private ActivoArticulo generarActivoArticulo(HttpServletRequest request) {
