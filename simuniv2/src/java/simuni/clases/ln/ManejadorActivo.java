@@ -203,6 +203,51 @@ public class ManejadorActivo {
         return resp;
     }
 
+    public ArrayList<Respuesta> agregarImagenesActivo(Activo activo) {
+        ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
+        ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
+        String msg = "";
+        try {
+
+            if (activo.getPlacaActivo() != null && activo.getPlacaActivo().length() > 0) {
+                if (activo.getImagenes() != null) {
+                    Iterator<ImagenActivo> iteradorimagenes = activo.getImagenes().iterator();
+                    if (iteradorimagenes != null && iteradorimagenes.hasNext()) {
+                        do {
+                            System.out.println("Entreee imagens");
+                            ImagenActivo imaux = iteradorimagenes.next();
+                            Respuesta ringresoImagen = new Respuesta();
+                            msg = mactivo.registrarImagenActivo(imaux);
+                            if (msg != null && msg.startsWith("2")) {
+                                ringresoImagen.setNivel(2);
+                            } else {
+                                ringresoImagen.setNivel(1);
+                            }
+                            ringresoImagen.setMensaje(msg);
+                            resp.add(ringresoImagen);
+
+                            System.out.println("La placa rara es esta " + imaux.toString());
+                            if (imaux.getCodigoImagen() > 0) {
+                                msg += "<br>Proceso de guardado de imagen " + mactivo.guardarImagenActivo(imaux);
+                            } else {
+                                System.out.println("No se puede registrar :D");
+                            }
+                        } while (iteradorimagenes.hasNext());
+                    }
+                }
+            }
+
+        } catch (SQLException ex) {
+            Respuesta rerror = new Respuesta();
+
+            rerror.setNivel(2);
+            rerror.setMensaje("Error: " + ex.getMessage());
+            resp.add(rerror);
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+
     private ArrayList<Respuesta> registrarActivoTransporte(ActivoTransporte activoTransporte) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorArchivos marchivos = new ManejadorArchivos();
@@ -310,7 +355,7 @@ public class ManejadorActivo {
             respregtran.setMensaje(msg);
             resp.add(respregtran);
 
-            System.out.println("upss el respondio " + respregtran.getNivel()+";"+activoTransporte.getCodigoActivoTransporte());
+            System.out.println("upss el respondio " + respregtran.getNivel() + ";" + activoTransporte.getCodigoActivoTransporte());
             //si fue correcto entonces registrar las llantas
             if (activoTransporte.getCodigoActivoTransporte() > 0 && respregtran.getNivel() == 1) {
                 System.out.println("Pase primer nivel" + activoTransporte.getCodigoActivoTransporte());

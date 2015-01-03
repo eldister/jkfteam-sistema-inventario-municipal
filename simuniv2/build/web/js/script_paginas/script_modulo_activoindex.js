@@ -3,7 +3,7 @@ $(document).ready(function() {
     sm_grillageneral_inicializar();
     sm_grilla_irapagina_paginacioneventhandler();
 
-  // alert(window.location);
+    // alert(window.location);
     // inicializarpaginamantenimiento();
 });
 
@@ -48,7 +48,7 @@ function sm_grilla_proceso_agregarnuevo() {
 
 function sm_grilla_busqueda(sm_grillageneral_query) {
     console.info("------ ");
-    sm_grilla_actualizargrillageneral("query&query=" + sm_grillageneral_query+(sm_grillageneral_buscarinactivos?sm_grillageneral_mostrarinactivos:""));
+    sm_grilla_actualizargrillageneral("query&query=" + sm_grillageneral_query + (sm_grillageneral_buscarinactivos ? sm_grillageneral_mostrarinactivos : ""));
 }
 
 
@@ -61,7 +61,7 @@ function sm_grilla_actualizargrillageneral(proceso) {
             console.info("correcto" + data);
             $("#sm_div_puratablecontainertarget").html(data);
             sm_grillageneral_refrescareventosgrilla();
-            
+
             sm_grilla_irapagina_paginacioneventhandler();
             //actualizar grilla
         },
@@ -85,14 +85,14 @@ function sm_grilla_actualizargrillageneral(proceso) {
 
 function sm_grilla_irapagina_paginacioneventhandler() {
     $(".sm_div_elementlinkpag").click(function(e) {
-       // alert('entree')
+        // alert('entree')
         var link = $(this).attr('href');
         var searchvalue = $(this).parents('#sm_grilla_maincontainer').children().find('#sm_div_txtcriteriobusquedagrilla').val();
         if (searchvalue) {
-          //    alert('entre4e')
+            //    alert('entre4e')
             link += '&query=' + searchvalue;
         }
-        link+=sm_grillageneral_mostrarinactivos;
+        link += sm_grillageneral_mostrarinactivos;
         $(this).attr('href', link);
     });
 }
@@ -103,7 +103,7 @@ function iniciarValores(i) {
     if ($("#sm_checkgrillageneral_mostrarinactivos").is(":checked")) {
 
         sm_grillageneral_mostrarinactivos = "&mostrar_inactivos=si";
-        sm_grillageneral_buscarinactivos=true;
+        sm_grillageneral_buscarinactivos = true;
 
     }
 }
@@ -112,14 +112,72 @@ function sm_grilla_proceso_mostrarinactivos(i) {
     var cururl = window.location.toString();
 
     if (i) {
-        if (cururl.indexOf(sm_grillageneral_mostrarinactivos) < 0) {  
+        if (cururl.indexOf(sm_grillageneral_mostrarinactivos) < 0) {
             cururl += sm_grillageneral_mostrarinactivos
         }
     } else {
-        console.info("estoy eliminando "+sm_grillageneral_mostrarinactivos)
+        console.info("estoy eliminando " + sm_grillageneral_mostrarinactivos)
         cururl = cururl.replace(sm_grillageneral_mostrarinactivos, "");
 
     }
     window.location.assign(cururl);
 
+}
+
+
+/*parte de la imagen*/
+function  sm_grilla_proceso_verimagen(sm_grilla_item_id) {
+
+    $.ajax({
+        type: 'POST',
+        url: SIMUNI_SERVER + "/activo?proceso=ver_imagen&registro=" + sm_grilla_item_id,
+        cache: false
+    }).done(function(html) {
+        $("#sm_body_ventanamodal").html(html);
+        //  AddSubmitFormNuevoEventHandler();
+        mostrarventanamodal();
+        addsubidaImagenEvento();
+    });
+    //alert('listooo');
+
+}
+
+function mostrarventanamodal() {
+    $("#sm_body_ventanamodal").show('slow');
+    $("#sm_body_ventanamodal").dialog({
+        width: "70%",
+        minHeight: '600px',
+        height: 500,
+        position: {my: "left-10 top-20", at: "left top", of: sm_body_mainsection},
+        maxWidth: "768px",
+        close: function() {$(this).html('&nbsp;');$(this).dialog('destroy');}});
+
+
+}
+
+function addsubidaImagenEvento() {
+    console.info('listo agregado evento')
+    $("#formulario_subidaimagen").submit(function(e) {
+   console.info('listo ejecutado evento')
+        e.preventDefault();
+        var formURL = SIMUNI_SERVER + "/activo?proceso=subida_imagen&registro=" + $("#registro").val();
+
+        var formData = new FormData(this);
+        // formData.append("registro",$("#cedulaproveedor").val())
+        $.ajax({
+            type: 'POST',
+            url: formURL,
+            data: formData,
+            mimeType: "multipart/form-data",
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(responde) {
+
+                $("#sm_body_ventanamodal").html(responde);
+
+            }
+
+        });
+    });
 }
