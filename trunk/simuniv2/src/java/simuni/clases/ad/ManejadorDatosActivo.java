@@ -428,6 +428,83 @@ public class ManejadorDatosActivo {
 
     }
 
+        /**
+     * Operación que se encarga de realizar la eliminación del
+     * <strong>Activo</strong> de la base de datos..
+     *
+     * @param activo El registro a eliminar.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
+    public String eliminarActivoArticulo(ActivoArticulo activo) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{ call simuni_sp_eliminacion_activoarticulo(?,?)  }");
+            cs.setString(1, activo.getPlacaActivo());
+            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(2);
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    }
+    
+    public String desactivarActivoArticulo(ActivoArticulo activo) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{ call simuni_sp_desactivacion_activoarticulo(?,?)  }");
+            cs.setString(1, activo.getPlacaActivo());
+            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(2);
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    }  
+    
+    public String eliminarActivoTransporte(ActivoTransporte activo) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{ call simuni_sp_eliminacion_activotransporte(?,?)  }");
+            cs.setString(1, activo.getPlacaActivo());
+            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(2);
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    }
+    
+    public String desactivarActivoTranporte(ActivoTransporte activo) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{ call simuni_sp_desactivacion_activotransporte(?,?)  }");
+            cs.setString(1, activo.getPlacaActivo());
+            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(2);
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    }      
     /**
      * Operación que se encarga de realizar la eliminación del
      * <strong>Activo</strong> de la base de datos..

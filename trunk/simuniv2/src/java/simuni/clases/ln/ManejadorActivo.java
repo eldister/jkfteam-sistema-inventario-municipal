@@ -577,4 +577,90 @@ public class ManejadorActivo {
         }
         return resp;
     }
+
+    public ArrayList<Respuesta> eliminarActivoArticulo(ActivoArticulo activo) {
+        ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
+        ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
+        String msg = "";
+       Respuesta rproceso=new Respuesta();
+       try {
+           
+            msg = mactivo.eliminarActivoArticulo(activo);
+            if (msg != null && msg.startsWith("2")) {
+                rproceso.setNivel(2);
+            } else {
+                rproceso.setNivel(1);
+            }
+            rproceso.setMensaje(msg);
+        } catch (SQLException ex) {
+            rproceso.setMensaje(ex.getMessage());
+            rproceso.setNivel(2);
+        }
+       resp.add(rproceso);
+        return resp;
+    }
+    public ArrayList<Respuesta> desactivarActivoArticulo(ActivoArticulo activo) {
+        ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
+        ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
+        String msg = "";
+       Respuesta rproceso=new Respuesta();
+       try {
+           
+            msg = mactivo.desactivarActivoArticulo(activo);
+            if (msg != null && msg.startsWith("2")) {
+                rproceso.setNivel(2);
+            } else {
+                rproceso.setNivel(1);
+            }
+            rproceso.setMensaje(msg);
+        } catch (SQLException ex) {
+            rproceso.setMensaje(ex.getMessage());
+            rproceso.setNivel(2);
+        }
+       resp.add(rproceso);
+        return resp;
+    }
+    
+        public ArrayList<Respuesta> eliminarActivoTransporte(ActivoTransporte activo) {
+        ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
+        ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
+        String msg = "";
+       Respuesta rproceso=new Respuesta();
+       try {
+           
+            msg = mactivo.eliminarActivoTransporte(activo);
+            if (msg != null && msg.startsWith("2")) {
+                rproceso.setNivel(2);
+            } else {
+                rproceso.setNivel(1);
+            }
+            rproceso.setMensaje(msg);
+        } catch (SQLException ex) {
+            rproceso.setMensaje(ex.getMessage());
+            rproceso.setNivel(2);
+        }
+       resp.add(rproceso);
+        return resp;
+    }
+    public ArrayList<Respuesta> desactivarActivoTransporte(ActivoTransporte activo) {
+        ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
+        ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
+        String msg = "";
+       Respuesta rproceso=new Respuesta();
+       try {
+           
+            msg = mactivo.desactivarActivoTranporte(activo);
+            if (msg != null && msg.startsWith("2")) {
+                rproceso.setNivel(2);
+            } else {
+                rproceso.setNivel(1);
+            }
+            rproceso.setMensaje(msg);
+        } catch (SQLException ex) {
+            rproceso.setMensaje(ex.getMessage());
+            rproceso.setNivel(2);
+        }
+       resp.add(rproceso);
+        return resp;
+    }
 }
