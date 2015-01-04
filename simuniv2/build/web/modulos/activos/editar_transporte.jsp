@@ -720,7 +720,7 @@
                     </table>
                 </div>
             </fieldset>
-            <input type="hidden" id="registro" name="registro"  value="<%out.print((activo != null) ? activo.getPlacaActivo() : "");%>">
+            <input type="hidden" id="registro" name="registro"  value="<%out.print((activo != null) ? activo.getPlacaActivo() : "");%>"/>
             <input type="hidden" id="registro_transporte" name="registro_transporte"  value="<%out.print((activo != null) ?activo.getCodigoActivoTransporte() : "");%>">
                                
         </form>

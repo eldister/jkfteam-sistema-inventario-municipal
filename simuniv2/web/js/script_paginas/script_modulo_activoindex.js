@@ -142,6 +142,9 @@ function  sm_grilla_proceso_verimagen(sm_grilla_item_id) {
 
 }
 
+function sm_grilla_proceso_imprimirreporte(sm_grilla_item_id){
+    window.location.assign(SIMUNI_SERVER+'/activo?proceso=reporte_activo&registro='+sm_grilla_item_id);
+}
 function mostrarventanamodal() {
     $("#sm_body_ventanamodal").show('slow');
     $("#sm_body_ventanamodal").dialog({

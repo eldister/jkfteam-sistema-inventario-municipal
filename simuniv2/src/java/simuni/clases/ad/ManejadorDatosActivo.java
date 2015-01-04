@@ -304,7 +304,7 @@ public class ManejadorDatosActivo {
         }
         return resp;
     }
-    
+
     public String eliminarLlantaVehiculo(int vehiculo) throws SQLException {
         String resp = "";
         try {
@@ -323,6 +323,7 @@ public class ManejadorDatosActivo {
         }
         return resp;
     }
+
     public String registrarLlantaActivo(TipoLlanta tipollanta, int codigoVehiculo) throws SQLException {
         String resp = "";
         try {
@@ -617,8 +618,21 @@ public class ManejadorDatosActivo {
             resp.setCilindros(rs.getString(21));
             resp.setCodigoBipoBateria(rs.getInt(22));
             resp.setObservacionesTecnicas(rs.getString(23));
+
             rs.close();
-        }
+            st = con.prepareCall("{ call simuni_sp_obtener_llantasactivotransporte(?)}");
+            st.setString(1, codigoRegistro);
+            rs = st.executeQuery();
+                while (rs.next()) {
+                    TipoLlanta tllantaux = new TipoLlanta();
+                    tllantaux.setIdtipollanta(rs.getInt(1));
+                    tllantaux.setDescripcion(rs.getString(2));
+                    resp.agregarTipoLlanta(tllantaux);
+                    System.out.println("ENTREEEEEEEEEEEEEEEE!!");
+                }
+            }
+            rs.close();
+        
         return resp;
     }
 

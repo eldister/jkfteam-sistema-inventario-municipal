@@ -746,3 +746,19 @@ body{
     width: auto;
     margin-left: 100px;
 }
+
+
+            /*imagenes*/
+            .sm_imgcontainer_item{
+                display: inline-block;
+                padding: 5px;
+                box-shadow: 0 0 5px rgba(0,0,0,0.5);
+            }
+            .sm_imgcontainer{
+                text-align: center;
+
+            }
+            .sm_imgcontainer_itemcontainer{
+                display: inline-block;
+                margin: 20px;
+            }

@@ -83,7 +83,19 @@ public class UtilidadesServlet {
         }
 
     }
+    public static String getFechaconTiempoString(Date fecha) {
 
+        if (fecha == null) {
+            return "";
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+        try {
+            return formatter.format(fecha);
+        } catch (Exception ex) {
+            return "";
+        }
+
+    }
     public static int getNumeroDePagina(Object str, int respaldo) {
         if (str == null) {
             return respaldo;

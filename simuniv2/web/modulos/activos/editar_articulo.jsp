@@ -139,16 +139,7 @@
                 margin:15px;
             }
 
-            /*imagenes*/
-            .sm_imgcontainer_item{
-                display: inline-block;
-                padding: 5px;
-                box-shadow: 0 0 5px rgba(0,0,0,0.5);
-            }
-            .sm_imgcontainer{
-                text-align: center;
 
-            }
         </style>
         <script>
             //se inicializan fechas

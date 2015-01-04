@@ -39,7 +39,7 @@ public class AccionesActivo extends HttpServlet {
 
         Listado, Existe_Activo, Existe_Placa, Existe_Consecutivo,
         Nuevo, Eliminar, Modificar, Modificar_Articulo,
-        Modificar_Transporte, Query, Ver_Imagenes, Subida_Imagenes, AccionDefault
+        Modificar_Transporte, Query, Ver_Imagenes, Subida_Imagenes, Reporte_Activo,AccionDefault
     }
 
     /**
@@ -115,6 +115,33 @@ public class AccionesActivo extends HttpServlet {
                     request.setAttribute("tiposactivo", mactivo.listadoTipoActivo());
 
                     break;
+                case Reporte_Activo:
+                    registro = request.getParameter("registro");
+                    if (mactivo.isRegistroArticulo(registro)) {
+                        System.out.println("Eaqui es articulo"+registro);
+                        activo_registro = mactivo.getActivoArticulo(registro);
+                        activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
+                        request.setAttribute("registro", ((ActivoArticulo) activo_registro));
+                        disp = request.getRequestDispatcher("/modulos/activos/reporte_articulo.jsp");
+                        System.out.println("Entreeee aqui");
+                          //disp.forward(request, response);
+                    }//el else debe tener su if
+                    else if (mactivo.isRegistroTransporte(registro)) {
+                        activo_registro = mactivo.getActivoTransporte(registro);
+                        activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
+                        request.setAttribute("registro", ((ActivoTransporte) activo_registro));
+                        request.setAttribute("tiposbateria", mactivo.listadoTipoBateria());
+                        request.setAttribute("tiposllanta", mactivo.listadoTipoLlanta());
+                        disp = request.getRequestDispatcher("/modulos/activos/reporte_transporte.jsp");
+                    }
+
+                    request.setAttribute("departamentos", mactivo.listadoDepartamento());
+                    request.setAttribute("tipospago", mactivo.listadoTipoPago());
+                    request.setAttribute("estados", mactivo.listadoEstado());
+                    request.setAttribute("tiposactivo", mactivo.listadoTipoActivo());    
+                    
+                  
+                    break;        
             }
             disp.forward(request, response);
         } catch (Exception ex) {
@@ -153,6 +180,8 @@ public class AccionesActivo extends HttpServlet {
             return OpcionesDo.Ver_Imagenes;
         } else if (key.equals("subida_imagen")) {
             return OpcionesDo.Subida_Imagenes;
+        } else if (key.equals("reporte_activo")) {
+            return OpcionesDo.Reporte_Activo;
         }
 
         return OpcionesDo.AccionDefault;
@@ -335,6 +364,7 @@ public class AccionesActivo extends HttpServlet {
                     disp = request.getRequestDispatcher("/modulos/activos/_asinc/_asinc_verimagenes.jsp");
                     disp.forward(request, response);
                     break;
+
             }
 
         } catch (Exception ex) {
@@ -383,6 +413,7 @@ public class AccionesActivo extends HttpServlet {
             }
 
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
         return activo;
