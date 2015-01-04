@@ -39,7 +39,8 @@ public class AccionesActivo extends HttpServlet {
 
         Listado, Existe_Activo, Existe_Placa, Existe_Consecutivo,
         Nuevo, Eliminar, Modificar, Modificar_Articulo,
-        Modificar_Transporte, Query, Ver_Imagenes, Subida_Imagenes, Reporte_Activo,AccionDefault
+        Modificar_Transporte, Query, Ver_Imagenes, Subida_Imagenes, Reporte_Activo,
+        Eliminar_Articulo, Eliminar_Transporte, AccionDefault
     }
 
     /**
@@ -118,13 +119,13 @@ public class AccionesActivo extends HttpServlet {
                 case Reporte_Activo:
                     registro = request.getParameter("registro");
                     if (mactivo.isRegistroArticulo(registro)) {
-                        System.out.println("Eaqui es articulo"+registro);
+                        System.out.println("Eaqui es articulo" + registro);
                         activo_registro = mactivo.getActivoArticulo(registro);
                         activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
                         request.setAttribute("registro", ((ActivoArticulo) activo_registro));
                         disp = request.getRequestDispatcher("/modulos/activos/reporte_articulo.jsp");
                         System.out.println("Entreeee aqui");
-                          //disp.forward(request, response);
+                        //disp.forward(request, response);
                     }//el else debe tener su if
                     else if (mactivo.isRegistroTransporte(registro)) {
                         activo_registro = mactivo.getActivoTransporte(registro);
@@ -138,10 +139,31 @@ public class AccionesActivo extends HttpServlet {
                     request.setAttribute("departamentos", mactivo.listadoDepartamento());
                     request.setAttribute("tipospago", mactivo.listadoTipoPago());
                     request.setAttribute("estados", mactivo.listadoEstado());
-                    request.setAttribute("tiposactivo", mactivo.listadoTipoActivo());    
-                    
-                  
-                    break;        
+                    request.setAttribute("tiposactivo", mactivo.listadoTipoActivo());
+
+                    break;
+                case Eliminar:
+                    registro = request.getParameter("registro");
+                    if (mactivo.isRegistroArticulo(registro)) {
+                        activo_registro = mactivo.getActivoArticulo(registro);
+                        activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
+                        request.setAttribute("registro", ((ActivoArticulo) activo_registro));
+                        disp = request.getRequestDispatcher("/modulos/activos/eliminar_articulo.jsp");
+                    }//el else debe tener su if
+                    else if (mactivo.isRegistroTransporte(registro)) {
+                        activo_registro = mactivo.getActivoTransporte(registro);
+                        activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
+                        request.setAttribute("registro", ((ActivoTransporte) activo_registro));
+                        request.setAttribute("tiposbateria", mactivo.listadoTipoBateria());
+                        request.setAttribute("tiposllanta", mactivo.listadoTipoLlanta());
+                        disp = request.getRequestDispatcher("/modulos/activos/eliminar_transporte.jsp");
+                    }
+
+                    request.setAttribute("departamentos", mactivo.listadoDepartamento());
+                    request.setAttribute("tipospago", mactivo.listadoTipoPago());
+                    request.setAttribute("estados", mactivo.listadoEstado());
+                    request.setAttribute("tiposactivo", mactivo.listadoTipoActivo());
+                    break;
             }
             disp.forward(request, response);
         } catch (Exception ex) {
@@ -182,6 +204,10 @@ public class AccionesActivo extends HttpServlet {
             return OpcionesDo.Subida_Imagenes;
         } else if (key.equals("reporte_activo")) {
             return OpcionesDo.Reporte_Activo;
+        } else if (key.equals("eliminar_articulo")) {
+            return OpcionesDo.Eliminar_Articulo;
+        } else if (key.equals("eliminar_transporte")) {
+            return OpcionesDo.Eliminar_Transporte;
         }
 
         return OpcionesDo.AccionDefault;
@@ -363,6 +389,76 @@ public class AccionesActivo extends HttpServlet {
                     request.setAttribute("imagenes", mactivo.getImagenesActivo(registro));
                     disp = request.getRequestDispatcher("/modulos/activos/_asinc/_asinc_verimagenes.jsp");
                     disp.forward(request, response);
+                    break;
+                case Eliminar_Articulo:
+                    registro = request.getParameter("registro");
+                    registro_activo = UtilidadesServlet.getInt(request.getParameter("registro_articulo"), 0);
+                    System.out.println(registro + " <<< este es");
+                    if (mactivo.isRegistroArticulo(registro)) {
+                        System.out.println("Entreeee");
+                        activo_registro = new ActivoArticulo();
+
+                        activo_registro.setPlacaActivo(registro);
+                        ((ActivoArticulo) activo_registro).setCodigoActivoArticulo(registro_activo);
+                        //hacer la eliminacion***
+                        if (request.getParameter("eliminar_completo") != null) {
+                            respuetas = mactivo.eliminarActivoArticulo(((ActivoArticulo) activo_registro));
+                            request.setAttribute("eliminar_completo", true);
+                        } else {
+                            respuetas = mactivo.desactivarActivoArticulo(((ActivoArticulo) activo_registro));
+                            activo_registro = mactivo.getActivoArticulo(registro);
+                            activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
+                        }
+
+                        request.setAttribute("registro", ((ActivoArticulo) activo_registro));
+                        request.setAttribute("respuesta", respuetas);//resultado de las operaciones
+
+                        request.setAttribute("departamentos", mactivo.listadoDepartamento());
+                        request.setAttribute("tipospago", mactivo.listadoTipoPago());
+                        request.setAttribute("estados", mactivo.listadoEstado());
+                        request.setAttribute("tiposactivo", mactivo.listadoTipoActivo());
+
+                        disp = request.getRequestDispatcher("/modulos/activos/eliminar_articulo.jsp");
+                        disp.forward(request, response);
+                    }//el else debe tener su if
+                    else {
+                        System.out.println("`No entreeee");
+                    }
+                    break;
+                case Eliminar_Transporte:
+                    registro = request.getParameter("registro");
+                    registro_activo = UtilidadesServlet.getInt(request.getParameter("registro_transporte"), 0);
+                    System.out.println(registro + " <<< este es");
+                    if (mactivo.isRegistroTransporte(registro)) {
+                        System.out.println("Entreeee");
+                        activo_registro = generarActivoTransporte(request, response);
+                        activo_registro.setPlacaActivo(registro);
+                        ((ActivoTransporte) activo_registro).setCodigoActivoTransporte(registro_activo);
+                        //hacer la eliminacion*** cambiar
+                      //  respuetas = mactivo.actualizarActivoTransporte(((ActivoTransporte) activo_registro));
+                        if (request.getParameter("eliminar_completo") != null) {
+                            respuetas = mactivo.eliminarActivoTransporte(((ActivoTransporte) activo_registro));
+                            request.setAttribute("eliminar_completo", true);
+                            
+                        } else {
+                            respuetas = mactivo.desactivarActivoTransporte(((ActivoTransporte) activo_registro));
+                            activo_registro = mactivo.getActivoTransporte(registro);
+                            activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
+                        }                        
+                
+
+                        request.setAttribute("registro", ((ActivoTransporte) activo_registro));
+                        request.setAttribute("respuesta", respuetas);//resultado de las operaciones
+
+                        request.setAttribute("departamentos", mactivo.listadoDepartamento());
+                        request.setAttribute("tipospago", mactivo.listadoTipoPago());
+                        request.setAttribute("estados", mactivo.listadoEstado());
+                        request.setAttribute("tiposactivo", mactivo.listadoTipoActivo());
+                        request.setAttribute("tiposbateria", mactivo.listadoTipoBateria());
+                        request.setAttribute("tiposllanta", mactivo.listadoTipoLlanta());
+                        disp = request.getRequestDispatcher("/modulos/activos/eliminar_transporte.jsp");
+                        disp.forward(request, response);
+                    }//el else debe tener su if                       
                     break;
 
             }
