@@ -1,6 +1,6 @@
 var sm_tamanioprevisualizacionimagen = 200;
 var sm_registroactivo_tipoproceso = 0;
-var Error_Existente=false;
+var Error_Existente = false;
 //inicio del formulario, esta parte es lo qeu se ejecutara en el inicio.
 $(document).ready(function() {
     $("#sm_idvehiculoautogenerado").click(function() {
@@ -69,8 +69,9 @@ function setEventosBotonesFormulario() {
     $("#sm_btn_reporte").click(function(e) {
         e.preventDefault();
         var codigoActivo = "";
-        codigoActivo = $("#sm_hidden_codigoactivo").val();
-        window.location.assign(SIMUNI_SERVER + '/activo?proceso=reporte' + codigoActivo);
+        codigoActivo = $("#registro").val();
+       // alert(codigoActivo);
+        window.location.assign(SIMUNI_SERVER + '/activo?proceso=reporte_activo&registro=' + codigoActivo);
     });
 
     $("#sm_btn_iractivos").click(function(e) {

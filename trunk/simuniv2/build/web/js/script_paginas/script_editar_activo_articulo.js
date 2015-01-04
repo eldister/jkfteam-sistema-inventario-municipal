@@ -40,13 +40,14 @@ function adaptar_controlesbotonformulario(val) {
 
 //Los eventos de cada uno de los botones disponibles/posibles del formulario
 function setEventosBotonesFormulario() {
+
     $("#sm_btn_reporte").click(function(e) {
         e.preventDefault();
         var codigoActivo = "";
-        codigoActivo = $("#sm_hidden_codigoactivo").val();
-        window.location.assign(SIMUNI_SERVER + '/activo?proceso=reporte' + codigoActivo);
+        codigoActivo = $("#registro").val();
+       // alert(codigoActivo);
+        window.location.assign(SIMUNI_SERVER + '/activo?proceso=reporte_activo&registro=' + codigoActivo);
     });
-
     $("#sm_btn_iractivos").click(function(e) {
         e.preventDefault();
         window.location.assign(SIMUNI_SERVER + '/activo?proceso=listado');
