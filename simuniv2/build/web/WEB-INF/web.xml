@@ -36,6 +36,14 @@
         <servlet-name>AccionesActivo</servlet-name>
         <servlet-class>simuni.servlets.AccionesActivo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccionesUsuario</servlet-name>
+        <servlet-class>simuni.servlets.AccionesUsuario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccionesMensajes</servlet-name>
+        <servlet-class>simuni.servlets.AccionesMensaje</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccionesTipoUsuario</servlet-name>
         <url-pattern>/tipousuario</url-pattern>
@@ -87,6 +95,14 @@
     <servlet-mapping>
         <servlet-name>AccionesActivo</servlet-name>
         <url-pattern>/activo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccionesUsuario</servlet-name>
+        <url-pattern>/usuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccionesMensajes</servlet-name>
+        <url-pattern>/mensaje</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

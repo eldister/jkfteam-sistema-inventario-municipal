@@ -10,8 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import simuni.clases.ln.ManejadorUsuario;
 
 import simuni.entidades.Notificacion;
+import simuni.entidades.Usuario;
 import simuni.entidades.bd.Conexionmysql;
 
 
@@ -26,7 +28,7 @@ public class ManejadorDatosNotificaciones {
         PreparedStatement st = con.prepareCall("{CALL sp_agregarNotificacion(?,?,?,?,?,?)}");
 
         st.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
-        st.setInt(2, notificacion.getUsuarioObjetivo());
+        st.setString(2, notificacion.getUsuarioObjetivo());
         st.setString(3, notificacion.getUsuarioOrigen());
         st.setString(4, "Activo");
         st.setString(5, notificacion.getDescripcionNotificacion());
@@ -35,7 +37,10 @@ public class ManejadorDatosNotificaciones {
         Conexionmysql.cerrarConexion(con);
         return true;
     }
-
+    public ArrayList<Usuario> listadoUsuario() {
+        ManejadorUsuario mdusuario = new ManejadorUsuario();
+        return mdusuario.listadoUsuarios();
+    }
     public ArrayList<Notificacion> obtenerNotificacionesUsuario(String idusuario) throws SQLException {
         ArrayList<Notificacion> notificaciones = new ArrayList<Notificacion>();
         Connection con = Conexionmysql.obtenerConexion();

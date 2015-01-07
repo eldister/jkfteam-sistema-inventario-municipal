@@ -6,10 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import simuni.entidades.bd.Conexionmysql;
-import simuni.entidades.mantenimientos.TipoUsuario;
+import simuni.entidades.mantenimientos.Puesto;
 
 /**
- * Esta clase de acceso a datos de <strong>Tipo de Usuario</strong> se encarga
+ * Esta clase de acceso a datos de <strong>Puesto</strong> se encarga
  * de las operaciones directamente con la base de datos, para hacer su ingreso,
  * modificación, eliminacino del mismo. Entre las operaciones comunes que se
  * solicitan estan agregar, modificar, eliminar, hacer un query de busqueda y
@@ -21,24 +21,24 @@ import simuni.entidades.mantenimientos.TipoUsuario;
  * @since 1.0
  * @version 1.0
  */
-public class ManejadorDatosTipoUsuario {
+public class ManejadorDatosPuesto {
 
     /**
      * Operación que se encarga de realizar el ingreso / registro del
-     * <strong>Tipo de Usuario</strong>.
+     * <strong>Puesto</strong>.
      *
-     * @param tipousuario El nuevo registro a ingresar.
+     * @param puesto El nuevo registro a ingresar.
      * @return Un string con la respuesta directamente del servidor de base de
      * datos.
      * @throws SQLException Si ocurre una excepcion sql.
      * @since 1.0
      */
-    public String registrarTipoUsuario(TipoUsuario tipousuario) throws SQLException {
+    public String registrarPuesto(Puesto puesto) throws SQLException {
         String resp = "";
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            CallableStatement cs = con.prepareCall("{call simuni_sp_registro_tipousuario(?,?)}");
-            cs.setString(1, tipousuario.getNombretipo());
+            CallableStatement cs = con.prepareCall("{call simuni_sp_registro_puesto(?,?)}");
+            cs.setString(1, puesto.getNombrePuesto());
             cs.registerOutParameter(2, java.sql.Types.VARCHAR);
             cs.execute();
             resp = cs.getString(2);
@@ -52,21 +52,21 @@ public class ManejadorDatosTipoUsuario {
 
     /**
      * Operación que se encarga de realizar modificación del
-     * <strong>Tipo de Usuario</strong>.
+     * <strong>Puesto</strong>.
      *
-     * @param tipousuario El registro a modificar.
+     * @param puesto El registro a modificar.
      * @return Un string con la respuesta directamente del servidor de base de
      * datos.
      * @throws SQLException Si ocurre una excepcion sql.
      * @since 1.0
      */
-    public String modificarTipoUsuario(TipoUsuario tipousuario) throws SQLException {
+    public String modificarPuesto(Puesto puesto) throws SQLException {
         String resp = "";
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            CallableStatement cs = con.prepareCall("{ call simuni_sp_actualizacion_tipousuario(?,?,?)  }");
-            cs.setString(1, tipousuario.getNombretipo());
-            cs.setInt(2, tipousuario.getIdtipousuario());
+            CallableStatement cs = con.prepareCall("{ call simuni_sp_actualizacion_puesto(?,?,?)  }");
+            cs.setString(1, puesto.getNombrePuesto());
+            cs.setInt(2, puesto.getCodigoPuesto());
             cs.registerOutParameter(3, java.sql.Types.VARCHAR);
             cs.execute();
             resp = cs.getString(3);
@@ -82,20 +82,20 @@ public class ManejadorDatosTipoUsuario {
 
     /**
      * Operación que se encarga de realizar la eliminación del
-     * <strong>Tipo de Usuario</strong> de la base de datos..
+     * <strong>Puesto</strong> de la base de datos..
      *
-     * @param tipousuario El registro a eliminar.
+     * @param puesto El registro a eliminar.
      * @return Un string con la respuesta directamente del servidor de base de
      * datos.
      * @throws SQLException Si ocurre una excepcion sql.
      * @since 1.0
      */
-    public String eliminarTipoUsuario(TipoUsuario tipousuario) throws SQLException {
+    public String eliminarPuesto(Puesto puesto) throws SQLException {
         String resp = "";
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            CallableStatement cs = con.prepareCall("{ call simuni_sp_eliminacion_tipousuario(?,?)  }");
-            cs.setInt(1, tipousuario.getIdtipousuario());
+            CallableStatement cs = con.prepareCall("{ call simuni_sp_eliminacion_puesto(?,?)  }");
+            cs.setInt(1, puesto.getCodigoPuesto());
             cs.registerOutParameter(2, java.sql.Types.VARCHAR);
             cs.execute();
             resp = cs.getString(2);
@@ -117,12 +117,12 @@ public class ManejadorDatosTipoUsuario {
      * @throws SQLException Si ocurre un error SQL
      * @since 1.0
      */
-    public ResultSet listadoTipoUsuario(int desplazamiento, int paginacion) throws SQLException {
+    public ResultSet listadoPuesto(int desplazamiento, int paginacion) throws SQLException {
         ResultSet resp = null;
 
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            PreparedStatement st = con.prepareCall("SELECT *  FROM  simuni_vw_listado_tiposusuario  LIMIT " + desplazamiento + "," + paginacion + ";");
+            PreparedStatement st = con.prepareCall("SELECT *  FROM  simuni_vw_listado_puesto  LIMIT " + desplazamiento + "," + paginacion + ";");
             resp = st.executeQuery();
 
         } catch (SQLException ex) {
@@ -133,13 +133,20 @@ public class ManejadorDatosTipoUsuario {
         return resp;
 
     }
-    
-        public ResultSet listadoTipoUsuario() throws SQLException {
+    /**
+     * Función que se encarga de obtener un listado de los datos en la base de
+     * datos. Todo trabaja a traves de vistas de la base de datos.
+     *
+     * @return Un ResultSet que trae consigo los datos de la selección.
+     * @throws SQLException Si ocurre un error SQL
+     * @since 1.0
+     */
+    public ResultSet listadoPuesto() throws SQLException {
         ResultSet resp = null;
 
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            PreparedStatement st = con.prepareCall("SELECT *  FROM  simuni_vw_listado_tiposusuario;");
+            PreparedStatement st = con.prepareCall("SELECT *  FROM  simuni_vw_listado_puesto;");
             resp = st.executeQuery();
 
         } catch (SQLException ex) {
@@ -149,7 +156,7 @@ public class ManejadorDatosTipoUsuario {
 
         return resp;
 
-    }  
+    }    
 
     /**
      * Funcion que se encarga de traer un registro específico de la base de
@@ -157,20 +164,20 @@ public class ManejadorDatosTipoUsuario {
      * la operacion.
      *
      * @param codigo El código / identificador del registro a buscar.
-     * @return Un objeto TipoUsuario con los valores correspondientes
+     * @return Un objeto Puesto con los valores correspondientes
      * @throws SQLException si ocurre una excepción de SQL
      * @since 1.0
      */
-    public TipoUsuario getTipoUsuario(int codigo) throws SQLException {
-        TipoUsuario resp = null;
+    public Puesto getPuesto(int codigo) throws SQLException {
+        Puesto resp = null;
         Connection con = Conexionmysql.obtenerConexion();
-        PreparedStatement st = con.prepareCall("{ call simuni_sp_obtener_tipousuario(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        PreparedStatement st = con.prepareCall("{ call simuni_sp_obtener_puesto(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         st.setInt(1, codigo);
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
-            resp = new TipoUsuario();
-            resp.setIdtipousuario(rs.getInt(1));
-            resp.setNombretipo(rs.getString(2));
+            resp = new Puesto();
+            resp.setCodigoPuesto(rs.getInt(1));
+            resp.setNombrePuesto(rs.getString(2));
             rs.close();
         }
         return resp;
@@ -188,7 +195,7 @@ public class ManejadorDatosTipoUsuario {
     public int getCantidadFilas(String query) throws SQLException {
         int resp = 0;
         Connection con = Conexionmysql.obtenerConexion();
-        PreparedStatement st = con.prepareCall(" {call simuni_sp_obtener_cantidad_retiposusuario(?)}");
+        PreparedStatement st = con.prepareCall(" {call simuni_sp_obtener_cantidad_repuesto(?)}");
         st.setString(1, query);
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
@@ -208,11 +215,11 @@ public class ManejadorDatosTipoUsuario {
      * @throws SQLException Si ocurre una excepcion de SQL.
      * @since 1.0
      */
-    public ResultSet busquedaTipoUsuario(String query, int desplazamiento, int paginacion) throws SQLException {
+    public ResultSet busquedaPuesto(String query, int desplazamiento, int paginacion) throws SQLException {
         ResultSet resp = null;
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            PreparedStatement st = con.prepareCall("{call simuni_sp_busqueda_tipousuario(?,?,?)}");
+            PreparedStatement st = con.prepareCall("{call simuni_sp_busqueda_puesto(?,?,?)}");
             st.setString(1, query);
             st.setInt(2, desplazamiento);
             st.setInt(3, paginacion);

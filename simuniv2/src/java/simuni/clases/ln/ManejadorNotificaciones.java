@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import simuni.clases.ad.ManejadorDatosNotificaciones;
 import simuni.entidades.Notificacion;
+import simuni.entidades.Usuario;
 
 /**
  *
@@ -78,6 +79,10 @@ public class ManejadorNotificaciones {
         }
 
     }
+    public ArrayList<Usuario> listadoUsuario() {
+        ManejadorUsuario mdusuario = new ManejadorUsuario();
+        return mdusuario.listadoUsuarios();
+    }    
 
     /**
      * Este método obtiene una lista con todos los mensajes enviados a un
