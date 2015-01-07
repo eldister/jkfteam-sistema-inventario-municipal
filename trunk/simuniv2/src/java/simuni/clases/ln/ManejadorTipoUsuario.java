@@ -2,6 +2,7 @@ package simuni.clases.ln;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import simuni.clases.ad.ManejadorDatosTipoUsuario;
 import simuni.entidades.Respuesta;
 import simuni.entidades.mantenimientos.TipoUsuario;
@@ -48,10 +49,11 @@ public class ManejadorTipoUsuario {
         }
         return resp;
     }
+
     /**
      * Operación que se encarga de realizar la eliminación del
-     * <strong>Tipo de Usuario</strong> de la base de datos.
-     * No lanza excepciones, y si las hay, las registra en bitácora.
+     * <strong>Tipo de Usuario</strong> de la base de datos. No lanza
+     * excepciones, y si las hay, las registra en bitácora.
      *
      * @param tipousuario El registro a eliminar.
      * @return Un objeto Respuesta que indica el resultado de la operación.
@@ -78,10 +80,11 @@ public class ManejadorTipoUsuario {
         return resp;
 
     }
+
     /**
      * Operación que se encarga de realizar la modificación del
-     * <strong>Tipo de Usuario</strong> de la base de datos.
-     * No lanza excepciones, y si las hay, las registra en bitácora.
+     * <strong>Tipo de Usuario</strong> de la base de datos. No lanza
+     * excepciones, y si las hay, las registra en bitácora.
      *
      * @param tipousuario El registro a modificar.
      * @return Un objeto Respuesta que indica el resultado de la operación.
@@ -108,9 +111,10 @@ public class ManejadorTipoUsuario {
         return resp;
 
     }
+
     /**
-     * Función que se encarga de obtener un listado de los registros ya ingreados.
-     * No lanza excepciones, y si las hay, las registra en bitácora.
+     * Función que se encarga de obtener un listado de los registros ya
+     * ingreados. No lanza excepciones, y si las hay, las registra en bitácora.
      *
      * @param desplazamiento Registros que se ha de brincar o pasar por alto.
      * @param paginacion Cantidad de registros a traer.
@@ -125,13 +129,38 @@ public class ManejadorTipoUsuario {
 
         } catch (SQLException ex) {
 
-           ex.printStackTrace();
+            ex.printStackTrace();
         }
         return resp;
     }
+
+    public ArrayList<TipoUsuario> listadoTipoUsuarios() {
+
+        ArrayList<TipoUsuario> tiposusuario = null;
+        ManejadorDatosTipoUsuario mdTipoUsuario = new ManejadorDatosTipoUsuario();
+        try {
+            ResultSet resp = null;
+            resp = mdTipoUsuario.listadoTipoUsuario();
+            if (resp.next()) {
+                tiposusuario = new ArrayList<TipoUsuario>();
+                do {
+                    TipoUsuario tipousuario = new TipoUsuario();
+                    tipousuario.setIdtipousuario(resp.getInt(1));
+                    tipousuario.setNombretipo(resp.getString(2));
+                    tiposusuario.add(tipousuario);
+                } while (resp.next());
+            }
+
+        } catch (SQLException ex) {
+
+            ex.printStackTrace();
+        }
+        return tiposusuario;
+    }
+
     /**
-     * Realiza una busqueda en la base de datos.
-     * No lanza excepciones, y si las hay, las registra en bitácora.
+     * Realiza una busqueda en la base de datos. No lanza excepciones, y si las
+     * hay, las registra en bitácora.
      *
      * @param query El criterio a buscar.
      * @param desplazamiento Cantidad de registros que se deben de pasar.
@@ -153,9 +182,11 @@ public class ManejadorTipoUsuario {
         return resp;
 
     }
+
     /**
      * Obtiene la cantidad de registros que hay en la base de datos, con el
-     * criterio qeu se pasa por parámetro. No lanza excepciones, y si las hay, las registra en bitácora.
+     * criterio qeu se pasa por parámetro. No lanza excepciones, y si las hay,
+     * las registra en bitácora.
      *
      * @param query La cadena con la busqueda a evaluar.
      * @return Un entero con la cantidad de registros.

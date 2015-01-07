@@ -16,7 +16,7 @@ package simuni.entidades;
 public class Notificacion {
     private int idNotificacion;
     private java.util.Date fechaNotificacion;
-    private int usuarioObjetivo;
+    private String usuarioObjetivo;
     private String usuarioOrigen;
     private String estadoNotificacion;
     private String descripcionNotificacion;
@@ -58,7 +58,7 @@ public class Notificacion {
      * obtener el usario que se le enviarán las notificaciones 
      * @return the usuarioObjetivo
      */
-    public int getUsuarioObjetivo() {
+    public String getUsuarioObjetivo() {
         return usuarioObjetivo;
     }
 
@@ -66,7 +66,7 @@ public class Notificacion {
      * poner el usario que se le enviarán las notificaciones 
      * @param usuarioObjetivo the usuarioObjetivo to set
      */
-    public void setUsuarioObjetivo(int usuarioObjetivo) {
+    public void setUsuarioObjetivo(String usuarioObjetivo) {
         this.usuarioObjetivo = usuarioObjetivo;
     }
 

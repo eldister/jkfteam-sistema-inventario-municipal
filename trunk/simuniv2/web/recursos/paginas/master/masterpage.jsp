@@ -3,7 +3,7 @@
 <%@page import="simuni.entidades.Notificacion"%>
 <%@page import="simuni.entidades.Notificacion"%>
 <%@page import="simuni.clases.ln.ManejadorNotificaciones"%>
-<%@page import="simuni.clases.ln.ManejadorUsuarios"%>
+<%@page import="simuni.clases.ln.ManejadorUsuario"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
@@ -27,7 +27,7 @@
 
     }
     if (loginpage == null && error == null) {
-        ManejadorUsuarios manejadorusuarios = new ManejadorUsuarios();
+        ManejadorUsuario manejadorusuarios = new ManejadorUsuario();
         user = manejadorusuarios.getMenuUsuario(idusuario);
 
     }
@@ -119,7 +119,7 @@
                             </div>
                         </div>                            
                     </div>
-                    <%out.print(user.getMenuusuario());
+          <% try{out.print(user.getMenuusuario());}catch(Exception ex){System.out.println(ex.getMessage());}
                         } %>
                 </header>  
             </div>

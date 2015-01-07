@@ -11,14 +11,18 @@ package simuni.entidades;
  * @author FchescO
  */
 public class Usuario {
-    private String nombreusuario;
+    private String cedula;//
+    private String nombreusuario;//
     private String contrasena;
+private String contrasena2;//
     private int tipousuario;
     private String menuusuario;
     private int areatrabajo;
-    private String nombre;
-    private String apellido1;
-    private String apellido2;
+    private int codigoPuesto;
+    private String nombre;//
+    private String apellido1;//
+    private String apellido2;//
+    private String email;
 
     /**
      * obtener el nombre de usuario
@@ -136,5 +140,61 @@ public class Usuario {
      */
     public void setApellido2(String apellido2) {
         this.apellido2 = apellido2;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * @return the codigoPuesto
+     */
+    public int getCodigoPuesto() {
+        return codigoPuesto;
+    }
+
+    /**
+     * @param codigoPuesto the codigoPuesto to set
+     */
+    public void setCodigoPuesto(int codigoPuesto) {
+        this.codigoPuesto = codigoPuesto;
+    }
+
+    /**
+     * @return the cedula
+     */
+    public String getCedula() {
+        return cedula;
+    }
+
+    /**
+     * @param cedula the cedula to set
+     */
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    /**
+     * @return the contrasena2
+     */
+    public String getContrasena2() {
+        return contrasena2;
+    }
+
+    /**
+     * @param contrasena2 the contrasena2 to set
+     */
+    public void setContrasena2(String contrasena2) {
+        this.contrasena2 = contrasena2;
     }
 }
