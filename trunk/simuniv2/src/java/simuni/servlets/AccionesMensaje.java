@@ -2,6 +2,7 @@ package simuni.servlets;
 
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -87,7 +88,7 @@ public class AccionesMensaje extends HttpServlet {
             String query = request.getParameter("query");
             ResultSet resultset = null;
             query = query == null ? "" : query;
-       
+
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     request.setAttribute("usuarios", mmensaje.listadoUsuario());
@@ -98,10 +99,10 @@ public class AccionesMensaje extends HttpServlet {
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
                     paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
                     desplazamiento = ((npagina) * paginacion);
-                   // resultset = mmensaje.busquedaMensaje(query, desplazamiento, paginacion);
+                    // resultset = mmensaje.busquedaMensaje(query, desplazamiento, paginacion);
                     request.setAttribute("listado", resultset);
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/mensajes/index.jsp");
-                   // request.setAttribute("paginacion", ((int) mmensaje.getCantidadRegistros(query) / paginacion) + 1);
+                    // request.setAttribute("paginacion", ((int) mmensaje.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
                     break;
                 case Modificar:
@@ -109,7 +110,7 @@ public class AccionesMensaje extends HttpServlet {
                     if (UtilidadesServlet.tryParseInt(request.getParameter("registro"))) {
                         registro = Integer.parseInt(request.getParameter("registro"));
                       //  Notificacion mensaje = mmensaje.getMensaje(registro);
-                      //  request.setAttribute("registro", mensaje);
+                        //  request.setAttribute("registro", mensaje);
                     }
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/mensajes/_asinc/_asinc_editar.jsp");
                     break;
@@ -117,7 +118,7 @@ public class AccionesMensaje extends HttpServlet {
                     if (UtilidadesServlet.tryParseInt(request.getParameter("registro"))) {
                         registro = Integer.parseInt(request.getParameter("registro"));
                       //  Notificacion mensaje = mmensaje.getMensaje(registro);
-                   //     request.setAttribute("registro", mensaje);
+                        //     request.setAttribute("registro", mensaje);
                     }
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/mensajes/_asinc/_asinc_eliminar.jsp");
                     break;
@@ -125,10 +126,10 @@ public class AccionesMensaje extends HttpServlet {
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
                     paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
                     desplazamiento = ((npagina) * paginacion);
-                //    resultset = mmensaje.busquedaMensaje(query, desplazamiento, paginacion);
+                    //    resultset = mmensaje.busquedaMensaje(query, desplazamiento, paginacion);
                     request.setAttribute("listado", resultset);
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/mensajes/index.jsp");
-              //      request.setAttribute("paginacion", ((int) mmensaje.getCantidadRegistros(query) / paginacion) + 1);
+                    //      request.setAttribute("paginacion", ((int) mmensaje.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
                     break;
             }
@@ -153,6 +154,7 @@ public class AccionesMensaje extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher disp = null;//para envio de respuestas y redirecciones 
+        Notificacion notificacion = null;
         try {
             Respuesta respuesta = null;//objeto respuesta al usuario
             int desplazamiento = 0;//movimiento hacia adelante en los queries
@@ -160,29 +162,27 @@ public class AccionesMensaje extends HttpServlet {
             int registro = 0;//codigo de registro a buscar
             int paginacion = 0;//obtener la paginacion y pagina actual  
             String nombremensaje = "";//campo txt
-         //   ManejadorMensaje mmensaje = new ManejadorMensaje();
+            ManejadorNotificaciones mmensaje = new ManejadorNotificaciones();
             String query = request.getParameter("query");
             query = query == null ? "" : query;
             ResultSet resultset = null;
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
-                    nombremensaje = request.getParameter("txtnombremensaje");
-             //       Mensaje nuevomensaje = new Mensaje();
-            //        nuevomensaje.setNombremensaje(nombremensaje);
-               //     respuesta = mmensaje.registrarMensaje(nuevomensaje);
+                    notificacion = generarMensaje(request);
+                    respuesta = mmensaje.agregarMensaje(notificacion);
                     request.setAttribute("respuesta", respuesta);
-                 //   request.setAttribute("nuevoregistro", nuevomensaje);
-                    disp = request.getRequestDispatcher("/modulos/mantenimientos/mensajes/_asinc/_asinc_nuevo.jsp");
+                    request.setAttribute("registro", notificacion);
+                    disp = request.getRequestDispatcher("/modulos/mensajes/_asinc/_asinc_nuevomensaje.jsp");
                     break;
                 case Modificar:
                     nombremensaje = request.getParameter("txtnombremensaje");
                     if (UtilidadesServlet.tryParseInt(request.getParameter("registro"))) {
                         registro = Integer.parseInt(request.getParameter("registro"));
                     //    Mensaje mensaje = new Mensaje();
-                     //   mensaje.setIdmensaje(registro);
-                  //      mensaje.setNombremensaje(nombremensaje);
-                    //    respuesta = mmensaje.modificarMensaje(mensaje);
-                      //  request.setAttribute("registro", mensaje);
+                        //   mensaje.setIdmensaje(registro);
+                        //      mensaje.setNombremensaje(nombremensaje);
+                        //    respuesta = mmensaje.modificarMensaje(mensaje);
+                        //  request.setAttribute("registro", mensaje);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/mensajes/_asinc/_asinc_editar.jsp");
                     } else {
@@ -193,8 +193,8 @@ public class AccionesMensaje extends HttpServlet {
                     if (UtilidadesServlet.tryParseInt(request.getParameter("registro"))) {
                         registro = Integer.parseInt(request.getParameter("registro"));
                     //    Mensaje mensaje = mmensaje.getMensaje(registro);
-                     //   respuesta = mmensaje.eliminarMensaje(mensaje);
-                   //     request.setAttribute("registro", mensaje);
+                        //   respuesta = mmensaje.eliminarMensaje(mensaje);
+                        //     request.setAttribute("registro", mensaje);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/mensajes/_asinc/_asinc_eliminar.jsp");
                     }
@@ -203,19 +203,19 @@ public class AccionesMensaje extends HttpServlet {
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
                     paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
                     desplazamiento = ((npagina) * paginacion);
-                  //  resultset = mmensaje.busquedaMensaje(query, desplazamiento, paginacion);
+                    //  resultset = mmensaje.busquedaMensaje(query, desplazamiento, paginacion);
                     request.setAttribute("listado", resultset);
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/mensajes/_asinc/_asinc_listar.jsp");
-                 //   request.setAttribute("paginacion", ((int) mmensaje.getCantidadRegistros(query) / paginacion) + 1);
+                    //   request.setAttribute("paginacion", ((int) mmensaje.getCantidadRegistros(query) / paginacion) + 1);
                     break;
                 case AccionDefault:
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
                     paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
                     desplazamiento = ((npagina) * paginacion);
-                   // resultset = mmensaje.busquedaMensaje(query, desplazamiento, paginacion);
+                    // resultset = mmensaje.busquedaMensaje(query, desplazamiento, paginacion);
                     request.setAttribute("listado", resultset);
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/mensajes/index.jsp");
-                //    request.setAttribute("paginacion", ((int) mmensaje.getCantidadRegistros(query) / paginacion) + 1);
+                    //    request.setAttribute("paginacion", ((int) mmensaje.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
                     break;
             }
@@ -226,5 +226,16 @@ public class AccionesMensaje extends HttpServlet {
             disp.forward(request, response);
             //redirigir a pagian de error de sistema
         }
+    }
+
+    private Notificacion generarMensaje(HttpServletRequest request) {
+        Notificacion notificacion = new Notificacion();
+        notificacion.setFechaNotificacion(new Date());
+        notificacion.setUsuarioObjetivo(request.getParameter("cmbusuarioobjetivo"));
+        notificacion.setUsuarioOrigen((String) request.getSession().getAttribute("USERNAME"));//username del usuario actual
+        notificacion.setEstadoNotificacion("Activa");
+        notificacion.setDescripcionNotificacion(request.getParameter("txtdescripcionmensaje"));
+        notificacion.setTipoNotificacion("Mensaje");
+        return notificacion;
     }
 }

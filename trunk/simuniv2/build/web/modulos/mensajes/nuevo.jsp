@@ -8,35 +8,22 @@
 <%@ page language='java' contentType='text/html; charset=ISO-8859-1' pageEncoding='ISO-8859-1'%>
 <%@ taglib prefix='decorator' uri='http://claudiushauptmann.com/jsp-decorator/'%>
 <%
-    boolean error = false;
-    boolean proceso = false;
-    Respuesta respuesta = null;
-    Notificacion notificacion = null;
+
     ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios");
     Iterator<Usuario> iterador_usuario = null;
     try {
-        notificacion = (Notificacion) request.getAttribute("registro");
-
         if (usuarios != null) {
             iterador_usuario = usuarios.iterator();
             System.out.println("listo entree");
         }
-        if (respuesta != null && notificacion != null) {
-            proceso = true;
-        }
-        if (proceso && respuesta.getNivel() == 2) {
-            error = true;
-        }
-
     } catch (Exception ex) {
         ex.printStackTrace();
     }
-
 %>
 <decorator:decorate filename='../../recursos/paginas/master/masterpage.jsp'>
     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | Nuevo Proveedor </decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
-        <script src='<%=request.getContextPath()%>/js/script_validator.js' charset="utf-8"></script>
+        <script src='<%=request.getContextPath()%>/js/script_paginas/script_nuevo_mensaje.js' charset="utf-8"></script>
 
         <style>
             #sm_tb_campos td .form-group{
@@ -69,7 +56,7 @@
 
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
-        <form id="formulario" class="form" method="POST" action="<%out.print(Recursos.Servers.MAINSERVER);%>/notificacion?proceso=nuevo">
+        <form id="formulario" class="form" method="POST">
             <fieldset id="notificaciones">
                 <legend>Enviar Mensaje <small><sup>* Campos requeridos</sup></small></legend>
                 <div id="registerInformation">
@@ -77,14 +64,14 @@
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <label  class="control-label"for="cmbtiporpoveedor">Selecciona el Usuario a Enviar</label>
-                                    <select class="form-control" name="cmbtiponotificacion" id="cmbtiporpoveedor">
+                                    <label  class="control-label"for="cmbusuarioobjetivo">Selecciona el Usuario a Enviar</label>
+                                    <select required="required" class="form-control" name="cmbusuarioobjetivo" id="cmbusuarioobjetivo">
                                         <%
                                             if (iterador_usuario != null && iterador_usuario.hasNext()) {
                                                 do {
                                                     Usuario usuario = iterador_usuario.next();
                                         %>
-                                        <option <%out.print((error && proceso && usuario != null && usuario.getNombreusuario() == notificacion.getUsuarioObjetivo()) ? "selected='selected'" : "");%> value="<%out.print(usuario.getNombreusuario());%>"><%out.print(usuario.getNombre());%></option>
+                                        <option value="<%out.print(usuario.getNombreusuario());%>"><%out.print(usuario.getNombre());%></option>
                                         <%
                                                 } while (iterador_usuario.hasNext());
                                             }
@@ -101,12 +88,11 @@
                             <td colspan="4">
                                 <div class="form-group">
                                     <label  class="control-label"for="cmbtiporpoveedor">Escribe tu mensaje*</label>
-                                    <textarea class="form-control"><%out.print((error && proceso && notificacion != null) ? notificacion.getDescripcionNotificacion() : "");%></textarea>
+                                    <textarea name="txtdescripcionmensaje" required="required" class="form-control"></textarea>
                                 </div>
                             </td>                             
                         </tr>
-                        <tr>
-                            <td>&nbsp;</td>
+                        <tr>         
                             <td>
                                 <div class="form-group">
                                     <input type="submit" value="Enviar Mensaje" class="form-control btn-info">
@@ -117,10 +103,16 @@
                                     <input type="reset" class="form-control" value="Limpiar formulario">
                                 </div>
                             </td>
-                        </tr>    
+                        </tr> 
+                        <tr>
+                            <td colspan="4">
+                              <div id="area-mensajes">-</div>     
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </fieldset>
+                              
         </form>
     </decorator:content>
 </decorator:decorate>

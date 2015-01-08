@@ -44,6 +44,10 @@
         <servlet-name>AccionesMensajes</servlet-name>
         <servlet-class>simuni.servlets.AccionesMensaje</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccionesNotificacion</servlet-name>
+        <servlet-class>simuni.servlets.AccionesNotificacion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccionesTipoUsuario</servlet-name>
         <url-pattern>/tipousuario</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>AccionesMensajes</servlet-name>
         <url-pattern>/mensaje</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccionesNotificacion</servlet-name>
+        <url-pattern>/notificacion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

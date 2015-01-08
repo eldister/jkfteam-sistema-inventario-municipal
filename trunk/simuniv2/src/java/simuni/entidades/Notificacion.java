@@ -6,6 +6,8 @@
 
 package simuni.entidades;
 
+import java.util.Date;
+
 
 
 
@@ -50,7 +52,7 @@ public class Notificacion {
      * pone la fecha de la notificación 
      * @param fechaNotificacion the fechaNotificacion to set
      */
-    public void setFechaNotificacion(java.sql.Date fechaNotificacion) {
+    public void setFechaNotificacion(Date fechaNotificacion) {
         this.fechaNotificacion = fechaNotificacion;
     }
 

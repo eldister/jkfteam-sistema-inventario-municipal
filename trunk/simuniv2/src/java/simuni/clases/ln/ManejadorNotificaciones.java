@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import simuni.clases.ad.ManejadorDatosNotificaciones;
 import simuni.entidades.Notificacion;
+import simuni.entidades.Respuesta;
 import simuni.entidades.Usuario;
 
 /**
@@ -79,10 +80,11 @@ public class ManejadorNotificaciones {
         }
 
     }
+
     public ArrayList<Usuario> listadoUsuario() {
         ManejadorUsuario mdusuario = new ManejadorUsuario();
         return mdusuario.listadoUsuarios();
-    }    
+    }
 
     /**
      * Este método obtiene una lista con todos los mensajes enviados a un
@@ -128,6 +130,17 @@ public class ManejadorNotificaciones {
         }
 
     }
+    
+    public Notificacion obtenerMensaje(int codigo){
+         Notificacion notificacion=null;
+        try {
+            ManejadorDatosNotificaciones manejadordatosnotificaciones = new ManejadorDatosNotificaciones();
+             notificacion = manejadordatosnotificaciones.obtenerMensaje(codigo);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } 
+        return notificacion;
+    }
 
     /**
      * Este método obtiene los recientes mensajes enviados a un usuario y
@@ -149,5 +162,25 @@ public class ManejadorNotificaciones {
             return null;
         }
 
+    }
+
+    public Respuesta agregarMensaje(Notificacion tipoactivo) {
+        Respuesta resp = new Respuesta();
+        ManejadorDatosNotificaciones mdmensaje = new ManejadorDatosNotificaciones();
+
+        try {
+            String msg = mdmensaje.agregarMensaje(tipoactivo);
+            if (msg != null && msg.startsWith("2")) {
+                resp.setNivel(2);
+            } else {
+                resp.setNivel(1);
+            }
+            resp.setMensaje(msg);
+
+        } catch (SQLException ex) {
+            resp.setNivel(2);
+            resp.setMensaje("Error: " + ex.getMessage());
+        }
+        return resp;
     }
 }

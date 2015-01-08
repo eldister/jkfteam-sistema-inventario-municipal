@@ -99,7 +99,7 @@ header{
     background-repeat: no-repeat;
     overflow: hidden;
     cursor: pointer;
-   
+
 }
 /*
     Para la imagen se hace un padding de 100
@@ -249,6 +249,8 @@ header{
     overflow-y: auto;
     width: 100%;
     font-size: 0.9em;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 #sm_body_notificacion{
     clear: both;
@@ -271,11 +273,11 @@ header{
     border: 0px rgba(0,0,0,0);
     padding: 0px;
     font-size: 1.2em;
-   
+
 }
 #sm_body_barralateral .sm_aside_barralateralitem > fieldset legend{
     margin-bottom: 5px;
-     color:lightgray;
+    color:lightgray;
 }
 
 #sm_body_barralateral .sm_aside_barralateralitem {
@@ -283,11 +285,7 @@ header{
 }
 
 
-.sm_body_barralateralseparador{
-    border: solid 1px rgba(0,0,0,0.3);
-    width: 60%;
-    height: 1px;
-}
+
 footer{
     clear: both;
     border-top:1px solid lightblue;
@@ -323,7 +321,7 @@ footer{
     -webkit-transition: all ease-in-out 0.5s;
 
 
-    
+
 }
 .sm_div_notificacion:hover{
     background-color: rgba(0,125,255,0.2);
@@ -348,19 +346,19 @@ footer{
 .sm_div_mensaje{
     padding: 5px;
     max-width: 200px;
-        padding-top:15px;
+    padding-top:15px;
     background-image: url(../recursos/imagenes/sistema/sm_mensaje_usuario.png);
     background-size: 15px 15px;
     background-repeat: no-repeat;  
 
-        box-shadow: 0px 0px 5px black;
+    box-shadow: 0px 0px 5px black;
     margin-left: 3px;
     width: 90%;
     -webkit-transition: all ease-in-out 0.5s;
 
 
 
-    
+
 }
 .sm_div_textomensaje{
     font-style: italic;
@@ -698,44 +696,44 @@ body{
 
 /*para la reporteria*/
 .sm_container_reporttext{
-   
+
 }
 @media print{
-.container{
-     font-size: 1.2em;
-     margin-bottom: 10px;
-}
-.datos_registro{
-    width: 100%;
-}
-.sm_datos_registro_table{
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
-    text-align: center;
-    
-}
-.SIMUNI_PRINCIPAL{
-    display: block;
-    height: 100%;
-    padding: 0px;
-    margin: 0px;
-}
-.sm_container_reporttextheader{
-    text-align: center;
-    font-weight: 700;
-    font-size: 1.1em;
-    margin-bottom:10px;
-}
-#maincontainer .SIMUNI_ROW:first-child{
-    height: 100px;
-}
-#sm_body_notificacion{
-    width: 100%;
-    display: block;
-    text-align: justify;
-    padding-left: 20%;
-}
+    .container{
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+    .datos_registro{
+        width: 100%;
+    }
+    .sm_datos_registro_table{
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+        text-align: center;
+
+    }
+    .SIMUNI_PRINCIPAL{
+        display: block;
+        height: 100%;
+        padding: 0px;
+        margin: 0px;
+    }
+    .sm_container_reporttextheader{
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.1em;
+        margin-bottom:10px;
+    }
+    #maincontainer .SIMUNI_ROW:first-child{
+        height: 100px;
+    }
+    #sm_body_notificacion{
+        width: 100%;
+        display: block;
+        text-align: justify;
+        padding-left: 20%;
+    }
 }
 
 .sm_container_reportopciones{
@@ -748,17 +746,28 @@ body{
 }
 
 
-            /*imagenes*/
-            .sm_imgcontainer_item{
-                display: inline-block;
-                padding: 5px;
-                box-shadow: 0 0 5px rgba(0,0,0,0.5);
-            }
-            .sm_imgcontainer{
-                text-align: center;
+/*imagenes*/
+.sm_imgcontainer_item{
+    display: inline-block;
+    padding: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+.sm_imgcontainer{
+    text-align: center;
 
-            }
-            .sm_imgcontainer_itemcontainer{
-                display: inline-block;
-                margin: 20px;
-            }
+}
+.sm_imgcontainer_itemcontainer{
+    display: inline-block;
+    margin: 20px;
+}
+
+.sm_div_containerloading{
+    background-image:url(/simuniv2/recursos/imagenes/sistema/sm_grilla_loadinggif2.gif);
+    background-position:center;
+    background-repeat:no-repeat;
+}
+/*notificaciones*/
+.sm_contenido_mensaje{
+    padding: 15px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}

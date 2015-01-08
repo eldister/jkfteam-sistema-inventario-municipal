@@ -8,20 +8,16 @@
 <%@ page language='java' contentType='text/html; charset=ISO-8859-1' pageEncoding='ISO-8859-1'%>
 <%@ taglib prefix='decorator' uri='http://claudiushauptmann.com/jsp-decorator/'%>
 <%
-
-    ArrayList<Usuario> usuarios = (ArrayList<Usuario>) request.getAttribute("usuarios");
-    Iterator<Usuario> iterador_usuario = null;
+Notificacion mensaje=(Notificacion)request.getAttribute("mensaje");
+boolean proceso=mensaje!=null;
     try {
-        if (usuarios != null) {
-            iterador_usuario = usuarios.iterator();
-            System.out.println("listo entree");
-        }
+ 
     } catch (Exception ex) {
         ex.printStackTrace();
     }
 %>
 <decorator:decorate filename='../../recursos/paginas/master/masterpage.jsp'>
-    <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | Nuevo Proveedor </decorator:content>    
+    <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | Responder Mensaje </decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
         <script src='<%=request.getContextPath()%>/js/script_paginas/script_nuevo_mensaje.js' charset="utf-8"></script>
 
@@ -50,12 +46,18 @@
     <decorator:content placeholder='sm_div_navegationbarmenuitems'>
         <ol class="breadcrumb">
             <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/">Inicio</a></li> 
-            <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/notificacion?proceso?listado">Proveedores</a></li> 
-            <li class="active">Nuevo</li>
+            <li class="active">Mensajeria</li>
         </ol>
 
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
+        <div>
+            <h3>Mensaje original <small>De <%out.print(proceso?mensaje.getUsuarioOrigen():"");%> | El <%out.print(proceso?mensaje.getFechaNotificacion():"");%></small></h3>
+            <details>
+                <summary>Ver mensaje</summary>
+                <p class="text-primary sm_contenido_mensaje"><%out.print(proceso?mensaje.getDescripcionNotificacion():"");%></p>
+            </details>
+        </div>
         <form id="formulario" class="form" method="POST">
             <fieldset id="notificaciones">
                 <legend>Enviar Mensaje <small><sup>* Campos requeridos</sup></small></legend>
@@ -65,18 +67,8 @@
                             <td>
                                 <div class="form-group">
                                     <label  class="control-label"for="cmbusuarioobjetivo">Selecciona el Usuario a Enviar</label>
-                                    <select required="required" class="form-control" name="cmbusuarioobjetivo" id="cmbusuarioobjetivo">
-                                        <%
-                                            if (iterador_usuario != null && iterador_usuario.hasNext()) {
-                                                do {
-                                                    Usuario usuario = iterador_usuario.next();
-                                        %>
-                                        <option value="<%out.print(usuario.getNombreusuario());%>"><%out.print(usuario.getNombre());%></option>
-                                        <%
-                                                } while (iterador_usuario.hasNext());
-                                            }
-                                        %>
-                                    </select>
+                                    <input type="text" readonly="readonly" required="required" class="form-control" value="<%out.print(proceso?mensaje.getUsuarioOrigen():"");%>" name="cmbusuarioobjetivo" id="cmbusuarioobjetivo">
+                                     
                                 </div>
                             </td>
                             <td>&nbsp;</td>

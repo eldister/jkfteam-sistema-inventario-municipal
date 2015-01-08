@@ -10,9 +10,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/" %>
 <%
-    /**
-     *
-     */
     String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
     String tipousuario = request.getSession().getAttribute("TIPOUSUARIO") == null ? null : request.getSession().getAttribute("TIPOUSUARIO").toString();
     String loginpage = request.getSession().getAttribute("LOGINPAGE") == null ? null : request.getSession().getAttribute("LOGINPAGE").toString();
@@ -20,22 +17,18 @@
     String error = request.getSession().getAttribute("ERROR") == null ? null : request.getSession().getAttribute("ERROR").toString();
     Usuario user = new Usuario();
     idusuario = "fCoulon";
+    request.getSession().setAttribute("USERNAME", idusuario);
     tipousuario = "admin";
     if ((idusuario == null || tipousuario == null) && (loginpage == null && error == null)) {
         out.print("<script>window.location.replace('/simuniv2/index.jsp');</script>");
         return;
-
     }
     if (loginpage == null && error == null) {
         ManejadorUsuario manejadorusuarios = new ManejadorUsuario();
         user = manejadorusuarios.getMenuUsuario(idusuario);
-
     }
-
 %>
-
 <!DOCTYPE HTML>
-
 <html>
     <head>
         <meta charset="utf-8">
@@ -52,8 +45,6 @@
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/temas/jquery_smoothness/style_jquery-ui.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style_main.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style_menuprincipal.css">
-
-
         <script>
             SIMUNI_SERVER = "<%out.print(Recursos.Servers.MAINSERVER);%>";
             $(document).ready(function() {
@@ -77,6 +68,7 @@
                     $("html, body").animate({scrollTop: 0}, duracion);
                     return false;
                 });
+                initMensajesNotificaciones();
             });
         </script>
 
@@ -86,7 +78,6 @@
         <div id="maincontainer">
             <div class="SIMUNI_ROW">
                 <a name="sm_body_headanchor"></a>
-
                 <header>
                     <div id="sm_header_bannerandusercontainer">
                         <div class="sm_header_bannercontainer">
@@ -119,7 +110,7 @@
                             </div>
                         </div>                            
                     </div>
-          <% try{out.print(user.getMenuusuario());}catch(Exception ex){System.out.println(ex.getMessage());}
+          <% out.print(user.getMenuusuario());
                         } %>
                 </header>  
             </div>
@@ -131,74 +122,18 @@
                             <fieldset>
                                 <legend>Notificaciones</legend>
                                 <div class="sm_fieldset_notificacionescontainer" id="sm_notificacionescontainer">
-                                    <%
-                                        ManejadorNotificaciones manejadornotif = new ManejadorNotificaciones();
-                                        ArrayList<Notificacion> notificaciones = manejadornotif.obtenerNotificacionesUsuario(idusuario);
-                                        if (notificaciones == null) {
-                                            out.print("<strong>No tiene notificaciones!</strong>");
-                                        } else {
-                                            Iterator<Notificacion> iter = notificaciones.iterator();
-                                            if (iter.hasNext()) {
-                                                while (iter.hasNext()) {
-                                                    Notificacion notificacion = iter.next();
-                                                    out.print("<div class='sm_div_notificacion'>");
-                                                    out.print("<div class='sm_div_notificacionfechacontainer'>");
-                                                    out.print(notificacion.getFechaNotificacion().toLocaleString());
-                                                    out.print("        <hr>");
-                                                    out.print("      </div>");
-                                                    out.print("<p class='sm_div_textonotificacion'>");
-                                                    out.print(notificacion.getDescripcionNotificacion());
-                                                    out.print("</p>");
-                                                    out.print("</div> ");
-                                                    out.print("<hr>");
-                                                }
-                                            } else {
-                                                out.print("<strong>No tiene mensajes!</strong>");
-                                            }
-
-                                        }
-                                    %>
+                                   <strong>No tiene mensajes!</strong> 
                                 </div>
                             </fieldset>
                         </div>
-                        <hr class="sm_body_barralateralseparador"/>
                         <div class="sm_aside_barralateralitem" id="sm_aside_barralateralitemmensaje">
                             <fieldset>
                                 <legend>Mensajes</legend>
                                 <div class="sm_fieldset_notificacionescontainer" id="sm_mensajescontainer">
-                                    <%
-                                        notificaciones = manejadornotif.obtenerMensajesUsuario(idusuario);
-                                        if (notificaciones == null) {
-                                            out.print("<strong>No tiene mensajes!</strong>");
-                                        } else {
-                                            Iterator<Notificacion> iter = notificaciones.iterator();
-                                            if (iter.hasNext()) {
-                                                while (iter.hasNext()) {
-                                                    Notificacion notificacion = iter.next();
-                                                    out.print("<div class='sm_div_mensaje'>");
-                                                    out.print("<div class='sm_div_notificacionfechacontainer'>");
-                                                    out.print(notificacion.getFechaNotificacion().toLocaleString());
-                                                    out.print("        <hr>");
-                                                    out.print("      </div>");
-                                                    out.print("<strong>");
-                                                    out.print(notificacion.getUsuarioOrigen());
-                                                    out.print("</strong>");
-                                                    out.print("<p class='sm_div_textomensaje'>");
-                                                    out.print(notificacion.getDescripcionNotificacion());
-                                                    out.print("</p>");
-                                                    out.print("</div> ");
-                                                    out.print("<hr>");
-                                                }
-                                            } else {
-                                                out.print("<strong>No tiene mensajes!</strong>");
-                                            }
-
-                                        }
-                                    %>                                                           
+                                    <strong>No tiene mensajes!</strong>                                                       
                                 </div>
                             </fieldset>
                         </div>
-                        <hr class="sm_body_barralateralseparador"/>
                         <div class="sm_aside_barralateralitem">
                             <fieldset>
                                 <legend>Configuraciones</legend>
@@ -281,5 +216,3 @@
 </html>
 <%  request.getSession().setAttribute("ERROR", null);%>
 <%  request.getSession().setAttribute("LOGINPAGE", null);%>
-
-
