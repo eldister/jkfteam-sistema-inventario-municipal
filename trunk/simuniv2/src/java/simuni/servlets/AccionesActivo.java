@@ -40,7 +40,7 @@ public class AccionesActivo extends HttpServlet {
         Listado, Existe_Activo, Existe_Placa, Existe_Consecutivo,
         Nuevo, Eliminar, Modificar, Modificar_Articulo,
         Modificar_Transporte, Query, Ver_Imagenes, Subida_Imagenes, Reporte_Activo,
-        Eliminar_Articulo, Eliminar_Transporte, AccionDefault
+        Eliminar_Articulo, Eliminar_Transporte, AccionDefault,Listado_Asinc,Query_Asinc
     }
 
     /**
@@ -82,6 +82,18 @@ public class AccionesActivo extends HttpServlet {
                     request.setAttribute("mostrar_inactivos", mostrar_inactivos ? "checked" : "");
                     request.setAttribute("query", query);
                     break;
+                case Listado_Asinc:
+                    
+                    npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
+                    paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
+                    desplazamiento = ((npagina) * paginacion);
+                    resultset = mactivo.busquedaActivo(query, desplazamiento, paginacion, mostrar_inactivos);//provisional
+                    request.setAttribute("listado", resultset);
+                    disp = request.getRequestDispatcher("/modulos/activos/_asinc/_asinc_index.jsp");
+                    request.setAttribute("paginacion", ((int) mactivo.getCantidadRegistros(query, mostrar_inactivos) / paginacion) + 1);
+                    request.setAttribute("query", query);
+                    request.setAttribute("mostrar_inactivos", mostrar_inactivos ? "checked" : "");
+                    break;                        
                 case Nuevo:
 
                     request.setAttribute("departamentos", mactivo.listadoDepartamento());
@@ -208,6 +220,10 @@ public class AccionesActivo extends HttpServlet {
             return OpcionesDo.Eliminar_Articulo;
         } else if (key.equals("eliminar_transporte")) {
             return OpcionesDo.Eliminar_Transporte;
+        } else if (key.equals("listado_asinc")) {
+            return OpcionesDo.Listado_Asinc;
+        }else if (key.equals("query_asinc")) {
+            return OpcionesDo.Query_Asinc;
         }
 
         return OpcionesDo.AccionDefault;
@@ -286,6 +302,17 @@ public class AccionesActivo extends HttpServlet {
                     disp = request.getRequestDispatcher("/modulos/activos/nuevo.jsp");
                     disp.forward(request, response);
                     break;
+                case Query_Asinc:
+                    npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
+                    paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
+                    desplazamiento = ((npagina) * paginacion);
+                    resultset = mactivo.busquedaActivo(query, desplazamiento, paginacion, mostrar_inactivos);
+                    request.setAttribute("listado", resultset);
+                    disp = request.getRequestDispatcher("/modulos/activos/_asinc/_asinc_actualizarlistado.jsp");
+                    request.setAttribute("paginacion", ((int) mactivo.getCantidadRegistros(query, mostrar_inactivos) / paginacion) + 1);
+                    request.setAttribute("mostrar_inactivos", mostrar_inactivos ? "checked" : "");
+                    disp.forward(request, response);
+                    break;                        
                 case Existe_Activo:
                     registro = request.getParameter("registro");
                     if (mactivo.existePlacaActivo(registro)) {

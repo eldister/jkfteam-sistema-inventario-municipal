@@ -20,7 +20,9 @@ function setFechaDatePicker(idselector){
 	document.getElementById(idselector).value=obtenerFechaString();
 }
 function setFechaDatePicker(idselector,value){
-	document.getElementById(idselector).value=value;
+    
+	document.getElementById(idselector).value=value?value:obtenerFechaString();
+        
 }
 
 

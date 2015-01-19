@@ -30,6 +30,7 @@ public class AccionesNotificacion extends HttpServlet {
         ObtenerMensajes,
         ObtenerNotificaciones,
         ResponderMensaje,
+        VerNotificaciones,
         AccionDefault
 
     }
@@ -84,6 +85,12 @@ public class AccionesNotificacion extends HttpServlet {
                     disp.forward(request, response);
                 }
                 break;
+            case VerNotificaciones:
+                notificaciones = mnotificacion.obtenerNotificacionesUsuario(idusuario);
+                request.setAttribute("notificaciones", notificaciones);                
+                disp  = request.getRequestDispatcher("/modulos/notificaciones/index.jsp");
+                disp.forward(request, response);                  
+                break;
             default:
                 break;
         }
@@ -118,6 +125,8 @@ public class AccionesNotificacion extends HttpServlet {
             return OpcionesDo.ObtenerNotificaciones;
         } else if (key.equals("ver_mensaje")) {
             return OpcionesDo.ResponderMensaje;
+        }else if (key.equals("ver_notificaciones")) {
+            return OpcionesDo.VerNotificaciones;
         }
         
         return OpcionesDo.AccionDefault;

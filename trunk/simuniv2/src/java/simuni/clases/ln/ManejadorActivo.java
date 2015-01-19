@@ -9,8 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import simuni.clases.ad.ManejadorDatosActivo;
 import simuni.entidades.Activo;
 import simuni.entidades.ActivoArticulo;
@@ -24,7 +22,6 @@ import simuni.entidades.mantenimientos.TipoActivo;
 import simuni.entidades.mantenimientos.TipoBateria;
 import simuni.entidades.mantenimientos.TipoLlanta;
 import simuni.entidades.mantenimientos.TipoPago;
-import simuni.enums.Recursos;
 import simuni.utils.UtilidadesServlet;
 
 /**
@@ -582,9 +579,9 @@ public class ManejadorActivo {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
         String msg = "";
-       Respuesta rproceso=new Respuesta();
-       try {
-           
+        Respuesta rproceso = new Respuesta();
+        try {
+
             msg = mactivo.eliminarActivoArticulo(activo);
             if (msg != null && msg.startsWith("2")) {
                 rproceso.setNivel(2);
@@ -596,16 +593,17 @@ public class ManejadorActivo {
             rproceso.setMensaje(ex.getMessage());
             rproceso.setNivel(2);
         }
-       resp.add(rproceso);
+        resp.add(rproceso);
         return resp;
     }
+
     public ArrayList<Respuesta> desactivarActivoArticulo(ActivoArticulo activo) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
         String msg = "";
-       Respuesta rproceso=new Respuesta();
-       try {
-           
+        Respuesta rproceso = new Respuesta();
+        try {
+
             msg = mactivo.desactivarActivoArticulo(activo);
             if (msg != null && msg.startsWith("2")) {
                 rproceso.setNivel(2);
@@ -617,17 +615,17 @@ public class ManejadorActivo {
             rproceso.setMensaje(ex.getMessage());
             rproceso.setNivel(2);
         }
-       resp.add(rproceso);
+        resp.add(rproceso);
         return resp;
     }
-    
-        public ArrayList<Respuesta> eliminarActivoTransporte(ActivoTransporte activo) {
+
+    public ArrayList<Respuesta> eliminarActivoTransporte(ActivoTransporte activo) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
         String msg = "";
-       Respuesta rproceso=new Respuesta();
-       try {
-           
+        Respuesta rproceso = new Respuesta();
+        try {
+
             msg = mactivo.eliminarActivoTransporte(activo);
             if (msg != null && msg.startsWith("2")) {
                 rproceso.setNivel(2);
@@ -639,16 +637,17 @@ public class ManejadorActivo {
             rproceso.setMensaje(ex.getMessage());
             rproceso.setNivel(2);
         }
-       resp.add(rproceso);
+        resp.add(rproceso);
         return resp;
     }
+
     public ArrayList<Respuesta> desactivarActivoTransporte(ActivoTransporte activo) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
         String msg = "";
-       Respuesta rproceso=new Respuesta();
-       try {
-           
+        Respuesta rproceso = new Respuesta();
+        try {
+
             msg = mactivo.desactivarActivoTranporte(activo);
             if (msg != null && msg.startsWith("2")) {
                 rproceso.setNivel(2);
@@ -660,7 +659,29 @@ public class ManejadorActivo {
             rproceso.setMensaje(ex.getMessage());
             rproceso.setNivel(2);
         }
-       resp.add(rproceso);
+        resp.add(rproceso);
         return resp;
     }
+
+    public boolean isActivoparaBaja(String placaActivo) {
+        boolean resp = false;
+        int estadoactivo = -1;
+        ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
+        try {
+            estadoactivo = mactivo.getEstadoActivo(placaActivo);
+            if (estadoactivo == 1) {
+                resp=true;
+            } else {
+                switch (estadoactivo) {
+                    default:
+                        resp=false;
+                        break;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+
 }
