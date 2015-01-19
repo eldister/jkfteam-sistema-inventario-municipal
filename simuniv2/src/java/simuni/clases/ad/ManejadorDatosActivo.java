@@ -612,6 +612,19 @@ public class ManejadorDatosActivo {
         }
         return resp;
     }
+    
+   public int getEstadoActivo(String placaActivo) throws SQLException {
+        int resp = -1;
+        Connection con = Conexionmysql.obtenerConexion();
+        PreparedStatement st = con.prepareCall("{ call simuni_sp_obtener_estadoactivo(?)}");
+        st.setString(1, placaActivo);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            resp=rs.getInt(1);
+            rs.close();
+        }
+        return resp;
+    }
 
     public ActivoArticulo getActivoArticulo(String codigoRegistro) throws SQLException {
         ActivoArticulo resp = null;

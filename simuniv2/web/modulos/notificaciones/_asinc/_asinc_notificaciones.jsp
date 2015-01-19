@@ -1,3 +1,4 @@
+<%@page import="simuni.enums.Recursos"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="simuni.entidades.Notificacion"%>
 <%@page import="java.util.ArrayList"%>
@@ -17,6 +18,8 @@
                 <p class='sm_div_textonotificacion'>
                     <% out.print(notificacion.getDescripcionNotificacion());%>
                 </p>
+                <p><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/notificacion?proceso=notificaciones">Ver</a></p>
+                                  
             </div> 
 <%
                     }

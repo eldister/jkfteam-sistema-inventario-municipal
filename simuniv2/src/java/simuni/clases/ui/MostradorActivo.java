@@ -58,6 +58,8 @@ public class MostradorActivo {
         GrillaBase gril = new GrillaBase();
         gril.setUrlpaginacionlink(Recursos.Servers.MAINSERVER + "/activo?proceso=listado_asinc");
         gril.setUsarControles(false);
+        gril.setUsarMostrarOcultos(true);
+        gril.setMostrarOcultosMsg("Inactivos");
 
         
       
