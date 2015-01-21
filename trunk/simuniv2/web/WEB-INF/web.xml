@@ -56,6 +56,10 @@
         <servlet-name>AccionesVenta</servlet-name>
         <servlet-class>simuni.servlets.AccionesVenta</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccionesSolicitudBaja</servlet-name>
+        <servlet-class>simuni.servlets.AccionesSolicitudBaja</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccionesTipoUsuario</servlet-name>
         <url-pattern>/tipousuario</url-pattern>
@@ -127,6 +131,10 @@
     <servlet-mapping>
         <servlet-name>AccionesVenta</servlet-name>
         <url-pattern>/venta</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccionesSolicitudBaja</servlet-name>
+        <url-pattern>/solicitudbaja</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

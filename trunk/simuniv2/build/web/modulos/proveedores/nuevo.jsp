@@ -56,7 +56,7 @@
     <decorator:content placeholder='sm_div_navegationbarmenuitems'>
         <ol class="breadcrumb">
             <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/">Inicio</a></li> 
-            <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/proveedor?proceso?listado">Proveedores</a></li> 
+            <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/proveedor?proceso=listado">Proveedores</a></li> 
             <li class="active">Nuevo</li>
         </ol>
 
