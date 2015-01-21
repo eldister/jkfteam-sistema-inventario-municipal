@@ -40,7 +40,7 @@ public class AccionesBaja extends HttpServlet {
      */
     enum OpcionesDo {
 
-        Listado,Listado_Asinc,Query_Asinc, Nuevo, Eliminar, Modificar, Query, AccionDefault
+        Listado,Listado_Asinc,Query_Asinc, Nuevo, Eliminar, Modificar, Query,Nueva_Solicitud_Baja, AccionDefault
     }
 
     /**
@@ -62,6 +62,8 @@ public class AccionesBaja extends HttpServlet {
             return OpcionesDo.Modificar;
         } else if (key.equals("query")) {
             return OpcionesDo.Query;
+        } else if (key.equals("nueva_solicitud")) {
+            return OpcionesDo.Nueva_Solicitud_Baja;
         }
         return OpcionesDo.AccionDefault;
     }
@@ -90,6 +92,9 @@ public class AccionesBaja extends HttpServlet {
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     disp = request.getRequestDispatcher("/modulos/bajas/nuevo.jsp");
+                    break;
+                case Nueva_Solicitud_Baja:
+                    disp = request.getRequestDispatcher("/modulos/bajas/nueva_solicitud.jsp");
                     break;
                 case Listado:
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);

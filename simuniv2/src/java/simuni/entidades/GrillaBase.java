@@ -512,16 +512,18 @@ public class GrillaBase {
         //SECCION ETIQUETA AGREGAR BOTON 'AGREGAR'
         if (isUsarControles()) {
             resp.append("   <div class='sm_div_colsim'>");
-            resp.append("      <div id='sm_div_agregaritemcontainer'>");
-            if (isUsarAgregarself()) {
-                resp.append("          <span class='sm_div_grillaagregar'>Agregar</span>");
-            } else {
-                resp.append("          <a href='");
-                resp.append(getUrlagregaropcionagregar());
-                resp.append("'>Agregar</a>");
-            }
+            if (isOpcionagregar()) {
+                resp.append("      <div id='sm_div_agregaritemcontainer'>");
+                if (isUsarAgregarself()) {
+                    resp.append("          <span class='sm_div_grillaagregar'>Agregar</span>");
+                } else {
+                    resp.append("          <a href='");
+                    resp.append(getUrlagregaropcionagregar());
+                    resp.append("'>Agregar</a>");
+                }
+             resp.append("     </div>"); }
 
-            resp.append("     </div>");
+          
             resp.append("  </div> ");
         }
         //FIN DE FILA BUSQUEDA
@@ -728,7 +730,7 @@ public class GrillaBase {
         ResultSetMetaData metadatos = resultset.getMetaData();
         int cantidadcolumnas = metadatos.getColumnCount();
 
-        resp.append(" <table class='sm_div_tablemain' >");
+        resp.append(" <table class='table table-hover table-bordered table-striped' >");
         resp.append("  <thead><!--seccion solo encabezado-->");
         resp.append("     <tr class='sm_thead_filaencabezado'>");
 

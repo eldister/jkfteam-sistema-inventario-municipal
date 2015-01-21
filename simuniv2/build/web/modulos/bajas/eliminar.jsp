@@ -43,7 +43,7 @@
 <%@ page language='java' contentType='text/html; charset=ISO-8859-1' pageEncoding='ISO-8859-1'%>
 <%@ taglib prefix='decorator' uri='http://claudiushauptmann.com/jsp-decorator/'%>
 <decorator:decorate filename='../../recursos/paginas/master/masterpage.jsp'>
-    <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | Activos </decorator:content>    
+    <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | Bajas - Eliminar </decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
         <script src="<%=request.getContextPath()%>/js/script_paginas/script_eliminar_baja.js" charset="utf-8"></script>
 
@@ -81,15 +81,16 @@
     </decorator:content>
     <decorator:content placeholder='sm_div_navegationbarmenuitems'>
         <ol class="breadcrumb">
-            <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/">Inicio</a></li>   
-            <li class="active">Activos***</li>
+            <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/">Inicio</a></li>  
+            <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/baja?proceso=listado">Listado de Bajas</a></li> 
+            <li class="active">Dar de Alta</li>
         </ol>
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
 
         <form class="form"  id="formulario" action="<%out.print(Recursos.Servers.MAINSERVER);%>/baja?proceso=eliminar" method="POST">
             <fieldset id="activos">
-                <legend style="<%out.print((error && proceso) ? "color:red;" : "");%>">Registro de activos <small><sup>* Campos requeridos</sup></small></legend>
+                <legend style="<%out.print((error && proceso) ? "color:red;" : "");%>">Eliminación de Bajas de Activos </legend>
                 <div id="registerInformation">
                     <table id="sm_tb_campos">
                         <tr id="sm_contenedor_activo">
