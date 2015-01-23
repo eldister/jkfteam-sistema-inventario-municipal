@@ -2,11 +2,13 @@ package simuni.clases.ad;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import simuni.entidades.bd.Conexionmysql;
 import simuni.entidades.Reparacion;
+import simuni.utils.UtilidadesServlet;
 
 /**
  * Esta clase de acceso a datos de <strong>Venta</strong> se encarga
@@ -37,12 +39,7 @@ public class ManejadorDatosReparacion {
         int id_reparacion=0;
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            CallableStatement cs = con.prepareCall("{call simuni_sp_registro_reparacion(?,?,?,?,?)}");
-            
-            /*
-            *realizar el procedimiento almacenado, ademas de las variables faltantes segun los
-            *requerimientos version 5 como columnas de la tabla 'sm_19reparaciones'
-            */
+            CallableStatement cs = con.prepareCall("{call simuni_sp_registro_reparacion(?, ?, ?, ?, ?)}");
             
             cs.setInt(1, reparacion.getCodigoReparacion());
             cs.setString(2, reparacion.getObservacion());
@@ -64,7 +61,35 @@ public class ManejadorDatosReparacion {
         }
         return resp;
     }
+    public String registrarDetalleReparacion(Reparacion reparacion) throws SQLException {
+        String resp = "";
+        int id_reparacion=0;
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{call simuni_sp_registro_detalle_reparacion(?, ?, ?, ?, ?, ?, ?)}");
+            
+            cs.setInt(1, reparacion.getCodigoDetalleReparacion());
+            cs.setString(2, reparacion.getIdUsuario());
+            cs.setString(3, reparacion.getMotivoReparacion());
+            cs.setDate(4, (Date) reparacion.getFechaReparacion());
+            cs.setDouble(5, reparacion.getCostoReparacion());
+            cs.setInt(6, reparacion.getCodigoReparacion());
+            cs.registerOutParameter(10, java.sql.Types.VARCHAR);
+            ResultSet rs = cs.executeQuery();
+            if (rs.next()) {
+                id_reparacion = rs.getInt(1);
+            }
+            reparacion.setCodigoReparacion(id_reparacion);
 
+            resp = cs.getString(10);
+            
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    }
     /**
      * Operación que se encarga de realizar modificación del
      * reparacion.
@@ -79,17 +104,14 @@ public class ManejadorDatosReparacion {
  String resp = "";
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            CallableStatement cs = con.prepareCall("{call simuni_sp_actualizacion_reparacion(?,?,?,?,?)}");
-            /*
-            *realizar el procedimiento almacenado, ademas de las variables faltantes segun los
-            *requerimientos version 5 como columnas de la tabla 'sm_19reparaciones'
-            */
+            CallableStatement cs = con.prepareCall("{call simuni_sp_actualizacion_reparacion(?, ?, ?, ?, ?, ?)}");
             
-            cs.setInt(1, reparacion.getCodigoReparacion());
-            cs.setString(2, reparacion.getObservacion());
-            cs.setInt(3, reparacion.getCodigoEstado());
-            cs.setString(4, reparacion.getPlacaActivo());
-            cs.registerOutParameter(11, java.sql.Types.VARCHAR);
+            cs.setString(1, reparacion.getMotivoReparacion());
+            cs.setString(2, reparacion.getnombreReparador());
+            cs.setDate(3, (Date) reparacion.getFechaReparacion());
+            cs.setDouble(4, reparacion.getCostoReparacion());
+            cs.setInt(5, reparacion.getCodigoReparacion());
+            cs.registerOutParameter(10, java.sql.Types.VARCHAR);
             cs.execute();
             resp = cs.getString(11);
             
@@ -102,7 +124,6 @@ public class ManejadorDatosReparacion {
     
 
     }
-
     /**
      * Operación que se encarga de realizar la eliminación del
      * Reparacion de la base de datos..

@@ -14,6 +14,7 @@ public class Recursos {
     public static enum BD {
 
         SERVIDORMYSQLFRANCISCO("Server=localhost;Port=3306;Database=myDataBase;Uid=chescosimuni;Pwd=chescosimuni;"),
+        SERVIDORMYSQLJEFFERSON("jdbc:mysql://localhost:3306/simuniv2?user=root&password=1234"),
         SERVIDORMYSQLKEYLIN("jdbc:mysql://localhost:3306/simuni_v1?user=adminSIMUNI&password=adminpass"),
         SERVIDORMYSQLDEBIAN("jdbc:mysql://192.168.56.101:3306/simuniv2?user=root&password=root&connectTimeout=30000&socketTimeout=30000");
 
