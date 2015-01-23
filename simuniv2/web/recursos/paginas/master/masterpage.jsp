@@ -16,11 +16,8 @@
     String horainicio = request.getSession().getAttribute("HORAINICIO") == null ? null : request.getSession().getAttribute("HORAINICIO").toString();
     String error = request.getSession().getAttribute("ERROR") == null ? null : request.getSession().getAttribute("ERROR").toString();
     Usuario user = new Usuario();
-    idusuario = "fCoulon";
-    request.getSession().setAttribute("USERNAME", idusuario);
-    tipousuario = "admin";
     if ((idusuario == null || tipousuario == null) && (loginpage == null && error == null)) {
-        out.print("<script>window.location.replace('/simuniv2/index.jsp');</script>");
+        out.print("<script>window.location.replace('/simuniv2/login');</script>");
         return;
     }
     if (loginpage == null && error == null) {
@@ -50,11 +47,9 @@
             $(document).ready(function() {
                 var desplazado = 220;
                 var duracion = 500;
-
+             //alert($("#volverTop").html())
                 $("#volverTop").fadeOut(0);
-
-                $("#volverTop").fadeOut(0);
-
+$("#volverTop").fadeOut(0);
                 $(window).scroll(function() {
                     if ($(this).scrollTop() > desplazado) {
                         $("#volverTop").fadeIn(duracion);

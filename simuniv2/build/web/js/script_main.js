@@ -8,7 +8,9 @@ window.onload = function() {
     userboxcomponent1.addMenuItem(SIMUNI_SERVER + "/", "Ir a Inicio");
     userboxcomponent1.addMenuItem(SIMUNI_SERVER + "/usuario?proceso=logout", "Cerrar Sesion");
     var configuraciones_usuario = document.getElementById("sm_div_usersettings");
-    configuraciones_usuario.addEventListener('click', userboxcomponent1.chesdev_components_events_handler);
+    if (configuraciones_usuario) {
+        configuraciones_usuario.addEventListener('click', userboxcomponent1.chesdev_components_events_handler);
+    }
     iniciarIntervaloNotificaciones();
     iniciarIntervaloMensajes();
 
