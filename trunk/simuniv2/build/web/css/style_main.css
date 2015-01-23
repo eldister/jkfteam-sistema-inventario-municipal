@@ -585,7 +585,6 @@ footer .sm_div_colcontainer ul{
 /*en esta seccion se encuentra el boton flotante para volver arriba de la pagina*/
 #imgVolverArriba{
     position:fixed; 
-    padding: 32px;
     bottom:0; 
     right:0;
     width: 40px;

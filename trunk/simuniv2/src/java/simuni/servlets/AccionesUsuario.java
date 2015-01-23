@@ -2,6 +2,8 @@ package simuni.servlets;
 
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import simuni.clases.ln.ManejadorUsuario;
 import simuni.entidades.Respuesta;
 import simuni.entidades.Usuario;
+import simuni.enums.Recursos;
 import simuni.utils.UtilidadesServlet;
 
 /**
@@ -40,7 +43,7 @@ public class AccionesUsuario extends HttpServlet {
      */
     enum OpcionesDo {
 
-        Listado, Nuevo, Eliminar, Modificar, Query, AccionDefault
+        Listado, Nuevo, Eliminar, Modificar, Query, AccionDefault, Login, Logout,
     }
 
     /**
@@ -62,6 +65,10 @@ public class AccionesUsuario extends HttpServlet {
             return OpcionesDo.Modificar;
         } else if (key.equals("query")) {
             return OpcionesDo.Query;
+        } else if (key.equals("login")) {
+            return OpcionesDo.Login;
+        } else if (key.equals("logout")) {
+            return OpcionesDo.Logout;
         }
         return OpcionesDo.AccionDefault;
     }
@@ -137,6 +144,14 @@ public class AccionesUsuario extends HttpServlet {
                     request.setAttribute("paginacion", ((int) musuario.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
                     break;
+                    case Logout:
+                        request.getSession().setAttribute("USERNAME", null);
+                        request.getSession().setAttribute("TIPOUSUARIO", null);
+                        request.getSession().setAttribute("HORAINICIO", null);
+                        request.getSession().setAttribute("LOGINPAGE", null);  
+                        response.getWriter().print("<script>window.location.assign('" + Recursos.Servers.MAINSERVER + "/login')</script>");
+                        return;
+                        
             }
             disp.forward(request, response);
         } catch (Exception ex) {
@@ -165,7 +180,6 @@ public class AccionesUsuario extends HttpServlet {
             int npagina = 0;//para la paginacion
             String registro = "";//codigo de registro a buscar
             int paginacion = 0;//obtener la paginacion y pagina actual  
-            String nombreusuario = "";//campo txt
             ManejadorUsuario musuario = new ManejadorUsuario();
             String query = request.getParameter("query");
             query = query == null ? "" : query;
@@ -178,6 +192,7 @@ public class AccionesUsuario extends HttpServlet {
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("nuevoregistro", nuevousuario);
                     disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_nuevo.jsp");
+                    disp.forward(request, response);
                     break;
                 case Modificar:
 
@@ -187,10 +202,11 @@ public class AccionesUsuario extends HttpServlet {
                         request.setAttribute("registro", usuario);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_editar.jsp");
+                        disp.forward(request, response);
                     }
                     break;
                 case Eliminar:
-                    if (request.getParameter("registro")!=null) {
+                    if (request.getParameter("registro") != null) {
                         registro = request.getParameter("registro");
                         Usuario usuario = new Usuario();
                         usuario.setNombreusuario(registro);
@@ -198,6 +214,7 @@ public class AccionesUsuario extends HttpServlet {
                         request.setAttribute("registro", usuario);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_eliminar.jsp");
+                        disp.forward(request, response);
                     }
                     break;
                 case Query:
@@ -207,7 +224,9 @@ public class AccionesUsuario extends HttpServlet {
                     resultset = musuario.busquedaUsuario(query, desplazamiento, paginacion);
                     request.setAttribute("listado", resultset);
                     disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_listar.jsp");
+                   
                     request.setAttribute("paginacion", ((int) musuario.getCantidadRegistros(query) / paginacion) + 1);
+                    disp.forward(request, response);
                     break;
                 case AccionDefault:
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
@@ -218,9 +237,43 @@ public class AccionesUsuario extends HttpServlet {
                     disp = request.getRequestDispatcher("/modulos/usuarios/index.jsp");
                     request.setAttribute("paginacion", ((int) musuario.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
+                    disp.forward(request, response);
                     break;
+                case Login:
+
+                    String nombreusuario = request.getParameter("txtNombreUsuario");
+                    String contrasena = request.getParameter("txtPassword");
+                    Usuario usuario = null;
+                    if (nombreusuario == null || contrasena == null) {
+                        request.getSession().setAttribute("USERNAME", null);
+                        request.getSession().setAttribute("TIPOUSUARIO", null);
+                        request.getSession().setAttribute("HORAINICIO", null);
+                        response.getWriter().print("<script>window.location.assign('" + Recursos.Servers.MAINSERVER + "/login')</script>");
+
+                    } else {
+                        ManejadorUsuario manejadorusuarios = new ManejadorUsuario();
+                        usuario = manejadorusuarios.login(nombreusuario, contrasena);
+                        if (usuario == null) {
+                            request.getSession().setAttribute("USERNAME", null);
+                            request.getSession().setAttribute("TIPOUSUARIO", null);
+                            request.getSession().setAttribute("HORAINICIO", null);
+                            response.getWriter().print("<script>window.location.assign('" + Recursos.Servers.MAINSERVER + "/login')</script>");
+
+                        } else {
+                            request.getSession().setAttribute("USERNAME", usuario.getNombreusuario());
+                            request.getSession().setAttribute("TIPOUSUARIO", usuario.getTipousuario());
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                            request.getSession().setAttribute("HORAINICIO", sdf.format(new Date()));
+                            request.getSession().setAttribute("LOGINPAGE", null);
+                            response.getWriter().print("<script>window.location.assign('" + Recursos.Servers.MAINSERVER + "')</script>");
+
+                        }
+                    }
+
+                    break;
+                
             }
-            disp.forward(request, response);
+            
         } catch (Exception ex) {
             ex.printStackTrace();
             disp = request.getRequestDispatcher("/recursos/paginas/error/errorpage.jsp");
