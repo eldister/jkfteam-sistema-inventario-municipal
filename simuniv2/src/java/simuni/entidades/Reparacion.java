@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Reparacion {
     private String placaActivo;
+    private String idUsuario;
     private String nombreSolicitante;
     private String motivoReparacion;
     private String nombreReparador;
@@ -11,7 +12,8 @@ public class Reparacion {
     private double costoReparacion;
     private String Observacion;
     private int codigoEstado;
-    private int codigoReparacion = 0;
+    private int codigoReparacion;
+    private int codigoDetalleReparacion;
 
     public String getPlacaActivo() {
         return placaActivo;
@@ -87,6 +89,22 @@ public class Reparacion {
 
     public void setCodigoReparacion(int codigoReparacion) {
         this.codigoReparacion = codigoReparacion;
+    }
+
+    public int getCodigoDetalleReparacion() {
+        return codigoDetalleReparacion;
+    }
+
+    public void setCodigoDetalleReparacion(int codigoDetalleReparacion) {
+        this.codigoDetalleReparacion = codigoDetalleReparacion;
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
     
     

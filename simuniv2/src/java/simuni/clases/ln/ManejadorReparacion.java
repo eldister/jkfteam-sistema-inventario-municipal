@@ -33,6 +33,7 @@ public class ManejadorReparacion {
 
         try {
             String msg = mdreparacion.registrarReparacion(reparacion);
+            mdreparacion.registrarDetalleReparacion(reparacion);
             if (msg != null && msg.startsWith("2")) {
                 resp.setNivel(2);
             } else {
