@@ -84,7 +84,7 @@ $("#volverTop").fadeOut(0);
                                 </a> 
                             </div>
                             <div id="sm_div_logosimunicontainer">
-                                <a href="/" id="enlaceInicio" title="Ir a la página de Inicio">
+                                <a href="<%out.print(Recursos.Servers.MAINSERVER);%>" id="enlaceInicio" title="Ir a la página de Inicio">
                                     <div id="sm_div_logosimuni">
                                         <img  src="/simuniv2/recursos/imagenes/sistema/sm_logo_simuni.png" width="100" height="100">
                                         <span id="sm_div_simunislogan">Sistema de Información para el Control de Inventario Municipal</span>

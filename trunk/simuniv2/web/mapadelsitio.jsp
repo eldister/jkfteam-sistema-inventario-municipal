@@ -15,50 +15,55 @@
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <div class="sm_div_mapasitio">
             <ul>
-                <li>Simuni
+                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/acerca"));%>">&#8226; Simuni</a>
                     <ul>
                         <li>
-                            <a href="<%out.print(Recursos.Servers.MAINSERVER);%>">Inicio</a>
+                            <a href="<%out.print(Recursos.Servers.MAINSERVER);%>">&#8226; Inicio</a>
                         </li>
-                        <li>Módulos
+                        <li>&#8226; Módulos
                             <ul>
-                                <li>Activos
+                                <li>&#8226; Activos
                                     <ul>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/activo?proceso=listado"));%>">Listado</a></li>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/activo?proceso=nuevo"));%>">Nuevo</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/activo?proceso=listado"));%>">&#8226; Listado</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/activo?proceso=nuevo"));%>">&#8226; Nuevo</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/tipoactivo"));%>">&#8226; Tipo de activos</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/estado"));%>">&#8226; Estado de activos</a></li>
                                     </ul>
                                 </li>
-                                <li>Proveedores
+                                <li>&#8226; Proveedores
                                     <ul>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/proveedor?proceso=listado"));%>">Listado</a></li>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/proveedor?proceso=nuevo"));%>">Nuevo</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/proveedor?proceso=listado"));%>">&#8226; Listado</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/proveedor?proceso=nuevo"));%>">&#8226; Nuevo</a></li>
                                     </ul>
                                 </li>
-                                <li>Reparaciones
+                                <li>&#8226; Reparaciones
                                     <ul>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/reparacion?proceso=listado"));%>">Listado</a></li>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/reparacion?proceso=nuevo"));%>">Nuevo</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/reparacion?proceso=listado"));%>">&#8226; Listado</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/reparacion?proceso=nuevo"));%>">&#8226; Nuevo</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/"));%>">&#8226; Solicitar reparación</a></li>
                                     </ul>
                                 </li>
-                                <li>Bajas
+                                <li>&#8226; Bajas
                                     <ul>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/baja"));%>">Listado</a></li>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/baja?proceso=nuevo"));%>">Nuevo</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/baja"));%>">&#8226; Listado</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/baja?proceso=nuevo"));%>">&#8226; Nuevo</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/solicitudbaja"));%>">&#8226; Solicitar baja</a></li>
                                     </ul>
                                 </li>
-                                <li>Ventas
+                                <li>&#8226; Ventas
                                     <ul>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/venta?proceso=listado"));%>">Listado</a></li>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/venta?proceso=nuevo"));%>">Nuevo</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/venta?proceso=listado"));%>">&#8226; Listado</a></li>
+                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/venta?proceso=nuevo"));%>">&#8226; Nuevo</a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
-                        <li>Ayuda
+                        <li>&#8226; Ayuda
                             <ul>
-                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/faq"));%>">Preguntas frecuentes</a></li>
-                                <li><a href="https://www.youtube.com/channel/UCXB2sRb8aOrUk85PstolE4Q">Tutoriales</a>
-                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/contacto"));%>">Contacto</a></li>
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/faq"));%>">&#8226; Preguntas frecuentes</a></li>
+                                <li><a href="https://www.youtube.com/channel/UCXB2sRb8aOrUk85PstolE4Q">&#8226; Tutoriales</a>
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/contacto"));%>">&#8226; Contacto</a></li>
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/"));%>">&#8226; Mapa del simuni</a></li>
                             </ul>
                         </li>
                     </ul>
