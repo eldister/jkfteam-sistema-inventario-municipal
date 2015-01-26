@@ -61,6 +61,7 @@
                         <li>&#8226; Ayuda
                             <ul>
                                 <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/faq"));%>">&#8226; Preguntas frecuentes</a></li>
+                                <li><a href="#">&#8226; Manual del usuario</a></li>
                                 <li><a href="https://www.youtube.com/channel/UCXB2sRb8aOrUk85PstolE4Q">&#8226; Tutoriales</a>
                                 <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/contacto"));%>">&#8226; Contacto</a></li>
                                 <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/"));%>">&#8226; Mapa del simuni</a></li>
