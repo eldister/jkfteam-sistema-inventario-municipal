@@ -14,6 +14,7 @@ import simuni.entidades.Documento;
 import simuni.entidades.ImagenActivo;
 import simuni.entidades.archivos.ManejadorArchivos;
 import simuni.entidades.mantenimientos.TipoLlanta;
+import simuni.enums.Recursos;
 
 /**
  * Esta clase de acceso a datos de <strong>Activo</strong> se encarga de las
@@ -669,7 +670,7 @@ public class ManejadorDatosActivo {
                 imaux.setCodigoActivo(rs.getString(1));
                 imaux.setCodigoImagen(rs.getInt(2));
                 imaux.setFechaSubida(rs.getDate(3));
-                imaux.setUrldocumento(rs.getString(4));
+                imaux.setUrldocumento(Recursos.Servers.SERVER_ARCHIVOS+rs.getString(4));
                 resp.add(imaux);
             } while (rs.next());
         }

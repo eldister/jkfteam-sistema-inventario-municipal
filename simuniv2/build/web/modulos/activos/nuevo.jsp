@@ -332,7 +332,7 @@
                                             <td>
                                                 <div class="form-group">
                                                     <label  class="control-label"for="txtprecio">Precio</label>
-                                                    <input type="number" value="<%out.print((tipo_registro != 2 && proceso && activo != null) ? activo.getPrecio() : "");%>" min="0" class="form-control" name="txtprecio"   id="txtprecio" placeholder="Ej. 50000000">
+                                                    <input step="any" type="number" value="<%out.print((tipo_registro != 2 && proceso && activo != null) ? activo.getPrecio() : "");%>" min="0" class="form-control" name="txtprecio"   id="txtprecio" placeholder="Ej. 50000000">
                                                 </div>
                                             </td>   
                                             <td>

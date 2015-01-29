@@ -5,12 +5,21 @@
  */
 package simuni.enums;
 
+import java.net.InetAddress;
+
 /**
  *
  * @author FchescO
  */
 public class Recursos {
-
+    public static String ip;
+    static {
+        try{
+            ip=InetAddress.getByName(InetAddress.getLocalHost().getCanonicalHostName()).getHostAddress();
+        }catch(Exception ex){
+            ip="localhost";
+        }
+    }
     public static enum BD {
 
         SERVIDORMYSQLFRANCISCO("Server=localhost;Port=3306;Database=myDataBase;Uid=chescosimuni;Pwd=chescosimuni;"),
@@ -37,7 +46,7 @@ public class Recursos {
     public static enum Servers {
 
         MAINSERVER("/simuniv2"),
-        SERVER_ARCHIVOS("http://localhost:8080/archivos");
+        SERVER_ARCHIVOS("http://"+Recursos.ip+":8080/archivos");
         
         private final String texto;
 
@@ -80,9 +89,9 @@ public class Recursos {
 
     public static enum SSI {
 
-        ARCHIVOSBASECONTEXT("/archivos/"),
+        //ARCHIVOSBASECONTEXT("/archivos/"),
         ARCHIVOSACTIVOSCONTEXT( "/Activos/"),
-        REMOTOARCHIVOSACTIVOSCONTEXT("http://localhost:8080"),
+        //REMOTOARCHIVOSACTIVOSCONTEXT("http://localhost:8080"),
         ARCHIVOSPROVEEDORESCONTEXT("/Proveedores/");
 
         private final String texto;
@@ -101,7 +110,7 @@ public class Recursos {
         }
     }
 
-    public static enum R {
+  /*  public static enum R {
 
         LOGOSIMUNIURL("http://localhost:8080/SIMUNI/recursos/imagenes/sistema/logomuni.jpg"),
         TITULOPRINCIPALACTIVOARTICULO("Módulo para el manejo de Activos");
@@ -120,6 +129,6 @@ public class Recursos {
         public String toString() {
             return texto;
         }
-    }
+    }*/
 
 }
