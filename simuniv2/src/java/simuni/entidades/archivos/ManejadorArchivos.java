@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package simuni.entidades.archivos;
 
 import java.io.File;
@@ -17,17 +16,18 @@ import java.io.OutputStream;
  * @author FchescO
  */
 public class ManejadorArchivos {
-        public boolean guardarArchivo(String rutaarchivo, String nombrearchivo, InputStream in) throws Exception {
+
+    public boolean guardarArchivo(String rutaarchivo, String nombrearchivo, InputStream in) throws Exception {
 
         OutputStream os = null;
         InputStream is = in;
         try {
             File archivo = new File(rutaarchivo);
-            if(!archivo.exists()){
-                 archivo.mkdirs(); 
+            if (!archivo.exists()) {
+                archivo.mkdirs();
             }
-          
-            System.out.println("Aqui vamos viendoooo "+rutaarchivo+" ---------- "+nombrearchivo);
+
+            System.out.println("Aqui vamos viendoooo " + rutaarchivo + " ---------- " + nombrearchivo);
             os = new FileOutputStream(new File(archivo, nombrearchivo));
 
             byte[] buffer = new byte[4096];
@@ -39,12 +39,16 @@ public class ManejadorArchivos {
             System.out.println(ex.getMessage());
             throw ex;
         } finally {
-            if(os!=null){
-            os.close();}
-            if(is!=null){   is.close();}
+            if (os != null) {
+                os.close();
+            }
+            if (is != null) {
+                is.close();
+            }
         }
         return true;
     }
+
     public InputStream obtenerArchivo(String rutaarchivo) throws Exception {
 
         OutputStream os = null;
@@ -57,5 +61,16 @@ public class ManejadorArchivos {
             ex.printStackTrace();
             return null;
         }
-    }        
+    }
+
+    public boolean isArchivoExistente(String pathfile) {
+        try {
+            File f = new File(pathfile);
+
+            return (f.exists() && !f.isDirectory());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -81,6 +81,22 @@
         <servlet-name>FAQS</servlet-name>
         <jsp-file>/faqs.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>AccionesReparacion</servlet-name>
+        <servlet-class>simuni.servlets.AccionesReparacion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MapaDelSitio</servlet-name>
+        <jsp-file>/mapadelsitio.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>AccionesConfiguracion</servlet-name>
+        <servlet-class>simuni.servlets.AccionesConfiguracion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccionesSoporte</servlet-name>
+        <servlet-class>simuni.servlets.AccionesSoporte</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccionesTipoUsuario</servlet-name>
         <url-pattern>/tipousuario</url-pattern>
@@ -172,6 +188,22 @@
     <servlet-mapping>
         <servlet-name>FAQS</servlet-name>
         <url-pattern>/faq</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccionesReparacion</servlet-name>
+        <url-pattern>/reparacion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MapaDelSitio</servlet-name>
+        <url-pattern>/mapa</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccionesConfiguracion</servlet-name>
+        <url-pattern>/configuracion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccionesSoporte</servlet-name>
+        <url-pattern>/soporte</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

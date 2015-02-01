@@ -41,7 +41,7 @@
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/temas/jquery_smoothness/style_jquery-ui.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style_main.css">
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style_menuprincipal.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style_menuprincipal2.css">
         <script>
             SIMUNI_SERVER = "<%out.print(Recursos.Servers.MAINSERVER);%>";
             $(document).ready(function() {
@@ -104,9 +104,14 @@ $("#volverTop").fadeOut(0);
                                 </div>
                             </div>
                         </div>                            
-                    </div>
-          <% out.print(user.getMenuusuario());
-                        } %>
+                    </div>                            
+                <%
+                        String menu_usuario= user.getMenuusuario(); 
+                        if(menu_usuario!=null){
+                            menu_usuario=menu_usuario.replace("%MAINSERVER%", Recursos.Servers.MAINSERVER.toString());
+                        }
+                        out.print(menu_usuario);
+                 } %>
                 </header>  
             </div>
             <div class="SIMUNI_ROW SIMUNI_MAINROW"> 

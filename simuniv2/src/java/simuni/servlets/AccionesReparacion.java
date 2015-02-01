@@ -89,11 +89,9 @@ public class AccionesReparacion extends HttpServlet {
             ResultSet resultset = null;
             query = query == null ? "" : query;
             switch (getOpcion(request.getParameter("proceso"))) {
-                case Nuevo:
-                    
-                    
-                    
-                    
+                case Nuevo:  
+                     disp = request.getRequestDispatcher("/modulos/reparaciones/nuevo.jsp");
+                     System.out.println("Entreeee");
                     break;
                 case Listado:
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);

@@ -20,7 +20,7 @@ public class Conexionmysql {
         try {
             Class.forName(driver).newInstance();
 
-            Connection conn = DriverManager.getConnection(Recursos.BD.SERVIDORMYSQLJEFFERSON.toString());
+            Connection conn = DriverManager.getConnection(Recursos.BD.SERVIDORMYSQLDEBIAN.toString());
 
             return conn;
         } catch (Exception e) {
