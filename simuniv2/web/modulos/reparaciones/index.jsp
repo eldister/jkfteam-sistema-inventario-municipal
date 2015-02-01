@@ -1,6 +1,6 @@
 <%@page import="simuni.enums.Recursos"%>
 <%@page import="java.sql.ResultSet"%>
- <%@page import="simuni.clases.ui.MostradorReparacion"%> 
+<%@page import="simuni.clases.ui.MostradorReparacion"%> 
 <%@page import="simuni.utils.UtilidadesServlet"%>
 <%@ page language='java' contentType='text/html; charset=ISO-8859-1' pageEncoding='ISO-8859-1'%>
 <%@ taglib prefix='decorator' uri='http://claudiushauptmann.com/jsp-decorator/'%>
@@ -9,12 +9,12 @@
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
         <link rel='stylesheet' href='<%=request.getContextPath()%>/css/style_grillageneral.css'>
         <script src='<%=request.getContextPath()%>/js/script_sm_grillageneral.js' charset="utf-8"></script>
-        <script src='<%=request.getContextPath()%>/js/script_paginas/script_modulo_ventaindex.js' charset="utf-8"></script>
+        <script src='<%=request.getContextPath()%>/js/script_paginas/script_modulo_reparacionindex.js' charset="utf-8"></script>
     </decorator:content>
     <decorator:content placeholder='sm_div_navegationbarmenuitems'>
         <ol class="breadcrumb">
             <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/">Inicio</a></li>   
-            <li class="active">Ventas</li>
+            <li class="active">Reparacion</li>
         </ol>
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>

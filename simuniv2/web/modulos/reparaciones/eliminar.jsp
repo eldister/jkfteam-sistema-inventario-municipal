@@ -41,9 +41,9 @@
 <%@ page language='java' contentType='text/html; charset=ISO-8859-1' pageEncoding='ISO-8859-1'%>
 <%@ taglib prefix='decorator' uri='http://claudiushauptmann.com/jsp-decorator/'%>
 <decorator:decorate filename='../../recursos/paginas/master/masterpage.jsp'>
-    <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | Actualizar reparación </decorator:content>    
+    <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | eliminar reparación </decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
-        <script src="<%=request.getContextPath()%>/js/script_paginas/script_nuevo_venta.js" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/script_paginas/script_eliminar_reparacion.js" charset="utf-8"></script>
 
         <style>
             #sm_tb_campos td .form-group{
@@ -80,12 +80,12 @@
     <decorator:content placeholder='sm_div_navegationbarmenuitems'>
         <ol class="breadcrumb">
             <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/">Inicio</a></li>   
-            <li class="active">Activos***</li>
+            <li class="active">Eliminar reparación</li>
         </ol>
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
 
-        <form class="form"  id="formulario" action="<%out.print(Recursos.Servers.MAINSERVER);%>/reparacion?proceso=nuevo" method="POST">
+        <form class="form"  id="formulario" action="<%out.print(Recursos.Servers.MAINSERVER);%>/reparacion?proceso=eliminar" method="POST">
             <fieldset id="activos">
                 <legend style="<%out.print((error && proceso) ? "color:red;" : "");%>">Registro de activos <small><sup>* Campos requeridos</sup></small></legend>
                 <div id="registerInformation">
@@ -161,7 +161,7 @@
                          <tr id="sm_contenedor_controles">
                             <td class="btn_controles_sinprocesocontainer">
                                 <div class="form-group">
-                                    <input type="submit" value="Eliminar Registro Venta" class="form-control btn-danger">
+                                    <input type="submit" value="Eliminar Registro Reparación" class="form-control btn-danger">
                                 </div>
                             </td>
                             <td  class="btn_controles_sinprocesocontainer">

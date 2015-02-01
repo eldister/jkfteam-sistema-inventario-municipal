@@ -1,4 +1,3 @@
-
 package simuni.clases.ui;
 
 import java.sql.ResultSet;
