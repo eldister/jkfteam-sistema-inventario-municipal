@@ -7,10 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import simuni.entidades.bd.Conexionmysql;
 import simuni.entidades.Configuracion;
+import simuni.entidades.TareaRespaldo;
 
 /**
- * Esta clase de acceso a datos de <strong>Configuracion</strong> se encarga
- * de las operaciones directamente con la base de datos, para hacer su ingreso,
+ * Esta clase de acceso a datos de <strong>Configuracion</strong> se encarga de
+ * las operaciones directamente con la base de datos, para hacer su ingreso,
  * modificación, eliminacino del mismo. Entre las operaciones comunes que se
  * solicitan estan agregar, modificar, eliminar, hacer un query de busqueda y
  * tambien hacer el listado por defecto que hay de los datos ingresados. Esta
@@ -169,9 +170,11 @@ public class ManejadorDatosConfiguracion {
         return resp;
 
     }
-  /**
+
+    /**
      * Función que se encarga de obtener un listado de los datos en la base de
-     * datos. Todo trabaja a traves de vistas de la base de datos. 
+     * datos. Todo trabaja a traves de vistas de la base de datos.
+     *
      * @return Un ResultSet que trae consigo los datos de la selección.
      * @throws SQLException Si ocurre un error SQL
      * @since 1.0
@@ -203,16 +206,27 @@ public class ManejadorDatosConfiguracion {
      * @throws SQLException si ocurre una excepción de SQL
      * @since 1.0
      */
-    public Configuracion getConfiguracion(int codigo) throws SQLException {
+    public Configuracion getConfiguracionRespaldo(int codigo) throws SQLException {
         Configuracion resp = null;
+        String sql = codigo < 0 ? "{ call simuni_sp_obtener_configuracion_respaldobd2()}" : "{ call simuni_sp_obtener_configuracion_respaldobd(?)}";
         Connection con = Conexionmysql.obtenerConexion();
-        PreparedStatement st = con.prepareCall("{ call simuni_sp_obtener_configuracion(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        st.setInt(1, codigo);
+        PreparedStatement st = con.prepareCall(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        if (codigo > 0) {
+            st.setInt(1, codigo);
+        }
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
             resp = new Configuracion();
-          /*  resp.setIdconfiguracion(rs.getInt(1));
-            resp.setNombreconfiguracion(rs.getString(2));*/
+            resp.setCodigoConfiguracion(rs.getInt(1));
+            resp.setPathMysqlDump(rs.getString(2));
+            resp.setPathBackup(rs.getString(3));
+            resp.setPrefijoBackup(rs.getString(4));
+            resp.setServerBaseDatos(rs.getString(5));
+            resp.setNombreBaseDatos(rs.getString(6));
+            resp.setLapsoTiempoBackup(rs.getInt(7));
+            resp.setPuertoServer(rs.getString(8));
+            resp.setUsuarioBd(rs.getString(9));
+            resp.setContraseniaBd(rs.getString(10));
             rs.close();
         }
         return resp;
@@ -266,6 +280,96 @@ public class ManejadorDatosConfiguracion {
         }
         return resp;
 
+    }
+
+    public String registrarConfiguracionRespaldoBD(Configuracion configuracion) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{call simuni_sp_registro_configuracion_respaldobd(?,?,?,?,?,?,?,?,?,?)}");
+            cs.setString(1, configuracion.getPathMysqlDump());
+            cs.setString(2, configuracion.getPathBackup());
+            cs.setString(3, configuracion.getPrefijoBackup());
+            cs.setString(4, configuracion.getServerBaseDatos());
+            cs.setString(5, configuracion.getNombreBaseDatos());
+            cs.setInt(6, configuracion.getLapsoTiempoBackup());
+            cs.setString(7, configuracion.getPuertoServer());
+            cs.setString(8, configuracion.getUsuarioBd());
+            cs.setString(9, configuracion.getContraseniaBd());
+            cs.registerOutParameter(10, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(10);
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    }
+
+    public String modificarConfiguracionRespaldoBD(Configuracion configuracion) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{call simuni_sp_actualizacion_configuracion_respaldobd(?,?,?,?,?,?,?,?,?,?,?)}");
+            cs.setString(1, configuracion.getPathMysqlDump());
+            cs.setString(2, configuracion.getPathBackup());
+            cs.setString(3, configuracion.getPrefijoBackup());
+            cs.setString(4, configuracion.getServerBaseDatos());
+            cs.setString(5, configuracion.getNombreBaseDatos());
+            cs.setInt(6, configuracion.getLapsoTiempoBackup());
+            cs.setInt(7, configuracion.getCodigoConfiguracion());
+            cs.setString(8, configuracion.getPuertoServer());
+            cs.setString(9, configuracion.getUsuarioBd());
+            cs.setString(10, configuracion.getContraseniaBd());
+            cs.registerOutParameter(11, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(11);
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    }
+    
+    public String modificarTareaRespaldo(TareaRespaldo tarearespaldo) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{call simuni_sp_actualizacion_tarearespaldo(?,?,?,?)}");
+            cs.setInt(1, tarearespaldo.getCodigoTarea());
+            cs.setDate(2, tarearespaldo.getFecha());
+            cs.setString(3, tarearespaldo.getEstado());
+            cs.registerOutParameter(4, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(4);
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    }    
+
+    public TareaRespaldo getTareaRespaldo() {
+        TareaRespaldo resp = null;
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            PreparedStatement st = con.prepareCall("{call simuni_sp_obtener_ultimatareabackup()}");
+
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                resp = new TareaRespaldo();
+                resp.setCodigoTarea(rs.getInt(1));
+                resp.setFecha(rs.getDate(2));
+                resp.setEstado(rs.getString(3));
+                rs.close();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return resp;
     }
 
 }

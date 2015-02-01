@@ -11,26 +11,29 @@ package simuni.entidades;
  * @author FchescO
  */
 public class Configuracion {
-    private int codigoConfiguracion;//-
-    private String nombreConfiguracion;//-
-    private String pathMysqlDump;//-
-    private String pathBackup;//-
-    private String nombreBaseDatos;//-
-    private String prefijoBackup;//-
-    private String serverBaseDatos;//-
-    private String serverWeb;
-    private String serverArchivos;
-    private String pathBaseArchivos;
-    private String pathImagenesArchivos;
-    private String pathImagenesDefault;
-    private String pathImagenesProveedores;
-    private String contextoWeb;
-    private String contextoArchivosActivos;
-    private String contextoArchivoProveedores;
-    private int lapsoTiempoBackup;//en dias
-    private int lapsoTimpoReporteActivo;
-    private int lapsoTimpoReporteProveedores;
-    private int lapsoTimpoReporteGeneral;
+    private int codigoConfiguracion=0;//-
+    private String nombreConfiguracion="";//-
+    private String pathMysqlDump="";//-
+    private String pathBackup="";//-
+    private String nombreBaseDatos="";//-
+    private String prefijoBackup="";//-
+    private String serverBaseDatos="";//-
+    private String serverWeb="";
+    private String serverArchivos="";
+    private String pathBaseArchivos="";
+    private String pathImagenesArchivos="";
+    private String pathImagenesDefault="";
+    private String pathImagenesProveedores="";
+    private String contextoWeb="";
+    private String contextoArchivosActivos="";
+    private String contextoArchivoProveedores="";
+    private int lapsoTiempoBackup=1;//en dias
+    private int lapsoTimpoReporteActivo=0;
+    private int lapsoTimpoReporteProveedores=0;
+    private int lapsoTimpoReporteGeneral=0;
+    private String puertoServer="";
+    private String usuarioBd="";
+    private String contraseniaBd="";
 
     /**
      * @return the nombreConfiguracion
@@ -310,6 +313,48 @@ public class Configuracion {
      */
     public void setCodigoConfiguracion(int codigoConfiguracion) {
         this.codigoConfiguracion = codigoConfiguracion;
+    }
+
+    /**
+     * @return the puertoServer
+     */
+    public String getPuertoServer() {
+        return puertoServer;
+    }
+
+    /**
+     * @param puertoServer the puertoServer to set
+     */
+    public void setPuertoServer(String puertoServer) {
+        this.puertoServer = puertoServer;
+    }
+
+    /**
+     * @return the usuarioBd
+     */
+    public String getUsuarioBd() {
+        return usuarioBd;
+    }
+
+    /**
+     * @param usuarioBd the usuarioBd to set
+     */
+    public void setUsuarioBd(String usuarioBd) {
+        this.usuarioBd = usuarioBd;
+    }
+
+    /**
+     * @return the contraseniaBd
+     */
+    public String getContraseniaBd() {
+        return contraseniaBd;
+    }
+
+    /**
+     * @param contraseniaBd the contraseniaBd to set
+     */
+    public void setContraseniaBd(String contraseniaBd) {
+        this.contraseniaBd = contraseniaBd;
     }
     
     
