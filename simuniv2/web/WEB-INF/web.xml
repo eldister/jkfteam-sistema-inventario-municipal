@@ -97,6 +97,10 @@
         <servlet-name>AccionesSoporte</servlet-name>
         <servlet-class>simuni.servlets.AccionesSoporte</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccionesTipoProveedor</servlet-name>
+        <servlet-class>simuni.servlets.AccionesTipoProveedor</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccionesTipoUsuario</servlet-name>
         <url-pattern>/tipousuario</url-pattern>
@@ -204,6 +208,10 @@
     <servlet-mapping>
         <servlet-name>AccionesSoporte</servlet-name>
         <url-pattern>/soporte</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccionesTipoProveedor</servlet-name>
+        <url-pattern>/tipoproveedor</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,8 +5,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import simuni.entidades.bd.Conexionmysql;
 import simuni.entidades.Proveedor;
+import simuni.entidades.mantenimientos.TipoProveedor;
 
 /**
  * Esta clase de acceso a datos de <strong>Proveedor</strong> se encarga de las
@@ -72,6 +75,92 @@ public class ManejadorDatosProveedor {
         return resp;
     }
 
+    public String registrarServiciosProveedor(Proveedor proveedor) throws SQLException {
+        String resp = "";
+        boolean error = false;
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            Iterator<TipoProveedor> tiposservicio = proveedor != null && proveedor.getTipoServicios() != null ? proveedor.getTipoServicios().iterator() : null;
+            if (tiposservicio != null) {
+                while (tiposservicio.hasNext()) {
+                    TipoProveedor tiposervicio = tiposservicio.next();
+                    CallableStatement cs = con.prepareCall("{call simuni_sp_registro_servicioproveedor(?,?,?)}");
+                    cs.setString(1, proveedor.getCedula());
+                    cs.setInt(2, tiposervicio.getCodigoTipoProveedor());
+                    cs.registerOutParameter(3, java.sql.Types.VARCHAR);
+                    cs.execute();
+                    resp = cs.getString(3);
+                    error = (error || resp == null || resp.startsWith("2"));
+                }
+            }
+
+            if (error) {
+                resp = "2 No se completaron el registro de servicios";
+            } else {
+                resp = "Registro de servicios completado";
+            }
+
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    }
+
+    public String actualizarServiciosProveedor(Proveedor proveedor) throws SQLException {
+        String resp = "";
+        boolean error = false;
+
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            Iterator<TipoProveedor> tiposservicio = proveedor != null && proveedor.getTipoServicios() != null ? proveedor.getTipoServicios().iterator() : null;
+            if (tiposservicio != null) {
+                while (tiposservicio.hasNext()) {
+                    TipoProveedor tiposervicio = tiposservicio.next();
+                    CallableStatement cs = con.prepareCall("{call simuni_sp_registro_servicioproveedor(?,?,?)}");
+                    cs.setString(1, proveedor.getCedula());
+                    cs.setInt(2, tiposervicio.getCodigoTipoProveedor());
+                    cs.registerOutParameter(3, java.sql.Types.VARCHAR);
+                    cs.execute();
+                    resp = cs.getString(3);
+                    error = (error || resp == null || resp.startsWith("2"));
+                }
+            }
+
+            if (error) {
+                resp = "2 No se completaron el registro de servicios";
+            } else {
+                resp = "Registro de servicios completado";
+            }
+
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    }
+
+    public String eliminarServiciosProveedor(Proveedor proveedor) throws SQLException {
+        String resp = "";
+
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{call simuni_sp_eliminacion_servicioproveedor(?,?)}");
+            cs.setString(1, proveedor.getCedula());
+            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(2);
+
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    }
+
     /**
      * Operación que se encarga de realizar modificación del
      * <strong>Proveedor</strong>.
@@ -102,7 +191,7 @@ public class ManejadorDatosProveedor {
             cs.setString(13, proveedor.getPrimerApellidoRepresentanteLegal());
             cs.setString(14, proveedor.getSegundoApellidoRepresentanteLegal());
             cs.setString(15, proveedor.getEstado());
-            java.sql.Date date = new java.sql.Date(proveedor.getFechaUltimaModificacion().getTime());                  
+            java.sql.Date date = new java.sql.Date(proveedor.getFechaUltimaModificacion().getTime());
             cs.setDate(16, date);
             cs.setString(17, proveedor.getTelFijo());
             cs.setString(18, proveedor.getTelFax());
@@ -249,6 +338,25 @@ public class ManejadorDatosProveedor {
             resp.setTipoProveedor(rs.getString(20));
             resp.setFechaUltimaModificacion(rs.getDate(21));
             resp.setApartadoPostal(rs.getString(22));
+            resp.setTipoServicios(getServiciosProveedor(cedula));
+            rs.close();
+        }
+        return resp;
+    }
+
+    public ArrayList<TipoProveedor> getServiciosProveedor(String cedula) throws SQLException {
+        ArrayList<TipoProveedor> resp = null;
+        Connection con = Conexionmysql.obtenerConexion();
+        PreparedStatement st = con.prepareCall("{ call simuni_sp_obtener_serviciosproveedor(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        st.setString(1, cedula);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            resp = new ArrayList<TipoProveedor>();
+            do {
+                TipoProveedor tiproaux = new TipoProveedor();
+                tiproaux.setCodigoTipoProveedor(rs.getInt(1));
+                resp.add(tiproaux);
+            } while (rs.next());
             rs.close();
         }
         return resp;
@@ -265,17 +373,18 @@ public class ManejadorDatosProveedor {
      * @since 1.0
      */
     public boolean existeProveedor(String cedula) throws SQLException {
-       
+
         Connection con = Conexionmysql.obtenerConexion();
         PreparedStatement st = con.prepareCall("{ call simuni_sp_existe_proveedor(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         st.setString(1, cedula);
         ResultSet rs = st.executeQuery();
-        if (rs.next()) {       
+        if (rs.next()) {
             rs.close();
             return true;
         }
         return false;
     }
+
     /**
      * Obtiene la cantidad de registros que hay en la base de datos, con el
      * criterio qeu se pasa por parámetro
@@ -286,7 +395,7 @@ public class ManejadorDatosProveedor {
      * @throws SQLException En caso de que lance una excepción de SQL.
      * @since 1.0
      */
-    public int getCantidadFilas(String query,boolean ocultos) throws SQLException {
+    public int getCantidadFilas(String query, boolean ocultos) throws SQLException {
         int resp = 0;
         Connection con = Conexionmysql.obtenerConexion();
         PreparedStatement st = con.prepareCall(" {call simuni_sp_obtener_cantidad_reproveedor(?,?)}");
@@ -311,7 +420,7 @@ public class ManejadorDatosProveedor {
      * @throws SQLException Si ocurre una excepcion de SQL.
      * @since 1.0
      */
-    public ResultSet busquedaProveedor(String query, int desplazamiento, int paginacion,boolean ocultos) throws SQLException {
+    public ResultSet busquedaProveedor(String query, int desplazamiento, int paginacion, boolean ocultos) throws SQLException {
         ResultSet resp = null;
         try {
             Connection con = Conexionmysql.obtenerConexion();
@@ -328,6 +437,45 @@ public class ManejadorDatosProveedor {
         }
         return resp;
 
+    }
+    
+        public ArrayList<Proveedor> getProveedoresXTipoServicio(int tiposervicio) throws SQLException {
+        ArrayList<Proveedor> proveedores = new ArrayList<Proveedor>();
+        Connection con = Conexionmysql.obtenerConexion();
+        PreparedStatement st = con.prepareCall("{ call simuni_sp_obtener_proveedorxtiposervicio(?)}");
+        st.setInt(1, tiposervicio);
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            Proveedor resp = new Proveedor();
+            resp.setCedula(rs.getString(1));
+            resp.setNombre(rs.getString(2));
+            resp.setPrimerApellido(rs.getString(3));
+            resp.setSegundoApellido(rs.getString(4));
+            resp.setNumeroCuenta(rs.getString(5));
+            resp.setEmail(rs.getString(6));
+            resp.setPaginaWeb(rs.getString(7));
+            resp.setNomEmpresa(rs.getString(8));
+            resp.setDirEmpresa(rs.getString(9));
+            resp.setRepresentanteLegal(
+                    rs.getString(10),
+                    rs.getString(11),
+                    rs.getString(12),
+                    rs.getString(13)
+            );
+            resp.setEstado(rs.getString(14));
+            resp.setFechaRegistro(rs.getDate(15));
+            resp.setTelFijo(rs.getString(16));
+            resp.setTelFax(rs.getString(17));
+            resp.setTelMovil(rs.getString(18));
+            resp.setTelOfic(rs.getString(19));
+            resp.setTipoProveedor(rs.getString(20));
+            resp.setFechaUltimaModificacion(rs.getDate(21));
+            resp.setApartadoPostal(rs.getString(22));
+            proveedores.add(resp);
+           
+        } 
+        rs.close();
+        return proveedores;
     }
 
 }

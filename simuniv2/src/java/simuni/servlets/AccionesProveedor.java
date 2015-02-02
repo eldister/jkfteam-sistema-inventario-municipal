@@ -6,7 +6,6 @@
 package simuni.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.util.Date;
 import javax.servlet.RequestDispatcher;
@@ -39,7 +38,7 @@ public class AccionesProveedor extends HttpServlet {
      */
     enum OpcionesDo {
 
-        Listado,Listado_Asinc, Nuevo, Eliminar, Modificar, Existe, Query,Query_Asinc, ReintentoNuevo, AccionDefault
+        Listado,Listado2,Listado_Asinc, Nuevo, Eliminar, Modificar, Existe, Query,Query_Asinc, ReintentoNuevo, AccionDefault
     }
 
     private OpcionesDo getOpcion(String key) {
@@ -63,7 +62,9 @@ public class AccionesProveedor extends HttpServlet {
             return OpcionesDo.Listado_Asinc;
         }else if (key.equals("query_asinc")) {
             return OpcionesDo.Query_Asinc;
-        }
+        }else if (key.equals("listado2")) {
+            return OpcionesDo.Listado2;
+        } 
         return OpcionesDo.AccionDefault;
     }
 
@@ -92,7 +93,12 @@ public class AccionesProveedor extends HttpServlet {
             query = query == null ? "" : query;
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
+                    request.setAttribute("tipoproveedores", mproveedor.listadoTipoProveedor());
                     disp = request.getRequestDispatcher("/modulos/proveedores/nuevo.jsp");
+                    break;
+                case Listado2:
+                    request.setAttribute("tipoproveedores", mproveedor.listadoTipoProveedor());
+                    disp = request.getRequestDispatcher("/modulos/proveedores/listado_proveedores.jsp");
                     break;
                 case Listado:
                     
@@ -120,6 +126,7 @@ public class AccionesProveedor extends HttpServlet {
                     registro = request.getParameter("registro");
                     proveedor = mproveedor.getProveedor(registro);
                     request.setAttribute("registro", proveedor);
+                    request.setAttribute("tipoproveedores", mproveedor.listadoTipoProveedor());    
                     disp = request.getRequestDispatcher("/modulos/proveedores/editar.jsp");
                     break;
                 case Eliminar:
@@ -226,7 +233,12 @@ public class AccionesProveedor extends HttpServlet {
                     disp = request.getRequestDispatcher("/modulos/proveedores/msgs/notificacion_eliminacion.jsp");
                     disp.forward(request, response);                        
                     break;
-
+                case Listado2:
+                    int tipoServicio=UtilidadesServlet.getInt(request.getParameter("tiposervicio"), 1);
+                    request.setAttribute("registros", mproveedor.getProveedoresXTipoServicio(tipoServicio));
+                    disp = request.getRequestDispatcher("/modulos/proveedores/_asinc/_asinc_listar2.jsp");
+                    disp.forward(request, response);                      
+                    break;  
             }
 
         } catch (Exception ex) {
@@ -260,7 +272,7 @@ public class AccionesProveedor extends HttpServlet {
         String numcuenta = request.getParameter("txtnumcuenta");
         String nombreempresa = request.getParameter("txtnombreempresa");
         String direccionempresa = request.getParameter("txtdireccionempresa");
-
+       
         resp.setTipoProveedor(tipoproveedor);
         resp.setEstado(estadoproveedor);
         resp.setCedula(cedula);
@@ -281,6 +293,13 @@ public class AccionesProveedor extends HttpServlet {
         resp.setDirEmpresa(direccionempresa);
         resp.setFechaRegistro(new Date());
         resp.setFechaUltimaModificacion(new Date());
+        String[]tiposservicios=request.getParameterValues("cmbserviciosproveedor");
+        if(tiposservicios!=null){
+            for (int i = 0; i < tiposservicios.length; i++) {
+                System.out.println("Servicio >>>>>> "+tiposservicios[i]);
+                resp.agregarTipoServicio(UtilidadesServlet.getInt(tiposservicios[i], -1));
+            }
+        }
 
         return resp;
     }
