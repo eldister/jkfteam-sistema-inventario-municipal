@@ -1,13 +1,19 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="simuni.entidades.mantenimientos.TipoProveedor"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="simuni.entidades.Proveedor"%>
 <%@page import="simuni.enums.Recursos"%>
 <%@ page language='java' contentType='text/html; charset=ISO-8859-1' pageEncoding='ISO-8859-1'%>
 <%@ taglib prefix='decorator' uri='http://claudiushauptmann.com/jsp-decorator/'%>
 <%
     Proveedor proveedor = null;
-
+    ArrayList<TipoProveedor> tipoproveedores = (ArrayList<TipoProveedor>) request.getAttribute("tipoproveedores");
+    Iterator<TipoProveedor> itertipoproveedor = null;
     try {
         proveedor = (Proveedor) request.getAttribute("registro");
-
+        if (tipoproveedores != null) {
+            itertipoproveedor = tipoproveedores.iterator();
+        }
         if (proveedor == null) {
             proveedor = new Proveedor();
         }
@@ -41,6 +47,10 @@
                 padding: 10px;
                 margin:15px;
             }
+            #cmbtipoproveedor{
+
+                height: 150px;
+            }
         </style>
         <script>
             //cmbtipoproveedor
@@ -49,7 +59,7 @@
             cmbestadoproveedor = "<%out.print(proveedor.getEstado()); %>";
             //cmbnombrebanco
             cmbnombrebanco = "<%out.print(proveedor.getNombreBanco()); %>";
-     
+
             //cmbtipoproveedor="Jurídico";
         </script>
     </decorator:content>
@@ -204,6 +214,39 @@
                                     <input type="text" value="<%out.print(proveedor.getNumeroCuenta()); %>" class="form-control" name="txtnumcuenta" id="txtnumcuenta" placeholder="Ej. 200-01-062-154">
                                 </div>
                             </td>
+                            <td rowspan="2">
+                                <div class="form-group">
+                                    <label  class="control-label"for="cmbtipoproveedor">Area de Servicio *</label>
+                                    <select class="form-control" multiple="multiple" name="cmbserviciosproveedor" id="cmbtipoproveedor">
+                                        <%
+                                            ArrayList<TipoProveedor> serviciosproveedor = proveedor == null ? null : proveedor.getTipoServicios();
+                                            boolean daservicio=false;
+                                            if (itertipoproveedor != null && itertipoproveedor.hasNext()) {
+                                                do {
+                                                    TipoProveedor tipoproveedor = itertipoproveedor.next();//del listado
+                                                    
+                                                Iterator<TipoProveedor> iter_ser_proveedor = null;
+                                                if (serviciosproveedor != null) {
+                                                    iter_ser_proveedor = serviciosproveedor.iterator();
+                                                }
+                                                while(iter_ser_proveedor!=null&&iter_ser_proveedor.hasNext()){
+                                                    TipoProveedor t_servicioprove=iter_ser_proveedor.next();
+                                                    if(tipoproveedor!=null&&tipoproveedor.getCodigoTipoProveedor()==t_servicioprove.getCodigoTipoProveedor()){
+                                                        daservicio=true;
+                                                    }
+                                                    
+                                                }
+
+                                        %>
+                                        <option <%out.print(daservicio ? "selected='selected'" : "");%> value="<%out.print(tipoproveedor.getCodigoTipoProveedor());%>"><%out.print(tipoproveedor.getNombreTipoProveedor());%></option>
+                                        <%
+                                                daservicio=false;
+                                                } while (itertipoproveedor.hasNext());
+                                            }
+                                        %>
+                                    </select>
+                                </div>
+                            </td>                              
                         </tr>
                         <tr>
                             <td>

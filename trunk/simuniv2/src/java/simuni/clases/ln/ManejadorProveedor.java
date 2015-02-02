@@ -2,9 +2,11 @@ package simuni.clases.ln;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import simuni.clases.ad.ManejadorDatosProveedor;
 import simuni.entidades.Respuesta;
 import simuni.entidades.Proveedor;
+import simuni.entidades.mantenimientos.TipoProveedor;
 import simuni.utils.UtilidadesServlet;
 
 /**
@@ -40,9 +42,14 @@ public class ManejadorProveedor {
                 resp.setNivel(2);
             } else {
                 resp.setNivel(1);
+                try {
+                    mdproveedor.registrarServiciosProveedor(proveedor);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    msg += " No se registraron todos los servicios del proveedor";
+                }
             }
             resp.setMensaje(msg);
-            
 
         } catch (SQLException ex) {
             resp.setNivel(2);
@@ -93,16 +100,33 @@ public class ManejadorProveedor {
      */
     public Respuesta modificarProveedor(Proveedor proveedor) {
         Respuesta resp = new Respuesta();
+        boolean error = false;
         ManejadorDatosProveedor mdproveedor = new ManejadorDatosProveedor();
 
         try {
-            String msg = mdproveedor.modificarProveedor(proveedor);
+            String msg = mdproveedor.eliminarServiciosProveedor(proveedor);
             if (msg != null && !msg.startsWith("2")) {
                 resp.setNivel(1);
             } else {
                 resp.setNivel(2);
+                error = true;
+                resp.setMensaje("No se podrá modificar el proveedor. "+msg);
             }
-            resp.setMensaje(msg);
+            if (!error) {
+                msg = mdproveedor.modificarProveedor(proveedor);
+                if (msg != null && !msg.startsWith("2")) {
+                    resp.setNivel(1);
+                    try {
+                        mdproveedor.registrarServiciosProveedor(proveedor);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        msg += " No se registraron todos los servicios del proveedor";
+                    }                    
+                } else {
+                    resp.setNivel(2);
+                }
+                resp.setMensaje(msg);
+            }
 
         } catch (SQLException ex) {
             resp.setNivel(2);
@@ -191,11 +215,11 @@ public class ManejadorProveedor {
      * @return Un entero con la cantidad de registros.
      * @since 1.0
      */
-    public int getCantidadRegistros(String query,boolean ocultos) {
+    public int getCantidadRegistros(String query, boolean ocultos) {
         int resp = 0;
         try {
             ManejadorDatosProveedor mdproveedor = new ManejadorDatosProveedor();
-            resp = mdproveedor.getCantidadFilas(query,ocultos);
+            resp = mdproveedor.getCantidadFilas(query, ocultos);
 
         } catch (SQLException ex) {
             UtilidadesServlet.registrarErrorSistema("getCantidadRegistrosActivosArticulos", ex.getMessage());
@@ -216,8 +240,20 @@ public class ManejadorProveedor {
         }
         return resp;
     }
+     public ArrayList<Proveedor> getProveedoresXTipoServicio(int tiposervicio){
+         ArrayList<Proveedor> resp = null;
+        ManejadorDatosProveedor mdproveedor = new ManejadorDatosProveedor();
+        try {
+            resp = mdproveedor.getProveedoresXTipoServicio(tiposervicio);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return resp;         
+     }
+
     public boolean existeProveedor(String cedula) {
-       boolean resp=false;
+        boolean resp = false;
         ManejadorDatosProveedor mdproveedor = new ManejadorDatosProveedor();
         try {
             resp = mdproveedor.existeProveedor(cedula);
@@ -226,5 +262,10 @@ public class ManejadorProveedor {
             ex.printStackTrace();
         }
         return resp;
+    }
+
+    public ArrayList<TipoProveedor> listadoTipoProveedor() {
+        ManejadorTipoProveedor mdtipopago = new ManejadorTipoProveedor();
+        return mdtipopago.listadoTipoProveedor();
     }
 }

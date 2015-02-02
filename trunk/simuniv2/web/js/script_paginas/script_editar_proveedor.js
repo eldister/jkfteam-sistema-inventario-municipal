@@ -119,7 +119,7 @@ function setEstadoCampo(element, value) {
 $(document).ready(function() {
 
     addEventosSubmitFormulario();
-    txtCedulaTextChangedHandler();
+
 
     $("select#cmbtiporpoveedor option")
             .each(function() {

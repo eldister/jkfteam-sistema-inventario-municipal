@@ -6,7 +6,9 @@
 
 package simuni.entidades;
 
+import java.util.ArrayList;
 import java.util.Date;
+import simuni.entidades.mantenimientos.TipoProveedor;
 
 /**
  *
@@ -30,6 +32,10 @@ public class Proveedor extends Persona {
     private Date fechaRegistro;  
     private Date fechaUltimaModificacion;
     private Persona representanteLegal;
+    private ArrayList<TipoProveedor>tipoServicios=null;
+
+    public Proveedor() {
+    }
 
 
 public String getNombreRepresentanteLegal(){
@@ -284,5 +290,28 @@ public String getCedulaRepresentanteLegal(){
     public void setFechaUltimaModificacion(Date fechaUltimaModificacion) {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
+
+    /**
+     * @return the tipoServicios
+     */
+    public ArrayList<TipoProveedor> getTipoServicios() {
+        return tipoServicios;
+    }
+
+    /**
+     * @param tipoServicios the tipoServicios to set
+     */
+    public void setTipoServicios(ArrayList<TipoProveedor> tipoServicios) {
+        this.tipoServicios = tipoServicios;
+    }
     
+    public boolean agregarTipoServicio(int codigo){
+        if(this.tipoServicios==null){
+            this.tipoServicios=new ArrayList<TipoProveedor>();
+        }
+        TipoProveedor tproveedor=new TipoProveedor();
+        tproveedor.setCodigoTipoProveedor(codigo);
+        return this.tipoServicios.add(tproveedor);
+        
+    }
 }
