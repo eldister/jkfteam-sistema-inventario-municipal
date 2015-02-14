@@ -3,17 +3,17 @@ package simuni.entidades;
 import java.util.Date;
 
 public class Reparacion {
-    private String placaActivo;
-    private String idUsuario;
-    private String nombreSolicitante;
-    private String motivoReparacion;
-    private String nombreReparador;
-    private Date fechaReparacion;
-    private double costoReparacion;
-    private String Observacion;
-    private int codigoEstado;
-    private int codigoReparacion;
-    private int codigoDetalleReparacion;
+    private String placaActivo = "";
+    private String idUsuario = "";
+    private String nombreSolicitante = "";
+    private String motivoReparacion = "";
+    private String nombreReparador = "";
+    private Date fechaReparacion = new Date();
+    private double costoReparacion = 0;
+    private String Observacion = "";
+    private int codigoEstado = 0;
+    private int codigoReparacion = 0;
+    private int codigoDetalleReparacion = 0;
 
     public String getPlacaActivo() {
         return placaActivo;
@@ -52,7 +52,7 @@ public class Reparacion {
     }
 
     public Date getFechaReparacion() {
-        return fechaReparacion;
+        return new Date(fechaReparacion == null ? null : fechaReparacion.getTime());
     }
 
     public void setFechaReparacion(Date fechaReparacion) {
