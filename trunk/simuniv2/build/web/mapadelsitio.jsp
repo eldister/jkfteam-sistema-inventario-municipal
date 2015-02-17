@@ -58,6 +58,29 @@
                                 </li>
                             </ul>
                         </li>
+                        <li>&#8226 Extras
+                            <ul>
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/departamento"));%>">&#8226 Departamentos</a></li>
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/estado"));%>">&#8226 Estados</a></li>
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/tipoactivo"));%>">&#8226 Tipos de activos</a></li>
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/tipobateria"));%>">&#8226 Tipo de batería</a></li>
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/tipollanta"));%>">&#8226 Tipo de llanta</a></li>
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/tipopago"));%>">&#8226 Tipo de pago</a></li>
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/tipopago"));%>">&#8226 Tipo de reporte</a></li>
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/tiporeporte"));%>">&#8226 Tipo de usuario</a></li>
+                            </ul>
+                        </li>
+                        <li>&#8226 Usuario 
+                            <ul>
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/mensaje?proceso=nuevo"));%>">&#8226 Enviar mensaje</a></li>
+                            </ul>
+                        </li>
+                        <li>&#8226 Soporte
+                            <ul>&#8226 Respaldo 
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/soporte?proceso=backup"));%>">&#8226 Hacer un respaldo</a></li>
+                                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/configuracion?proceso=actualizar_cr"));%>">&#8226</a></li>
+                            </ul>
+                        </li>
                         <li>&#8226; Ayuda
                             <ul>
                                 <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/faq"));%>">&#8226; Preguntas frecuentes</a></li>

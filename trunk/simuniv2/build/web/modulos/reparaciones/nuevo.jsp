@@ -43,8 +43,7 @@
 <decorator:decorate filename='../../recursos/paginas/master/masterpage.jsp'>
     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | Reparaciones </decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
-        <script src="<%=request.getContextPath()%>/js/script_paginas/script_nuevo_venta.js" charset="utf-8"></script>
-
+        <script src="<%=request.getContextPath()%>/js/script_paginas/script_nuevo_reparacion.js" charset="utf-8"></script>
         <style>
             #sm_tb_campos td .form-group{
                 margin: 15px;
@@ -80,14 +79,14 @@
     <decorator:content placeholder='sm_div_navegationbarmenuitems'>
         <ol class="breadcrumb">
             <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/">Inicio</a></li>   
-            <li class="active">Activos***</li>
+            <li class="active">Registro de reparación</li>
         </ol>
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
 
         <form class="form"  id="formulario" action="<%out.print(Recursos.Servers.MAINSERVER);%>/reparacion?proceso=nuevo" method="POST">
             <fieldset id="activos">
-                <legend style="<%out.print((error && proceso) ? "color:red;" : "");%>">Registro de activos <small><sup>* Campos requeridos</sup></small></legend>
+                <legend style="<%out.print((error && proceso) ? "color:red;" : "");%>">Registro de la reparación <small><sup>* Campos requeridos</sup></small></legend>
                 <div id="registerInformation">
                     <table id="sm_tb_campos">
                         <tr id="sm_contenedor_activo">
@@ -171,7 +170,7 @@
                             </td>  
                             <%if (proceso) {%>     
                             <td id="btn_controles_procesocorrecto">
-                                <input type="hidden" id="sm_hidden_codigoventa" value="<%out.print((reparacion != null) ? reparacion.getCodigoReparacion() : "");%>">
+                                <input type="hidden" id="sm_hidden_reparacion" name="sm_hidden_reparacion" value="<%out.print((reparacion != null) ? reparacion.getCodigoReparacion() : "");%>">
                                 <div class="form-group">
                                     <button id="sm_btn_reporte" class="form-control btn-success">Generar Reporte Reparación</button>
                                 </div>
