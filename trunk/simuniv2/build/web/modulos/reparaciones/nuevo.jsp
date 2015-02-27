@@ -114,18 +114,13 @@
                                                 <input type="date" value="<%out.print((reparacion != null) ? (reparacion).getFechaR() : "");%>" required="required" class="form-control" name="txtfechareparacion" id="txtfechareparacion" placeholder="12-05-2014">
                                             </div>
                                         </td>      
+                                        
+                                    </tr>
+                                    <tr>
                                         <td>
                                             <div class="form-group">
                                                 <label  class="control-label" for="txtmontoreparacion">Monto de la reparación <small>*en colones</small></label>
                                                 <input type="number" value="<%out.print((reparacion != null) ? (reparacion).getCostoReparacion(): "");%>" required="required" class="form-control" name="txtmontoreparacion" id="txtmontoreparacion" placeholder="5000000">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr> 
-                                        <td>
-                                            <div class="form-group">
-                                                <label  class="control-label"for="txtnombresolicitante">Solicitante</label>
-                                                <input type="text" required="required" value="<%out.print((reparacion != null) ? (reparacion).getnombreSolicitante(): "");%>" class="form-control" name="txtnombresolicitante" id="txtnombresolicitante" placeholder="Ej: Pablo Salazar">
                                             </div>
                                         </td>
                                         <td>

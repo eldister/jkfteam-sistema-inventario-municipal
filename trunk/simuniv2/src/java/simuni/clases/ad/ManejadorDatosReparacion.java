@@ -67,18 +67,14 @@ public class ManejadorDatosReparacion {
             Connection con = Conexionmysql.obtenerConexion();
             CallableStatement cs = con.prepareCall("{call simuni_sp_registro_detalle_reparacion(?, ?, ?, ?, ?, ?, ?)}");
             
-            cs.setInt(1, reparacion.getCodigoDetalleReparacion());
-            cs.setString(2, reparacion.getIdUsuario());
-            cs.setString(3, reparacion.getMotivoReparacion());
+            cs.setString(1, reparacion.getIdUsuario());
+            cs.setString(2, reparacion.getMotivoReparacion());
+            cs.setString(3, reparacion.getnombreReparador());
             cs.setDate(4, (Date) reparacion.getFechaReparacion());
             cs.setDouble(5, reparacion.getCostoReparacion());
-            cs.setInt(6, reparacion.getCodigoReparacion());
+            cs.setDouble(6, reparacion.getCodigoReparacion());
             cs.registerOutParameter(7, java.sql.Types.VARCHAR);
-            ResultSet rs = cs.executeQuery();
-            if (rs.next()) {
-                id_reparacion = rs.getInt(1);
-            }
-            reparacion.setCodigoReparacion(id_reparacion);
+             cs.executeQuery();
 
             resp = cs.getString(7);
             
