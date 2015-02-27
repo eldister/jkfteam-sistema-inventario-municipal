@@ -1,5 +1,6 @@
 package simuni.entidades;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Reparacion {
@@ -53,6 +54,11 @@ public class Reparacion {
 
     public Date getFechaReparacion() {
         return new Date(fechaReparacion == null ? null : fechaReparacion.getTime());
+    }
+    
+    public String getFechaR(){
+        SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd");
+        return sdp.format(this.getFechaReparacion());
     }
 
     public void setFechaReparacion(Date fechaReparacion) {

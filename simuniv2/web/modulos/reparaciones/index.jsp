@@ -9,7 +9,7 @@
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
         <link rel='stylesheet' href='<%=request.getContextPath()%>/css/style_grillageneral.css'>
         <script src='<%=request.getContextPath()%>/js/script_sm_grillageneral.js' charset="utf-8"></script>
-        <script src='<%=request.getContextPath()%>/js/script_paginas/script_modulo_reparacionindex.js' charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/script_paginas/script_modulo_reparacionindex.js"></script>
     </decorator:content>
     <decorator:content placeholder='sm_div_navegationbarmenuitems'>
         <ol class="breadcrumb">

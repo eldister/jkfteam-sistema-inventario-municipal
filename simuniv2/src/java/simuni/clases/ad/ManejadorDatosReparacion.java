@@ -39,20 +39,19 @@ public class ManejadorDatosReparacion {
         int id_reparacion=0;
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            CallableStatement cs = con.prepareCall("{call simuni_sp_registro_reparacion(?, ?, ?, ?, ?)}");
+            CallableStatement cs = con.prepareCall("{call simuni_sp_registro_reparacion(?, ?, ?, ?)}");
             
-            cs.setInt(1, reparacion.getCodigoReparacion());
-            cs.setString(2, reparacion.getObservacion());
-            cs.setInt(3, reparacion.getCodigoEstado());
-            cs.setString(4, reparacion.getPlacaActivo());
-            cs.registerOutParameter(10, java.sql.Types.VARCHAR);
+            cs.setString(1, reparacion.getObservacion());
+            cs.setInt(2, reparacion.getCodigoEstado());
+            cs.setString(3, reparacion.getPlacaActivo());
+            cs.registerOutParameter(4, java.sql.Types.VARCHAR);
             ResultSet rs = cs.executeQuery();
             if (rs.next()) {
                 id_reparacion = rs.getInt(1);
             }
             reparacion.setCodigoReparacion(id_reparacion);
 
-            resp = cs.getString(10);
+            resp = cs.getString(4);
             
             Conexionmysql.cerrarConexion(con);
         } catch (SQLException ex) {
@@ -74,14 +73,14 @@ public class ManejadorDatosReparacion {
             cs.setDate(4, (Date) reparacion.getFechaReparacion());
             cs.setDouble(5, reparacion.getCostoReparacion());
             cs.setInt(6, reparacion.getCodigoReparacion());
-            cs.registerOutParameter(10, java.sql.Types.VARCHAR);
+            cs.registerOutParameter(7, java.sql.Types.VARCHAR);
             ResultSet rs = cs.executeQuery();
             if (rs.next()) {
                 id_reparacion = rs.getInt(1);
             }
             reparacion.setCodigoReparacion(id_reparacion);
 
-            resp = cs.getString(10);
+            resp = cs.getString(7);
             
             Conexionmysql.cerrarConexion(con);
         } catch (SQLException ex) {
