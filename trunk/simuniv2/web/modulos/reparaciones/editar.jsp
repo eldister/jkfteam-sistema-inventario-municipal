@@ -43,7 +43,7 @@
 <decorator:decorate filename='../../recursos/paginas/master/masterpage.jsp'>
     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | Actualizar reparación </decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
-        <script src="<%=request.getContextPath()%>/js/script_paginas/script_nuevo_venta.js" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/script_paginas/script_nuevo_reparacion.js" charset="utf-8"></script>
 
         <style>
             #sm_tb_campos td .form-group{
@@ -106,13 +106,13 @@
                                         <td>
                                             <div class="form-group">
                                                 <label  class="control-label"for="txtnombrereparador">Reparador</label>
-                                                <input type="text" required="required" value="<%out.print((reparacion != null) ? (reparacion).getnombreReparador(): "");%>" class="form-control" name="txtnombrereparador" id="txtnombrereparador" placeholder="00001">
+                                                <input type="text" required="required" value="<%out.print((reparacion != null) ? (reparacion).getnombreReparador(): "");%>" class="form-control" name="txtnombrereparador" id="txtnombrereparador" placeholder="Ej: Pablo Salazar">
                                             </div>
                                         </td> 
                                         <td>
                                             <div class="form-group">
                                                 <label  class="control-label" for="txtfechareparacion">Fecha de la reparación</label>
-                                                <input type="date" value="<%out.print((reparacion != null) ? (reparacion).getFechaReparacion() : "");%>" required="required" class="form-control" name="txtfechareparacion" id="txtfechareparacion" placeholder="12-05-2014">
+                                                <input type="date" value="<%out.print((reparacion != null) ? (reparacion).getFechaR() : "");%>" required="required" class="form-control" name="txtfechareparacion" id="txtfechareparacion" placeholder="12-05-2014">
                                             </div>
                                         </td>      
                                         <td>
@@ -126,7 +126,7 @@
                                         <td>
                                             <div class="form-group">
                                                 <label  class="control-label"for="txtnombresolicitante">Solicitante</label>
-                                                <input type="text" required="required" value="<%out.print((reparacion != null) ? (reparacion).getnombreSolicitante(): "");%>" class="form-control" name="txtnombresolicitante" id="txtnombresolicitante" placeholder="00001">
+                                                <input type="text" required="required" value="<%out.print((reparacion != null) ? (reparacion).getnombreSolicitante(): "");%>" class="form-control" name="txtnombresolicitante" id="txtnombresolicitante" placeholder="Ej: Pablo Salazar">
                                             </div>
                                         </td>
                                         <td>

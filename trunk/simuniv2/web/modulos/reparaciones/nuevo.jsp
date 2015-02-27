@@ -105,13 +105,13 @@
                                         <td>
                                             <div class="form-group">
                                                 <label  class="control-label"for="txtnombrereparador">Reparador</label>
-                                                <input type="text" required="required" value="<%out.print((reparacion != null) ? (reparacion).getnombreReparador(): "");%>" class="form-control" name="txtnombrereparador" id="txtnombrereparador" placeholder="00001">
+                                                <input type="text" required="required" value="<%out.print((reparacion != null) ? (reparacion).getnombreReparador(): "");%>" class="form-control" name="txtnombrereparador" id="txtnombrereparador" placeholder="Ej: Pablo Salazar">
                                             </div>
                                         </td> 
                                         <td>
                                             <div class="form-group">
                                                 <label  class="control-label" for="txtfechareparacion">Fecha de la reparación</label>
-                                                <input type="date" value="<%out.print((reparacion != null) ? (reparacion).getFechaReparacion() : "");%>" required="required" class="form-control" name="txtfechareparacion" id="txtfechareparacion" placeholder="12-05-2014">
+                                                <input type="date" value="<%out.print((reparacion != null) ? (reparacion).getFechaR() : "");%>" required="required" class="form-control" name="txtfechareparacion" id="txtfechareparacion" placeholder="12-05-2014">
                                             </div>
                                         </td>      
                                         <td>
@@ -125,7 +125,7 @@
                                         <td>
                                             <div class="form-group">
                                                 <label  class="control-label"for="txtnombresolicitante">Solicitante</label>
-                                                <input type="text" required="required" value="<%out.print((reparacion != null) ? (reparacion).getnombreSolicitante(): "");%>" class="form-control" name="txtnombresolicitante" id="txtnombresolicitante" placeholder="00001">
+                                                <input type="text" required="required" value="<%out.print((reparacion != null) ? (reparacion).getnombreSolicitante(): "");%>" class="form-control" name="txtnombresolicitante" id="txtnombresolicitante" placeholder="Ej: Pablo Salazar">
                                             </div>
                                         </td>
                                         <td>
