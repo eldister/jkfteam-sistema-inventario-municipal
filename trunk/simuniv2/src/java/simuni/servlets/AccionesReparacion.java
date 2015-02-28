@@ -225,10 +225,11 @@ public class AccionesReparacion extends HttpServlet {
             reparacion.setnombreReparador(request.getParameter("txtnombrereparador"));
             reparacion.setFechaReparacion(UtilidadesServlet.getFecha(request.getParameter("txtfechareparacion"), null));
             reparacion.setCostoReparacion(UtilidadesServlet.getDouble(request.getParameter("txtmontoreparacion"), -1));
-            reparacion.setnombreSolicitante(request.getParameter("txtnombresolicitante"));
+            reparacion.setIdUsuario(request.getSession().getAttribute("USERNAME").toString());
             reparacion.setObservacion(request.getParameter("txtobservaciones"));
             reparacion.setPlacaActivo(request.getParameter("hddactivo"));
             reparacion.setCodigoReparacion(UtilidadesServlet.getInt("hddreparacion", 0));
+            reparacion.setMotivoReparacion(request.getParameter("txtmotivosreparacion"));
 
         } catch (Exception ex) {
             ex.printStackTrace();

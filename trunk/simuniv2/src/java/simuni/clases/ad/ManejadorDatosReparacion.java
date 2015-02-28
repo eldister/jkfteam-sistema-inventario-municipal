@@ -70,7 +70,7 @@ public class ManejadorDatosReparacion {
             cs.setString(1, reparacion.getIdUsuario());
             cs.setString(2, reparacion.getMotivoReparacion());
             cs.setString(3, reparacion.getnombreReparador());
-            cs.setDate(4, (Date) reparacion.getFechaReparacion());
+            cs.setDate(4, new java.sql.Date( reparacion.getFechaReparacion()!=null?reparacion.getFechaReparacion().getTime():null));
             cs.setDouble(5, reparacion.getCostoReparacion());
             cs.setDouble(6, reparacion.getCodigoReparacion());
             cs.registerOutParameter(7, java.sql.Types.VARCHAR);
@@ -216,9 +216,14 @@ public class ManejadorDatosReparacion {
             
             resp = new Reparacion();
             resp.setCodigoReparacion(rs.getInt(1));
-            resp.setObservacion(rs.getString(2));
-            resp.setCodigoEstado(rs.getInt(3));
-            resp.setPlacaActivo(rs.getString(4));
+            resp.setPlacaActivo(rs.getString(2));
+            resp.setnombreReparador(rs.getString(3));
+            resp.setIdUsuario(rs.getString(4));
+            resp.setMotivoReparacion(rs.getString(5));
+            resp.setCostoReparacion(rs.getDouble(6));
+            resp.setFechaReparacion(rs.getDate(7));
+            resp.setObservacion(rs.getString(8));
+            resp.setCodigoEstado(rs.getInt(9));
             
             rs.close();
         }
