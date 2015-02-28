@@ -43,7 +43,7 @@
 <decorator:decorate filename='../../recursos/paginas/master/masterpage.jsp'>
     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | Actualizar reparación </decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
-        <script src="<%=request.getContextPath()%>/js/script_paginas/script_nuevo_reparacion.js" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/script_paginas/script_editar_reparacion.js">
 
         <style>
             #sm_tb_campos td .form-group{
@@ -126,7 +126,7 @@
                                         <td>
                                             <div class="form-group">
                                                 <label  class="control-label"for="txtnombresolicitante">Solicitante</label>
-                                                <input type="text" required="required" value="<%out.print((reparacion != null) ? (reparacion).getnombreSolicitante(): "");%>" class="form-control" name="txtnombresolicitante" id="txtnombresolicitante" placeholder="Ej: Pablo Salazar">
+                                                <input type="text" disabled="disabled" required="required" value="<%out.print((reparacion != null) ? (reparacion).getIdUsuario() : "");%>" class="form-control" name="txtnombresolicitante" id="txtnombresolicitante" placeholder="Ej: Pablo Salazar">
                                             </div>
                                         </td>
                                         <td>
@@ -161,7 +161,7 @@
                          <tr id="sm_contenedor_controles">
                             <td class="btn_controles_sinprocesocontainer">
                                 <div class="form-group">
-                                    <input type="submit" value="Actualizar Registro Venta" class="form-control btn-info">
+                                    <input type="submit" value="Actualizar Registro Reparación" class="form-control btn-info">
                                 </div>
                             </td>
                             <td  class="btn_controles_sinprocesocontainer">
@@ -169,12 +169,12 @@
                             <%if (proceso) {%>     
                             <td id="btn_controles_procesocorrecto">
                                 <div class="form-group">
-                                    <button id="sm_btn_reporte" class="form-control btn-success">Generar Reporte Venta</button>
+                                    <button id="sm_btn_reporte" class="form-control btn-success">Generar Reporte reparación</button>
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <button id="sm_btn_iractivos" class="form-control btn-info">Ir a  Ventas</button>
+                                    <button id="sm_btn_iractivos" class="form-control btn-info">Ir a reparaciones</button>
                                 </div>
                             </td> 
                             <td id="btn_controles_procesoerror">

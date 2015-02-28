@@ -172,7 +172,7 @@
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <button id="sm_btn_iractivos" class="form-control btn-info">Ir a  Ventas</button>
+                                    <button id="sm_btn_iractivos" class="form-control btn-info">Ir a reparaciones</button>
                                 </div>
                             </td> 
                             <td id="btn_controles_procesoerror">

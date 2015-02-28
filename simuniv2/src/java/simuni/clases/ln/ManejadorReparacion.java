@@ -8,7 +8,7 @@ import simuni.entidades.Reparacion;
 import simuni.utils.UtilidadesServlet;
 
 /**
- * Esta clase de lógica de negocios de <strong>Venta</strong> se encarga de las
+ * Esta clase de lógica de negocios de <strong>Reparacion</strong> se encarga de las
  * operaciones de validación, solicitudes y respuestas, para hacer su ingreso,
  * modificación, eliminación de registros. Entre las operaciones comunes que se
  * solicitan estan agregar, modificar, eliminar, hacer un query de busqueda y
