@@ -1,3 +1,4 @@
+<%@page import="simuni.utils.UtilidadesServlet"%>
 <%@page import="simuni.enums.Recursos"%>
 <%@page import="simuni.entidades.Usuario"%>
 <%@page import="simuni.entidades.Notificacion"%>
@@ -10,6 +11,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="decorator" uri="http://claudiushauptmann.com/jsp-decorator/" %>
 <%
+
     String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
     String tipousuario = request.getSession().getAttribute("TIPOUSUARIO") == null ? null : request.getSession().getAttribute("TIPOUSUARIO").toString();
     String loginpage = request.getSession().getAttribute("LOGINPAGE") == null ? null : request.getSession().getAttribute("LOGINPAGE").toString();
@@ -23,6 +25,17 @@
     if (loginpage == null && error == null) {
         ManejadorUsuario manejadorusuarios = new ManejadorUsuario();
         user = manejadorusuarios.getMenuUsuario(idusuario);
+
+        String permiso_requerido = request.getAttribute("permiso_requerido") != null ? request.getAttribute("permiso_requerido").toString() : null;
+        if (permiso_requerido != null && UtilidadesServlet.tryParseInt(permiso_requerido)) {
+            int codigo_permiso = UtilidadesServlet.getInt(permiso_requerido, -1);
+            
+            out.print("El permiso solicitado es " + request.getAttribute("permiso_requerido") + permiso_requerido);
+            if(!manejadorusuarios.usuarioTienePermiso(codigo_permiso, idusuario)){
+                       out.print("<script>window.location.replace('/simuniv2/prohibido');</script>");
+                       return; 
+            }
+        }
     }
 %>
 <!DOCTYPE HTML>
@@ -44,13 +57,13 @@
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style_menuprincipal2.css">
         <script>
             SIMUNI_SERVER = "<%out.print(Recursos.Servers.MAINSERVER);%>";
-            $(document).ready(function() {
+            $(document).ready(function () {
                 var desplazado = 220;
                 var duracion = 500;
-             //alert($("#volverTop").html())
+                //alert($("#volverTop").html())
                 $("#volverTop").fadeOut(0);
-$("#volverTop").fadeOut(0);
-                $(window).scroll(function() {
+                $("#volverTop").fadeOut(0);
+                $(window).scroll(function () {
                     if ($(this).scrollTop() > desplazado) {
                         $("#volverTop").fadeIn(duracion);
                     } else {
@@ -58,7 +71,7 @@ $("#volverTop").fadeOut(0);
                     }
                 });
 
-                $("#volverTop").click(function(event) {
+                $("#volverTop").click(function (event) {
                     event.preventDefault();
                     $("html, body").animate({scrollTop: 0}, duracion);
                     return false;
@@ -105,13 +118,13 @@ $("#volverTop").fadeOut(0);
                             </div>
                         </div>                            
                     </div>                            
-                <%
-                        String menu_usuario= user.getMenuusuario(); 
-                        if(menu_usuario!=null){
-                            menu_usuario=menu_usuario.replace("%MAINSERVER%", Recursos.Servers.MAINSERVER.toString());
-                        }
-                        out.print(menu_usuario);
-                 } %>
+                    <%
+                            String menu_usuario = user.getMenuusuario();
+                            if (menu_usuario != null) {
+                                menu_usuario = menu_usuario.replace("%MAINSERVER%", Recursos.Servers.MAINSERVER.toString());
+                            }
+                            out.print(menu_usuario);
+                    } %>
                 </header>  
             </div>
             <div class="SIMUNI_ROW SIMUNI_MAINROW"> 
@@ -122,7 +135,7 @@ $("#volverTop").fadeOut(0);
                             <fieldset>
                                 <legend>Notificaciones</legend>
                                 <div class="sm_fieldset_notificacionescontainer" id="sm_notificacionescontainer">
-                                   <strong>No tiene mensajes!</strong> 
+                                    <strong>No tiene mensajes!</strong> 
                                 </div>
                             </fieldset>
                         </div>

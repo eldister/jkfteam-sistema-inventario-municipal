@@ -43,7 +43,9 @@ public class AccionesUsuario extends HttpServlet {
      */
     enum OpcionesDo {
 
-        Listado, Nuevo, Eliminar, Modificar, Query, AccionDefault, Login, Logout,
+       Reactivar_Usuario, Reseteo_Clave, Listado, Nuevo, Eliminar, 
+       Modificar, Query, AccionDefault, Login, Logout, Permisos, Actualizacion_Clave,
+       Query_Inactivos
     }
 
     /**
@@ -69,7 +71,18 @@ public class AccionesUsuario extends HttpServlet {
             return OpcionesDo.Login;
         } else if (key.equals("logout")) {
             return OpcionesDo.Logout;
+        } else if (key.equals("permisos")) {
+            return OpcionesDo.Permisos;
+        } else if (key.equals("renovacion")) {
+            return OpcionesDo.Actualizacion_Clave;
+        } else if (key.equals("resetear")) {
+            return OpcionesDo.Reseteo_Clave;
+        } else if (key.equals("reactivar")) {
+            return OpcionesDo.Reactivar_Usuario;
+        } else if (key.equals("query_inactivos")) {
+            return OpcionesDo.Query_Inactivos;
         }
+
         return OpcionesDo.AccionDefault;
     }
 
@@ -112,6 +125,16 @@ public class AccionesUsuario extends HttpServlet {
                     request.setAttribute("paginacion", ((int) musuario.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
                     break;
+                case Reactivar_Usuario:
+                    npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
+                    paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
+                    desplazamiento = ((npagina) * paginacion);
+                    resultset = musuario.busquedaUsuarioInactivo(query, desplazamiento, paginacion);
+                    request.setAttribute("listado", resultset);
+                    disp = request.getRequestDispatcher("/modulos/usuarios/index_inactivos.jsp");
+                    request.setAttribute("paginacion", ((int) musuario.getCantidadRegistrosInactivos(query) / paginacion) + 1);
+                    request.setAttribute("query", query);
+                    break;                    
                 case Modificar:
                     //obtener el activo
                     registro = request.getParameter("registro");
@@ -144,14 +167,25 @@ public class AccionesUsuario extends HttpServlet {
                     request.setAttribute("paginacion", ((int) musuario.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
                     break;
-                    case Logout:
-                        request.getSession().setAttribute("USERNAME", null);
-                        request.getSession().setAttribute("TIPOUSUARIO", null);
-                        request.getSession().setAttribute("HORAINICIO", null);
-                        request.getSession().setAttribute("LOGINPAGE", null);  
-                        response.getWriter().print("<script>window.location.assign('" + Recursos.Servers.MAINSERVER + "/login')</script>");
-                        return;
-                        
+                case Logout:
+                    request.getSession().setAttribute("USERNAME", null);
+                    request.getSession().setAttribute("TIPOUSUARIO", null);
+                    request.getSession().setAttribute("HORAINICIO", null);
+                    request.getSession().setAttribute("LOGINPAGE", null);
+                    response.getWriter().print("<script>window.location.assign('" + Recursos.Servers.MAINSERVER + "/login')</script>");
+                    return;
+                case Permisos:
+                    request.setAttribute("usuarios", musuario.listadoUsuarios_Permisos());
+                    disp = request.getRequestDispatcher("/modulos/usuarios/permisos.jsp");
+                    break;
+                case Reseteo_Clave:
+                    request.setAttribute("usuarios", musuario.listadoUsuarios_Permisos());
+                    disp = request.getRequestDispatcher("/modulos/usuarios/reseteo_clave.jsp");
+                    break;
+                case Actualizacion_Clave:
+                    disp = request.getRequestDispatcher("/modulos/usuarios/cambio_clave.jsp");
+                    break;
+
             }
             disp.forward(request, response);
         } catch (Exception ex) {
@@ -184,6 +218,7 @@ public class AccionesUsuario extends HttpServlet {
             String query = request.getParameter("query");
             query = query == null ? "" : query;
             ResultSet resultset = null;
+            Usuario usuario = null;
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
 
@@ -197,7 +232,7 @@ public class AccionesUsuario extends HttpServlet {
                 case Modificar:
 
                     if (request.getParameter("registro") != null) {
-                        Usuario usuario = generarUsuario(request);
+                        usuario = generarUsuario(request);
                         respuesta = musuario.modificarUsuario(usuario);
                         request.setAttribute("registro", usuario);
                         request.setAttribute("respuesta", respuesta);
@@ -208,11 +243,15 @@ public class AccionesUsuario extends HttpServlet {
                 case Eliminar:
                     if (request.getParameter("registro") != null) {
                         registro = request.getParameter("registro");
-                        Usuario usuario = new Usuario();
+                        usuario = new Usuario();
                         usuario.setNombreusuario(registro);
                         respuesta = musuario.eliminarUsuario(usuario);
+                        usuario = musuario.obtenerUsuario(registro);
                         request.setAttribute("registro", usuario);
                         request.setAttribute("respuesta", respuesta);
+                        request.setAttribute("departamentos", musuario.listadoDepartamento());
+                        request.setAttribute("tiposusuario", musuario.listadoTipoUsuario());
+                        request.setAttribute("puestos", musuario.listadoPuesto());
                         disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_eliminar.jsp");
                         disp.forward(request, response);
                     }
@@ -224,7 +263,7 @@ public class AccionesUsuario extends HttpServlet {
                     resultset = musuario.busquedaUsuario(query, desplazamiento, paginacion);
                     request.setAttribute("listado", resultset);
                     disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_listar.jsp");
-                   
+
                     request.setAttribute("paginacion", ((int) musuario.getCantidadRegistros(query) / paginacion) + 1);
                     disp.forward(request, response);
                     break;
@@ -243,7 +282,7 @@ public class AccionesUsuario extends HttpServlet {
 
                     String nombreusuario = request.getParameter("txtNombreUsuario");
                     String contrasena = request.getParameter("txtPassword");
-                    Usuario usuario = null;
+
                     if (nombreusuario == null || contrasena == null) {
                         request.getSession().setAttribute("USERNAME", null);
                         request.getSession().setAttribute("TIPOUSUARIO", null);
@@ -271,9 +310,47 @@ public class AccionesUsuario extends HttpServlet {
                     }
 
                     break;
-                
+                case Actualizacion_Clave:
+                    usuario = generarUsuario(request);
+                    String contrasena_actual = request.getParameter("txtpassactual");
+                    respuesta = musuario.modificarClaveUsuario(usuario, contrasena_actual);
+                    request.setAttribute("respuesta", respuesta);
+                    disp = request.getRequestDispatcher("/modulos/usuarios/cambio_clave.jsp");
+                    disp.forward(request, response);
+                    break;
+                case Reseteo_Clave:
+                    usuario = generarUsuario(request);
+                    respuesta = musuario.resetearClaveUsuario(usuario);
+                    request.setAttribute("respuesta", respuesta);
+                    request.setAttribute("usuarios", musuario.listadoUsuarios_Permisos());
+                    request.setAttribute("idusuario", usuario.getNombreusuario());
+                    disp = request.getRequestDispatcher("/modulos/usuarios/reseteo_clave.jsp");
+                    disp.forward(request, response);
+                    break;
+                case Query_Inactivos:
+                    npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
+                    paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
+                    desplazamiento = ((npagina) * paginacion);
+                    resultset = musuario.busquedaUsuarioInactivo(query, desplazamiento, paginacion);
+                    request.setAttribute("listado", resultset);
+                    disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_listar_inactivos.jsp");
+
+                    request.setAttribute("paginacion", ((int) musuario.getCantidadRegistrosInactivos(query) / paginacion) + 1);
+                    disp.forward(request, response);                    
+                    break;
+                case Reactivar_Usuario:
+                    if (request.getParameter("registro") != null) {
+                        registro = request.getParameter("registro");
+                        usuario = new Usuario();
+                        usuario.setNombreusuario(registro);
+                        System.out.println("El que se va a reacviar es "+registro);
+                        musuario.reactivarUsuario(usuario);
+                        response.getWriter().print("Usuario Reactivado");
+                    }
+                    break;                    
+
             }
-            
+
         } catch (Exception ex) {
             ex.printStackTrace();
             disp = request.getRequestDispatcher("/recursos/paginas/error/errorpage.jsp");
