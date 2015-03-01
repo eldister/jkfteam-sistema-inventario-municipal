@@ -2,16 +2,14 @@ package simuni.clases.ad;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import simuni.entidades.bd.Conexionmysql;
-import simuni.entidades.Reparacion;
-import simuni.utils.UtilidadesServlet;
+import simuni.entidades.mantenimientos.Permiso;
 
 /**
- * Esta clase de acceso a datos de <strong>Venta</strong> se encarga
+ * Esta clase de acceso a datos de <strong>Permiso de </strong> se encarga
  * de las operaciones directamente con la base de datos, para hacer su ingreso,
  * modificación, eliminacino del mismo. Entre las operaciones comunes que se
  * solicitan estan agregar, modificar, eliminar, hacer un query de busqueda y
@@ -19,129 +17,119 @@ import simuni.utils.UtilidadesServlet;
  * clase busca que la separación entre código y base de datos directamente sea
  * alta, y no este tanto código embebido en el sistema.
  *
- * @author Producjeffer
+ * @author FchescO
  * @since 1.0
- * @version 2.0
+ * @version 1.0
  */
-public class ManejadorDatosReparacion {
+public class ManejadorDatosPermiso {
+
     /**
      * Operación que se encarga de realizar el ingreso / registro del
-     * Reparacion
+     * <strong>Permiso de </strong>.
      *
-     * @param reparacion El nuevo registro a ingresar.
+     * @param permiso El nuevo registro a ingresar.
      * @return Un string con la respuesta directamente del servidor de base de
      * datos.
      * @throws SQLException Si ocurre una excepcion sql.
      * @since 1.0
      */
-    public String registrarReparacion(Reparacion reparacion) throws SQLException {
+    public String registrarPermiso(Permiso permiso) throws SQLException {
         String resp = "";
-        int id_reparacion=0;
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            CallableStatement cs = con.prepareCall("{call simuni_sp_registro_reparacion(?, ?, ?, ?)}");
-            
-            cs.setString(1, reparacion.getObservacion());
-            cs.setInt(2, reparacion.getCodigoEstado());
-            cs.setString(3, reparacion.getPlacaActivo());
-            cs.registerOutParameter(4, java.sql.Types.VARCHAR);
-            ResultSet rs = cs.executeQuery();
-            if (rs.next()) {
-                id_reparacion = rs.getInt(1);
-            }
-            reparacion.setCodigoReparacion(id_reparacion);
-
-            resp = cs.getString(4);
-            
-            Conexionmysql.cerrarConexion(con);
-        } catch (SQLException ex) {
-            resp = ex.getMessage();
-            throw ex;
-        }
-        return resp;
-    }
-    public String registrarDetalleReparacion(Reparacion reparacion) throws SQLException {
-        String resp = "";
-        int id_reparacion=0;
-        try {
-            Connection con = Conexionmysql.obtenerConexion();
-            CallableStatement cs = con.prepareCall("{call simuni_sp_registro_detalle_reparacion(?, ?, ?, ?, ?, ?, ?)}");
-            
-<<<<<<< .mine
-            cs.setInt(1, reparacion.getCodigoDetalleReparacion());
-            cs.setString(2, reparacion.getIdUsuario());
-            cs.setString(3, reparacion.getMotivoReparacion());
-            cs.setDate(4, new java.sql.Date(reparacion.getFechaReparacion()!=null?reparacion.getFechaReparacion().getTime():null));
-=======
-            cs.setString(1, reparacion.getIdUsuario());
-            cs.setString(2, reparacion.getMotivoReparacion());
-            cs.setString(3, reparacion.getnombreReparador());
-            cs.setDate(4, new java.sql.Date( reparacion.getFechaReparacion()!=null?reparacion.getFechaReparacion().getTime():null));
->>>>>>> .r96
-            cs.setDouble(5, reparacion.getCostoReparacion());
-            cs.setDouble(6, reparacion.getCodigoReparacion());
-            cs.registerOutParameter(7, java.sql.Types.VARCHAR);
-             cs.executeQuery();
-
-            resp = cs.getString(7);
-            
-            Conexionmysql.cerrarConexion(con);
-        } catch (SQLException ex) {
-            resp = ex.getMessage();
-            throw ex;
-        }
-        return resp;
-    }
-    /**
-     * Operación que se encarga de realizar modificación del
-     * reparacion.
-     *
-     * @param reparacion El registro a modificar.
-     * @return Un string con la respuesta directamente del servidor de base de
-     * datos.
-     * @throws SQLException Si ocurre una excepcion sql.
-     * @since 1.0
-     */
-    public String modificarReparacion(Reparacion reparacion) throws SQLException {
- String resp = "";
-        try {
-            Connection con = Conexionmysql.obtenerConexion();
-            CallableStatement cs = con.prepareCall("{call simuni_sp_actualizacion_reparacion(?, ?, ?, ?, ?, ?)}");
-            
-            cs.setString(1, reparacion.getMotivoReparacion());
-            cs.setString(2, reparacion.getnombreReparador());
-            cs.setDate(3, (Date) reparacion.getFechaReparacion());
-            cs.setDouble(4, reparacion.getCostoReparacion());
-            cs.setInt(5, reparacion.getCodigoReparacion());
-            cs.registerOutParameter(10, java.sql.Types.VARCHAR);
+            CallableStatement cs = con.prepareCall("{call simuni_sp_registro_permiso(?,?)}");
+            cs.setString(1, permiso.getNombrePermiso());
+            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
             cs.execute();
-            resp = cs.getString(11);
-            
+            resp = cs.getString(2);
             Conexionmysql.cerrarConexion(con);
         } catch (SQLException ex) {
             resp = ex.getMessage();
             throw ex;
         }
         return resp;
+    }
+    public String registrarAsignarPermiso(String usuario,int codigopermiso) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{call simuni_sp_asignar_permisosusuario(?,?,?)}");
+            cs.setInt(1, codigopermiso);
+            cs.setString(2, usuario);
+            cs.registerOutParameter(3, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(3);
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    } 
+    public String eliminarAsignacionPermiso(String usuario) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{call simuni_sp_eliminacion_permisosusuario(?,?)}");
+            cs.setString(1, usuario);
+            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(2);
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    }     
     
 
-    }
     /**
-     * Operación que se encarga de realizar la eliminación del
-     * Reparacion de la base de datos..
+     * Operación que se encarga de realizar modificación del
+     * <strong>Permiso de </strong>.
      *
-     * @param reparacion El registro a eliminar.
+     * @param permiso El registro a modificar.
      * @return Un string con la respuesta directamente del servidor de base de
      * datos.
      * @throws SQLException Si ocurre una excepcion sql.
      * @since 1.0
      */
-    public String eliminarReparacion(Reparacion reparacion) throws SQLException {
+    public String modificarPermiso(Permiso permiso) throws SQLException {
         String resp = "";
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            CallableStatement cs = con.prepareCall("{ call simuni_sp_eliminacion_reparacion(?,?)  }");
-            cs.setInt(1, reparacion.getCodigoReparacion());
+            CallableStatement cs = con.prepareCall("{ call simuni_sp_actualizacion_permiso(?,?,?)  }");
+            cs.setString(1, permiso.getNombrePermiso());
+            cs.setInt(2, permiso.getCodigoPermiso());
+            cs.registerOutParameter(3, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(3);
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+
+        return resp;
+
+    }
+
+    /**
+     * Operación que se encarga de realizar la eliminación del
+     * <strong>Permiso de </strong> de la base de datos..
+     *
+     * @param permiso El registro a eliminar.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
+    public String eliminarPermiso(Permiso permiso) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{ call simuni_sp_eliminacion_permiso(?,?)  }");
+            cs.setInt(1, permiso.getCodigoPermiso());
             cs.registerOutParameter(2, java.sql.Types.VARCHAR);
             cs.execute();
             resp = cs.getString(2);
@@ -163,12 +151,12 @@ public class ManejadorDatosReparacion {
      * @throws SQLException Si ocurre un error SQL
      * @since 1.0
      */
-    public ResultSet listadoReparacion(int desplazamiento, int paginacion) throws SQLException {
+    public ResultSet listadoPermiso(int desplazamiento, int paginacion) throws SQLException {
         ResultSet resp = null;
 
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            PreparedStatement st = con.prepareCall("SELECT *  FROM  simuni_vw_listado_reparacion  LIMIT " + desplazamiento + "," + paginacion + ";");
+            PreparedStatement st = con.prepareCall("SELECT *  FROM  simuni_vw_listado_permisos  LIMIT " + desplazamiento + "," + paginacion + ";");
             resp = st.executeQuery();
 
         } catch (SQLException ex) {
@@ -179,19 +167,13 @@ public class ManejadorDatosReparacion {
         return resp;
 
     }
-  /**
-     * Función que se encarga de obtener un listado de los datos en la base de
-     * datos. Todo trabaja a traves de vistas de la base de datos. 
-     * @return Un ResultSet que trae consigo los datos de la selección.
-     * @throws SQLException Si ocurre un error SQL
-     * @since 1.0
-     */
-    public ResultSet listadoReparacion() throws SQLException {
+    
+        public ResultSet listadoPermiso() throws SQLException {
         ResultSet resp = null;
 
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            PreparedStatement st = con.prepareCall("SELECT *  FROM  simuni_vw_listado_reparacion;");
+            PreparedStatement st = con.prepareCall("SELECT *  FROM  simuni_vw_listado_permisos;");
             resp = st.executeQuery();
 
         } catch (SQLException ex) {
@@ -201,7 +183,41 @@ public class ManejadorDatosReparacion {
 
         return resp;
 
-    }
+    } 
+        
+   public ResultSet listadoPermiso_Asignados(String nombre_usuario) throws SQLException {
+        ResultSet resp = null;
+
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            System.out.println("");
+            PreparedStatement st = con.prepareCall("call simuni_sp_obtener_permisosusuario('" +nombre_usuario + "')");
+            resp = st.executeQuery();
+
+        } catch (SQLException ex) {
+
+            throw ex;
+        }
+        System.out.println("Listooo "+resp!=null);
+        return resp;
+
+    } 
+   public ResultSet listadoPermiso_Disponibles(String nombre_usuario) throws SQLException {
+        ResultSet resp = null;
+
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            PreparedStatement st = con.prepareCall("call simuni_sp_obtener_nopermisosusuario('" +nombre_usuario + "')");
+            resp = st.executeQuery();
+
+        } catch (SQLException ex) {
+
+            throw ex;
+        }
+
+        return resp;
+
+    }    
 
     /**
      * Funcion que se encarga de traer un registro específico de la base de
@@ -209,29 +225,20 @@ public class ManejadorDatosReparacion {
      * la operacion.
      *
      * @param codigo El código / identificador del registro a buscar.
-     * @return Un objeto Venta con los valores correspondientes
+     * @return Un objeto Permiso con los valores correspondientes
      * @throws SQLException si ocurre una excepción de SQL
      * @since 1.0
      */
-    public Reparacion getReparacion(int codigo) throws SQLException {
-        Reparacion resp = null;
+    public Permiso getPermiso(int codigo) throws SQLException {
+        Permiso resp = null;
         Connection con = Conexionmysql.obtenerConexion();
-        PreparedStatement st = con.prepareCall("{ call simuni_sp_obtener_reparacion(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        PreparedStatement st = con.prepareCall("{ call simuni_sp_obtener_permiso(?)}", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         st.setInt(1, codigo);
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
-            
-            resp = new Reparacion();
-            resp.setCodigoReparacion(rs.getInt(1));
-            resp.setPlacaActivo(rs.getString(2));
-            resp.setnombreReparador(rs.getString(3));
-            resp.setIdUsuario(rs.getString(4));
-            resp.setMotivoReparacion(rs.getString(5));
-            resp.setCostoReparacion(rs.getDouble(6));
-            resp.setFechaReparacion(rs.getDate(7));
-            resp.setObservacion(rs.getString(8));
-            resp.setCodigoEstado(rs.getInt(9));
-            
+            resp = new Permiso();
+            resp.setCodigoPermiso(rs.getInt(1));
+            resp.setNombrePermiso(rs.getString(2));
             rs.close();
         }
         return resp;
@@ -249,7 +256,7 @@ public class ManejadorDatosReparacion {
     public int getCantidadFilas(String query) throws SQLException {
         int resp = 0;
         Connection con = Conexionmysql.obtenerConexion();
-        PreparedStatement st = con.prepareCall(" {call simuni_sp_obtener_cantidad_reparacion(?)}");
+        PreparedStatement st = con.prepareCall(" {call simuni_sp_obtener_cantidad_repermisos(?)}");
         st.setString(1, query);
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
@@ -269,11 +276,11 @@ public class ManejadorDatosReparacion {
      * @throws SQLException Si ocurre una excepcion de SQL.
      * @since 1.0
      */
-    public ResultSet busquedaReparacion(String query, int desplazamiento, int paginacion) throws SQLException {
+    public ResultSet busquedaPermiso(String query, int desplazamiento, int paginacion) throws SQLException {
         ResultSet resp = null;
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            PreparedStatement st = con.prepareCall("{call simuni_sp_busqueda_reparacion(?,?,?)}");
+            PreparedStatement st = con.prepareCall("{call simuni_sp_busqueda_permiso(?,?,?)}");
             st.setString(1, query);
             st.setInt(2, desplazamiento);
             st.setInt(3, paginacion);
@@ -286,5 +293,5 @@ public class ManejadorDatosReparacion {
         return resp;
 
     }
-    
+
 }

@@ -86,6 +86,7 @@ public class ManejadorDatosUsuario {
         }
         return resp;
     }
+
     public String modificarUsuario(Usuario usuario) throws Exception {
         String resp = "";
         try {
@@ -110,6 +111,44 @@ public class ManejadorDatosUsuario {
         }
         return resp;
     }
+
+    public String modificarClaveUsuario(Usuario usuario, String pass_actual) throws Exception {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{call simuni_sp_actualizacion_clave_usuario(?,?,?,?)}");
+            cs.setString(1, usuario.getNombreusuario());
+            cs.setString(2, usuario.getContrasena());
+            cs.setString(3, pass_actual);
+            cs.registerOutParameter(4, java.sql.Types.VARCHAR);
+            cs.execute();
+
+            resp = cs.getString(4);
+            Conexionmysql.cerrarConexion(con);
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return resp;
+    }
+
+    public String resetearClaveUsuario(Usuario usuario) throws Exception {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{call simuni_sp_actualizacion_reseteoclave_usuario(?,?,?)}");
+            cs.setString(1, usuario.getNombreusuario());
+            cs.setString(2, usuario.getContrasena());
+            cs.registerOutParameter(3, java.sql.Types.VARCHAR);
+            cs.execute();
+
+            resp = cs.getString(3);
+            Conexionmysql.cerrarConexion(con);
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return resp;
+    }
+
     public String eliminarUsuario(Usuario usuario) throws Exception {
         String resp = "";
         try {
@@ -124,7 +163,24 @@ public class ManejadorDatosUsuario {
             throw ex;
         }
         return resp;
-    }    
+    }
+
+    public String reactivarUsuario(Usuario usuario) throws Exception {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{ call simuni_sp_reactivacion_usuario(?,?)  }");
+            cs.setString(1, usuario.getNombreusuario());
+            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(2);
+            Conexionmysql.cerrarConexion(con);
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return resp;
+    }
+
     public Usuario obtenerUsuario(String usuario) throws SQLException {
 
         Usuario usuarioresp = null;
@@ -179,7 +235,25 @@ public class ManejadorDatosUsuario {
         return resp;
 
     }
-    
+
+    public ResultSet busquedaUsuarioInactivo(String query, int desplazamiento, int paginacion) throws SQLException {
+        ResultSet resp = null;
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            PreparedStatement st = con.prepareCall("{call simuni_sp_busqueda_usuarioinactivo(?,?,?)}");
+            st.setString(1, query);
+            st.setInt(2, desplazamiento);
+            st.setInt(3, paginacion);
+            resp = st.executeQuery();
+
+        } catch (SQLException ex) {
+
+            throw ex;
+        }
+        return resp;
+
+    }
+
     public ResultSet listadoUsuario() throws SQLException {
         ResultSet resp = null;
         try {
@@ -194,12 +268,59 @@ public class ManejadorDatosUsuario {
         }
         return resp;
 
-    }    
-    
-        public int getCantidadFilas(String query) throws SQLException {
+    }
+
+    public ResultSet usuarioTienePermiso(String idusuario, int codigopermiso) throws SQLException {
+        ResultSet resp = null;
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            PreparedStatement st = con.prepareCall("{call simuni_sp_obtener_sipermisovalido(?,?)}");
+            st.setString(1, idusuario);
+            st.setInt(2, codigopermiso);
+
+            resp = st.executeQuery();
+
+        } catch (SQLException ex) {
+
+            throw ex;
+        }
+        return resp;
+
+    }
+
+    public ResultSet listadoUsuarios_Permisos() throws SQLException {
+        ResultSet resp = null;
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            PreparedStatement st = con.prepareCall("SELECT * FROM simuni_vw_listado_usuarios_parapermisos");
+
+            resp = st.executeQuery();
+
+        } catch (SQLException ex) {
+
+            throw ex;
+        }
+        return resp;
+
+    }
+
+    public int getCantidadFilas(String query) throws SQLException {
         int resp = 0;
         Connection con = Conexionmysql.obtenerConexion();
         PreparedStatement st = con.prepareCall(" {call simuni_sp_obtener_cantidad_reusuario(?)}");
+        st.setString(1, query);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            resp = rs.getInt(1);
+        }
+        Conexionmysql.cerrarConexion(con);
+        return resp;
+    }
+
+    public int getCantidadFilasInactivas(String query) throws SQLException {
+        int resp = 0;
+        Connection con = Conexionmysql.obtenerConexion();
+        PreparedStatement st = con.prepareCall(" {call simuni_sp_obtener_cantidad_reusuarioinactivo(?)}");
         st.setString(1, query);
         ResultSet rs = st.executeQuery();
         if (rs.next()) {

@@ -77,7 +77,21 @@ public class ManejadorUsuario {
         }
         return usu;
     }
-
+    public boolean usuarioTienePermiso(int codigopermiso,String idusuario){
+        boolean resp=false;
+         ManejadorDatosUsuario manejadordatosusuarios = new ManejadorDatosUsuario();
+        try{
+            ResultSet aux = null;
+             aux = manejadordatosusuarios.usuarioTienePermiso(idusuario, codigopermiso);
+             if(aux!=null&&aux.next()){
+                 resp=true;
+             }
+             
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return resp;
+    }
     public Usuario obtenerUsuario(String usuario) {
         Usuario usuarioresp = null;
         try {
@@ -152,6 +166,19 @@ public class ManejadorUsuario {
         return resp;
 
     }
+     public ResultSet busquedaUsuarioInactivo(String query, int desplazamiento, int paginacion) throws SQLException {
+        ResultSet resp = null;
+        ManejadorDatosUsuario mdUsuario = new ManejadorDatosUsuario();
+        try {
+            resp = mdUsuario.busquedaUsuarioInactivo(query, desplazamiento, paginacion);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Debes registrar algo");
+        }
+        return resp;
+
+    }   
     
     public ArrayList<Usuario> listadoUsuarios(){
         ArrayList<Usuario> usuarios = null;
@@ -175,6 +202,30 @@ public class ManejadorUsuario {
         }
         return usuarios;        
     }
+    public ArrayList<Usuario> listadoUsuarios_Permisos(){
+        ArrayList<Usuario> usuarios = null;
+        ManejadorDatosUsuario mdUsuario = new ManejadorDatosUsuario();
+        try {
+            ResultSet resp = null;
+            resp = mdUsuario.listadoUsuarios_Permisos();
+            if (resp.next()) {
+                usuarios = new ArrayList<Usuario>();
+                do {
+                    Usuario usuario = new Usuario();
+                    usuario.setNombreusuario(resp.getString(1));
+                    usuario.setNombre(resp.getString(2));
+                    usuario.setCedula(resp.getString(3));
+                    usuarios.add(usuario);
+                } while (resp.next());
+            }
+
+        } catch (SQLException ex) {
+
+            ex.printStackTrace();
+        }
+        return usuarios;        
+    }    
+    
 
     public Respuesta registrarUsuario(Usuario usuario) {
         Respuesta resp = new Respuesta();
@@ -195,6 +246,26 @@ public class ManejadorUsuario {
         }
         return resp;
     }
+    
+    public Respuesta reactivarUsuario(Usuario usuario) {
+        Respuesta resp = new Respuesta();
+        ManejadorDatosUsuario mdusuario = new ManejadorDatosUsuario();
+
+        try {
+            String msg = mdusuario.reactivarUsuario(usuario);
+            if (msg != null && msg.startsWith("2")) {
+                resp.setNivel(2);
+            } else {
+                resp.setNivel(1);
+            }
+            resp.setMensaje(msg);
+
+        } catch (Exception ex) {
+            resp.setNivel(2);
+            resp.setMensaje("Error: " + ex.getMessage());
+        }
+        return resp;
+    }    
 
     public Respuesta modificarUsuario(Usuario usuario) {
         Respuesta resp = new Respuesta();
@@ -245,6 +316,61 @@ public class ManejadorUsuario {
             
             ex.printStackTrace();
 
+        }
+        return resp;
+    }
+        public int getCantidadRegistrosInactivos(String query) {
+        int resp = 0;
+        try {
+            ManejadorDatosUsuario mdusuario = new ManejadorDatosUsuario();
+            resp = mdusuario.getCantidadFilasInactivas(query);
+
+        } catch (SQLException ex) {
+            
+            ex.printStackTrace();
+
+        }
+        return resp;
+    }        
+        
+        
+    public Respuesta modificarClaveUsuario(Usuario usuario,String pass_actual) {
+        Respuesta resp = new Respuesta();
+       
+        ManejadorDatosUsuario mdusuario = new ManejadorDatosUsuario();
+
+        try {
+            String msg = mdusuario.modificarClaveUsuario(usuario,pass_actual);
+            if (msg != null && msg.startsWith("2")) {
+                resp.setNivel(2);
+            } else {
+                resp.setNivel(1);
+            }
+            resp.setMensaje(msg);
+
+        } catch (Exception ex) {
+            resp.setNivel(2);
+            resp.setMensaje("Error: " + ex.getMessage());
+        }
+        return resp;
+    }
+        public Respuesta resetearClaveUsuario(Usuario usuario) {
+        Respuesta resp = new Respuesta();
+       
+        ManejadorDatosUsuario mdusuario = new ManejadorDatosUsuario();
+
+        try {
+            String msg = mdusuario.resetearClaveUsuario(usuario);
+            if (msg != null && msg.startsWith("2")) {
+                resp.setNivel(2);
+            } else {
+                resp.setNivel(1);
+            }
+            resp.setMensaje(msg);
+
+        } catch (Exception ex) {
+            resp.setNivel(2);
+            resp.setMensaje("Error: " + ex.getMessage());
         }
         return resp;
     }

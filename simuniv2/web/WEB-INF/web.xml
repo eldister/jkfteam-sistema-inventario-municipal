@@ -101,6 +101,15 @@
         <servlet-name>AccionesTipoProveedor</servlet-name>
         <servlet-class>simuni.servlets.AccionesTipoProveedor</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccionesPermiso</servlet-name>
+        <servlet-class>simuni.servlets.AccionesPermiso</servlet-class>
+    </servlet>
+    <servlet>
+        <description>Se le muestra al usuario que no tiene permiso</description>
+        <servlet-name>EntradaProhibida</servlet-name>
+        <jsp-file>/recursos/paginas/noautorizado/index.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccionesTipoUsuario</servlet-name>
         <url-pattern>/tipousuario</url-pattern>
@@ -212,6 +221,14 @@
     <servlet-mapping>
         <servlet-name>AccionesTipoProveedor</servlet-name>
         <url-pattern>/tipoproveedor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccionesPermiso</servlet-name>
+        <url-pattern>/permiso</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EntradaProhibida</servlet-name>
+        <url-pattern>/prohibido</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

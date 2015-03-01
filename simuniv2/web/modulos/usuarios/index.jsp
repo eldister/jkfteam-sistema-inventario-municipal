@@ -1,3 +1,6 @@
+<%
+    //request.setAttribute("permiso_requerido", 1000);
+%>
 <%@page import="simuni.enums.Recursos"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="simuni.clases.ui.MostradorUsuario"%>
