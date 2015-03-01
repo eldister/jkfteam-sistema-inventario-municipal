@@ -1,9 +1,0 @@
-#sm_div_reenvioInicio, #sm_div_reenvioRegistroActivos, #sm_div_reenvioGrilla{
-    margin: 0;
-    padding: 15px;
-    float: left;
-    font-size: 120%;
-}
-#sm_div_reenvioInicio, #sm_div_reenvioRegistroActivos{
-    border-right: 1px solid black;
-}
