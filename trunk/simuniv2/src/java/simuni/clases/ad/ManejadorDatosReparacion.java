@@ -101,19 +101,50 @@ public class ManejadorDatosReparacion {
      * @since 1.0
      */
     public String modificarReparacion(Reparacion reparacion) throws SQLException {
- String resp = "";
+        String resp = "";
         try {
             Connection con = Conexionmysql.obtenerConexion();
-            CallableStatement cs = con.prepareCall("{call simuni_sp_actualizacion_reparacion(?, ?, ?, ?, ?, ?)}");
+            CallableStatement cs = con.prepareCall("{call simuni_sp_actualizacion_reparacion(?, ?, ?)}");
             
-            cs.setString(1, reparacion.getMotivoReparacion());
-            cs.setString(2, reparacion.getnombreReparador());
-            cs.setDate(3, (Date) reparacion.getFechaReparacion());
-            cs.setDouble(4, reparacion.getCostoReparacion());
-            cs.setInt(5, reparacion.getCodigoReparacion());
-            cs.registerOutParameter(10, java.sql.Types.VARCHAR);
+            cs.setInt(1, reparacion.getCodigoReparacion());
+            cs.setString(2, Integer.toString(reparacion.getCodigoEstado()));
+            cs.registerOutParameter(3, java.sql.Types.VARCHAR);
             cs.execute();
-            resp = cs.getString(11);
+            resp = cs.getString(3);
+            
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    
+
+    }
+    /**
+     * Operación que se encarga de realizar modificación del detalle de la
+     * reparacion.
+     *
+     * @param reparacion El registro a modificar.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
+    public String modificarDetalleReparacion(Reparacion reparacion) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{simuni_sp_actualizacion_detalle_reparacion(?, ?, ?, ?, ?, ?)}");
+            
+            cs.setInt(1, reparacion.getCodigoReparacion());
+            cs.setString(2, reparacion.getMotivoReparacion());
+            cs.setString(3, reparacion.getnombreReparador());
+            cs.setDate(4, new java.sql.Date( reparacion.getFechaReparacion()!=null?reparacion.getFechaReparacion().getTime():null));
+            cs.setDouble(5, reparacion.getCostoReparacion());
+            cs.registerOutParameter(6, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(6);
             
             Conexionmysql.cerrarConexion(con);
         } catch (SQLException ex) {
@@ -150,7 +181,32 @@ public class ManejadorDatosReparacion {
         }
         return resp;
     }
-
+    /**
+     * Operación que se encarga de realizar la eliminación del detalle de la 
+     * Reparacion de la base de datos..
+     *
+     * @param reparacion El registro a eliminar.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
+    public String eliminarDetalleReparacion(Reparacion reparacion) throws SQLException {
+        String resp = "";
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{ call simuni_sp_eliminacion_detalle_reparacion(?,?)  }");
+            cs.setInt(1, reparacion.getCodigoReparacion());
+            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
+            cs.execute();
+            resp = cs.getString(2);
+            Conexionmysql.cerrarConexion(con);
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+            throw ex;
+        }
+        return resp;
+    }
     /**
      * Función que se encarga de obtener un listado de los datos en la base de
      * datos. Todo trabaja a traves de vistas de la base de datos.
