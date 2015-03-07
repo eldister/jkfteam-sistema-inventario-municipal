@@ -42,7 +42,7 @@
 <decorator:decorate filename='../../recursos/paginas/master/masterpage.jsp'>
     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | eliminar reparación </decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
-        <script src="<%=request.getContextPath()%>/js/script_paginas/script_eliminar_reparacion.js">
+        <script src="<%=request.getContextPath()%>/js/script_paginas/script_eliminar_reparacion.js" charset="utf-8"></script>
 
         <style>
             #sm_tb_campos td .form-group{

@@ -52,7 +52,7 @@ function setEventosBotonesFormulario() {
 
     $("#sm_btn_iractivos").click(function(e) {
         e.preventDefault();
-        window.location.assign(SIMUNI_SERVER + '/baja?proceso=listado');
+        window.location.assign(SIMUNI_SERVER + '/reparacion?proceso=listado');
     });
 
     $("#sm_btn_reintentar").click(function(e) {

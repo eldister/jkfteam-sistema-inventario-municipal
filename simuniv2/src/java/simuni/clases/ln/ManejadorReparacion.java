@@ -33,7 +33,7 @@ public class ManejadorReparacion {
 
         try {
             String msg = mdreparacion.registrarReparacion(reparacion);
-           // mdreparacion.registrarDetalleReparacion(reparacion);
+            mdreparacion.registrarDetalleReparacion(reparacion);
             if (msg != null && msg.startsWith("2")) {
                 resp.setNivel(2);
             } else {
@@ -60,9 +60,9 @@ public class ManejadorReparacion {
     public Respuesta eliminarReparacion(Reparacion reparacion) {
         Respuesta resp = new Respuesta();
         ManejadorDatosReparacion mdreparacion = new ManejadorDatosReparacion();
-
         try {
             String msg = mdreparacion.eliminarReparacion(reparacion);
+            mdreparacion.eliminarDetalleReparacion(reparacion);
             if (msg != null && !msg.startsWith("2")) {
                 resp.setNivel(1);
             } else {
@@ -93,7 +93,8 @@ public class ManejadorReparacion {
         ManejadorDatosReparacion mdreparacion = new ManejadorDatosReparacion();
 
         try {
-            String msg = mdreparacion.modificarReparacion(reparacion);
+            String msg = mdreparacion.modificarDetalleReparacion(reparacion);
+            mdreparacion.modificarReparacion(reparacion);
             if (msg != null && !msg.startsWith("2")) {
                 resp.setNivel(1);
             } else {
