@@ -66,6 +66,24 @@ function mostrarventanamodal() {
 
 
 }
+
+//funcion metiche para obtener valores de una ventana modal con el atributo a
+
+function sm_grilla_proceso_modificar_nogrilla(id){
+    $.ajax({
+        url: SIMUNI_SERVER + "/usuario?proceso=actualizar&registro=" + id,
+        cache: false
+    })
+            .done(function(html) {
+                $("#sm_body_ventanamodal").html(html);
+                AddSubmitFormActualizacionEventHandler();
+                mostrarventanamodal();
+            });
+}
+
+
+
+
 function  sm_grilla_proceso_modificar(sm_grilla_item_id) {
 
     //   alert(sm_grilla_item_id);

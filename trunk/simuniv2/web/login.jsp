@@ -11,7 +11,7 @@
    }
 %>
 <decorator:decorate filename='recursos/paginas/master/masterpage.jsp'>
-        <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI - Inicio de sesión</decorator:content>    
+        <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | Inicio de sesión</decorator:content>    
         <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
             <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/css/css_paginas/style_login.css">
             <style>
