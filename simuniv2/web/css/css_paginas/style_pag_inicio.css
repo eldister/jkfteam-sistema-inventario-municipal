@@ -1,0 +1,62 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 07/03/2015, 05:39:59 PM
+    Author     : ProducJeffer
+*/
+.container{
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px #999;
+}
+.logocampo{
+    padding: 2px;
+}
+.logosys{
+    float:left;
+}
+.simunipa{
+    padding-top: 5px;
+    padding-left: 2px;
+    float: left;
+}
+.saludo{
+    font-size: 500%;
+    float:left;
+}
+.config a{
+    padding: 6px;
+    float: right;
+    border-radius: 7px 0px 7px 0px;
+    -webkit-border-radius: 7px 0px 7px 0px;
+    -moz-border-radius: 7px 0px 7px 0px;
+    text-decoration: none;
+    color: #FFFFFF;
+    border:1px solid #96f0ff; 
+    font-size:12px;
+    display:inline-block;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3);
+    font-weight:bold;
+    background-color: #cef8ff; 
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#cef8ff), to(#7fe0f8));
+    background-image: -webkit-linear-gradient(top, #cef8ff, #7fe0f8);
+    background-image: -moz-linear-gradient(top, #cef8ff, #7fe0f8);
+    background-image: -ms-linear-gradient(top, #cef8ff, #7fe0f8);
+    background-image: -o-linear-gradient(top, #cef8ff, #7fe0f8);
+    background-image: linear-gradient(to bottom, #cef8ff, #7fe0f8);
+}
+.config a:hover{
+    border:1px solid #68e9ff;
+    background-color: #9bf1ff;
+    border-radius: 0px 7px 0px 7px;
+    -webkit-border-radius: 0px 7px 0px 7px;
+    -moz-border-radius: 0px 7px 0px 7px;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#9bf1ff), to(#4fd4f5));
+    background-image: -webkit-linear-gradient(top, #9bf1ff, #4fd4f5);
+    background-image: -moz-linear-gradient(top, #9bf1ff, #4fd4f5);
+    background-image: -ms-linear-gradient(top, #9bf1ff, #4fd4f5);
+    background-image: -o-linear-gradient(top, #9bf1ff, #4fd4f5);
+    background-image: linear-gradient(to bottom, #9bf1ff, #4fd4f5);
+}
