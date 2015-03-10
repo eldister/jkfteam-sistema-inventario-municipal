@@ -193,8 +193,8 @@
                             <div class="sm_div_colcontainer">
                                 <b>Páginas</b>
                                 <ul>
-                                    <li><a href="/SIMUNI/acercade.jsp">Acerca de</a></li>
-                                    <li><a href="#" title="Ver el sistema desde arriba">Mapa del sitio</a></li>
+                                    <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/acerca"));%>">Acerca de</a></li>
+                                    <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/mapa"));%>" title="Ver el sistema desde arriba">Mapa del sitio</a></li>
                                     <li><a href="#" title="#">Mantenimiento Activos</a></li>
 
                                 </ul>
@@ -203,7 +203,7 @@
                             <div class="sm_div_colcontainer">
                                 <b>SIMUNI</b><br/>
                                 <ul> 
-                                    <li><a href="/SIMUNI/acercade.jsp" title="Información del proyecto">Acerca del proyecto</a></li>
+                                    <li><a href="#" title="Información del proyecto">Acerca del proyecto</a></li>
                                     <li><a href="#" title="Creadores del sistema">Desarrolladores</a></li>                     
                                 </ul>
                             </div>  
@@ -211,9 +211,9 @@
                             <div class="sm_div_colcontainer">
                                 <b>Ayuda</b><br/>
                                 <ul>
-                                    <li><a href="" title="Preguntas Frecuentes">FAQ</a></li>
+                                    <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/faq"));%>" title="Preguntas Frecuentes">FAQ</a></li>
                                     <li><a href="#" title="Ir al manual">Manual de usuario</a></li>
-                                    <li><a href="/SIMUNI/contacto.jsp" title="Contactar al administrador">Contacto</a></li>
+                                    <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/contacto"));%>" title="Contactar al administrador">Contacto</a></li>
                                 </ul>
                             </div>                     
                         </div>

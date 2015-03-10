@@ -66,7 +66,7 @@
                     <td>
                         <div class="form-group">
                             <label  class="control-label"for="txtcedulausuario">Cédula </label>
-                            <input  type="text" value="<%out.print((proceso) ? usuario.getCedula() : "");%>" class="form-control" name="txtcedulausuario" required="required" id="txtcedulausuario" placeholder="#-####-#####">
+                            <input  type="text" value="<%out.print((proceso) ? usuario.getCedula() : "");%>" class="form-control" name="txtcedulausuario" required="required" id="txtcedulausuario">
                         </div>
                     </td>
                     <td>
