@@ -10,7 +10,7 @@ and open the template in the editor.
 .container{
     border-radius: 5px;
     box-shadow: 2px 2px 5px #999;
-    height: auto;
+    height: 500px;
     width: auto;
 }
 .logocampo{

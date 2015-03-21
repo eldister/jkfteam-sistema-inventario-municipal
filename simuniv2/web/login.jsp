@@ -43,7 +43,7 @@
                                     <td><label>Contraseña:</label></td>
                                     <td>
                                         <input id="txtPassword" name="txtPassword"  type="password" value="password" onfocus="this.value=''" required/>
-                                        <div id="imgIconoPassword">
+                                        <div id="imgIconoPassword"></div>
                                     </td>
                                 </tr>
                                 <tr>
