@@ -15,42 +15,42 @@
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
         <div class="sm_div_mapasitio">
             <ul>
-                <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/acerca"));%>">&#8226; Simuni</a>
+                <li class="sistema"><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/acerca"));%>">&#8226; Simuni</a>
                     <ul>
-                        <li>
+                        <li class="inicio">
                             <a href="<%out.print(Recursos.Servers.MAINSERVER);%>">&#8226; Inicio</a>
                         </li>
-                        <li>&#8226; Módulos
+                        <li class="modulos">&#8226; Módulos
                             <ul>
-                                <li>&#8226; Activos
+                                <li class="modulohijo">&#8226; Activos
                                     <ul>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/activo?proceso=listado"));%>">&#8226; Listado</a></li>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/activo?proceso=nuevo"));%>">&#8226; Nuevo</a></li>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/tipoactivo"));%>">&#8226; Tipo de activos</a></li>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/estado"));%>">&#8226; Estado de activos</a></li>
+                                        <li class="modulonieto"><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/activo?proceso=listado"));%>">&#8226; Listado</a></li>
+                                        <li class="modulonieto"><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/activo?proceso=nuevo"));%>">&#8226; Nuevo</a></li>
+                                        <li class="modulonieto"><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/tipoactivo"));%>">&#8226; Tipo de activos</a></li>
+                                        <li class="modulonieto"><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/estado"));%>">&#8226; Estado de activos</a></li>
                                     </ul>
                                 </li>
-                                <li>&#8226; Proveedores
+                                <li class="modulohijo">&#8226; Proveedores
                                     <ul>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/proveedor?proceso=listado"));%>">&#8226; Listado</a></li>
-                                        <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/proveedor?proceso=nuevo"));%>">&#8226; Nuevo</a></li>
+                                        <li class="modulonieto"><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/proveedor?proceso=listado"));%>">&#8226; Listado</a></li>
+                                        <li class="modulonieto"><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/proveedor?proceso=nuevo"));%>">&#8226; Nuevo</a></li>
                                     </ul>
                                 </li>
-                                <li>&#8226; Reparaciones
+                                <li class="modulohijo">&#8226; Reparaciones
                                     <ul>
                                         <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/reparacion?proceso=listado"));%>">&#8226; Listado</a></li>
                                         <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/reparacion?proceso=nuevo"));%>">&#8226; Nuevo</a></li>
                                         <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/"));%>">&#8226; Solicitar reparación</a></li>
                                     </ul>
                                 </li>
-                                <li>&#8226; Bajas
+                                <li class="modulohijo">&#8226; Bajas
                                     <ul>
                                         <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/baja"));%>">&#8226; Listado</a></li>
                                         <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/baja?proceso=nuevo"));%>">&#8226; Nuevo</a></li>
                                         <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/solicitudbaja"));%>">&#8226; Solicitar baja</a></li>
                                     </ul>
                                 </li>
-                                <li>&#8226; Ventas
+                                <li class="modulohijo">&#8226; Ventas
                                     <ul>
                                         <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/venta?proceso=listado"));%>">&#8226; Listado</a></li>
                                         <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/venta?proceso=nuevo"));%>">&#8226; Nuevo</a></li>
@@ -58,7 +58,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>&#8226 Extras
+                        <li  class="extras">&#8226 Extras
                             <ul>
                                 <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/departamento"));%>">&#8226 Departamentos</a></li>
                                 <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/estado"));%>">&#8226 Estados</a></li>
@@ -70,18 +70,18 @@
                                 <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/tiporeporte"));%>">&#8226 Tipo de usuario</a></li>
                             </ul>
                         </li>
-                        <li>&#8226 Usuario 
+                        <li class="usuario">&#8226 Usuario 
                             <ul>
                                 <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/mensaje?proceso=nuevo"));%>">&#8226 Enviar mensaje</a></li>
                             </ul>
                         </li>
-                        <li>&#8226 Soporte
-                            <ul>&#8226 Respaldo 
+                        <li class="soporte">&#8226 Soporte
+                            <ul>
                                 <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/soporte?proceso=backup"));%>">&#8226 Hacer un respaldo</a></li>
                                 <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/configuracion?proceso=actualizar_cr"));%>">&#8226</a></li>
                             </ul>
                         </li>
-                        <li>&#8226; Ayuda
+                        <li class="ayuda">&#8226; Ayuda
                             <ul>
                                 <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/faq"));%>">&#8226; Preguntas frecuentes</a></li>
                                 <li><a href="#">&#8226; Manual del usuario</a></li>

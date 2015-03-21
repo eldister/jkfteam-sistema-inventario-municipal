@@ -47,4 +47,17 @@ public class ManejadorPuesto {
         }
         return puestos;
     }
+    
+    
+    public Puesto getPuesto(int codigo) {
+        Puesto resp = null;
+        ManejadorDatosPuesto mdpuesto = new ManejadorDatosPuesto();
+        try {
+            resp = mdpuesto.getPuesto(codigo);
+            System.out.println(resp.getNombrePuesto());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
 }

@@ -111,7 +111,6 @@ public class ManejadorDatosReparacion {
             cs.registerOutParameter(3, java.sql.Types.VARCHAR);
             cs.execute();
             resp = cs.getString(3);
-            
             Conexionmysql.cerrarConexion(con);
         } catch (SQLException ex) {
             resp = ex.getMessage();
