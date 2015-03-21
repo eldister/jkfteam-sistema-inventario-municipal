@@ -7,7 +7,7 @@
 package simuni.clases.ad;
 
 /**
- *
+ * por eliminar
  * @author FchescO
  */
 public class ManejadorDatosBitacoraSistema {

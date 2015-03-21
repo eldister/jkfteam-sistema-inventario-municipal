@@ -2,7 +2,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>SIMUNI | Error</title>
-                <link rel="stylesheet" href="../../../css/bootstrap.min.css" />
+                <link rel="stylesheet" href="../../../simuniv2/css/bootstrap.min.css" />
 		<style>
 			.container{
 				margin-top: 50px;
@@ -26,13 +26,13 @@
 							<p>
 								La aplicación presento un error y no pudo seguir con el proceso
 							</p>
-							<h4><a href="../../../">Pulse aqui para ir a la pagina de inicio</a></h4>
+							<h4><a href="../../../simuniv2">Pulse aqui para ir a la pagina de inicio</a></h4>
 						</fieldset>
 					</div>
 				</div>
 				<div class="col col-xs-5">
 					<div class="imagecontainer">
-                                            <img src="../../../recursos/imagenes/sistema/sad.png">
+                                            <img src="../../../simuniv2/recursos/imagenes/sistema/sad.png">
 					</div>
 				</div>
 			</div>

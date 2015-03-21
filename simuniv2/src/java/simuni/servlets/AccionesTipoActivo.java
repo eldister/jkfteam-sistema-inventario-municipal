@@ -7,7 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
 import simuni.clases.ln.ManejadorTipoActivo;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.mantenimientos.TipoActivo;
 import simuni.utils.UtilidadesServlet;
@@ -150,6 +152,8 @@ public class AccionesTipoActivo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher disp = null;//para envio de respuestas y redirecciones 
+        RegistroBitacora registroBitacora;
+        ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
         try {
             Respuesta respuesta = null;//objeto respuesta al usuario
             int desplazamiento = 0;//movimiento hacia adelante en los queries
@@ -167,6 +171,12 @@ public class AccionesTipoActivo extends HttpServlet {
                     TipoActivo nuevotipoactivo = new TipoActivo();
                     nuevotipoactivo.setNombretipoactivo(nombretipoactivo);
                     respuesta = mtipoactivo.registrarTipoActivo(nuevotipoactivo);
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registro un nuevo tipo de Activo", "Se registró el registro  "
+                            + nuevotipoactivo.getNombretipoactivo());
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("nuevoregistro", nuevotipoactivo);
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposactivos/_asinc/_asinc_nuevo.jsp");
@@ -181,6 +191,10 @@ public class AccionesTipoActivo extends HttpServlet {
                         respuesta = mtipoactivo.modificarTipoActivo(tipoactivo);
                         request.setAttribute("registro", tipoactivo);
                         request.setAttribute("respuesta", respuesta);
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se modificó un nuevo tipo de Activo", "Se modificó el registro  "
+                                + tipoactivo.getIdtipoactivo());
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposactivos/_asinc/_asinc_editar.jsp");
                     } else {
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposactivos/index.jsp");
@@ -222,6 +236,10 @@ public class AccionesTipoActivo extends HttpServlet {
             disp = request.getRequestDispatcher("/recursos/paginas/error/errorpage.jsp");
             disp.forward(request, response);
             //redirigir a pagian de error de sistema
+            registroBitacora = manejadorBitacora.generarRegistroBitacora(new Respuesta(), request,
+                    "Error de procesamiento en el post", ex.getMessage());
+            manejadorBitacora.registrarEnBitacora(registroBitacora);
         }
     }
+
 }

@@ -102,8 +102,8 @@
     String fechaFabricacion = "";
     String denominacion = "";
     String tipoVehiculo = "A";
-    String consecutivoVehiculo="";
-    int tipo_botones_requeridos=4;
+    String consecutivoVehiculo = "";
+    int tipo_botones_requeridos = 4;
     try {
 
         //iniciar algunas variables para mayor facilidad
@@ -131,14 +131,13 @@
             //inicializar las fecha de frabricacion
             fechaFabricacion = UtilidadesServlet.getFechaString(((ActivoTransporte) activo).getAnioFabrica());
             tipoVehiculo = ((ActivoTransporte) activo).getTipoVehiculo();
-          consecutivoVehiculo=request.getAttribute("consecutivovehiculo")!=null?request.getAttribute("consecutivovehiculo").toString():"";
-     System.out.println(consecutivoVehiculo);
+            consecutivoVehiculo = request.getAttribute("consecutivovehiculo") != null ? request.getAttribute("consecutivovehiculo").toString() : "";
+            System.out.println(consecutivoVehiculo);
         }
-        if(proceso&&error){
-            tipo_botones_requeridos=2;
-        }
-        else if(proceso&&!error){
-            tipo_botones_requeridos=3;
+        if (proceso && error) {
+            tipo_botones_requeridos = 2;
+        } else if (proceso && !error) {
+            tipo_botones_requeridos = 3;
         }
     } catch (Exception ex) {
         ex.printStackTrace();
@@ -184,15 +183,16 @@
         </style>
         <script>
             //se inicializan fechas
-            inicializarValores(<%out.print("'" + fechaCompra + "','" + fechaInicioOperacion + "','" + fechaFabricacion + "','" + denominacion + "','" + tipoVehiculo + "','"+tipo_botones_requeridos+"'");%>);
-            
+            inicializarValores(<%out.print("'" + fechaCompra + "','" + fechaInicioOperacion + "','" + fechaFabricacion + "','" + denominacion + "','" + tipoVehiculo + "','" + tipo_botones_requeridos + "'");%>);
+
 
         </script>
     </decorator:content>
     <decorator:content placeholder='sm_div_navegationbarmenuitems'>
         <ol class="breadcrumb">
             <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/">Inicio</a></li>   
-            <li class="active">Activos***</li>
+            <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/activo?proceso=listado">Activos</a></li>   
+            <li class="active">Registro de Nuevo Activo</li>
         </ol>
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
@@ -649,61 +649,61 @@
                                     </legend>
                                     <details>
                                         <summary class="<%out.print((error && proceso) ? "text-danger" : "text-success");%>">Detalles de los resultados</summary>
-                              
-                                            <table class="table table-condensed">
-                                                <%if (respuesta != null) {
-                                                        Iterator<Respuesta> iterador_respuestas = respuesta.iterator();
-                                                        if (iterador_respuestas != null && iterador_respuestas.hasNext()) {
-                                                            int numeroproceso = 1;
-                                                %>
-                                                <tr>
-                                                    <th>Numero de Proceso</th><th>Resultado</th>
-                                                </tr>
-                                                <%while (iterador_respuestas.hasNext()) {
-                                                        Respuesta au = iterador_respuestas.next();
 
-                                                %>
+                                        <table class="table table-condensed">
+                                            <%if (respuesta != null) {
+                                                    Iterator<Respuesta> iterador_respuestas = respuesta.iterator();
+                                                    if (iterador_respuestas != null && iterador_respuestas.hasNext()) {
+                                                        int numeroproceso = 1;
+                                            %>
+                                            <tr>
+                                                <th>Numero de Proceso</th><th>Resultado</th>
+                                            </tr>
+                                            <%while (iterador_respuestas.hasNext()) {
+                                                    Respuesta au = iterador_respuestas.next();
 
-                                                <tr>
-                                                    <td>
-                                                        <%out.print(numeroproceso++);%>
-                                                    </td>     
-                                                    <td>
-                                                        <%
-                                                            if (au.getNivel() == 2) {
-                                                        %>
-                                                        <div class="alert alert-danger" role="alert">
-                                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                                            <span class="sr-only">Error:</span>
-                                                            <%out.print(au.getMensaje());%>
-                                                        </div>
-                                                        <%} else {%>
-                                                        <div class="alert alert-success" role="alert">
-                                                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                                            <span class="sr-only">Correcto:</span>
-                                                            <%out.print(au.getMensaje());%>
-                                                        </div>                        
-                                                        <%}%>                                        
+                                            %>
 
-                                                    </td> 
-                                                </tr>
-                                                <%}%>
+                                            <tr>
+                                                <td>
+                                                    <%out.print(numeroproceso++);%>
+                                                </td>     
+                                                <td>
+                                                    <%
+                                                        if (au.getNivel() == 2) {
+                                                    %>
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                        <span class="sr-only">Error:</span>
+                                                        <%out.print(au.getMensaje());%>
+                                                    </div>
+                                                    <%} else {%>
+                                                    <div class="alert alert-success" role="alert">
+                                                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                                        <span class="sr-only">Correcto:</span>
+                                                        <%out.print(au.getMensaje());%>
+                                                    </div>                        
+                                                    <%}%>                                        
 
-                                                <%} else {%>
-                                                <tr>
-                                                    <th>Proceso no devolvió nada!*</th>
-                                                </tr>      
-                                                <% }
+                                                </td> 
+                                            </tr>
+                                            <%}%>
+
+                                            <%} else {%>
+                                            <tr>
+                                                <th>Proceso no devolvió nada!*</th>
+                                            </tr>      
+                                            <% }
                                                 } else {%>
-                                                <tr>
-                                                    <th>Proceso no devolvió nada!</th>
-                                                </tr>                                       
-                                                <%}%>
-                                            </table>
-                                 </details>
-                                </fieldset>
-                            </td> 
-                            <%}%>
+                                            <tr>
+                                                <th>Proceso no devolvió nada!</th>
+                                            </tr>                                       
+                                            <%}%>
+                                        </table>
+                                    </details>
+                                </fieldset>        
+                           </td> 
+                           <%}%>
                         </tr>
                         <tr id="sm_contenedor_controles">
                             <td>&nbsp;<input type="hidden" name="sm_registroactivo_tipoproceso" value="<%out.print(tipo_registro);%>" id="sm_registroactivo_tipoproceso"></td>
@@ -717,30 +717,30 @@
                                     <input type="reset" class="form-control" value="Limpiar formulario">
                                 </div>
                             </td>  
-                            <%if(proceso){//falta campo hidden con el codigo activo%>     
+                            <%if (proceso) {//falta campo hidden con el codigo activo%>     
                             <td id="btn_controles_procesocorrecto">
                                 <input type="hidden" id="sm_hidden_codigoactivo" value="<%out.print((tipo_registro != 2 && proceso && activo != null) ? activo.getPlacaActivo() : "");%>">
-                                    <div class="form-group">
-                                        <button id="sm_btn_reporte" class="form-control btn-success">Generar Reporte Activo</button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="form-group">
-                                        <button id="sm_btn_registrarnuevo" class="form-control btn-info">Ingresar Nuevo</button>
-                                    </div>
-                                </td> 
-                                <td>
-                                    <div class="form-group">
-                                        <button id="sm_btn_iractivos" class="form-control btn-info">Ir a  Activos</button>
-                                    </div>
-                                </td> 
-                                <td id="btn_controles_procesoerror">
-                                    <div class="form-group">
-                                        <button id="sm_btn_reintentar" class="form-control btn-danger">Reintentar</button>
-                                    </div>
-                                </td>  
-                            <%}%>
-                        </tr>  
+                                <div class="form-group">
+                                    <button id="sm_btn_reporte" class="form-control btn-success">Generar Reporte Activo</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <button id="sm_btn_registrarnuevo" class="form-control btn-info">Ingresar Nuevo</button>
+                                </div>
+                            </td> 
+                            <td>
+                                <div class="form-group">
+                                    <button id="sm_btn_iractivos" class="form-control btn-info">Ir a  Activos</button>
+                                </div>
+                            </td> 
+                            <td id="btn_controles_procesoerror">
+                                <div class="form-group">
+                                    <button id="sm_btn_reintentar" class="form-control btn-danger">Reintentar</button>
+                                </div>
+                            </td>  
+                             <%}%>
+                        </tr> 
                     </table>
                 </div>
             </fieldset>
