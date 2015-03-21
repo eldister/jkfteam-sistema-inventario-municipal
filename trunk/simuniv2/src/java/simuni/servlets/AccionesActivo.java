@@ -19,10 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import simuni.clases.ln.ManejadorActivo;
+import simuni.clases.ln.ManejadorBitacora;
 import simuni.entidades.Activo;
 import simuni.entidades.ActivoArticulo;
 import simuni.entidades.ActivoTransporte;
 import simuni.entidades.ImagenActivo;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.mantenimientos.TipoLlanta;
 import simuni.enums.Recursos;
@@ -40,7 +42,7 @@ public class AccionesActivo extends HttpServlet {
         Listado, Existe_Activo, Existe_Placa, Existe_Consecutivo,
         Nuevo, Eliminar, Modificar, Modificar_Articulo,
         Modificar_Transporte, Query, Ver_Imagenes, Subida_Imagenes, Reporte_Activo,
-        Eliminar_Articulo, Eliminar_Transporte, AccionDefault,Listado_Asinc,Query_Asinc
+        Eliminar_Articulo, Eliminar_Transporte, AccionDefault, Listado_Asinc, Query_Asinc
     }
 
     /**
@@ -83,7 +85,7 @@ public class AccionesActivo extends HttpServlet {
                     request.setAttribute("query", query);
                     break;
                 case Listado_Asinc:
-                    
+
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
                     paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
                     desplazamiento = ((npagina) * paginacion);
@@ -93,7 +95,7 @@ public class AccionesActivo extends HttpServlet {
                     request.setAttribute("paginacion", ((int) mactivo.getCantidadRegistros(query, mostrar_inactivos) / paginacion) + 1);
                     request.setAttribute("query", query);
                     request.setAttribute("mostrar_inactivos", mostrar_inactivos ? "checked" : "");
-                    break;                        
+                    break;
                 case Nuevo:
 
                     request.setAttribute("departamentos", mactivo.listadoDepartamento());
@@ -222,7 +224,7 @@ public class AccionesActivo extends HttpServlet {
             return OpcionesDo.Eliminar_Transporte;
         } else if (key.equals("listado_asinc")) {
             return OpcionesDo.Listado_Asinc;
-        }else if (key.equals("query_asinc")) {
+        } else if (key.equals("query_asinc")) {
             return OpcionesDo.Query_Asinc;
         }
 
@@ -241,15 +243,15 @@ public class AccionesActivo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher disp = null;
+        ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+        RegistroBitacora registroBitacora;
         try {
             boolean mostrar_inactivos = request.getParameter("mostrar_inactivos") != null;
-            Respuesta respuesta = null;//objeto respuesta al usuario
             int desplazamiento = 0;//movimiento hacia adelante en los queries
             int npagina = 0;//para la paginacion
             String registro = "";//codigo de registro a buscar
             int paginacion = 0;//obtener la paginacion y pagina actual  
             int registro_activo = 0;
-            String nombreactivo = "";//campo txt
             ResultSet resultset = null;
             ManejadorActivo mactivo = new ManejadorActivo();
             ArrayList<Respuesta> respuetas = null;
@@ -282,7 +284,9 @@ public class AccionesActivo extends HttpServlet {
                             break;
                     }
                     respuetas = mactivo.registrarActivo(activo_registro, tipo_registro);
-
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuetas.get(0), request,
+                            "Nuevo registro de activo del tipo " + tipo_registro, "Las respuestas vienen en un List");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
                     request.setAttribute("respuesta", respuetas);//resultado de las operaciones
                     request.setAttribute("registro", activo_registro);//el nuevo registro.
                     request.setAttribute("tipo_registro", tipo_registro);//dici si es carro, moto, normal
@@ -312,7 +316,7 @@ public class AccionesActivo extends HttpServlet {
                     request.setAttribute("paginacion", ((int) mactivo.getCantidadRegistros(query, mostrar_inactivos) / paginacion) + 1);
                     request.setAttribute("mostrar_inactivos", mostrar_inactivos ? "checked" : "");
                     disp.forward(request, response);
-                    break;                        
+                    break;
                 case Existe_Activo:
                     registro = request.getParameter("registro");
                     if (mactivo.existePlacaActivo(registro)) {
@@ -355,6 +359,9 @@ public class AccionesActivo extends HttpServlet {
                         ((ActivoArticulo) activo_registro).setCodigoActivoArticulo(registro_activo);
                         //hacer la actualizacion***
                         respuetas = mactivo.actualizarActivoArticulo(((ActivoArticulo) activo_registro));
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuetas.get(0), request,
+                                "Modificación de registro de activo del tipo artículo", "Las respuestas vienen en un List");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
                         activo_registro = mactivo.getActivoArticulo(registro);
                         activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
                         request.setAttribute("registro", ((ActivoArticulo) activo_registro));
@@ -384,6 +391,9 @@ public class AccionesActivo extends HttpServlet {
                         ((ActivoTransporte) activo_registro).setCodigoActivoTransporte(registro_activo);
                         //hacer la actualizacion*** cambiar
                         respuetas = mactivo.actualizarActivoTransporte(((ActivoTransporte) activo_registro));
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuetas.get(0), request,
+                                "Modificación de registro de activo del tipo transporte", "Las respuestas vienen en un List");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
                         activo_registro = mactivo.getActivoTransporte(registro);
                         activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
                         request.setAttribute("registro", ((ActivoTransporte) activo_registro));
@@ -410,6 +420,10 @@ public class AccionesActivo extends HttpServlet {
 
                     activo_registro = generarActivo(request);
                     respuetas = mactivo.agregarImagenesActivo(activo_registro);
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuetas.get(0), request,
+                            "Agregar imágenes de activo", "Las respuestas vienen en un List. Se registraron "
+                            + (activo_registro.getImagenes()) != null ? activo_registro.getImagenes().size() + "" : "0");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
                     registro = activo_registro.getPlacaActivo();
                     request.setAttribute("respuesta", respuetas);//resultado de las operaciones
                     request.setAttribute("registro", registro);
@@ -431,10 +445,16 @@ public class AccionesActivo extends HttpServlet {
                         if (request.getParameter("eliminar_completo") != null) {
                             respuetas = mactivo.eliminarActivoArticulo(((ActivoArticulo) activo_registro));
                             request.setAttribute("eliminar_completo", true);
+                            registroBitacora = manejadorBitacora.generarRegistroBitacora(respuetas.get(0), request,
+                                    "Eliminar Activo Articulo", "La eliminación fue completa de la placa " + activo_registro.getPlacaActivo());
+                            manejadorBitacora.registrarEnBitacora(registroBitacora);
                         } else {
                             respuetas = mactivo.desactivarActivoArticulo(((ActivoArticulo) activo_registro));
                             activo_registro = mactivo.getActivoArticulo(registro);
                             activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
+                            registroBitacora = manejadorBitacora.generarRegistroBitacora(respuetas.get(0), request,
+                                    "Eliminar Activo Articulo", "La eliminación no fue completa de la placa " + activo_registro.getPlacaActivo());
+                            manejadorBitacora.registrarEnBitacora(registroBitacora);
                         }
 
                         request.setAttribute("registro", ((ActivoArticulo) activo_registro));
@@ -462,17 +482,22 @@ public class AccionesActivo extends HttpServlet {
                         activo_registro.setPlacaActivo(registro);
                         ((ActivoTransporte) activo_registro).setCodigoActivoTransporte(registro_activo);
                         //hacer la eliminacion*** cambiar
-                      //  respuetas = mactivo.actualizarActivoTransporte(((ActivoTransporte) activo_registro));
+                        //  respuetas = mactivo.actualizarActivoTransporte(((ActivoTransporte) activo_registro));
                         if (request.getParameter("eliminar_completo") != null) {
                             respuetas = mactivo.eliminarActivoTransporte(((ActivoTransporte) activo_registro));
                             request.setAttribute("eliminar_completo", true);
-                            
+                            registroBitacora = manejadorBitacora.generarRegistroBitacora(respuetas.get(0), request,
+                                    "Eliminar Activo Transporte", "La eliminación  fue completa de la placa " + activo_registro.getPlacaActivo());
+                            manejadorBitacora.registrarEnBitacora(registroBitacora);
+
                         } else {
                             respuetas = mactivo.desactivarActivoTransporte(((ActivoTransporte) activo_registro));
                             activo_registro = mactivo.getActivoTransporte(registro);
                             activo_registro.setImagenes(mactivo.getImagenesActivo(registro));
-                        }                        
-                
+                            registroBitacora = manejadorBitacora.generarRegistroBitacora(respuetas.get(0), request,
+                                    "Eliminar Activo Transporte", "La eliminación no fue completa de la placa " + activo_registro.getPlacaActivo());
+                            manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        }
 
                         request.setAttribute("registro", ((ActivoTransporte) activo_registro));
                         request.setAttribute("respuesta", respuetas);//resultado de las operaciones
@@ -495,6 +520,9 @@ public class AccionesActivo extends HttpServlet {
             disp = request.getRequestDispatcher("/recursos/paginas/error/errorpage.jsp");
             disp.forward(request, response);
             //redirigir a pagian de error de sistema
+            registroBitacora = manejadorBitacora.generarRegistroBitacora(new Respuesta(), request,
+                    "Error de procesamiento en el post", ex.getMessage());
+            manejadorBitacora.registrarEnBitacora(registroBitacora);
         }
 
     }
@@ -690,5 +718,7 @@ public class AccionesActivo extends HttpServlet {
         }
         return activo_transporte;
     }
+
+
 
 }

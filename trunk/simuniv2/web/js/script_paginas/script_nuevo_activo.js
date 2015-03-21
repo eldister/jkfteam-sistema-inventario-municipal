@@ -340,6 +340,8 @@ function setEventosGrillaOnLoad() {
             $("#hddproveedor").val(cedulaproveedor);
             //$("#cantidadestu").val(cantidadestu);
             alert("Seleccionaste a " + nombreproveedor_completo + "\n" + "Cédula: " + cedulaproveedor);
+              $("#sm_body_ventanamodal").dialog('close');
+            
 
         });
     });
