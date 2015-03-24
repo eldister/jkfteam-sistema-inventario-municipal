@@ -828,5 +828,41 @@ public class ManejadorDatosActivo {
         return resp;
 
     }
+        
+        public ResultSet ReporteGeneralActivos() throws SQLException {//solo los qeu no esten inactivos
+        ResultSet resp = null;
+
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{ call simuni_rprt_general_activos()  }");
+
+            resp = cs.executeQuery();
+
+        } catch (SQLException ex) {
+
+            throw ex;
+        }
+
+        return resp;
+
+    }
+        
+     public ResultSet ReporteGeneralActivos(int departamento) throws SQLException {//solo los qeu no esten inactivos
+        ResultSet resp = null;
+
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{ call simuni_rprt_general_activos()  }");
+
+            resp = cs.executeQuery();
+
+        } catch (SQLException ex) {
+
+            throw ex;
+        }
+
+        return resp;
+
+    }
 
 }

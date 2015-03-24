@@ -1,9 +1,12 @@
 package simuni.utils;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.Part;
@@ -32,6 +35,14 @@ public class UtilidadesServlet {
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    public static String decimalToString(double value) {
+
+        DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+        df.setMaximumFractionDigits(340); //340 = DecimalFormat.DOUBLE_FRACTION_DIGITS
+
+        return df.format(value); //output: 0.00000021
     }
 
     public static boolean tryParseDouble(String value) {
@@ -83,6 +94,7 @@ public class UtilidadesServlet {
         }
 
     }
+
     public static String getFechaconTiempoString(Date fecha) {
 
         if (fecha == null) {
@@ -96,6 +108,7 @@ public class UtilidadesServlet {
         }
 
     }
+
     public static int getNumeroDePagina(Object str, int respaldo) {
         if (str == null) {
             return respaldo;

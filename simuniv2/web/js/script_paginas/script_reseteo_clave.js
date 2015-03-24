@@ -5,10 +5,7 @@ function addEventosSubmitFormulario() {
         var isformulariovalido = true;
         //validamos    
 
-
-        var element = $(this).children().find('#txtpassactual');
-        isformulariovalido = (isformulariovalido && campoValido(element));
-        element = $(this).children().find('#txtpassword1');
+       var element = $(this).children().find('#txtpassword1');
         isformulariovalido = (isformulariovalido && campoValido(element));
         element = $(this).children().find('#txtpassword2');
         isformulariovalido = (isformulariovalido && campoValido(element));

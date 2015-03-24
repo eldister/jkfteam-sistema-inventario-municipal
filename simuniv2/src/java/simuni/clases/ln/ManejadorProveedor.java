@@ -1,12 +1,14 @@
 package simuni.clases.ln;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import simuni.clases.ad.ManejadorDatosProveedor;
 import simuni.entidades.Respuesta;
 import simuni.entidades.Proveedor;
 import simuni.entidades.mantenimientos.TipoProveedor;
+import simuni.intefaces.IReporteador;
 import simuni.utils.UtilidadesServlet;
 
 /**
@@ -21,7 +23,7 @@ import simuni.utils.UtilidadesServlet;
  * @since 1.0
  * @version 1.0
  */
-public class ManejadorProveedor {
+public class ManejadorProveedor implements IReporteador {
 
     /**
      * Operación que se encarga de realizar el ingreso / registro del
@@ -267,5 +269,52 @@ public class ManejadorProveedor {
     public ArrayList<TipoProveedor> listadoTipoProveedor() {
         ManejadorTipoProveedor mdtipopago = new ManejadorTipoProveedor();
         return mdtipopago.listadoTipoProveedor();
+    }
+
+    @Override
+    public ArrayList<String[]> obtenerDatosReporte() {
+          ArrayList<String[]> resp = new ArrayList<String[]>();
+        ManejadorDatosProveedor mproveedor = new ManejadorDatosProveedor();
+        try {
+            ResultSet rs = mproveedor.ReporteGeneralProveedores();
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            if (rs != null&&rs.next()) {
+                resp.add(new String[]{
+                    rsmd.getColumnLabel(1),
+                    rsmd.getColumnLabel(2),
+                    rsmd.getColumnLabel(3),
+                    rsmd.getColumnLabel(4),
+                    rsmd.getColumnLabel(5),
+                    rsmd.getColumnLabel(6),
+                    rsmd.getColumnLabel(7),
+                    rsmd.getColumnLabel(8)
+                        
+                });
+                
+                do {
+                resp.add(new String[]{
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6),
+                    rs.getString(7),
+                    rs.getString(8)
+                });
+                } while (rs.next());
+            }
+            rs.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return resp;
+    }
+
+    @Override
+    public String[] obtenerColumnasReporte() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

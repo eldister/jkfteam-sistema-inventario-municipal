@@ -6,6 +6,7 @@
 package simuni.clases.ln;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import simuni.clases.ad.ManejadorDatosPuesto;
@@ -15,12 +16,13 @@ import simuni.entidades.Usuario;
 import simuni.entidades.mantenimientos.Departamento;
 import simuni.entidades.mantenimientos.Puesto;
 import simuni.entidades.mantenimientos.TipoUsuario;
+import simuni.intefaces.IReporteador;
 
 /**
  *
  * @author FchescO
  */
-public class ManejadorUsuario {
+public class ManejadorUsuario implements IReporteador {
 
     /**
      * Este método realiza la autentificación de un usuario particular al
@@ -373,6 +375,49 @@ public class ManejadorUsuario {
             resp.setMensaje("Error: " + ex.getMessage());
         }
         return resp;
+    }
+
+    @Override
+    public ArrayList<String[]> obtenerDatosReporte() {
+ ArrayList<String[]> resp = new ArrayList<String[]>();
+        ManejadorDatosUsuario musuario = new ManejadorDatosUsuario();
+        try {
+            ResultSet rs = musuario.ReporteGeneralUsuarios();
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            if (rs != null&&rs.next()) {
+                resp.add(new String[]{
+                    rsmd.getColumnLabel(1),
+                    rsmd.getColumnLabel(2),
+                    rsmd.getColumnLabel(3),
+                    rsmd.getColumnLabel(4),
+                    rsmd.getColumnLabel(5),
+                    rsmd.getColumnLabel(6),
+                    rsmd.getColumnLabel(7)
+                });
+                
+                do {
+                resp.add(new String[]{
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6),
+                    rs.getString(7)
+                });
+                } while (rs.next());
+            }
+            rs.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return resp;}
+
+    @Override
+    public String[] obtenerColumnasReporte() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
