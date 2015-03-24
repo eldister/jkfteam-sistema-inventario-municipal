@@ -477,5 +477,21 @@ public class ManejadorDatosProveedor {
         rs.close();
         return proveedores;
     }
+        public ResultSet ReporteGeneralProveedores() throws SQLException {//solo los qeu no esten inactivos
+        ResultSet resp = null;
 
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{ call simuni_rprt_general_proveedores()  }");
+
+            resp = cs.executeQuery();
+
+        } catch (SQLException ex) {
+
+            throw ex;
+        }
+
+        return resp;
+
+    }
 }

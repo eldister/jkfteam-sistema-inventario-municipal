@@ -58,7 +58,7 @@
                 <form  method="POST"  id="formulario_mantenimiento_reseteo_clave" class="form-horizonal" >
                     <fieldset>
                         <legend>
-                            Formulario de Asignacion de Permisos
+                            Formulario de Reseteo de Clave General
                         </legend>
                         <div class="form-group row">
                             <div class="col-xs-11 col-sm-5 col-md-6 col-lg-5 col-sm-offset-0 col-xs-offset-1 ">
@@ -84,13 +84,6 @@
                                 <div id="registerInformation">
                                     <table id="sm_tb_campos" style="width: 100%;">
                                         <tr id="sm_contenedor_activo">
-                                            <td>
-                                                <div class="form-group">
-                                                    <label  class="control-label"for="txtpassactual">Contraseña Actual*</label>
-                                                    <input type="password" required="required" value="" class="form-control" name="txtpassactual" id="txtpassactual" placeholder="********">
-                                                </div>
-                                            </td>
-
                                             <td>
                                                 <div class="form-group">
                                                     <label  class="control-label" for="txtpassword1">Nueva Contraseña*</label>
@@ -145,7 +138,7 @@
                                             <%}%>    
                                             <td class="btn_controles_sinprocesocontainer">
                                                 <div class="form-group">
-                                                    <input type="submit" value="Actualizar Clave" class="form-control btn-info">
+                                                    <input type="submit" value="Resetear Clave" class="form-control btn-info">
                                                 </div>
                                             </td> 
                                             <%if (proceso) {%>     

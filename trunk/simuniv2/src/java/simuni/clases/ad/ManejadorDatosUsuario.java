@@ -329,5 +329,21 @@ public class ManejadorDatosUsuario {
         Conexionmysql.cerrarConexion(con);
         return resp;
     }
+    public ResultSet ReporteGeneralUsuarios() throws SQLException {//solo los qeu no esten inactivos
+        ResultSet resp = null;
 
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{ call simuni_rprt_general_usuarios()  }");
+
+            resp = cs.executeQuery();
+
+        } catch (SQLException ex) {
+
+            throw ex;
+        }
+
+        return resp;
+
+    }
 }

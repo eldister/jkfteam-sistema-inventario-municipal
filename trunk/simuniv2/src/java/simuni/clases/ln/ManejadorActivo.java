@@ -6,6 +6,7 @@
 package simuni.clases.ln;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,13 +23,14 @@ import simuni.entidades.mantenimientos.TipoActivo;
 import simuni.entidades.mantenimientos.TipoBateria;
 import simuni.entidades.mantenimientos.TipoLlanta;
 import simuni.entidades.mantenimientos.TipoPago;
+import simuni.intefaces.IReporteador;
 import simuni.utils.UtilidadesServlet;
 
 /**
  *
  * @author FchescO
  */
-public class ManejadorActivo {
+public class ManejadorActivo implements IReporteador {
 
     /**
      * Función que se encarga de obtener un listado de los registros ya
@@ -670,11 +672,11 @@ public class ManejadorActivo {
         try {
             estadoactivo = mactivo.getEstadoActivo(placaActivo);
             if (estadoactivo == 1) {
-                resp=true;
+                resp = true;
             } else {
                 switch (estadoactivo) {
                     default:
-                        resp=false;
+                        resp = false;
                         break;
                 }
             }
@@ -682,6 +684,86 @@ public class ManejadorActivo {
             ex.printStackTrace();
         }
         return resp;
+    }
+
+    @Override
+    public ArrayList<String[]> obtenerDatosReporte() {
+        ArrayList<String[]> resp = new ArrayList<String[]>();
+        ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
+        try {
+            ResultSet rs = mactivo.ReporteGeneralActivos();
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            if (rs != null&&rs.next()) {
+                resp.add(new String[]{
+                    rsmd.getColumnLabel(1),
+                    rsmd.getColumnLabel(2),
+                    rsmd.getColumnLabel(3),
+                    rsmd.getColumnLabel(4),
+                    rsmd.getColumnLabel(5),
+                    rsmd.getColumnLabel(6),
+                    rsmd.getColumnLabel(7)
+                });
+                
+                do {
+                resp.add(new String[]{
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6),
+                    UtilidadesServlet.decimalToString(rs.getDouble(7))+" "+ rs.getString(8)
+                });
+                } while (rs.next());
+            }
+            rs.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return resp;
+    }
+ public ArrayList<String[]> obtenerDatosReporte(int departamento) {
+        ArrayList<String[]> resp = new ArrayList<String[]>();
+        ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
+        try {
+            ResultSet rs = mactivo.ReporteGeneralActivos();
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            if (rs != null&&rs.next()) {
+                resp.add(new String[]{
+                    rsmd.getColumnLabel(1),
+                    rsmd.getColumnLabel(2),
+                    rsmd.getColumnLabel(3),
+                    rsmd.getColumnLabel(4),
+                    rsmd.getColumnLabel(5),
+                    rsmd.getColumnLabel(6),
+                    rsmd.getColumnLabel(7)
+                });
+                
+                do {
+                resp.add(new String[]{
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6),
+                    UtilidadesServlet.decimalToString(rs.getDouble(7))+" "+ rs.getString(8)
+                });
+                } while (rs.next());
+            }
+            rs.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return resp;
+    }
+    @Override
+    public String[] obtenerColumnasReporte() {
+        return new String[]{};
     }
 
 }

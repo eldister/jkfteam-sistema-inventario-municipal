@@ -110,9 +110,9 @@ public class Recursos {
         }
     }
 
-  /*  public static enum R {
+    public static enum R {
 
-        LOGOSIMUNIURL("http://localhost:8080/SIMUNI/recursos/imagenes/sistema/logomuni.jpg"),
+        LOGOSIMUNIURL("http://localhost:8080/simuniv2/recursos/imagenes/sistema/muni.jpg"),
         TITULOPRINCIPALACTIVOARTICULO("Módulo para el manejo de Activos");
 
         private final String texto;
@@ -129,6 +129,6 @@ public class Recursos {
         public String toString() {
             return texto;
         }
-    }*/
+    }
 
 }

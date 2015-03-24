@@ -110,6 +110,10 @@
         <servlet-name>EntradaProhibida</servlet-name>
         <jsp-file>/recursos/paginas/noautorizado/index.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>AccionesReportes</servlet-name>
+        <servlet-class>simuni.servlets.AccionesReportes</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccionesTipoUsuario</servlet-name>
         <url-pattern>/tipousuario</url-pattern>
@@ -229,6 +233,10 @@
     <servlet-mapping>
         <servlet-name>EntradaProhibida</servlet-name>
         <url-pattern>/prohibido</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccionesReportes</servlet-name>
+        <url-pattern>/reporte</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

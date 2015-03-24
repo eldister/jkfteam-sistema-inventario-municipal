@@ -16,7 +16,8 @@
     </decorator:content>
     <decorator:content placeholder='sm_div_navegationbarmenuitems'>
         <ol class="breadcrumb">
-            <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/">Inicio</a></li>   
+            <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/">Inicio</a></li> 
+            <li><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/usuario">Usuarios</a></li> 
             <li class="active">Usuarios Inactivos</li>
         </ol>
             
