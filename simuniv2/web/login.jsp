@@ -36,14 +36,13 @@
                                     <td><label>Nombre de usuario: </label></td>
                                     <td>
                                         <input id="txtNombreUsuario" name="txtNombreUsuario" type="text" onfocus="this.value=''" required/>
-                                        <div id="imgIconoUsuario"></div>
+                                        
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><label>Contraseña:</label></td>
                                     <td>
                                         <input id="txtPassword" name="txtPassword"  type="password" value="password" onfocus="this.value=''" required/>
-                                        <div id="imgIconoPassword"></div>
                                     </td>
                                 </tr>
                                 <tr>
