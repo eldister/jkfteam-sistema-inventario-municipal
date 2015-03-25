@@ -36,6 +36,7 @@ fieldset legend{
 #sm_tb_credentials{
     margin: 0px;
     padding: 4px;
+    border-collapse: collapse;
 }
 #sm_tb_credentials, td{
     margin: 0px;
@@ -75,27 +76,42 @@ input[type=submit]:hover{
   background-image: -moz-linear-gradient(top, #1ba9f5, #4d8bd6);
   background-image: -ms-linear-gradient(top, #1ba9f5, #4d8bd6);
   background-image: -o-linear-gradient(top, #1ba9f5, #4d8bd6);
-    filter : progid:DXImageTransform.Microsoft.gradient( startColorstr='#bacef5', endColorstr='#02238f',GradientType=0 );
-    cursor: pointer;
+  filter : progid:DXImageTransform.Microsoft.gradient( startColorstr='#bacef5', endColorstr='#02238f',GradientType=0 );
+  cursor: pointer;
 }
 input[type=text]{
     padding: 2px;
     margin-top: -5px;
-    border-radius: 5px 0px 0px 5px;
+    border-radius: 5px 5px 5px 5px;
     -moz-border-radius: 5px 0px 0px 5px;
     -webkit-border-radius: 5px 0px 0px 5px;
     border: 1px solid #ccc;
+    background-image: url(/simuniv2/recursos/imagenes/login/sm_icono_usuario2.png);
+    background-repeat: no-repeat;
+    background-position: right center;
+    padding-right: 17px;
+    width: 150px;
 }
 input[type=password]{
     padding: 2px;
-    border-radius: 5px 0px 0px 5px;
+    border-radius: 5px 5px 5px 5px;
     -moz-border-radius: 5px 0px 0px 5px;
     -webkit-border-radius: 5px 0px 0px 5px;
     border: 1px solid #ccc;
+    background-image: url(/simuniv2/recursos/imagenes/login/sm_icono_password2.png);
+    background-repeat: no-repeat;
+    background-position: right center;
+    padding-right: 17px;
+    width: 150px;
 }
 input[type=text]:hover{
     background: #dfe9ec;
     color: #414848;
+    background-image: url(/simuniv2/recursos/imagenes/login/sm_icono_usuario2.png);
+    background-repeat: no-repeat;
+    background-position: right center;
+    padding-right: 17px;
+    
 }
 input[type=text]:focus{
     background: #dfe9ec;
@@ -103,10 +119,18 @@ input[type=text]:focus{
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
     -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
     -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
+    background-image: url(/simuniv2/recursos/imagenes/login/sm_icono_usuario2.png);
+    background-repeat: no-repeat;
+    background-position: right center;
+    padding-right: 17px;
 }
 input[type=password]:hover{
     background: #dfe9ec;
     color: #414848;
+    background-image: url(/simuniv2/recursos/imagenes/login/sm_icono_password2.png);
+    background-repeat: no-repeat;
+    background-position: right center;
+    padding-right: 17px;
 }
 input[type=password]:focus{
     background: #dfe9ec;
@@ -114,6 +138,10 @@ input[type=password]:focus{
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
     -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
     -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
+    background-image: url(/simuniv2/recursos/imagenes/login/sm_icono_password2.png);
+    background-repeat: no-repeat;
+    background-position: right center;
+    padding-right: 17px;
 }
 #sm_a_olvCont{
     text-decoration: none;
@@ -131,10 +159,4 @@ input[type=password]:focus{
     -moz-border-radius-bottomleft: 5px;
     -webkit-border-top-left-radius: 5px;
     -webkit-border-bottom-left-radius: 5px;
-}
-#imgIconoUsuario{
-    background: rgba(65,72,72,0.75) url(../../recursos/imagenes/login/sm_icono_usuario.png) no-repeat center;	
-}
-#imgIconoPassword{
-    background: rgba(65,72,72,0.75) url(../../recursos/imagenes/login/sm_icono_password.png) no-repeat center;
 }

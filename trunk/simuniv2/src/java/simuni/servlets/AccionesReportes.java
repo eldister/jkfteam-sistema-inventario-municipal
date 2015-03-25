@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import simuni.clases.ln.ManejadorActivo;
 import simuni.clases.ln.ManejadorProveedor;
+import simuni.clases.ln.ManejadorReparacion;
 import simuni.clases.ln.ManejadorUsuario;
 import simuni.intefaces.IReporteador;
 
@@ -27,6 +28,7 @@ public class AccionesReportes extends HttpServlet {
         ReporteGeneralActivos,
         ReporteGeneralUsuarios,
         ReporteGeneralProveedores,
+        ReporteGeneralReparaciones,
         ObtenerNotificaciones,
         ResponderMensaje,
         VerNotificaciones,
@@ -42,7 +44,9 @@ public class AccionesReportes extends HttpServlet {
             return OpcionesDo.ReporteGeneralUsuarios;
         }  else if (key.equals("rprt_gproveedor")) {
             return OpcionesDo.ReporteGeneralProveedores;
-        } 
+        } else if(key.equals("rprt_greparacion")){
+            return OpcionesDo.ReporteGeneralReparaciones;
+        }
         return OpcionesDo.AccionDefault;
     }
 
@@ -77,6 +81,10 @@ public class AccionesReportes extends HttpServlet {
                             request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
               disp = request.getRequestDispatcher("/modulos/reportes/rprt_proveedores.jsp");
               disp.forward(request, response);
+              break;
+          case ReporteGeneralReparaciones:
+              reporteador = new ManejadorReparacion();
+              
               break;
       }
     }

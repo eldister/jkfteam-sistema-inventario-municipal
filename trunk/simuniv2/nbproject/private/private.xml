@@ -6,9 +6,8 @@
         <group/>
 =======
         <group>
-            <file>file:/C:/Users/ProducJeffer/Documents/NetBeansProjects/SimuniV2/simuniv2/src/java/simuni/clases/ad/ManejadorDatosPuesto.java</file>
-            <file>file:/C:/Users/ProducJeffer/Documents/NetBeansProjects/SimuniV2/simuniv2/src/java/simuni/clases/ln/ManejadorPuesto.java</file>
-            <file>file:/C:/Users/ProducJeffer/Documents/NetBeansProjects/SimuniV2/simuniv2/web/index.jsp</file>
+            <file>file:/C:/Users/ProducJeffer/Documents/NetBeansProjects/SimuniV2/simuniv2/src/java/simuni/servlets/AccionesTipoBateria.java</file>
+            <file>file:/C:/Users/ProducJeffer/Documents/NetBeansProjects/SimuniV2/simuniv2/src/java/simuni/servlets/AccionesTipoActivo.java</file>
         </group>
 >>>>>>> .r106
     </open-files>

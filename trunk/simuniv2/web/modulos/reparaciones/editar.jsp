@@ -1,3 +1,4 @@
+<%@page import="simuni.clases.ln.ManejadorReparacion"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="simuni.entidades.Reparacion"%>
 <%@page import="simuni.utils.UtilidadesServlet"%>
@@ -36,6 +37,7 @@
     } catch (Exception ex) {
         ex.printStackTrace();
     }
+    
 %>
 
 <%@ page language='java' contentType='text/html; charset=ISO-8859-1' pageEncoding='ISO-8859-1'%>
@@ -43,7 +45,7 @@
 <decorator:decorate filename='../../recursos/paginas/master/masterpage.jsp'>
     <decorator:content placeholder='sm_section_titulodepagina'>SIMUNI | Actualizar reparación </decorator:content>    
     <decorator:content placeholder='sm_section_estilosyscriptssectioncontainer'>
-        <script src="<%=request.getContextPath()%>/js/script_paginas/script_editar_reparacion.js" charset="utf-8"></script>
+        <scrip src="<%=request.getContextPath()%>/js/script_paginas/script_editar_reparacion.js"></scrip>
 
         <style>
             #sm_tb_campos td .form-group{
@@ -85,7 +87,7 @@
     </decorator:content>
     <decorator:content placeholder='sm_section_mainsectioncontainer'>
 
-        <form class="form"  id="formulario" action="<%out.print(Recursos.Servers.MAINSERVER);%>/reparacion?proceso=nuevo" method="POST">
+        <form class="form"  id="formulario" action="<%out.print(Recursos.Servers.MAINSERVER);%>/reparacion?proceso=actualizar" method="POST">
             <fieldset id="activos">
                 <legend style="<%out.print((error && proceso) ? "color:red;" : "");%>">Registro de activos <small><sup>* Campos requeridos</sup></small></legend>
                 <div id="registerInformation">
