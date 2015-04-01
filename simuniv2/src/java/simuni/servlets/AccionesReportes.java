@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package simuni.servlets;
 
 import java.io.IOException;
@@ -13,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import simuni.clases.ln.ManejadorActivo;
 import simuni.clases.ln.ManejadorProveedor;
+import simuni.clases.ln.ManejadorTipoReporte;
 import simuni.clases.ln.ManejadorReparacion;
 import simuni.clases.ln.ManejadorUsuario;
 import simuni.intefaces.IReporteador;
+import simuni.utils.UtilidadesServlet;
 
 /**
  *
@@ -36,6 +34,7 @@ public class AccionesReportes extends HttpServlet {
         AccionDefault
 
     }
+
     private OpcionesDo getOpcion(String key) {
         if (key == null || key.length() == 0) {
             return OpcionesDo.AccionDefault;
@@ -43,7 +42,7 @@ public class AccionesReportes extends HttpServlet {
             return OpcionesDo.ReporteGeneralActivos;
         } else if (key.equals("rprt_gusuario")) {
             return OpcionesDo.ReporteGeneralUsuarios;
-        }  else if (key.equals("rprt_gproveedor")) {
+        } else if (key.equals("rprt_gproveedor")) {
             return OpcionesDo.ReporteGeneralProveedores;
         } else if(key.equals("rprt_greparacion")){
             return OpcionesDo.ReporteGeneralReparaciones;
@@ -66,6 +65,32 @@ public class AccionesReportes extends HttpServlet {
             throws ServletException, IOException {
         IReporteador reporteador;
         RequestDispatcher disp;
+        switch (getOpcion(request.getParameter("proceso"))) {
+            case ReporteGeneralActivos:
+                reporteador = new ManejadorActivo();
+                request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
+                disp = request.getRequestDispatcher("/modulos/reportes/rprt_activos.jsp");
+                disp.forward(request, response);
+                break;
+            case ReporteGeneralUsuarios:
+                reporteador = new ManejadorUsuario();
+                request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
+                disp = request.getRequestDispatcher("/modulos/reportes/rprt_usuarios.jsp");
+                disp.forward(request, response);
+                break;
+            case ReporteGeneralProveedores:
+                reporteador = new ManejadorProveedor();
+                request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
+                disp = request.getRequestDispatcher("/modulos/reportes/rprt_proveedores.jsp");
+                disp.forward(request, response);
+                break;
+            default:
+
+                disp = request.getRequestDispatcher("/modulos/reportes/index.jsp");
+                request.setAttribute("TIPOS_REPORTE", new ManejadorTipoReporte().listadoTipoReporte());
+                disp.forward(request, response);
+                break;
+        }
       switch (getOpcion(request.getParameter("proceso"))) {
           case ReporteGeneralActivos:
               reporteador=new ManejadorActivo();
@@ -111,7 +136,44 @@ public class AccionesReportes extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        IReporteador reporteador = null;
+        RequestDispatcher disp=null;
+        int tiporeporte = UtilidadesServlet.getInt(request.getParameter("cmbtiporeporte"), -1);
+        java.sql.Date fein=UtilidadesServlet.getFecha(request.getParameter("feinicial"), null);
+        java.sql.Date fin=UtilidadesServlet.getFecha(request.getParameter("fefinal"), null);
+        boolean usarFechas=request.getParameter("chkfechas")!=null;
+        switch (tiporeporte) {
+            case 1:
+                reporteador = new ManejadorActivo();
+                request.setAttribute("Rprt_Datos", usarFechas?
+                        reporteador.obtenerDatosReporte(fein, fin):
+                        reporteador.obtenerDatosReporte());
+                disp = request.getRequestDispatcher("/modulos/reportes/rprt_activos.jsp");
+                request.setAttribute("Usa_Fechas", usarFechas);
+                request.setAttribute("Fecha_Ini", fein);
+                request.setAttribute("Fecha_Fin", fin);
+                disp.forward(request, response);
+                break;
+            case 2:
+                reporteador = new ManejadorProveedor();
+                request.setAttribute("Rprt_Datos", usarFechas?
+                        reporteador.obtenerDatosReporte(fein, fin):
+                        reporteador.obtenerDatosReporte());
+                disp = request.getRequestDispatcher("/modulos/reportes/rprt_proveedores.jsp");
+                request.setAttribute("Usa_Fechas", usarFechas);
+                request.setAttribute("Fecha_Ini", fein);
+                request.setAttribute("Fecha_Fin", fin);
+                disp.forward(request, response);
+                break;
+            case 3:
+                reporteador = new ManejadorUsuario();
+                request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
+                disp = request.getRequestDispatcher("/modulos/reportes/rprt_usuarios.jsp");
+                disp.forward(request, response);                
+                break;
+        }
         
+
     }
 
     /**

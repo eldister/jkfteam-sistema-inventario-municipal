@@ -1,5 +1,6 @@
 package simuni.clases.ln;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -313,8 +314,46 @@ public class ManejadorProveedor implements IReporteador {
         return resp;
     }
 
-    @Override
-    public String[] obtenerColumnasReporte() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  @Override
+    public ArrayList<String[]> obtenerDatosReporte(Date fini, Date ffin) {
+           ArrayList<String[]> resp = new ArrayList<String[]>();
+        ManejadorDatosProveedor mproveedor = new ManejadorDatosProveedor();
+        try {
+            ResultSet rs = mproveedor.ReporteGeneralProveedores(fini, ffin);
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            if (rs != null&&rs.next()) {
+                resp.add(new String[]{
+                    rsmd.getColumnLabel(1),
+                    rsmd.getColumnLabel(2),
+                    rsmd.getColumnLabel(3),
+                    rsmd.getColumnLabel(4),
+                    rsmd.getColumnLabel(5),
+                    rsmd.getColumnLabel(6),
+                    rsmd.getColumnLabel(7),
+                    rsmd.getColumnLabel(8)
+                        
+                });
+                
+                do {
+                resp.add(new String[]{
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6),
+                    rs.getString(7),
+                    rs.getString(8)
+                });
+                } while (rs.next());
+            }
+            rs.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return resp;    
+       }
+
 }

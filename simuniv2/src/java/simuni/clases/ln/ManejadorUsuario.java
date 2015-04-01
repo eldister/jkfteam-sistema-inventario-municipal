@@ -5,6 +5,7 @@
  */
 package simuni.clases.ln;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -415,8 +416,9 @@ public class ManejadorUsuario implements IReporteador {
         
         return resp;}
 
+
     @Override
-    public String[] obtenerColumnasReporte() {
+    public ArrayList<String[]> obtenerDatosReporte(Date fini, Date ffin) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

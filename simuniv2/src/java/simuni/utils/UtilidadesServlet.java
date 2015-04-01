@@ -80,6 +80,21 @@ public class UtilidadesServlet {
             return respaldo;
         }
     }
+        public static java.sql.Date getFecha(Object str, java.sql.Date respaldo) {
+        if (str == null) {
+            return respaldo;
+        }
+        if (UtilidadesServlet.tryParseDate(str.toString())) {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                return new java.sql.Date(formatter.parse(str.toString()).getTime());
+            } catch (ParseException ex) {
+                return respaldo;
+            }
+        } else {
+            return respaldo;
+        }
+    }
 
     public static String getFechaString(Date fecha) {
 

@@ -201,10 +201,10 @@ public class Rprt_Base {
         if (columnas != null && datos != null) {
             respuesta = "<html>"
                     + "     <body>"
-                    + "         <table border=1>"
+                    + "         <table border='0.1'>"
                     + "             <tr>";
             for (String columna : columnas) {
-                respuesta += "<th color='green' style='font-weight: 900;'>"
+                respuesta += "<th color='green'  style='text-align:center;font-weight: 900;'>"
                         + columna
                         + " </th>";
             }
@@ -237,9 +237,9 @@ public class Rprt_Base {
         Calendar c = Calendar.getInstance();
 
         respuesta += "Emitido el "
-                + c.get(Calendar.DAY_OF_MONTH)
+                + (((c.get(Calendar.DAY_OF_MONTH ))>9)?(c.get(Calendar.DAY_OF_MONTH ))+"":"0"+(c.get(Calendar.DAY_OF_MONTH )))
                 + "-"
-                + c.get(Calendar.MONTH + 1)
+                + (((c.get(Calendar.MONTH )+1)>9)?(c.get(Calendar.MONTH )+1)+"":"0"+(c.get(Calendar.MONTH )+1))
                 + "-"
                 + c.get(Calendar.YEAR)
                 + " a las "

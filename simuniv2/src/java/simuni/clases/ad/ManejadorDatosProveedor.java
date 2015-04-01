@@ -438,8 +438,8 @@ public class ManejadorDatosProveedor {
         return resp;
 
     }
-    
-        public ArrayList<Proveedor> getProveedoresXTipoServicio(int tiposervicio) throws SQLException {
+
+    public ArrayList<Proveedor> getProveedoresXTipoServicio(int tiposervicio) throws SQLException {
         ArrayList<Proveedor> proveedores = new ArrayList<Proveedor>();
         Connection con = Conexionmysql.obtenerConexion();
         PreparedStatement st = con.prepareCall("{ call simuni_sp_obtener_proveedorxtiposervicio(?)}");
@@ -472,18 +472,38 @@ public class ManejadorDatosProveedor {
             resp.setFechaUltimaModificacion(rs.getDate(21));
             resp.setApartadoPostal(rs.getString(22));
             proveedores.add(resp);
-           
-        } 
+
+        }
         rs.close();
         return proveedores;
     }
-        public ResultSet ReporteGeneralProveedores() throws SQLException {//solo los qeu no esten inactivos
+
+    public ResultSet ReporteGeneralProveedores() throws SQLException {//solo los qeu no esten inactivos
         ResultSet resp = null;
 
         try {
             Connection con = Conexionmysql.obtenerConexion();
             CallableStatement cs = con.prepareCall("{ call simuni_rprt_general_proveedores()  }");
 
+            resp = cs.executeQuery();
+
+        } catch (SQLException ex) {
+
+            throw ex;
+        }
+
+        return resp;
+
+    }
+
+    public ResultSet ReporteGeneralProveedores(java.sql.Date fein, java.sql.Date fin) throws SQLException {//solo los qeu no esten inactivos
+        ResultSet resp = null;
+
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{ call simuni_rprt_general_proveedores_xfechaingreso(?,?)  }");
+            cs.setDate(1, fein);
+            cs.setDate(2, fin);
             resp = cs.executeQuery();
 
         } catch (SQLException ex) {

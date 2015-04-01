@@ -208,5 +208,21 @@ public class ManejadorDatosTipoReporte {
         return resp;
 
     }
+    public ResultSet listadoTipoReporte() throws SQLException {
+        ResultSet resp = null;
 
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            PreparedStatement st = con.prepareCall("SELECT *  FROM  simuni_vw_listado_tiposreporte;");
+            resp = st.executeQuery();
+
+        } catch (SQLException ex) {
+
+            throw ex;
+        }
+
+        return resp;
+
+    }
+    
 }
