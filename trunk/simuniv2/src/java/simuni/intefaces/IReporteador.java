@@ -13,5 +13,6 @@ import java.util.ArrayList;
  */
 public interface IReporteador {
     public ArrayList<String[]> obtenerDatosReporte();
-    public String[]obtenerColumnasReporte();
+    public ArrayList<String[]> obtenerDatosReporte(java.sql.Date fini,java.sql.Date ffin);
+
 }

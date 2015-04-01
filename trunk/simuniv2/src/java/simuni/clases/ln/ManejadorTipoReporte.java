@@ -2,6 +2,7 @@ package simuni.clases.ln;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import simuni.clases.ad.ManejadorDatosTipoReporte;
 import simuni.entidades.Respuesta;
 import simuni.entidades.mantenimientos.TipoReporte;
@@ -186,4 +187,27 @@ public class ManejadorTipoReporte {
         }
         return resp;
     }
+ public ArrayList<TipoReporte> listadoTipoReporte() {
+
+        ArrayList<TipoReporte> tiporeportes = null;
+        ManejadorDatosTipoReporte mdTipoReporte = new ManejadorDatosTipoReporte();
+        try {
+            ResultSet resp = null;
+            resp = mdTipoReporte.listadoTipoReporte();
+            if (resp.next()) {
+                tiporeportes = new ArrayList<TipoReporte>();
+                do {
+                    TipoReporte tiporeporte = new TipoReporte();
+                    tiporeporte.setIdtiporeporte(resp.getInt(1));
+                    tiporeporte.setNombretiporeporte(resp.getString(2));
+                    tiporeportes.add(tiporeporte);
+                } while (resp.next());
+            }
+
+        } catch (SQLException ex) {
+
+            ex.printStackTrace();
+        }
+        return tiporeportes;
+    }    
 }
