@@ -29,6 +29,7 @@ public class AccionesReportes extends HttpServlet {
         ReporteGeneralUsuarios,
         ReporteGeneralProveedores,
         ReporteGeneralReparaciones,
+        ReporteGeneralBajas,
         ObtenerNotificaciones,
         ResponderMensaje,
         VerNotificaciones,
@@ -46,6 +47,8 @@ public class AccionesReportes extends HttpServlet {
             return OpcionesDo.ReporteGeneralProveedores;
         } else if(key.equals("rprt_greparacion")){
             return OpcionesDo.ReporteGeneralReparaciones;
+        } else if(key.equals("rprt_gbaja")){
+            return OpcionesDo.ReporteGeneralBajas;
         }
         return OpcionesDo.AccionDefault;
     }
@@ -84,7 +87,15 @@ public class AccionesReportes extends HttpServlet {
               break;
           case ReporteGeneralReparaciones:
               reporteador = new ManejadorReparacion();
-              
+              request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
+              disp = request.getRequestDispatcher("/modulos/reportes/rprt_reparaciones.jsp");
+              disp.forward(request, response);
+              break;
+          case ReporteGeneralBajas:
+              reporteador = new ManejadorReparacion();
+              request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
+              disp = request.getRequestDispatcher("/modulos/reportes/rprt_reparaciones.jsp");
+              disp.forward(request, response);
               break;
       }
     }

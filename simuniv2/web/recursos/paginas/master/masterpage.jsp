@@ -54,7 +54,7 @@
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/temas/jquery_smoothness/style_jquery-ui.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style_main.css">
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style_menuprincipal2.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style_menuprincipal_v3.css">
         <script>
             SIMUNI_SERVER = "<%out.print(Recursos.Servers.MAINSERVER);%>";
             $(document).ready(function () {
@@ -117,14 +117,40 @@
                                 </div>
                             </div>
                         </div>                            
-                    </div>                            
+                    </div>    
+                                        
+                    <div id='simuni_div_menu'>
+                        <ul>
+                            <li><a href='#'><img src="/simuniv2/recursos/imagenes/menu/home.png" width="20" height="16" style="padding-right: 4px;">Inicio</a></li>
+                           <li class='active has-sub'><a href='#'>Sistema<img src="/simuniv2/recursos/imagenes/menu/circle-down.png" width="20" height="16" style="padding-left: 4px;"></span></a>
+                              <ul>
+                                 <li class='has-sub'><a href='#'>Activo<img src="/simuniv2/recursos/imagenes/menu/circle-right.png" width="16" height="12" style="float: right;"></span></a>
+                                    <ul>
+                                       <li><a href='#'>Registrar</a></li>
+                                       <li><a href='#'>Listado</a></li>
+                                    </ul>
+                                 </li>
+                                 <li class='has-sub'><a href='#'>Proveedores<img src="/simuniv2/recursos/imagenes/menu/circle-right.png" width="16" height="12" style="float: right;"></span></a>
+                                    <ul>
+                                       <li><a href='#'>Registrar</a></li>
+                                       <li><a href='#'>Listado</a></li>
+                                    </ul>
+                                 </li>
+                              </ul>
+                           </li>
+                           <li><a href='#'>Contacto</a></li>
+                           <li><a href='#'>Extras</a></li>
+                        </ul>
+                    </div>
+                                       
                     <%
-                            String menu_usuario = user.getMenuusuario();
+                            /*String menu_usuario = user.getMenuusuario();
                             if (menu_usuario != null) {
                                 menu_usuario = menu_usuario.replace("%MAINSERVER%", Recursos.Servers.MAINSERVER.toString());
                             }
-                            out.print(menu_usuario);
+                            out.print(menu_usuario);*/
                     } %>
+                    
                 </header>  
             </div>
             <div class="SIMUNI_ROW SIMUNI_MAINROW"> 

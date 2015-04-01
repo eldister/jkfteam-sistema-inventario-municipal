@@ -197,7 +197,13 @@ public class ManejadorReparacion implements IReporteador{
         }
         return resp;
     }
-
+    
+    /**
+     * Método abstracto implementado de la interfaz IReporteador para obtener los datos 
+     * que serán utilizados en el reporte
+     * @return resp un arraylist con los datos recupertados de la base de datos para 
+     * que seran utilizados en el reporte
+     */
     @Override
     public ArrayList<String[]> obtenerDatosReporte() {
         ArrayList<String[]> resp = new ArrayList<String[]>();
@@ -237,6 +243,11 @@ public class ManejadorReparacion implements IReporteador{
         return resp;
     }
 
+    /**
+     * Método abstracto implementado de la interface IReporteador
+     * actualmente no se esta utilizando
+     * @return nuevo vector de string
+     */
     @Override
     public String[] obtenerColumnasReporte() {
         return new String[]{};
