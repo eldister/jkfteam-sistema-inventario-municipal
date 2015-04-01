@@ -1,11 +1,13 @@
 package simuni.clases.ln;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import simuni.clases.ad.ManejadorDatosBaja;
 import simuni.entidades.Respuesta;
 import simuni.entidades.Baja;
+import simuni.intefaces.IReporteador;
 import simuni.utils.UtilidadesServlet;
 
 /**
@@ -20,7 +22,7 @@ import simuni.utils.UtilidadesServlet;
  * @since 1.0
  * @version 1.0
  */
-public class ManejadorBaja {
+public class ManejadorBaja implements IReporteador{
 
     /**
      * Operación que se encarga de realizar el ingreso / registro del
@@ -165,5 +167,56 @@ public class ManejadorBaja {
             ex.printStackTrace();
         }
         return resp;
+    }
+    
+    /**
+     * Método abstracto implementado de la interfaz IReporteador para obtener los datos 
+     * que serán utilizados en el reporte
+     * @return resp un arraylist con los datos recupertados de la base de datos para 
+     * que seran utilizados en el reporte
+     */
+    @Override
+    public ArrayList<String[]> obtenerDatosReporte() {
+        ArrayList<String[]> resp = new ArrayList<String[]>();
+        ManejadorDatosBaja mdreparacion = new ManejadorDatosBaja();
+        try {
+            ResultSet rs = mdreparacion.ReporteGeneralReparacion();
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            if (rs != null&&rs.next()) {
+                resp.add(new String[]{
+                    rsmd.getColumnLabel(1),
+                    rsmd.getColumnLabel(2),
+                    rsmd.getColumnLabel(3),
+                    rsmd.getColumnLabel(4),
+                    rsmd.getColumnLabel(5)
+                });
+                
+                do {
+                resp.add(new String[]{
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5)
+                });
+                } while (rs.next());
+            }
+            rs.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return resp;
+    }
+
+    /**
+     * Método abstracto implementado de la interface IReporteador
+     * actualmente no se esta utilizando
+     * @return nuevo vector de string
+     */
+    @Override
+    public String[] obtenerColumnasReporte() {
+        return new String[]{};
     }
 }
