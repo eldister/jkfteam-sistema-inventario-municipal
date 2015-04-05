@@ -237,5 +237,29 @@ public class ManejadorDatosBaja {
         return resp;
     }
     
+    /**
+     * Método el cuál obtiene a través de un procedimiento almacenado los datos
+     * almacenados en la base de datos del sistema
+     * @return un resultset con los resultados encontrados o recibidos por la llamada
+     * de un procedimiento almacenado
+     */
+    public ResultSet ReporteGeneralBajas(java.sql.Date fein, java.sql.Date fin) throws SQLException {//solo los qeu no esten inactivos
+        ResultSet resp = null;
+
+        try {
+            Connection con = Conexionmysql.obtenerConexion();
+            CallableStatement cs = con.prepareCall("{ call simuni_rprt_general_bajas_xfechaingreso(?,?)  }");
+            cs.setDate(1, fein);
+            cs.setDate(2, fin);
+            resp = cs.executeQuery();
+
+        } catch (SQLException ex) {
+
+            throw ex;
+        }
+
+        return resp;
+
+    }
     
 }

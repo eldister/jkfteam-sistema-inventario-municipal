@@ -137,7 +137,7 @@ function addEventoSubmitFormulario() {
 //alert(isformulariovalido);
 
         if (isformulariovalido) {
-            if (confirm("Esta a punto de actualizar una reparación ¿Desea continuar?")) {
+            if (confirm("Esta a punto de actualizar una Reparación ¿Desea continuar?")) {
                 $(this).unbind();
                 $(this).submit();
             }
