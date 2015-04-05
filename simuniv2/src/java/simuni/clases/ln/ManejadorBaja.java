@@ -1,5 +1,6 @@
 package simuni.clases.ln;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -175,12 +176,14 @@ public class ManejadorBaja implements IReporteador{
      * @return resp un arraylist con los datos recupertados de la base de datos para 
      * que seran utilizados en el reporte
      */
+    
+
     @Override
     public ArrayList<String[]> obtenerDatosReporte() {
         ArrayList<String[]> resp = new ArrayList<String[]>();
-        ManejadorDatosBaja mdreparacion = new ManejadorDatosBaja();
+        ManejadorDatosBaja mdbaja = new ManejadorDatosBaja();
         try {
-            ResultSet rs = mdreparacion.ReporteGeneralReparacion();
+            ResultSet rs = mdbaja.ReporteGeneralReparacion();
             ResultSetMetaData rsmd = rs.getMetaData();
 
             if (rs != null&&rs.next()) {
@@ -210,13 +213,40 @@ public class ManejadorBaja implements IReporteador{
         return resp;
     }
 
-    /**
-     * Método abstracto implementado de la interface IReporteador
-     * actualmente no se esta utilizando
-     * @return nuevo vector de string
-     */
     @Override
-    public String[] obtenerColumnasReporte() {
-        return new String[]{};
+    public ArrayList<String[]> obtenerDatosReporte(Date fini, Date ffin) {
+        ArrayList<String[]> resp = new ArrayList<String[]>();
+        ManejadorDatosBaja mbaja = new ManejadorDatosBaja();
+        try {
+            ResultSet rs = mbaja.ReporteGeneralBajas(fini, ffin);
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            if (rs != null&&rs.next()) {
+                resp.add(new String[]{
+                    rsmd.getColumnLabel(1),
+                    rsmd.getColumnLabel(2),
+                    rsmd.getColumnLabel(3),
+                    rsmd.getColumnLabel(4),
+                    rsmd.getColumnLabel(5)
+                });
+                
+                do {
+                resp.add(new String[]{
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5)
+                });
+                } while (rs.next());
+            }
+            rs.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return resp;
     }
+
+    
 }

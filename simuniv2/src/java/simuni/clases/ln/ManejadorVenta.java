@@ -1,13 +1,17 @@
 package simuni.clases.ln;
 
+import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import simuni.clases.ad.ManejadorDatosBaja;
 import simuni.clases.ad.ManejadorDatosVenta;
 import simuni.entidades.Respuesta;
 import simuni.entidades.Venta;
 import simuni.entidades.mantenimientos.TipoPago;
 import simuni.utils.UtilidadesServlet;
+import simuni.intefaces.IReporteador;
 
 /**
  * Esta clase de lógica de negocios de <strong>Venta</strong> se encarga de las
@@ -20,7 +24,7 @@ import simuni.utils.UtilidadesServlet;
  * @since 1.0
  * @version 1.0
  */
-public class ManejadorVenta {
+public class ManejadorVenta implements IReporteador {
 
     /**
      * Operación que se encarga de realizar el ingreso / registro del
@@ -197,6 +201,88 @@ public class ManejadorVenta {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return resp;
+    }
+
+    /**
+     * Método abstracto implementado de la interfaz IReporteador para obtener los datos 
+     * que serán utilizados en el reporte
+     * @return resp un arraylist con los datos recupertados de la base de datos para 
+     * que seran utilizados en el reporte
+     */
+    
+
+    @Override
+    public ArrayList<String[]> obtenerDatosReporte() {
+        ArrayList<String[]> resp = new ArrayList<String[]>();
+        ManejadorDatosBaja mdventa = new ManejadorDatosBaja();
+        try {
+            ResultSet rs = mdventa.ReporteGeneralReparacion();
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            if (rs != null&&rs.next()) {
+                resp.add(new String[]{
+                    rsmd.getColumnLabel(1),
+                    rsmd.getColumnLabel(2),
+                    rsmd.getColumnLabel(3),
+                    rsmd.getColumnLabel(4),
+                    rsmd.getColumnLabel(5),
+                    rsmd.getColumnLabel(6)
+                });
+                
+                do {
+                resp.add(new String[]{
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rsmd.getColumnLabel(6)
+                });
+                } while (rs.next());
+            }
+            rs.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return resp;
+    }
+
+    @Override
+    public ArrayList<String[]> obtenerDatosReporte(Date fini, Date ffin) {
+        ArrayList<String[]> resp = new ArrayList<String[]>();
+        ManejadorDatosBaja mventa = new ManejadorDatosBaja();
+        try {
+            ResultSet rs = mventa.ReporteGeneralBajas(fini, ffin);
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            if (rs != null&&rs.next()) {
+                resp.add(new String[]{
+                    rsmd.getColumnLabel(1),
+                    rsmd.getColumnLabel(2),
+                    rsmd.getColumnLabel(3),
+                    rsmd.getColumnLabel(4),
+                    rsmd.getColumnLabel(5),
+                    rsmd.getColumnLabel(6)
+                });
+                
+                do {
+                resp.add(new String[]{
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rsmd.getColumnLabel(6)
+                });
+                } while (rs.next());
+            }
+            rs.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
         return resp;
     }
 }

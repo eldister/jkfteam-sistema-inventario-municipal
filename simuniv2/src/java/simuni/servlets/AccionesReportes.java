@@ -8,10 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import simuni.clases.ln.ManejadorActivo;
+import simuni.clases.ln.ManejadorBaja;
 import simuni.clases.ln.ManejadorProveedor;
 import simuni.clases.ln.ManejadorTipoReporte;
 import simuni.clases.ln.ManejadorReparacion;
 import simuni.clases.ln.ManejadorUsuario;
+import simuni.clases.ln.ManejadorVenta;
 import simuni.intefaces.IReporteador;
 import simuni.utils.UtilidadesServlet;
 
@@ -28,6 +30,7 @@ public class AccionesReportes extends HttpServlet {
         ReporteGeneralProveedores,
         ReporteGeneralReparaciones,
         ReporteGeneralBajas,
+        ReporteGeneralVentas,
         ObtenerNotificaciones,
         ResponderMensaje,
         VerNotificaciones,
@@ -48,6 +51,9 @@ public class AccionesReportes extends HttpServlet {
             return OpcionesDo.ReporteGeneralReparaciones;
         } else if(key.equals("rprt_gbaja")){
             return OpcionesDo.ReporteGeneralBajas;
+        }
+        else if(key.equals("rprt_gventa")){
+            return OpcionesDo.ReporteGeneralVentas;
         }
         return OpcionesDo.AccionDefault;
     }
@@ -117,7 +123,13 @@ public class AccionesReportes extends HttpServlet {
               disp.forward(request, response);
               break;
           case ReporteGeneralBajas:
-              reporteador = new ManejadorReparacion();
+              reporteador = new ManejadorBaja();
+              request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
+              disp = request.getRequestDispatcher("/modulos/reportes/rprt_reparaciones.jsp");
+              disp.forward(request, response);
+              break;
+          case ReporteGeneralVentas:
+              reporteador = new ManejadorVenta();
               request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
               disp = request.getRequestDispatcher("/modulos/reportes/rprt_reparaciones.jsp");
               disp.forward(request, response);
