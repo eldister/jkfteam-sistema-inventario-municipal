@@ -134,6 +134,15 @@
         <servlet-name>AccionesEstado</servlet-name>
         <url-pattern>/estado</url-pattern>
     </servlet-mapping>
+           <servlet>
+        <servlet-name>AccionesPrestamo</servlet-name>
+        <servlet-class>simuni.servlets.AccionesPrestamo</servlet-class>
+    </servlet>
+        <servlet-mapping>
+        <servlet-name>AccionesPrestamo</servlet-name>
+        <url-pattern>/prestamo</url-pattern>
+    </servlet-mapping>
+    
     <servlet-mapping>
         <servlet-name>AccionesTipoActivo</servlet-name>
         <url-pattern>/tipoactivo</url-pattern>
