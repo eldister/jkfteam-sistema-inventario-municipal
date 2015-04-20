@@ -11,6 +11,7 @@ package simuni.entidades;
  * @author FchescO
  */
 public class Usuario {
+    //atributos de la clase
     private String cedula;//
     private String nombreusuario;//
     private String contrasena;

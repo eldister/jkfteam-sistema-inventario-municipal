@@ -203,7 +203,6 @@ public class ManejadorDatosConfiguracion {
      *
      * @param codigo El código / identificador del registro a buscar.
      * @return Un objeto Configuracion con los valores correspondientes
-     * @throws SQLException si ocurre una excepción de SQL
      * @since 1.0
      */
     public Configuracion getConfiguracionRespaldo(int codigo) throws SQLException {
@@ -238,7 +237,6 @@ public class ManejadorDatosConfiguracion {
      *
      * @param query La cadena con la busqueda a evaluar.
      * @return Un entero con la cantidad de registros.
-     * @throws SQLException En caso de que lance una excepción de SQL.
      * @since 1.0
      */
     public int getCantidadFilas(String query) throws SQLException {
@@ -282,6 +280,16 @@ public class ManejadorDatosConfiguracion {
 
     }
 
+    /**
+     * Método que realiza una registra la configuración sobre los respaldos de la base de
+     * datos hecha por el usuario.
+     * 
+     * @param configuracion objeto con la configuración para el repaldo
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion de SQL.
+     * @since 1.0
+     */
     public String registrarConfiguracionRespaldoBD(Configuracion configuracion) throws SQLException {
         String resp = "";
         try {
@@ -307,6 +315,16 @@ public class ManejadorDatosConfiguracion {
         return resp;
     }
 
+    /**
+     * Método que realiza una modifica la configuración sobre los respaldos de la base de
+     * datos hecha por el usuario.
+     * 
+     * @param configuracion objeto con la configuración nueva para el respaldo
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion de SQL.
+     * @since 1.0
+     */
     public String modificarConfiguracionRespaldoBD(Configuracion configuracion) throws SQLException {
         String resp = "";
         try {
@@ -333,6 +351,16 @@ public class ManejadorDatosConfiguracion {
         return resp;
     }
     
+    /**
+     * Método que realiza una modifica una tarea que se debe realizar con relacion a los 
+     * respaldos del sistema a la base de datos
+     * 
+     * @param tarearespaldo objeto con la tarea de respaldo nueva
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion de SQL.
+     * @since 1.0
+     */
     public String modificarTareaRespaldo(TareaRespaldo tarearespaldo) throws SQLException {
         String resp = "";
         try {
@@ -352,6 +380,14 @@ public class ManejadorDatosConfiguracion {
         return resp;
     }    
 
+    /**
+     * Método que obtiene la última tarea de respaldo realizada de la base de datos 
+     * del sistema
+     * 
+     * @return un objeto con la tarea de respaldo obtenida de la base de datos
+     * @throws Exception Si ocurre una excepcion.
+     * @since 1.0
+     */
     public TareaRespaldo getTareaRespaldo() {
         TareaRespaldo resp = null;
         try {

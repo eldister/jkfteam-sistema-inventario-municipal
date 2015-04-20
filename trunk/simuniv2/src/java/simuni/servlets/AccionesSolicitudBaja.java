@@ -284,6 +284,13 @@ public class AccionesSolicitudBaja extends HttpServlet {
         }
     }
 
+    /**
+     * metodo para la generacion de una nueva reparacion con la información obtenido
+     * de los formularios html del lado del cliente
+     * 
+     * @param request solicitud al servlet
+     * @return la nueva solicitud de baja enviada por algún usuario
+     */
     private SolicitudBaja generarSolicitudBaja(HttpServletRequest request) {
         SolicitudBaja solicitud = new SolicitudBaja();
         try {

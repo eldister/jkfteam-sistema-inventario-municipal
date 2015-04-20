@@ -18,7 +18,15 @@ import simuni.entidades.bd.Conexionmysql;
  * @author FchescO
  */
 public class ManejadorDatosUsuario {
-
+    
+    /**
+     *Método para el logeo o inicio de sesion de un usuario al sistema
+     * @param usuario nombre de usuario a logearse
+     * @param contrasena contraseña del usuario a logearse
+     * @return un objeto tipo usuario con la informacion de la persona
+     * que ha iniciado sesion en el sistema
+     * @since 1.0
+     */
     public Usuario login(String usuario, String contrasena) throws SQLException {
 
         Usuario usuarioresp = null;
@@ -43,7 +51,13 @@ public class ManejadorDatosUsuario {
         Conexionmysql.cerrarConexion(con);
         return usuarioresp;
     }
-
+    
+    /**
+     * Método que obtiene un menu deacuerdo al tipo de usuario que se ha logeado o
+     * iniciado sesion
+     * @param usuario objeto con toda la informacion de la persona o usuairo logeada
+     * @return un objeto de tipo usuario con toda la infomarcion de una persona
+     */
     public Usuario getMenuUsuario(Usuario usuario) throws SQLException {
 
         Connection con = Conexionmysql.obtenerConexion();
@@ -62,6 +76,15 @@ public class ManejadorDatosUsuario {
         return usuario;
     }
 
+    /**
+     * Metodo para registrar un unevo usuario al sistema
+     *
+     * @param usuario El nuevo registro a ingresar.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws Exception Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String registrarUsuario(Usuario usuario) throws Exception {
         String resp = "";
         try {
@@ -87,6 +110,16 @@ public class ManejadorDatosUsuario {
         return resp;
     }
 
+    /**
+     * Método para la modificación o cambios de la información de un usuario 
+     * en particular
+     *
+     * @param usuario El nuevo registro a ingresar.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws Exception Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String modificarUsuario(Usuario usuario) throws Exception {
         String resp = "";
         try {
@@ -112,6 +145,19 @@ public class ManejadorDatosUsuario {
         return resp;
     }
 
+    
+    /**
+     * Método para modificar o cambiar la contraseña de un usuario en particular
+     * en caso de que el usuario asi lo desee
+     *
+     * @param usuario objeto tipo Usuario referente al individuo que va a cambiar su contraseña
+     * contiene la informacion del usuario, ademas de la nueva contraseña
+     * @param pass_actual la contraseña que posee actualmente el usuario
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws Exception Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String modificarClaveUsuario(Usuario usuario, String pass_actual) throws Exception {
         String resp = "";
         try {
@@ -131,6 +177,18 @@ public class ManejadorDatosUsuario {
         return resp;
     }
 
+    /**
+     * Método para actualizar la contraseña de un usuario, se llama resetear puesto que 
+     * se le puede colocar la que tenia anteriormente o cualquiera que considere poner
+     * el encargado de las TICs
+     *
+     * @param usuario a quien se le hara el reseteo de la contraseña
+     * contiene la información del usuario y la contraseña nueva
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws Exception Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String resetearClaveUsuario(Usuario usuario) throws Exception {
         String resp = "";
         try {
@@ -149,6 +207,15 @@ public class ManejadorDatosUsuario {
         return resp;
     }
 
+    /**
+     * Método para la deshabilitacion de un registro de un usuario del sistema 
+     *
+     * @param usuario a quien se deshabilitara su registro del sistema
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws Exception Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String eliminarUsuario(Usuario usuario) throws Exception {
         String resp = "";
         try {
@@ -165,6 +232,16 @@ public class ManejadorDatosUsuario {
         return resp;
     }
 
+    /**
+     * Método contrario al anterior, este método a un usuario cuyo registro en la base
+     * de datos del sistema se encuentra en estado INACTIVO.
+     *
+     * @param usuario a quien se rehabilitara el registro en la base de datos
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws Exception Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String reactivarUsuario(Usuario usuario) throws Exception {
         String resp = "";
         try {
@@ -181,6 +258,13 @@ public class ManejadorDatosUsuario {
         return resp;
     }
 
+    /**
+     * Método para obtener a un usuario en especifico de la base de datos
+     *
+     * @param usuario cuyos datos serán obtenidos de la base de datos
+     * @return un objeto de tipo usuario
+     * @since 1.0
+     */
     public Usuario obtenerUsuario(String usuario) throws SQLException {
 
         Usuario usuarioresp = null;
@@ -236,6 +320,16 @@ public class ManejadorDatosUsuario {
 
     }
 
+    /**
+     * Método que realiza una búsqueda de un usuario que se encuentra inactivo
+     * en el sistema
+     * @param query sentencia para la búsqueda del usuario
+     * @param desplazamiento de los registros
+     * @param paginacion de los registros
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @since 1.0
+     */
     public ResultSet busquedaUsuarioInactivo(String query, int desplazamiento, int paginacion) throws SQLException {
         ResultSet resp = null;
         try {
@@ -254,6 +348,13 @@ public class ManejadorDatosUsuario {
 
     }
 
+    /**
+     * Método para obtener una vista de la información de los usuarios registrados
+     * 
+     * @return un resultset con los resultados obtenedos al ejecutar la vista
+     * @throws SQLException si ocurre una excepción sql
+     * @since 1.0
+     */
     public ResultSet listadoUsuario() throws SQLException {
         ResultSet resp = null;
         try {
@@ -270,6 +371,15 @@ public class ManejadorDatosUsuario {
 
     }
 
+    /**
+     *Método para conocer si un usuario posee un permiso valido.
+     * 
+     * @param idusuario identificación del usuario
+     * @param codigopermiso código de permiso relacionado a un usuario
+     * @return Resultset con los resultados al ejecutar el procedimiento almacenado
+     * @throws SQLException si ocurre una excepsion sql
+     * @since 1.0
+     */
     public ResultSet usuarioTienePermiso(String idusuario, int codigopermiso) throws SQLException {
         ResultSet resp = null;
         try {
@@ -288,6 +398,14 @@ public class ManejadorDatosUsuario {
 
     }
 
+    /**
+     * Método para obtener una vista de la información de los permisos que tienen
+     * los usuarios registrados
+     * 
+     * @return un resultset con los resultados obtenedos al ejecutar la vista
+     * @throws SQLException si ocurre una excepción sql
+     * @since 1.0
+     */
     public ResultSet listadoUsuarios_Permisos() throws SQLException {
         ResultSet resp = null;
         try {
@@ -317,6 +435,14 @@ public class ManejadorDatosUsuario {
         return resp;
     }
 
+    /**
+     * Método para obtener la cantidad total de los registros con relación a los
+     * usuarios que se encuentran deshabilitados.
+     * 
+     * @param query sentencia de búsqueda en los registros de la base de datos
+     * @return el total de los registros sobre los usuarios deshabilitados
+     * @since 1.0
+     */
     public int getCantidadFilasInactivas(String query) throws SQLException {
         int resp = 0;
         Connection con = Conexionmysql.obtenerConexion();
@@ -329,6 +455,15 @@ public class ManejadorDatosUsuario {
         Conexionmysql.cerrarConexion(con);
         return resp;
     }
+    
+    /**
+     * Método el cuál los datos para el reporte obtiene a través de un 
+     * procedimiento almacenado, los datos registrados en la base de datos del sistema
+     * @return un resultset con los resultados encontrados o recibidos por la llamada
+     * de un procedimiento almacenado
+     * @throws SQLException si ocurre una excepcion sql-
+     * @since 1.0
+     */
     public ResultSet ReporteGeneralUsuarios() throws SQLException {//solo los qeu no esten inactivos
         ResultSet resp = null;
 

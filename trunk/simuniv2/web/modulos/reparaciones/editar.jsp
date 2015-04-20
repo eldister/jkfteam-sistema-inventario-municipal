@@ -3,8 +3,7 @@
 <%@page import="simuni.entidades.Respuesta"%>
 <%@page import="simuni.enums.Recursos"%>
 <%
-    //evaluamos si viene de un prceso en curso para ver si fue correcto y si podemos guardar el estado.
-
+    //evaluacion de los objetos para conocer si provienen de algún proceso
     Reparacion reparacion = null;
     Respuesta respuesta = null;
     boolean error = false;
@@ -219,8 +218,8 @@
         <script>
             //se inicializan fechas
             inicializarValores(<%out.print("'" + tipo_botones_requeridos + "'");%>);
-
-
+            
+            
         </script>                        
     </decorator:content>
 </decorator:decorate>

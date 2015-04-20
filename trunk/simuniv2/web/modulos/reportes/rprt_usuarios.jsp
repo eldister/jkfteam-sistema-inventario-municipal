@@ -2,6 +2,7 @@
 <%@page import="simuni.entidades.reportes.Rprt_Base"%>
 <%@page import="java.util.ArrayList"%>
 <%
+    //generación de un reporte general sobre los usuarios registrados
     response.setContentType("application/pdf");
     try {
         String[] columns = null;
