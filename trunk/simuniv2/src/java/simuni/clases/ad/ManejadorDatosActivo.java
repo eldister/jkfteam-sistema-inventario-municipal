@@ -10,7 +10,6 @@ import simuni.entidades.bd.Conexionmysql;
 import simuni.entidades.Activo;
 import simuni.entidades.ActivoArticulo;
 import simuni.entidades.ActivoTransporte;
-import simuni.entidades.Documento;
 import simuni.entidades.ImagenActivo;
 import simuni.entidades.archivos.ManejadorArchivos;
 import simuni.entidades.mantenimientos.TipoLlanta;
@@ -88,6 +87,16 @@ public class ManejadorDatosActivo {
         return resp;
     }
 
+    /**
+     * Operación que se encarga de modificar el registro del
+     * <strong>Activo</strong>. en este caso del tipo articulo.
+     *
+     * @param activoarticulo
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String actualizarActivoArticulo(ActivoArticulo activoarticulo) throws SQLException {
         String resp = "";
         try {
@@ -133,9 +142,9 @@ public class ManejadorDatosActivo {
 
     /**
      * Operación que se encarga de realizar el ingreso / registro del
-     * <strong>Activo</strong>.
+     * <strong>Activo</strong>. del tipo transporte
      *
-     * @param activotransporte
+     * @param activotransporte objeto del tipo ActivoTransporte
      * @return Un string con la respuesta directamente del servidor de base de
      * datos.
      * @throws SQLException Si ocurre una excepcion sql.
@@ -197,6 +206,16 @@ public class ManejadorDatosActivo {
         return resp;
     }
 
+    /**
+     * Operación que se encarga de actualizar el registro del
+     * <strong>Activo</strong>. del tipo transporte
+     *
+     * @param activotransporte Objeto del tipo Transporte
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String actualizarActivoTransporte(ActivoTransporte activotransporte) throws SQLException {
         String resp = "";
         try {
@@ -287,6 +306,16 @@ public class ManejadorDatosActivo {
         return resp;
     }
 
+    /**
+     * Operación que se encarga de realizar la eliminación de todas las imagenes
+     * del activo
+     *
+     * @param activo El numero de placa del activo a eliminar.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String eliminarImagenActivo(String activo) throws SQLException {
         String resp = "";
         try {
@@ -306,6 +335,16 @@ public class ManejadorDatosActivo {
         return resp;
     }
 
+    /**
+     * Operación que se encarga de realizar la eliminación de las llantas de un
+     * vehiculo en base de datos
+     *
+     * @param vehiculo
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String eliminarLlantaVehiculo(int vehiculo) throws SQLException {
         String resp = "";
         try {
@@ -325,6 +364,14 @@ public class ManejadorDatosActivo {
         return resp;
     }
 
+    /**
+     * Proceso para poder hacer el registro de las llantas del activo.
+     *
+     * @param tipollanta el tipo de llanta a asignar
+     * @param codigoVehiculo el vehiculo a quien se va a asignar
+     * @return el resultado de la operación
+     * @throws SQLException En caso de una excepción de sql
+     */
     public String registrarLlantaActivo(TipoLlanta tipollanta, int codigoVehiculo) throws SQLException {
         String resp = "";
         try {
@@ -348,6 +395,14 @@ public class ManejadorDatosActivo {
         return resp;
     }
 
+    /**
+     * Proceso para realizar el registro de una imagen y asignarla aun activo en
+     * específico.
+     *
+     * @param imagenactivo la imagen a asignar
+     * @return el mensaje de resultado de la operación
+     * @since 1.0
+     */
     public String guardarImagenActivo(ImagenActivo imagenactivo) {
         ManejadorArchivos marchivos = new ManejadorArchivos();
         String resp = "";
@@ -361,6 +416,14 @@ public class ManejadorDatosActivo {
         return resp;
     }
 
+    /**
+     * Chequea si existe la placa que se pasa por parámetro
+     *
+     * @param placactivo la placa del activo a buscar
+     * @return true si existe, false otherwise
+     * @throws SQLException si sucede algún tipo de excepción.
+     * @since 1.0
+     */
     public boolean existePlacaActivo(String placactivo) throws SQLException {
 
         Connection con = Conexionmysql.obtenerConexion();
@@ -374,6 +437,14 @@ public class ManejadorDatosActivo {
         return false;
     }
 
+    /**
+     * Chequea si existe la placa que se pasa por parámetro
+     *
+     * @param placavehiculo la placa del vehiculo a buscar
+     * @return true si existe, false otherwise
+     * @throws SQLException si sucede algún tipo de excepción.
+     * @since 1.0
+     */
     public boolean existePlacaVehiculo(String placavehiculo) throws SQLException {
 
         Connection con = Conexionmysql.obtenerConexion();
@@ -387,6 +458,13 @@ public class ManejadorDatosActivo {
         return false;
     }
 
+    /**
+     * Esta función hace una búsqueda del consecutivo de un vehículo particular.
+     *
+     * @param consecutivotipovehiculo el valor a buscar
+     * @return true si existe, false otherwise
+     * @throws SQLException
+     */
     public boolean existeConsecutivoTipoVehiculo(String consecutivotipovehiculo) throws SQLException {
 
         Connection con = Conexionmysql.obtenerConexion();
@@ -429,7 +507,7 @@ public class ManejadorDatosActivo {
 
     }
 
-        /**
+    /**
      * Operación que se encarga de realizar la eliminación del
      * <strong>Activo</strong> de la base de datos..
      *
@@ -455,7 +533,17 @@ public class ManejadorDatosActivo {
         }
         return resp;
     }
-    
+
+    /**
+     * Operación que se encarga de realizar la descativación del
+     * <strong>Activo</strong> de tipo Articulo de la base de datos..
+     *
+     * @param activo El registro a eliminar.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String desactivarActivoArticulo(ActivoArticulo activo) throws SQLException {
         String resp = "";
         try {
@@ -471,8 +559,18 @@ public class ManejadorDatosActivo {
             throw ex;
         }
         return resp;
-    }  
-    
+    }
+
+    /**
+     * Operación que se encarga de realizar la eliminación del
+     * <strong>Activo</strong> de tipo Tranporte de la base de datos..
+     *
+     * @param activo El registro a eliminar.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String eliminarActivoTransporte(ActivoTransporte activo) throws SQLException {
         String resp = "";
         try {
@@ -489,7 +587,17 @@ public class ManejadorDatosActivo {
         }
         return resp;
     }
-    
+
+    /**
+     * Operación que se encarga de realizar la desactivación del
+     * <strong>Activo</strong> de tipo Tranporte de la base de datos..
+     *
+     * @param activo El registro a desactivar.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String desactivarActivoTranporte(ActivoTransporte activo) throws SQLException {
         String resp = "";
         try {
@@ -505,7 +613,8 @@ public class ManejadorDatosActivo {
             throw ex;
         }
         return resp;
-    }      
+    }
+
     /**
      * Operación que se encarga de realizar la eliminación del
      * <strong>Activo</strong> de la base de datos..
@@ -613,20 +722,38 @@ public class ManejadorDatosActivo {
         }
         return resp;
     }
-    
-   public int getEstadoActivo(String placaActivo) throws SQLException {
+
+    /**
+     * Función que obtiene el estado actual de un activo específico.
+     *
+     * @param placaActivo la placa del actio.
+     * @return el codigo de estad
+     * @throws SQLException en caso de un error sql
+     * @since 1.0
+     */
+    public int getEstadoActivo(String placaActivo) throws SQLException {
         int resp = -1;
         Connection con = Conexionmysql.obtenerConexion();
         PreparedStatement st = con.prepareCall("{ call simuni_sp_obtener_estadoactivo(?)}");
         st.setString(1, placaActivo);
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
-            resp=rs.getInt(1);
+            resp = rs.getInt(1);
             rs.close();
         }
         return resp;
     }
 
+    /**
+     * Funcion que hace obtiene el activo del tipo artículo, recibe como
+     * parámetro el número de placa y posteriormente se asignan valores para
+     * poder devolver un objeto "lleno" con los valores de la placa solicitada.
+     *
+     * @param codigoRegistro el número de placa
+     * @return el objeto ActivoArticulo o null
+     * @throws SQLException si hay un error de sql
+     * @since 1.0
+     */
     public ActivoArticulo getActivoArticulo(String codigoRegistro) throws SQLException {
         ActivoArticulo resp = null;
         Connection con = Conexionmysql.obtenerConexion();
@@ -657,6 +784,15 @@ public class ManejadorDatosActivo {
         return resp;
     }
 
+    /**
+     * Funcion que permite obtener las imagenes de un activo a partir de su
+     * numero de placa.
+     *
+     * @param codigoRegistro el número de placa del activo.
+     * @return un ArrayList con los objetos ImagenActivo o null
+     * @throws SQLException si hay un error de SQL
+     * @since 1.0
+     */
     public ArrayList<ImagenActivo> getImagenesActivo(String codigoRegistro) throws SQLException {
         ArrayList<ImagenActivo> resp = null;
         Connection con = Conexionmysql.obtenerConexion();
@@ -670,13 +806,23 @@ public class ManejadorDatosActivo {
                 imaux.setCodigoActivo(rs.getString(1));
                 imaux.setCodigoImagen(rs.getInt(2));
                 imaux.setFechaSubida(rs.getDate(3));
-                imaux.setUrldocumento(Recursos.Servers.SERVER_ARCHIVOS+rs.getString(4));
+                imaux.setUrldocumento(Recursos.Servers.SERVER_ARCHIVOS + rs.getString(4));
                 resp.add(imaux);
             } while (rs.next());
         }
         return resp;
     }
 
+    /**
+     * Funcion que hace obtiene el activo del tipo transporte, recibe como
+     * parámetro el número de placa y posteriormente se asignan valores para
+     * poder devolver un objeto "lleno" con los valores de la placa solicitada.
+     *
+     * @param codigoRegistro el número de placa
+     * @return el objeto ActivoTransporte o null
+     * @throws SQLException si hay un error de sql
+     * @since 1.0
+     */
     public ActivoTransporte getActivoTransporte(String codigoRegistro) throws SQLException {
         ActivoTransporte resp = null;
         Connection con = Conexionmysql.obtenerConexion();
@@ -714,16 +860,16 @@ public class ManejadorDatosActivo {
             st = con.prepareCall("{ call simuni_sp_obtener_llantasactivotransporte(?)}");
             st.setString(1, codigoRegistro);
             rs = st.executeQuery();
-                while (rs.next()) {
-                    TipoLlanta tllantaux = new TipoLlanta();
-                    tllantaux.setIdtipollanta(rs.getInt(1));
-                    tllantaux.setDescripcion(rs.getString(2));
-                    resp.agregarTipoLlanta(tllantaux);
-                    System.out.println("ENTREEEEEEEEEEEEEEEE!!");
-                }
+            while (rs.next()) {
+                TipoLlanta tllantaux = new TipoLlanta();
+                tllantaux.setIdtipollanta(rs.getInt(1));
+                tllantaux.setDescripcion(rs.getString(2));
+                resp.agregarTipoLlanta(tllantaux);
+                System.out.println("ENTREEEEEEEEEEEEEEEE!!");
             }
-            rs.close();
-        
+        }
+        rs.close();
+
         return resp;
     }
 
@@ -750,6 +896,15 @@ public class ManejadorDatosActivo {
         return false;
     }
 
+    /**
+     * funcion que permite determinar si la placa que se pasa por parámetro es
+     * del tipo Artículo o no.
+     *
+     * @param codigoRegistro la placa a buscar
+     * @return true si es activo Articulo false otherwise
+     * @throws SQLException si hay un error de SQL
+     * @since 1.0
+     */
     public boolean isRegistroArticulo(String codigoRegistro) throws SQLException {
 
         Connection con = Conexionmysql.obtenerConexion();
@@ -763,6 +918,15 @@ public class ManejadorDatosActivo {
         return false;
     }
 
+    /**
+     * funcion que permite determinar si la placa que se pasa por parámetro es
+     * del tipo Transporte o no.
+     *
+     * @param codigoRegistro la placa a buscar
+     * @return true si es activo Transporte false otherwise
+     * @throws SQLException si hay un error de SQL
+     * @since 1.0
+     */
     public boolean isRegistroTransporte(String codigoRegistro) throws SQLException {
 
         Connection con = Conexionmysql.obtenerConexion();
@@ -828,8 +992,16 @@ public class ManejadorDatosActivo {
         return resp;
 
     }
-        
-        public ResultSet ReporteGeneralActivos() throws SQLException {//solo los qeu no esten inactivos
+
+    /**
+     * Hacer un reporte general de activos, se obtienen todos menos los que
+     * esten inactivos.
+     *
+     * @return un ResultSet que maneje la respuesta desde el Servidor MYSQL
+     * @throws SQLException si hay una excepcion SQL
+     * @since 1.0
+     */
+    public ResultSet ReporteGeneralActivos() throws SQLException {//solo los qeu no esten inactivos
         ResultSet resp = null;
 
         try {
@@ -846,7 +1018,18 @@ public class ManejadorDatosActivo {
         return resp;
 
     }
-        public ResultSet ReporteGeneralActivos(java.sql.Date fein,java.sql.Date fin) throws SQLException {//solo los qeu no esten inactivos
+
+    /**
+     * Hacer un reporte general de activos con rango de fecha, se obtienen todos
+     * menos los que esten inactivos.
+     *
+     * @param fein la fecha de inicio
+     * @param fin la fecha final
+     * @return un ResultSet que maneje la respuesta desde el Servidor MYSQL
+     * @throws SQLException si hay un error de SQL
+     * @since 1.0
+     */
+    public ResultSet ReporteGeneralActivos(java.sql.Date fein, java.sql.Date fin) throws SQLException {//solo los qeu no esten inactivos
         ResultSet resp = null;
 
         try {
@@ -863,9 +1046,18 @@ public class ManejadorDatosActivo {
 
         return resp;
 
-    }        
-        
-     public ResultSet ReporteGeneralActivos(int departamento) throws SQLException {//solo los qeu no esten inactivos
+    }
+
+    /**
+     * Hacer un reporte general de activos pro departamento, se obtienen todos
+     * menos los que esten inactivos.
+     *
+     * @param departamento código del departamento a obtener sus activos.
+     * @return un ResultSet que maneje la respuesta desde el Servidor MYSQL
+     * @throws SQLException si hay un error de SQL
+     * @since 1.0
+     */
+    public ResultSet ReporteGeneralActivos(int departamento) throws SQLException {//solo los qeu no esten inactivos
         ResultSet resp = null;
 
         try {

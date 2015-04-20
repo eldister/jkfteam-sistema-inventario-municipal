@@ -1,23 +1,34 @@
 package simuni.utils;
 
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.Part;
 import simuni.clases.ln.ManejadorBitacoraSistema;
 
 /**
+ * Esta clase lo qeu se encarga de agrupar una serie de funcionalidades que se
+ * ocupan a lo largo de la aplicación, es decir, se repiten. Entonces a través
+ * de esta clase se haría un uso de las mismas mas estandar y facil.
  *
  * @author FchescO
+ * @since 1.0
+ * @version 1.0
  */
 public class UtilidadesServlet {
 
+    /**
+     * Esta función lo que hace es obtener el nombre de un archivo a partir de
+     * un objeto Part. El objeto Part se genera cuando se hace una solicitud
+     * http y se envía archivos.
+     *
+     * @param part el objeto part obtenido de la solicitud http
+     * @return el nombre del archivo original que el cliente envió o null
+     * @since 1.0
+     */
     public static String getFilename(Part part) {
         for (String cd : part.getHeader("content-disposition").split(";")) {
             if (cd.trim().startsWith("filename")) {
@@ -28,6 +39,14 @@ public class UtilidadesServlet {
         return null;
     }
 
+    /**
+     * Función que se encarga de indicar si un valor puede ser o no convertido a
+     * int.
+     *
+     * @param value una cadena a evaluar
+     * @return true si es int, false otherwise
+     * @since 1.0
+     */
     public static boolean tryParseInt(String value) {
         try {
             Integer.parseInt(value);
@@ -37,6 +56,15 @@ public class UtilidadesServlet {
         }
     }
 
+    /**
+     * Una función que convierte un double a un objeto String, lo particular es
+     * que devuelve el valor double no en formato científico, sino que con las
+     * decimales originales, en su representación "normal"
+     *
+     * @param value a convertir a String
+     * @return una cadena String con la representación del double.
+     * @since 1.0
+     */
     public static String decimalToString(double value) {
 
         DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
@@ -45,6 +73,14 @@ public class UtilidadesServlet {
         return df.format(value); //output: 0.00000021
     }
 
+    /**
+     * Función que se encarga de indicar si un valor puede ser o no convertido a
+     * double.
+     *
+     * @param value una cadena a evaluar
+     * @return true si es double, false otherwise
+     * @since 1.0
+     */
     public static boolean tryParseDouble(String value) {
         try {
             Double.parseDouble(value);
@@ -54,6 +90,14 @@ public class UtilidadesServlet {
         }
     }
 
+    /**
+     * Función que se encarga de indicar si un valor puede ser o no convertido a
+     * Date.
+     *
+     * @param value una cadena a evaluar
+     * @return true si es Date, false otherwise
+     * @since 1.0
+     */
     public static boolean tryParseDate(String value) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -65,6 +109,16 @@ public class UtilidadesServlet {
         }
     }
 
+    /**
+     * Obtener un objeto java.util.Date a partir de un Objeto (normalmente
+     * String), el cual se convierte.
+     *
+     * @param str el valor a convertir a java.util.Date
+     * @param respaldo el valor retornado en caso de error
+     * @return un objeto java.util.Date a partir del str convertido o el
+     * parámetro respaldo.
+     * @since 1.0
+     */
     public static Date getFecha(Object str, Date respaldo) {
         if (str == null) {
             return respaldo;
@@ -80,7 +134,18 @@ public class UtilidadesServlet {
             return respaldo;
         }
     }
-        public static java.sql.Date getFecha(Object str, java.sql.Date respaldo) {
+
+    /**
+     * Obtener un objeto java.sql.Date a partir de un Objeto (normalmente
+     * String), el cual se convierte.
+     *
+     * @param str el valor a convertir a java.sqlDate
+     * @param respaldo el valor retornado en caso de error
+     * @return un objeto java.sql.Date a partir del str convertido o el
+     * parámetro respaldo.
+     * @since 1.0
+     */
+    public static java.sql.Date getFecha(Object str, java.sql.Date respaldo) {
         if (str == null) {
             return respaldo;
         }
@@ -96,6 +161,14 @@ public class UtilidadesServlet {
         }
     }
 
+    /**
+     * Función que se encarga de convertir un objeto java.util.Date a un objeto
+     * String.
+     *
+     * @param fecha el valor a convertir
+     * @return una representacion del parámetro fecha en String o vacío
+     * @since 1.0
+     */
     public static String getFechaString(Date fecha) {
 
         if (fecha == null) {
@@ -110,6 +183,15 @@ public class UtilidadesServlet {
 
     }
 
+    /**
+     * Función que se encarga de convertir un objeto java.util.Date a un objeto
+     * String. Se devuelve una cadena con Fecha y también con tiempo. Estilo
+     * TimeStamp
+     *
+     * @param fecha el valor a convertir
+     * @return una representacion del parámetro fecha en String o vacío
+     * @since 1.0
+     */
     public static String getFechaconTiempoString(Date fecha) {
 
         if (fecha == null) {
@@ -124,6 +206,15 @@ public class UtilidadesServlet {
 
     }
 
+    /**
+     * Obtener un int a partir de un Objeto (normalmente String), el cual se
+     * convierte.
+     *
+     * @param str el valor a convertir a int
+     * @param respaldo el valor retornado en caso de error
+     * @return un int a partir del str convertido o el parámetro respaldo.
+     * @since 1.0
+     */
     public static int getNumeroDePagina(Object str, int respaldo) {
         if (str == null) {
             return respaldo;
@@ -135,6 +226,15 @@ public class UtilidadesServlet {
         }
     }
 
+    /**
+     * Obtener un int a partir de un Objeto (normalmente String), el cual se
+     * convierte.
+     *
+     * @param str el valor a convertir a int
+     * @param respaldo el valor retornado en caso de error
+     * @return un int a partir del str convertido o el parámetro respaldo.
+     * @since 1.0
+     */
     public static int getInt(Object str, int respaldo) {
         if (str == null) {
             return respaldo;
@@ -146,6 +246,15 @@ public class UtilidadesServlet {
         }
     }
 
+    /**
+     * Obtener un double a partir de un Objeto (normalmente String), el cual se
+     * convierte.
+     *
+     * @param str el valor a convertir a double
+     * @param respaldo el valor retornado en caso de error
+     * @return un double a partir del str convertido o el parámetro respaldo.
+     * @since 1.0
+     */
     public static double getDouble(Object str, double respaldo) {
         if (str == null) {
             return respaldo;
@@ -157,6 +266,15 @@ public class UtilidadesServlet {
         }
     }
 
+    /**
+     * Función que Hace el registro en bitácora de un error de sistema.
+     *
+     * @param proceso por ejemplo Ventas
+     * @param mensaje Ejemplo: Error general
+     * @return un booleano indicando si se hizo o no "correcto" el proceso de
+     * registro
+     * @since 1.0
+     */
     public static boolean registrarErrorSistema(String proceso, String mensaje) {
         ManejadorBitacoraSistema bitacora = new ManejadorBitacoraSistema();
         try {
@@ -167,6 +285,16 @@ public class UtilidadesServlet {
         }
     }
 
+    /**
+     * Función que Hace el registro en bitácora de un proceso cualquiera de
+     * sistema.
+     *
+     * @param proceso por ejemplo Ventas
+     * @param mensaje Ejemplo: Venta de un Artículo
+     * @return un booleano indicando si se hizo o no "correcto" el proceso de
+     * registro
+     * @since 1.0
+     */
     public static boolean registrarProcesoSistema(String proceso, String mensaje) {
         ManejadorBitacoraSistema bitacora = new ManejadorBitacoraSistema();
         try {

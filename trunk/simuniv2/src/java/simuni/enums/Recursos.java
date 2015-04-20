@@ -1,25 +1,37 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package simuni.enums;
 
 import java.net.InetAddress;
 
 /**
+ * Esta clase, se convierte como un "repositorio" de valores compartido a lo
+ * largo de la aplicación para no tener qeu estar cambiando en cada una de las
+ * partes o archivos.
  *
  * @author FchescO
+ * @since 1.0
+ * @version 1.0
  */
 public class Recursos {
+
     public static String ip;
+    public static final int intervalo_respaldo_automatico=60000;
+    public static final int delay_respaldo_automatico=5000;
+
     static {
-        try{
-            ip=InetAddress.getByName(InetAddress.getLocalHost().getCanonicalHostName()).getHostAddress();
-        }catch(Exception ex){
-            ip="localhost";
+        try {
+            ip = InetAddress.getByName(InetAddress.getLocalHost().getCanonicalHostName()).getHostAddress();
+        } catch (Exception ex) {
+            ip = "localhost";
         }
     }
+
+    /**
+     * Listado de servidores de Bases de Datos, sus cadenas de conexión
+     *
+     * @author FchescO
+     * @since 1.0
+     * @version 1.0
+     */
     public static enum BD {
 
         SERVIDORMYSQLFRANCISCO("Server=localhost;Port=3306;Database=myDataBase;Uid=chescosimuni;Pwd=chescosimuni;"),
@@ -43,11 +55,18 @@ public class Recursos {
         }
     }
 
+    /**
+     * Listado de servidores web.
+     *
+     * @author FchescO
+     * @since 1.0
+     * @version 1.0
+     */
     public static enum Servers {
 
         MAINSERVER("/simuniv2"),
-        SERVER_ARCHIVOS("http://"+Recursos.ip+":8080/archivos");
-        
+        SERVER_ARCHIVOS("http://" + Recursos.ip + ":8080/archivos");
+
         private final String texto;
 
         private Servers(String s) {
@@ -64,6 +83,13 @@ public class Recursos {
         }
     }
 
+    /**
+     * Listado de servidores para guardar archivos. Dentro del servidor
+     *
+     * @author FchescO
+     * @since 1.0
+     * @version 1.0
+     */
     public static enum SSA {
 
         CARPETABASE("C:\\Users\\FchescO\\Downloads\\pruebas\\"),
@@ -87,10 +113,17 @@ public class Recursos {
         }
     }
 
+    /**
+     * Listado de servidores archivos, a nivel web
+     *
+     * @author FchescO
+     * @since 1.0
+     * @version 1.0
+     */
     public static enum SSI {
 
         //ARCHIVOSBASECONTEXT("/archivos/"),
-        ARCHIVOSACTIVOSCONTEXT( "/Activos/"),
+        ARCHIVOSACTIVOSCONTEXT("/Activos/"),
         //REMOTOARCHIVOSACTIVOSCONTEXT("http://localhost:8080"),
         ARCHIVOSPROVEEDORESCONTEXT("/Proveedores/");
 
@@ -110,6 +143,13 @@ public class Recursos {
         }
     }
 
+    /**
+     * Listado de recursos compartidos a lo largo de la aplicación web.
+     *
+     * @author FchescO
+     * @since 1.0
+     * @version 1.0
+     */
     public static enum R {
 
         LOGOSIMUNIURL("http://localhost:8080/simuniv2/recursos/imagenes/sistema/muni.jpg"),
