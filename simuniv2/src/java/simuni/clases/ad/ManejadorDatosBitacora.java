@@ -17,7 +17,17 @@ import simuni.entidades.bd.Conexionmysql;
  * @author FchescO
  */
 public class ManejadorDatosBitacora {
-
+    
+    /**
+     * Método para el registro de los eventos acontecidos en el sistema en una tabla
+     * en la base de datos que servira como bitacora.
+     * 
+     * @param registroBitacora objeto con que obtiene información que sera registrada
+     * en la base de datos
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @since 1.0
+     */
     public String registrarEnBitacora(RegistroBitacora registroBitacora) throws SQLException {
         String resp = "";
         try {

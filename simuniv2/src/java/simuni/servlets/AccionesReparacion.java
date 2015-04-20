@@ -219,6 +219,13 @@ public class AccionesReparacion extends HttpServlet {
         }
     }
 
+    /**
+     * metodo para la generacion de una nueva reparacion con la información obtenido
+     * de los formularios html del lado del cliente
+     * 
+     * @param request solicitud al servlet
+     * @return la nueva reparación con la información obtenida de los formularios
+     */
     private Reparacion generarReparacion(HttpServletRequest request) {
         Reparacion reparacion = new Reparacion();
         try {

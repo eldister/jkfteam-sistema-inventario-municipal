@@ -8,6 +8,7 @@ import java.util.Date;
  */
 
 public class Reparacion {
+    //atributos de la clase
     private String placaActivo = "";
     private String idUsuario = "";
     private String motivoReparacion = "";

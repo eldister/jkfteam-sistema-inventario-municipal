@@ -60,6 +60,16 @@ public class ManejadorDatosReparacion {
         }
         return resp;
     }
+    /**
+     * Operación que se encarga de realizar el ingreso / registro del
+     * detalle de una reparacion
+     *
+     * @param reparacion El nuevo registro a ingresar.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String registrarDetalleReparacion(Reparacion reparacion) throws SQLException {
         String resp = "";
         int id_reparacion=0;
@@ -341,10 +351,12 @@ public class ManejadorDatosReparacion {
     }
     
     /**
-     * Método el cuál obtiene a través de un procedimiento almacenado los datos
-     * almacenados en la base de datos del sistema
+     * Método el cuál los datos para el reporte obtiene a través de un 
+     * procedimiento almacenado, los datos registrados en la base de datos del sistema
      * @return un resultset con los resultados encontrados o recibidos por la llamada
      * de un procedimiento almacenado
+     * @throws SQLExcepcion si ocurre una excepcion sql.
+     * @since 1.0
      */
     public ResultSet ReporteGeneralReparacion() throws SQLException {//solo los qeu no esten inactivos
         ResultSet resp = null;
@@ -359,10 +371,14 @@ public class ManejadorDatosReparacion {
     }
     
     /**
-     * Método el cuál obtiene a través de un procedimiento almacenado los datos
-     * almacenados en la base de datos del sistema
+     * Método el cuál los datos para el reporte obtiene a través de un 
+     * procedimiento almacenado, los datos registrados en la base de datos del sistema
+     * @param fein fecha de inicio de rango de fechas
+     * @param fin fecha final de un rango de fechas
      * @return un resultset con los resultados encontrados o recibidos por la llamada
      * de un procedimiento almacenado
+     * @throws SQLException si ocurre una excepcion sql
+     * @since 1.0
      */
     public ResultSet ReporteGeneralReparaciones(java.sql.Date fein, java.sql.Date fin) throws SQLException {//solo los qeu no esten inactivos
         ResultSet resp = null;

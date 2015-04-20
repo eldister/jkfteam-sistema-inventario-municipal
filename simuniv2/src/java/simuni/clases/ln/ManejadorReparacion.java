@@ -187,6 +187,15 @@ public class ManejadorReparacion implements IReporteador{
         return resp;
     }
 
+    /**
+     * Método que obtiene una reparacion en particular acorde a un codigo
+     * 
+     * @param codigo de la reparación que se desea obtener
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public Reparacion getReparacion(int codigo) {
         Reparacion resp = null;
         ManejadorDatosReparacion mdreparacion = new ManejadorDatosReparacion();
@@ -251,7 +260,6 @@ public class ManejadorReparacion implements IReporteador{
      * fini y ffin para obtener los reporter en un rango de fecha
      * @return nuevo vector de string
      */
-
     @Override
     public ArrayList<String[]> obtenerDatosReporte(Date fini, Date ffin) {
         ArrayList<String[]> resp = new ArrayList<String[]>();

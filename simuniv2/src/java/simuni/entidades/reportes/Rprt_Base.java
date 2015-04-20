@@ -30,7 +30,8 @@ import javax.servlet.ServletOutputStream;
  * @author FchescO
  */
 public class Rprt_Base {
-
+ 
+    //atributos de la clase base para los reportes
     private String[] columnas;
     private ArrayList<String[]> datos;
     private String titulo;
@@ -42,9 +43,28 @@ public class Rprt_Base {
     private PdfWriter writer;
     int cantidadCampos;
 
+    /**
+     * primer constructor de la clase 
+     * contructor con parametros para la intanciación de objetos relacionados con los
+     *reportes que será generado por un usuario
+     */
     public Rprt_Base() {
     }
 
+    /**
+     * segundo constructor de la clase
+     * contructor con parametros para la intanciación de objetos relacionados con los
+     * reportes que será generado por un usuario
+     * 
+     * @param columnas vector o arreglo con las columnas que se mostraran en la tabla del reporte
+     * @param datos arraylist con los datos que se hayan obtenido en una consulta a la base
+     * de datos con relación a los registros de los procesos que se desean hacer un reporte.
+     * @param titulo titulo del reporte
+     * @param usuario individuo quién realiza o realizó la generación del reporte
+     * @param observaciones observaciones que se realicen
+     * @param event_helper un ayudador de evento
+     * ♠
+     */
     public Rprt_Base(String[] columnas, ArrayList<String[]> datos, String titulo, String usuario, String observaciones, PdfPageEventHelper event_helper) {
         this.columnas = columnas;
         this.datos = datos;
@@ -54,6 +74,20 @@ public class Rprt_Base {
         this.event_helper = event_helper;
     }
 
+    /**
+     * tercer constructor de la clase
+     * contructor con parametros para la intanciación de objetos relacionados con los
+     * reportes que será generado por un usuario
+     * 
+     * @param columnas vector o arreglo con las columnas que se mostraran en la tabla del reporte
+     * @param datos arraylist con los datos que se hayan obtenido en una consulta a la base
+     * de datos con relación a los registros de los procesos que se desean hacer un reporte.
+     * @param titulo titulo del reporte
+     * @param usuario individuo quién realiza o realizó la generación del reporte
+     * @param observaciones observaciones que se realicen
+     * @param horizontal el horizontal que será mostrado
+     * @param writer el escritor que sera mostrado
+     */
     public Rprt_Base(String[] columnas, ArrayList<String[]> datos, String titulo, String usuario, String observaciones, boolean horizontal, PdfWriter writer) {
         this.columnas = columnas;
         this.datos = datos;
@@ -69,6 +103,19 @@ public class Rprt_Base {
 
     }
 
+    /**
+     * cuarto constructor de la clase
+     * contructor con parametros para la intanciación de objetos relacionados con los
+     * reportes que será generado por un usuario
+     * 
+     * @param columnas vector o arreglo con las columnas que se mostraran en la tabla del reporte
+     * @param datos arraylist con los datos que se hayan obtenido en una consulta a la base
+     * de datos con relación a los registros de los procesos que se desean hacer un reporte.
+     * @param titulo titulo del reporte
+     * @param usuario individuo quién realiza o realizó la generación del reporte
+     * @param observaciones observaciones que se realicen
+     * @param horizontal el horizontal que será mostrado
+     */
     public Rprt_Base(String[] columnas, ArrayList<String[]> datos, String titulo, String usuario, String observaciones, boolean horizontal, ServletOutputStream out) {
         this.columnas = columnas;
         this.datos = datos;
@@ -83,7 +130,7 @@ public class Rprt_Base {
         } catch (DocumentException ex) {
             Logger.getLogger(Rprt_Base.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ;
+        ; //el punto y coma del aberno
 
         if (this.horizontal) {
             event_helper = new HeaderFooterHorizontal(this.columnas);
@@ -196,6 +243,11 @@ public class Rprt_Base {
         this.horizontal = horizontal;
     }
 
+    /**
+     * Método utilizado para gnerar o crear una tabla html
+     * 
+     * @return una cadena que contiene código fuente en html
+     */
     public String generarTablaHtml() {
         String respuesta = "";
         if (columnas != null && datos != null) {
@@ -231,6 +283,11 @@ public class Rprt_Base {
 
     }
 
+    /**
+     * Método que obtiene la fecha en la cual fue generado el reporte
+     * 
+     * @return un string con la fecha y hora del reporte generado
+     */
     private String getFechaReporte() {
         String respuesta = "";
 
@@ -253,6 +310,10 @@ public class Rprt_Base {
         return respuesta;
     }
 
+    /**
+     * Método utilizado para generar un reporte
+     * para ser mostrado como un documento <strong>PDF</strong>
+     */
     public void generarReporte() {
         try {
             writer.setBoxSize("art", new Rectangle(36, 54, 559, 788));    
@@ -279,10 +340,16 @@ public class Rprt_Base {
         }
     }
 
+    /**
+     * @return cadena con el total de los registros
+     */
     private String getCantidadRegistros() {
         return "Total " + cantidadCampos;
     }
 
+    /**
+     * @return event_helper
+     */
     public PdfPageEventHelper getPdfEventHelper() {
 
         return this.event_helper;
