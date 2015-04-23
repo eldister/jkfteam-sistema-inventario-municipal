@@ -49,6 +49,13 @@ public class ManejadorDatosPermiso {
         }
         return resp;
     }
+    /**
+     * Método que registra el momento cuando se asigna el permiso a un usuario
+     * @param usuario a quien se le asignara el permiso de usuario
+     * @param codigopermiso el id del permiso que se le otorgara a dicho usuario
+     * @throws SQLException en caso de que ocurra una excepsion sql 
+     * @since 1.0
+     */
     public String registrarAsignarPermiso(String usuario,int codigopermiso) throws SQLException {
         String resp = "";
         try {
@@ -66,6 +73,14 @@ public class ManejadorDatosPermiso {
         }
         return resp;
     } 
+    /**
+     * Método para eliminar los permisos asignados a un usuario
+     * @param usuario a quien se le removeran los permisos de usuario
+     * @throws SQLException en caso de que ocurra una excepsion sql 
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @since 1.0
+     */
     public String eliminarAsignacionPermiso(String usuario) throws SQLException {
         String resp = "";
         try {
@@ -168,6 +183,12 @@ public class ManejadorDatosPermiso {
 
     }
     
+    /**
+     * Método que obtiene todo los resultados de los permisos a través de una
+     * vista de la base de datos
+     * @throws SQLException en caso de que ocurra una excepcion 
+     * @return un resultset con el resultado al ejecutar el query sql
+     */
         public ResultSet listadoPermiso() throws SQLException {
         ResultSet resp = null;
 
@@ -184,7 +205,13 @@ public class ManejadorDatosPermiso {
         return resp;
 
     } 
-        
+   /**
+     * Método que obtiene todo los permisos que han sido asignados a los usuarios del
+     * sistema
+     * @param nombre_usuario usuarios de quien se obtendran la lista de permisos
+     * @throws SQLException en caso de que ocurra una excepcion 
+     * @return un resultset con el listado de los permisos asignados a dicho usuario
+     */
    public ResultSet listadoPermiso_Asignados(String nombre_usuario) throws SQLException {
         ResultSet resp = null;
 
@@ -202,6 +229,13 @@ public class ManejadorDatosPermiso {
         return resp;
 
     } 
+   /**
+     * Método que obtiene todo los permisos que tiene disponibles un usuario del
+     * sistema
+     * @param nombre_usuario usuarios de quien se obtendran la lista de permisos disponibles
+     * @throws SQLException en caso de que ocurra una excepcion 
+     * @return un resultset con el listado de los permisos disponibles de dicho usuario
+     */
    public ResultSet listadoPermiso_Disponibles(String nombre_usuario) throws SQLException {
         ResultSet resp = null;
 

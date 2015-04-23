@@ -88,6 +88,15 @@ public class ManejadorDatosSolicitudBaja {
 
     }
     
+    /**
+     * Método para modificar el estado de una solicitud de baja enviada por un usuairo
+     * del sistema.
+     * @param solicitudbaja la solicitud de baja por parte de un usuairo del sistema.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException en caso de que ocurra una excepcion sql.
+     * @since 1.0
+     */
     public String modificarEstadoSolicitudBaja(SolicitudBaja solicitudbaja) throws SQLException {
         String resp = "";
         try {
@@ -216,6 +225,16 @@ public class ManejadorDatosSolicitudBaja {
         return resp;
     }
     
+    /**
+     * Método para obtener la solitud de baja especifico y también del usuario que la
+     * ha enviado.
+     * @param codigo el identificador de la solicitud de la baja.
+     * @param usuario el usuario de la solicitud de la baja
+     * @return un objeto de tipo solitudbaja con la informacion resultado de la 
+     * busqueda en la base de datos.
+     * @throws SQLException en caso de que ocurra una excepcion sql.
+     * @since 1.0
+     */
     public SolicitudBaja getSolicitudBajaUsuario(int codigo,String usuario) throws SQLException {
         SolicitudBaja resp = null;
         Connection con = Conexionmysql.obtenerConexion();
@@ -259,6 +278,16 @@ public class ManejadorDatosSolicitudBaja {
         Conexionmysql.cerrarConexion(con);
         return resp;
     }
+    
+    /**
+     * Método que obtiene una candtidad de filas con relacion al total de solitud de bajas 
+     * realizadas por un usuario en particular
+     * @param query de la busqueda 
+     * @param usuario quien hizo las solicitudes de baja
+     * @return la cantidad de filas 
+     * @throws SQLException en caso de que ocurra una excepcion sql.
+     * @since 1.0
+     */
     public int getCantidadFilasUsuario(String query,String usuario) throws SQLException {
         int resp = 0;
         Connection con = Conexionmysql.obtenerConexion();
@@ -300,6 +329,18 @@ public class ManejadorDatosSolicitudBaja {
 
     }
     
+    /**
+     * Método que realiza la búsqueda entre las solicitudes de los registros en la 
+     * base de datos.
+     * 
+     * @param query para la búsqueda en la base de datos
+     * @param desplazamiento Cantidad de registros que se deben de pasar.
+     * @param paginacion La cantidad de registros a devolver.
+     * @param usuario usuario de las solicitudes de bajas
+     * @return un resultset con todos los resultados de la busqueda
+     * @throws SQLException en caso de que ocurra una excepcion sql.
+     * @since 1.0
+     */
     public ResultSet busquedaSolicitudBajaUsuario(String query, int desplazamiento, int paginacion,String usuario) throws SQLException {
         ResultSet resp = null;
         try {

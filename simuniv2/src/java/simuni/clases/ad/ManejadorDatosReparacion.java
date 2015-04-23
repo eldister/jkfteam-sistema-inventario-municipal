@@ -11,7 +11,7 @@ import simuni.entidades.Reparacion;
 import simuni.utils.UtilidadesServlet;
 
 /**
- * Esta clase de acceso a datos de <strong>Venta</strong> se encarga
+ * Esta clase de acceso a datos de <strong>Reparacion</strong> se encarga
  * de las operaciones directamente con la base de datos, para hacer su ingreso,
  * modificación, eliminacino del mismo. Entre las operaciones comunes que se
  * solicitan estan agregar, modificar, eliminar, hacer un query de busqueda y

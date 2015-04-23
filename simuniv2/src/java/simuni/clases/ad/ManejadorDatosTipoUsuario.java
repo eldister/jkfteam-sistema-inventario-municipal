@@ -134,6 +134,12 @@ public class ManejadorDatosTipoUsuario {
 
     }
     
+    /**
+     * Método que obtiene un listado de todos los tipos de usuarios registrados en
+     * la base de datos. Funciona con vistas de base de datos.
+     * @return un resultset con todos los resultados tras ejecutar la vista
+     * @throws SQLException en caso de que ocurra una excepcion sql.
+     */
         public ResultSet listadoTipoUsuario() throws SQLException {
         ResultSet resp = null;
 

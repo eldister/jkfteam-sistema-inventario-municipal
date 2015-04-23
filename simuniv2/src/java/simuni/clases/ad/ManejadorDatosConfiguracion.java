@@ -385,7 +385,6 @@ public class ManejadorDatosConfiguracion {
      * del sistema
      * 
      * @return un objeto con la tarea de respaldo obtenida de la base de datos
-     * @throws Exception Si ocurre una excepcion.
      * @since 1.0
      */
     public TareaRespaldo getTareaRespaldo() {

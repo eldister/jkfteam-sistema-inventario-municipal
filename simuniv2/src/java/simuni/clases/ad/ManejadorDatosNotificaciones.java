@@ -25,6 +25,16 @@ import simuni.entidades.bd.Conexionmysql;
 public class ManejadorDatosNotificaciones {
 //simuni_sp_registro_mensaje
 
+    /**
+     * Método para el registro o la agregación a la base de datos de un
+     * mensaje enviado por un usuario a otro.
+     * 
+     * @param notificacion un objeto con la información del mensaje enviado
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public String agregarMensaje(Notificacion notificacion) throws SQLException {
         String resp = "";
         Connection con = Conexionmysql.obtenerConexion();
@@ -43,6 +53,15 @@ public class ManejadorDatosNotificaciones {
         return resp;
     }
 
+    /**
+     * Método para el registro o la agregación a la base de datos de una
+     * notificación.
+     * 
+     * @param notificacion un objeto con la notificación que será registrada
+     * @return un valor booleano true
+     * @throws SQLException Si ocurre una excepcion sql.
+     * @since 1.0
+     */
     public boolean agregarNotificacion(Notificacion notificacion) throws SQLException {
         Connection con = Conexionmysql.obtenerConexion();
         PreparedStatement st = con.prepareCall("{CALL sp_agregarNotificacion(?,?,?,?,?,?)}");
@@ -58,11 +77,26 @@ public class ManejadorDatosNotificaciones {
         return true;
     }
 
+    /**
+     * Método que obtiene un listado de los usuarios registrados en el sistema
+     * @return un arraylist de tipo usuario con todo el listado de los usuarios
+     * @since 1.0
+     */
     public ArrayList<Usuario> listadoUsuario() {
         ManejadorUsuario mdusuario = new ManejadorUsuario();
         return mdusuario.listadoUsuarios();
     }
 
+    /**
+     * Método que obtiene las notificaciones correspondientes a un usuario en 
+     * particular.
+     * 
+     * @param idusuario identificación del usuario
+     * @return un arraylist de tipo notificación con todas las notificaciones
+     * que le corresponden a un usuario.
+     * @throws SQLException en caso de que ocurra una excepcion.
+     * @since 1.0
+     */
     public ArrayList<Notificacion> obtenerNotificacionesUsuario(String idusuario) throws SQLException {
         ArrayList<Notificacion> notificaciones = new ArrayList<Notificacion>();
         Connection con = Conexionmysql.obtenerConexion();
@@ -86,6 +120,16 @@ public class ManejadorDatosNotificaciones {
         return notificaciones;
     }
 
+    /**
+     * Método que obtiene los mensajes correspondientes a un usuario en 
+     * particular.
+     * 
+     * @param idusuario identificación del usuario
+     * @return un arraylist de tipo notificación con todas los mensajes que le
+     * corresponden a un usuario.
+     * @throws SQLException en caso de que ocurra una excepcion.
+     * @since 1.0
+     */
     public ArrayList<Notificacion> obtenerMensajesUsuario(String idusuario) throws SQLException {
         ArrayList<Notificacion> notificaciones = new ArrayList<Notificacion>();
         Connection con = Conexionmysql.obtenerConexion();
@@ -109,6 +153,16 @@ public class ManejadorDatosNotificaciones {
         return notificaciones;
     }
 
+    /**
+     * Método que obtiene las ultimas notificaciones que ha recibido un usuario
+     *  en particular.
+     * 
+     * @param idusuario identificación del usuario
+     * @return un arraylist de tipo notificación con todas las notificaciones
+     * que le corresponden a un usuario.
+     * @throws SQLException en caso de que ocurra una excepcion.
+     * @since 1.0
+     */
     public ArrayList<Notificacion> obtenerUltimasNotificacionesUsuario(String idusuario) throws SQLException {
         ArrayList<Notificacion> notificaciones = new ArrayList<Notificacion>();
         Connection con = Conexionmysql.obtenerConexion();
@@ -132,6 +186,16 @@ public class ManejadorDatosNotificaciones {
         return notificaciones;
     }
 
+    /**
+     * Método que obtiene los ultimos mensajes que ha recibido un usuario en 
+     * particular por parte de otro.
+     * 
+     * @param idusuario identificación del usuario
+     * @return un arraylist de tipo notificación con todos los mensajes que le
+     * fueron enviados al usuario.
+     * @throws SQLException en caso de que ocurra una excepcion.
+     * @since 1.0
+     */
     public ArrayList<Notificacion> obtenerUltimosMensajesUsuario(String idusuario) throws SQLException {
         ArrayList<Notificacion> notificaciones = new ArrayList<Notificacion>();
         Connection con = Conexionmysql.obtenerConexion();
@@ -155,6 +219,13 @@ public class ManejadorDatosNotificaciones {
         return notificaciones;
     }
     
+    /**
+     * Método que obtiene un mensaje en particular
+     * @param codigo el codigo del mensaje que se desea obtener
+     * @return un objeto tipo noficiacion con el mensaje encontrado
+     * @throws SQLException en caso de que ocurra una excepsion sql
+     * @since 1.0
+     */
     public Notificacion obtenerMensaje(int codigo) throws SQLException{
         Notificacion notificacion=null;
          Connection con = Conexionmysql.obtenerConexion();
