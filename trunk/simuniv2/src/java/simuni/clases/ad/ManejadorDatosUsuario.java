@@ -422,6 +422,15 @@ public class ManejadorDatosUsuario {
 
     }
 
+    /**
+     * Obtiene la cantidad de registros que hay en la base de datos, con el
+     * criterio que se pasa por parámetro
+     *
+     * @param query La cadena con la busqueda a evaluar.
+     * @return Un entero con la cantidad de registros.
+     * @throws SQLException En caso de que lance una excepción de SQL.
+     * @since 1.0
+     */
     public int getCantidadFilas(String query) throws SQLException {
         int resp = 0;
         Connection con = Conexionmysql.obtenerConexion();

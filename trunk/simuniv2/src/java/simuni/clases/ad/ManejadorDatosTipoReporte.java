@@ -208,6 +208,13 @@ public class ManejadorDatosTipoReporte {
         return resp;
 
     }
+    
+    /**
+     * Método que obtiene un listado de todos los tipos de reportes registrados en
+     * la base de datos. Funciona con vistas de base de datos.
+     * @return un resultset con todos los resultados tras ejecutar la vista
+     * @throws SQLException en caso de que ocurra una excepcion sql.
+     */
     public ResultSet listadoTipoReporte() throws SQLException {
         ResultSet resp = null;
 

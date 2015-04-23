@@ -75,6 +75,15 @@ public class ManejadorDatosProveedor {
         return resp;
     }
 
+    /**
+     * Método para registrar en la base de datos los servicios que ofrezca un 
+     * proveedor de la municipalidad.
+     * @param proveedor el proveedore de la municipalidad
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException en caso de que ocurra una excepsion sql
+     * @since 1.0
+     */
     public String registrarServiciosProveedor(Proveedor proveedor) throws SQLException {
         String resp = "";
         boolean error = false;
@@ -108,6 +117,15 @@ public class ManejadorDatosProveedor {
         return resp;
     }
 
+    /**
+     * Método para modificar la informacion de los servicios ofrecidos por uno de
+     * los proveedores de la municipalidad.
+     * @param proveedor el proveedor de la municipalidad.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException en caso de que ocurra una excepcion sql.
+     * @since 1.0
+     */
     public String actualizarServiciosProveedor(Proveedor proveedor) throws SQLException {
         String resp = "";
         boolean error = false;
@@ -118,6 +136,7 @@ public class ManejadorDatosProveedor {
             if (tiposservicio != null) {
                 while (tiposservicio.hasNext()) {
                     TipoProveedor tiposervicio = tiposservicio.next();
+                    // nota: esta registrando no actualizando
                     CallableStatement cs = con.prepareCall("{call simuni_sp_registro_servicioproveedor(?,?,?)}");
                     cs.setString(1, proveedor.getCedula());
                     cs.setInt(2, tiposervicio.getCodigoTipoProveedor());
@@ -142,6 +161,15 @@ public class ManejadorDatosProveedor {
         return resp;
     }
 
+    /**
+     * Método para eliminar un registro de la base de datos con relacion a un los
+     * servicios ofrecidos por un proveedor de la municipalidad.
+     * @param proveedor de la municipalidad.
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @throws SQLException en caso de que ocurra una excepcion sql.
+     * @since 1.0
+     */
     public String eliminarServiciosProveedor(Proveedor proveedor) throws SQLException {
         String resp = "";
 
@@ -344,6 +372,14 @@ public class ManejadorDatosProveedor {
         return resp;
     }
 
+    /**
+     * Método para obtener todos los servicios que ofrece un proveedor en particular
+     * @param cedula identificacion del proveedor
+     * @return un arraylist con todos los servicios ofrecidos por un proveedor en 
+     * particular
+     * @throws SQLException en caso de que ocurra una excepcion sql.
+     * @since 1.0
+     */
     public ArrayList<TipoProveedor> getServiciosProveedor(String cedula) throws SQLException {
         ArrayList<TipoProveedor> resp = null;
         Connection con = Conexionmysql.obtenerConexion();
@@ -439,6 +475,13 @@ public class ManejadorDatosProveedor {
 
     }
 
+    /**
+     * Método que obtiene una lista de proveedores según un tipo de servicio en particular
+     * @param tiposervicio el identificador del tipo de servicio
+     * @return un arraylist con todos los proveedores que ofrecen ese servicio
+     * @throws SQLException en caso de que ocurra una excepcion sql.
+     * @since 1.0
+     */
     public ArrayList<Proveedor> getProveedoresXTipoServicio(int tiposervicio) throws SQLException {
         ArrayList<Proveedor> proveedores = new ArrayList<Proveedor>();
         Connection con = Conexionmysql.obtenerConexion();
@@ -478,6 +521,12 @@ public class ManejadorDatosProveedor {
         return proveedores;
     }
 
+    /**
+     * Método para generar un un reporte general de los proveedores de la municipalidad
+     * @return un resultset con los proveedores registrados en la base de datos
+     * @throws SQLException en caso de que ocurra una excepcion sql.
+     * @since 1.0
+     */
     public ResultSet ReporteGeneralProveedores() throws SQLException {//solo los qeu no esten inactivos
         ResultSet resp = null;
 
@@ -496,6 +545,15 @@ public class ManejadorDatosProveedor {
 
     }
 
+    /**
+     * Método para generar un un reporte general de los proveedores de la municipalidad
+     * acorde a un rango de fechas
+     * @param fein fecha de inicio del rango de fechas
+     * @param fin fecha final del rango de fechas.
+     * @return un resultset con los proveedores registrados en la base de datos
+     * @throws SQLException en caso de que ocurra una excepcion sql.
+     * @since 1.0
+     */
     public ResultSet ReporteGeneralProveedores(java.sql.Date fein, java.sql.Date fin) throws SQLException {//solo los qeu no esten inactivos
         ResultSet resp = null;
 

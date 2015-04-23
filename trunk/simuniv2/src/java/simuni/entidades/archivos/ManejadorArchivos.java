@@ -17,6 +17,17 @@ import java.io.OutputStream;
  */
 public class ManejadorArchivos {
 
+    /**
+     * Método que obtiene la información de un cualquier tipo de archivo que se requiera guardar
+     * aunque anteriormente valida no exista o no el archivo que se va a guardar
+     * 
+     * @param rutaarchivo la ruta o directorio del archivo a guardar
+     * @param nombrearchivo nombre del archivo a guarduar
+     * @param in representa el flujo de entrada de bytes del archivo a guardar
+     * @throws Exception en caso de que ocurra una excepcion
+     * @return un valor booleano true al terminar el proceso de guardado
+     * @since 1.0
+     */
     public boolean guardarArchivo(String rutaarchivo, String nombrearchivo, InputStream in) throws Exception {
 
         OutputStream os = null;
@@ -49,8 +60,17 @@ public class ManejadorArchivos {
         return true;
     }
 
+    /**
+     * Método que devuelve el flujo de bytes de un archivo según la ruta del mismo
+     * 
+     * @param rutaarchivo ruta o directorio del archivo
+     * @throws Exception en caso de que ocurra un error
+     * @return un objeto de tipo InputStream
+     * @since 1.0
+     */
     public InputStream obtenerArchivo(String rutaarchivo) throws Exception {
 
+        //variable que no se esta utilizando
         OutputStream os = null;
 
         try {
@@ -63,6 +83,14 @@ public class ManejadorArchivos {
         }
     }
 
+    /**
+     * Método que valida si un archivo es existente o no 
+     * 
+     * @param pathfile diretorio o ubicación del archivo
+     * @return valores boolenos
+     * true en caso de que exista 
+     * false en caso de que no exista
+     */
     public boolean isArchivoExistente(String pathfile) {
         try {
             File f = new File(pathfile);
