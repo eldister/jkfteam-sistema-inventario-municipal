@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package simuni.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,11 +12,28 @@ import simuni.entidades.Notificacion;
 import simuni.utils.UtilidadesServlet;
 
 /**
+ * Esta clase se encarga de realizar el manejo de las solicitudes del modulo de
+ * Notificaciones. Acepta solicitudes del tipo POST o GET. Se encarga de dar una
+ * respuesta a esas demandas.
  *
  * @author FchescO
+ * @since 1.0
+ * @version 1.0
  */
 public class AccionesNotificacion extends HttpServlet {
 
+    /**
+     * Esta enumeración es particular al servelet para poder hacer mas facil y
+     * exacto el control de operaciones solicitadas. Entre las operaciones
+     * comunes que se solicitan estan agregar, modificar, eliminar, hacer un
+     * query de busqueda y tambien hacer el listado por defecto que hay de los
+     * datos ingresados. Si el usuario no elige una de las operaciones de la
+     * enumeración por defecto se hara la operacion listado.
+     *
+     * @author FchescO
+     * @since 1.0
+     * @version 1.0
+     */
     enum OpcionesDo {
 
         ObtenerUltimosMensajes,
@@ -55,41 +66,41 @@ public class AccionesNotificacion extends HttpServlet {
             case ObtenerUltimosMensajes:
                 notificaciones = mnotificacion.obtenerUltimosMensajesUsuario(idusuario);
                 request.setAttribute("notificaciones", notificaciones);
-                disp  = request.getRequestDispatcher("/modulos/notificaciones/_asinc/_asinc_mensajes.jsp");
+                disp = request.getRequestDispatcher("/modulos/notificaciones/_asinc/_asinc_mensajes.jsp");
                 disp.forward(request, response);
                 break;
             case ObtenerUltimasNotificaciones:
                 notificaciones = mnotificacion.obtenerUltimasNotificacionesUsuario(idusuario);
-                request.setAttribute("notificaciones", notificaciones);                
-                disp  = request.getRequestDispatcher("/modulos/notificaciones/_asinc/_asinc_notificaciones.jsp");
+                request.setAttribute("notificaciones", notificaciones);
+                disp = request.getRequestDispatcher("/modulos/notificaciones/_asinc/_asinc_notificaciones.jsp");
                 disp.forward(request, response);
                 break;
             case ObtenerMensajes:
                 notificaciones = mnotificacion.obtenerMensajesUsuario(idusuario);
                 request.setAttribute("notificaciones", notificaciones);
-                disp  = request.getRequestDispatcher("/modulos/notificaciones/_asinc/_asinc_mensajes.jsp");
-                disp.forward(request, response);                
+                disp = request.getRequestDispatcher("/modulos/notificaciones/_asinc/_asinc_mensajes.jsp");
+                disp.forward(request, response);
                 break;
             case ObtenerNotificaciones:
                 notificaciones = mnotificacion.obtenerNotificacionesUsuario(idusuario);
-                request.setAttribute("notificaciones", notificaciones);                
-                disp  = request.getRequestDispatcher("/modulos/notificaciones/_asinc/_asinc_notificaciones.jsp");
-                disp.forward(request, response);                
+                request.setAttribute("notificaciones", notificaciones);
+                disp = request.getRequestDispatcher("/modulos/notificaciones/_asinc/_asinc_notificaciones.jsp");
+                disp.forward(request, response);
                 break;
             case ResponderMensaje:
-                if(UtilidadesServlet.tryParseInt(request.getParameter("id"))){
-                    int idmensaje=Integer.parseInt(request.getParameter("id"));
-                    Notificacion mensaje=mnotificacion.obtenerMensaje(idmensaje);
+                if (UtilidadesServlet.tryParseInt(request.getParameter("id"))) {
+                    int idmensaje = Integer.parseInt(request.getParameter("id"));
+                    Notificacion mensaje = mnotificacion.obtenerMensaje(idmensaje);
                     request.setAttribute("mensaje", mensaje);
-                    disp  = request.getRequestDispatcher("/modulos/mensajes/responder.jsp");
+                    disp = request.getRequestDispatcher("/modulos/mensajes/responder.jsp");
                     disp.forward(request, response);
                 }
                 break;
             case VerNotificaciones:
                 notificaciones = mnotificacion.obtenerNotificacionesUsuario(idusuario);
-                request.setAttribute("notificaciones", notificaciones);                
-                disp  = request.getRequestDispatcher("/modulos/notificaciones/index.jsp");
-                disp.forward(request, response);                  
+                request.setAttribute("notificaciones", notificaciones);
+                disp = request.getRequestDispatcher("/modulos/notificaciones/index.jsp");
+                disp.forward(request, response);
                 break;
             default:
                 break;
@@ -110,6 +121,13 @@ public class AccionesNotificacion extends HttpServlet {
 
     }
 
+    /**
+     * Se encarga de clasificar la operación solicitada por el cliente.
+     *
+     * @param key el valor enviado por el cliente.
+     * @return Un elemento de la enumeración OpcionesDo
+     * @since 1.0
+     */
     private OpcionesDo getOpcion(String key) {
         if (key == null) {
             return OpcionesDo.AccionDefault;
@@ -125,10 +143,10 @@ public class AccionesNotificacion extends HttpServlet {
             return OpcionesDo.ObtenerNotificaciones;
         } else if (key.equals("ver_mensaje")) {
             return OpcionesDo.ResponderMensaje;
-        }else if (key.equals("ver_notificaciones")) {
+        } else if (key.equals("ver_notificaciones")) {
             return OpcionesDo.VerNotificaciones;
         }
-        
+
         return OpcionesDo.AccionDefault;
     }
 }

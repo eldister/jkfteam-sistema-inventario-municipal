@@ -227,7 +227,16 @@ public class AccionesMensaje extends HttpServlet {
             //redirigir a pagian de error de sistema
         }
     }
-
+    /**
+     * Función que permite obtener un objeto de Notificacion a partir de la
+     * soliciitud que el usuario realiza y que el servidor recibe, esto para la
+     * operacion de actualización. Si los campos no son correctos, se
+     * completaran con nulos o con -1 en caso de ser numéricos.
+     *
+     * @param request el objeto que contiene el dato de la solicitud.
+     * @return un objeto Notificacion para su uso.
+     * @since 1.0
+     */
     private Notificacion generarMensaje(HttpServletRequest request) {
         Notificacion notificacion = new Notificacion();
         notificacion.setFechaNotificacion(new Date());

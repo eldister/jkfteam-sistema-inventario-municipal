@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package simuni.servlets;
 
 import java.io.IOException;
@@ -31,12 +26,32 @@ import simuni.enums.Recursos;
 import simuni.utils.UtilidadesServlet;
 
 /**
+ * Este servelet controla las acciones que tienen qeu ver con el catálogo de
+ * <strong>Activo</strong>
+ * En este se controlan los get y post correspondientes a las solicitudes del
+ * usuario y tambien la preparación de lo necesario para dar respuesta a la
+ * solicitud. Entre las operaciones qeu se contemplan estan las básicas de
+ * ingreso, modificación y eliminacion.
  *
  * @author FchescO
+ * @since 1.0
+ * @version 1.0
  */
 @MultipartConfig
 public class AccionesActivo extends HttpServlet {
 
+    /**
+     * Esta enumeración es particular al servelet para poder hacer mas facil y
+     * exacto el control de operaciones solicitadas. Entre las operaciones
+     * comunes que se solicitan estan agregar, modificar, eliminar, hacer un
+     * query de busqueda y tambien hacer el listado por defecto que hay de los
+     * datos ingresados. Si el usuario no elige una de las operaciones de la
+     * enumeración por defecto se hara la operacion listado.
+     *
+     * @author FchescO
+     * @since 1.0
+     * @version 1.0
+     */
     enum OpcionesDo {
 
         Listado, Existe_Activo, Existe_Placa, Existe_Consecutivo,
@@ -189,6 +204,12 @@ public class AccionesActivo extends HttpServlet {
 
     }
 
+    /**
+     * Se encarga de clasificar la operación solicitada por el cliente.
+     *
+     * @param key el valor enviado por el cliente.
+     * @return Un elemento de la enumeración OpcionesDo
+     */
     private OpcionesDo getOpcion(String key) {
         if (key == null || key.length() == 0) {
             return OpcionesDo.AccionDefault;
@@ -527,6 +548,16 @@ public class AccionesActivo extends HttpServlet {
 
     }
 
+    /**
+     * Función que permite obtener un objeto de Activo a partir de la soliciitud
+     * que el usuario realiza y que el servidor recibe, esto para la operacion
+     * de registro. Si los campos no son correctos, se completaran con nulos o
+     * con -1 en caso de ser numéricos.
+     *
+     * @param request el objeto que contiene el dato de la solicitud.
+     * @return un objeto Activo para su uso.
+     * @since 1.0
+     */
     private Activo generarActivo(HttpServletRequest request) {
         Activo activo = new Activo();
         try {
@@ -570,6 +601,16 @@ public class AccionesActivo extends HttpServlet {
         return activo;
     }
 
+    /**
+     * Función que permite obtener un objeto de ActivoArticulo a partir de la
+     * soliciitud que el usuario realiza y que el servidor recibe, esto para la
+     * operacion de registro. Si los campos no son correctos, se completaran con
+     * nulos o con -1 en caso de ser numéricos.
+     *
+     * @param request el objeto que contiene el dato de la solicitud.
+     * @return un objeto ActivoArticulo para su uso.
+     * @since 1.0
+     */
     private ActivoArticulo generarActivoArticulo(HttpServletRequest request) {
         ActivoArticulo activo_articulo = new ActivoArticulo();
         try {
@@ -625,6 +666,16 @@ public class AccionesActivo extends HttpServlet {
         return activo_articulo;
     }
 
+    /**
+     * Función que permite obtener un objeto de ActivoTransporte a partir de la
+     * soliciitud que el usuario realiza y que el servidor recibe, esto para la
+     * operacion de registro. Si los campos no son correctos, se completaran con
+     * nulos o con -1 en caso de ser numéricos.
+     *
+     * @param request el objeto que contiene el dato de la solicitud.
+     * @return un objeto ActivoTrasporte para su uso.
+     * @since 1.0
+     */
     private ActivoTransporte generarActivoTransporte(HttpServletRequest request, HttpServletResponse response) {
         ActivoTransporte activo_transporte = new ActivoTransporte();
         try {
@@ -718,7 +769,5 @@ public class AccionesActivo extends HttpServlet {
         }
         return activo_transporte;
     }
-
-
 
 }

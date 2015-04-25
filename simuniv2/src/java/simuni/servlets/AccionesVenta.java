@@ -223,7 +223,13 @@ public class AccionesVenta extends HttpServlet {
             //redirigir a pagian de error de sistema
         }
     }
-
+/**
+ * Función que permite obtener un objeto de venta a partir de la soliciitud que el usuario realiza y que el servidor recibe.
+ * Si los campos no son correctos, se completaran con nulos o con -1 en caso de ser numéricos.
+ * @param request el objeto que contiene el dato de la solicitud.
+ * @return un objeto Venta para su uso.
+ * @since 1.0
+ */
     private Venta generarVenta(HttpServletRequest request) {
         Venta venta = new Venta();
         try {

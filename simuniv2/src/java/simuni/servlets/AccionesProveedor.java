@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package simuni.servlets;
 
 import java.io.IOException;
@@ -19,8 +14,11 @@ import simuni.entidades.Respuesta;
 import simuni.utils.UtilidadesServlet;
 
 /**
- *
+ * Esta clase se encarga de realizar el manejo de las solicitudes del modulo de proveedores. Acepta solicitudes
+ * del tipo POST o GET. Se encarga de dar una respuesta a esas demandas.
  * @author FchescO
+ * @since 1.0
+ * @version 1.0
  */
 public class AccionesProveedor extends HttpServlet {
 
@@ -40,7 +38,13 @@ public class AccionesProveedor extends HttpServlet {
 
         Listado,Listado2,Listado_Asinc, Nuevo, Eliminar, Modificar, Existe, Query,Query_Asinc, ReintentoNuevo, AccionDefault
     }
-
+    /**
+     * Se encarga de clasificar la operación solicitada por el cliente.
+     *
+     * @param key el valor enviado por el cliente.
+     * @return Un elemento de la enumeración OpcionesDo
+     * @since 1.0
+     */
     private OpcionesDo getOpcion(String key) {
         if (key == null || key.length() == 0) {
             return OpcionesDo.AccionDefault;
@@ -248,7 +252,13 @@ public class AccionesProveedor extends HttpServlet {
             //redirigir a  pagina de error de sistema
         }
     }
-
+/**
+ * Función que permite obtener un objeto de Proveedor a partir de la soliciitud que el usuario realiza y que el servidor recibe.
+ * Si los campos no son correctos, se completaran con nulos o con -1 en caso de ser numéricos.
+ * @param request el objeto que contiene el dato de la solicitud.
+ * @return un objeto Proveedor para su uso.
+ * @since 1.0
+ */
     private Proveedor generarProveedor(HttpServletRequest request) {
         Proveedor resp = new Proveedor();
         String tipoproveedor = request.getParameter("cmbtipoproveedor");

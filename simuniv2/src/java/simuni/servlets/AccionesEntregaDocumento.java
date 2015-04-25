@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package simuni.servlets;
 
 import java.io.IOException;
@@ -28,12 +23,30 @@ import simuni.enums.Recursos;
 import simuni.utils.UtilidadesServlet;
 
 /**
+ * Esta clase se encarga de hacer el meno de todas las solicitudes de ingreos,
+ * modificacion, eliminar, documentos qeu han sido entregados por los
+ * proveedores. La clase tiene la anotacion multipartconfig porque recibe
+ * archivos.
  *
  * @author FchescO
+ * @since 1.0
+ * @version 1.0
  */
 @MultipartConfig
 public class AccionesEntregaDocumento extends HttpServlet {
 
+    /**
+     * Esta enumeración es particular al servelet para poder hacer mas facil y
+     * exacto el control de operaciones solicitadas. Entre las operaciones
+     * comunes que se solicitan estan agregar, modificar, eliminar, hacer un
+     * query de busqueda y tambien hacer el listado por defecto que hay de los
+     * datos ingresados. Si el usuario no elige una de las operaciones de la
+     * enumeración por defecto se hara la operacion listado.
+     *
+     * @author FchescO
+     * @since 1.0
+     * @version 1.0
+     */
     enum OpcionesDo {
 
         Listado, Nuevo, Eliminar, EliminarDocumento, Modificar, Existe, Query, ReintentoNuevo, AccionDefault, VerDetalle
@@ -143,6 +156,12 @@ public class AccionesEntregaDocumento extends HttpServlet {
         }
     }
 
+    /**
+     * Se encarga de clasificar la operación solicitada por el cliente.
+     *
+     * @param key el valor enviado por el cliente.
+     * @return Un elemento de la enumeración OpcionesDo
+     */
     private OpcionesDo getOpcion(String key) {
         if (key == null || key.length() == 0) {
             return OpcionesDo.AccionDefault;
@@ -254,15 +273,15 @@ public class AccionesEntregaDocumento extends HttpServlet {
                     break;
                 case EliminarDocumento:
 
-                    if (UtilidadesServlet.tryParseInt(request.getParameter("registro"))&&UtilidadesServlet.tryParseInt(request.getParameter("entrega"))) {
+                    if (UtilidadesServlet.tryParseInt(request.getParameter("registro")) && UtilidadesServlet.tryParseInt(request.getParameter("entrega"))) {
                         Respuesta respuesta = null;
                         registro = Integer.parseInt(request.getParameter("registro"));
-                        codigoentrega=Integer.parseInt(request.getParameter("entrega"));
+                        codigoentrega = Integer.parseInt(request.getParameter("entrega"));
                         Documento documento = new Documento();
                         documento.setCodigodocumento(registro);
                         documento.setCodigoentregadocumento(codigoentrega);
                         respuesta = mentregadocumento.eliminarDocumento(documento);
-                        resultset=mentregadocumento.getDocumentosEntrega(codigoentrega);
+                        resultset = mentregadocumento.getDocumentosEntrega(codigoentrega);
                         request.setAttribute("respuesta", respuesta);
                         request.setAttribute("listado", resultset);
                         disp = request.getRequestDispatcher("/modulos/proveedores/documentos/_asinc/_asinc_listardocumentos.jsp");
@@ -281,6 +300,16 @@ public class AccionesEntregaDocumento extends HttpServlet {
 
     }
 
+    /**
+     * Función que permite obtener un objeto de EntregaDocumento a partir de la
+     * soliciitud que el usuario realiza y que el servidor recibe, esto para la
+     * operacion de registro. Si los campos no son correctos, se completaran con
+     * nulos o con -1 en caso de ser numéricos.
+     *
+     * @param request el objeto que contiene el dato de la solicitud.
+     * @return un objeto EntregaDocumento para su uso.
+     * @since 1.0
+     */
     private EntregaDocumento generarEntregaDocumento(HttpServletRequest request) {
         EntregaDocumento entrega = new EntregaDocumento();
         try {

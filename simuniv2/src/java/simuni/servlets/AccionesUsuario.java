@@ -43,9 +43,9 @@ public class AccionesUsuario extends HttpServlet {
      */
     enum OpcionesDo {
 
-       Reactivar_Usuario, Reseteo_Clave, Listado, Nuevo, Eliminar, 
-       Modificar, Query, AccionDefault, Login, Logout, Permisos, Actualizacion_Clave,
-       Query_Inactivos
+        Reactivar_Usuario, Reseteo_Clave, Listado, Nuevo, Eliminar,
+        Modificar, Query, AccionDefault, Login, Logout, Permisos, Actualizacion_Clave,
+        Query_Inactivos
     }
 
     /**
@@ -53,6 +53,7 @@ public class AccionesUsuario extends HttpServlet {
      *
      * @param key el valor enviado por el cliente.
      * @return Un elemento de la enumeración OpcionesDo
+     * @since 1.0
      */
     private OpcionesDo getOpcion(String key) {
         if (key == null || key.length() == 0) {
@@ -134,7 +135,7 @@ public class AccionesUsuario extends HttpServlet {
                     disp = request.getRequestDispatcher("/modulos/usuarios/index_inactivos.jsp");
                     request.setAttribute("paginacion", ((int) musuario.getCantidadRegistrosInactivos(query) / paginacion) + 1);
                     request.setAttribute("query", query);
-                    break;                    
+                    break;
                 case Modificar:
                     //obtener el activo
                     registro = request.getParameter("registro");
@@ -336,18 +337,18 @@ public class AccionesUsuario extends HttpServlet {
                     disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_listar_inactivos.jsp");
 
                     request.setAttribute("paginacion", ((int) musuario.getCantidadRegistrosInactivos(query) / paginacion) + 1);
-                    disp.forward(request, response);                    
+                    disp.forward(request, response);
                     break;
                 case Reactivar_Usuario:
                     if (request.getParameter("registro") != null) {
                         registro = request.getParameter("registro");
                         usuario = new Usuario();
                         usuario.setNombreusuario(registro);
-                        System.out.println("El que se va a reacviar es "+registro);
+                        System.out.println("El que se va a reacviar es " + registro);
                         musuario.reactivarUsuario(usuario);
                         response.getWriter().print("Usuario Reactivado");
                     }
-                    break;                    
+                    break;
 
             }
 
@@ -359,6 +360,14 @@ public class AccionesUsuario extends HttpServlet {
         }
     }
 
+    /**
+     * Función que permite generar un objeto Usuario a partir de la solicitud
+     * que realiza el usuario a nivel web y que el servidor recibe.
+     *
+     * @param request la solicitud del usuario a descodificar.
+     * @return un objeto Usuario a partir de la solicitud.
+     * @since 1.0
+     */
     private Usuario generarUsuario(HttpServletRequest request) {
         Usuario usuario = new Usuario();
         try {
