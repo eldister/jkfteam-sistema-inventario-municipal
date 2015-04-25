@@ -1,4 +1,3 @@
-
 package simuni.servlets;
 
 import java.io.IOException;
@@ -18,11 +17,25 @@ import simuni.intefaces.IReporteador;
 import simuni.utils.UtilidadesServlet;
 
 /**
+ * Clase que se encarga de hacer el manejo de la solicitudes para poder hacer
+ * los reportes del sistema. Esta clase es un servlet y se encarga de las
+ * solicitudes.
  *
  * @author FchescO
+ * @since 1.0
+ * @version 1.0
  */
 public class AccionesReportes extends HttpServlet {
 
+    /**
+     * Enumeraciones que contiene las opciones a las que tiene acceso el suuario
+     * a traves de sus solicitudes. Esta enumeracion es para facilitar la
+     * clasificación de las solicitudes.
+     *
+     * @author FchescO
+     * @since 1.0
+     * @version 1.0
+     */
     enum OpcionesDo {
 
         ReporteGeneralActivos,
@@ -38,6 +51,13 @@ public class AccionesReportes extends HttpServlet {
 
     }
 
+    /**
+     * Se encarga de clasificar la operación solicitada por el cliente.
+     *
+     * @param key el valor enviado por el cliente.
+     * @return Un elemento de la enumeración OpcionesDo
+     * @since 1.0
+     */
     private OpcionesDo getOpcion(String key) {
         if (key == null || key.length() == 0) {
             return OpcionesDo.AccionDefault;
@@ -47,22 +67,21 @@ public class AccionesReportes extends HttpServlet {
             return OpcionesDo.ReporteGeneralUsuarios;
         } else if (key.equals("rprt_gproveedor")) {
             return OpcionesDo.ReporteGeneralProveedores;
-        } else if(key.equals("rprt_greparacion")){
+        } else if (key.equals("rprt_greparacion")) {
             return OpcionesDo.ReporteGeneralReparaciones;
-        } else if(key.equals("rprt_gbaja")){
+        } else if (key.equals("rprt_gbaja")) {
             return OpcionesDo.ReporteGeneralBajas;
-        }
-        else if(key.equals("rprt_gventa")){
+        } else if (key.equals("rprt_gventa")) {
             return OpcionesDo.ReporteGeneralVentas;
         }
         return OpcionesDo.AccionDefault;
     }
 
     /**
-     * Handles the HTTP <code>GET</code> method.
+     * Manejador de las solicitudes HTTP <code>GET</code> .
      *
-     * @param request servlet request
-     * @param response servlet response
+     * @param request objeto solicitud
+     * @param response respuesta del servlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
@@ -97,44 +116,44 @@ public class AccionesReportes extends HttpServlet {
                 disp.forward(request, response);
                 break;
         }
-      switch (getOpcion(request.getParameter("proceso"))) {
-          case ReporteGeneralActivos:
-              reporteador=new ManejadorActivo();
-              request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
-              disp = request.getRequestDispatcher("/modulos/reportes/rprt_activos.jsp");
-              disp.forward(request, response);
-              break;
-          case ReporteGeneralUsuarios:
-              reporteador=new ManejadorUsuario();
-              request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
-              disp = request.getRequestDispatcher("/modulos/reportes/rprt_usuarios.jsp");
-              disp.forward(request, response);
-              break;
-          case ReporteGeneralProveedores:
-              reporteador=new ManejadorProveedor();
-                            request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
-              disp = request.getRequestDispatcher("/modulos/reportes/rprt_proveedores.jsp");
-              disp.forward(request, response);
-              break;
-          case ReporteGeneralReparaciones:
-              reporteador = new ManejadorReparacion();
-              request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
-              disp = request.getRequestDispatcher("/modulos/reportes/rprt_reparaciones.jsp");
-              disp.forward(request, response);
-              break;
-          case ReporteGeneralBajas:
-              reporteador = new ManejadorBaja();
-              request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
-              disp = request.getRequestDispatcher("/modulos/reportes/rprt_reparaciones.jsp");
-              disp.forward(request, response);
-              break;
-          case ReporteGeneralVentas:
-              reporteador = new ManejadorVenta();
-              request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
-              disp = request.getRequestDispatcher("/modulos/reportes/rprt_reparaciones.jsp");
-              disp.forward(request, response);
-              break;
-      }
+        switch (getOpcion(request.getParameter("proceso"))) {
+            case ReporteGeneralActivos:
+                reporteador = new ManejadorActivo();
+                request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
+                disp = request.getRequestDispatcher("/modulos/reportes/rprt_activos.jsp");
+                disp.forward(request, response);
+                break;
+            case ReporteGeneralUsuarios:
+                reporteador = new ManejadorUsuario();
+                request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
+                disp = request.getRequestDispatcher("/modulos/reportes/rprt_usuarios.jsp");
+                disp.forward(request, response);
+                break;
+            case ReporteGeneralProveedores:
+                reporteador = new ManejadorProveedor();
+                request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
+                disp = request.getRequestDispatcher("/modulos/reportes/rprt_proveedores.jsp");
+                disp.forward(request, response);
+                break;
+            case ReporteGeneralReparaciones:
+                reporteador = new ManejadorReparacion();
+                request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
+                disp = request.getRequestDispatcher("/modulos/reportes/rprt_reparaciones.jsp");
+                disp.forward(request, response);
+                break;
+            case ReporteGeneralBajas:
+                reporteador = new ManejadorBaja();
+                request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
+                disp = request.getRequestDispatcher("/modulos/reportes/rprt_reparaciones.jsp");
+                disp.forward(request, response);
+                break;
+            case ReporteGeneralVentas:
+                reporteador = new ManejadorVenta();
+                request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
+                disp = request.getRequestDispatcher("/modulos/reportes/rprt_reparaciones.jsp");
+                disp.forward(request, response);
+                break;
+        }
     }
 
     /**
@@ -149,17 +168,17 @@ public class AccionesReportes extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         IReporteador reporteador = null;
-        RequestDispatcher disp=null;
+        RequestDispatcher disp = null;
         int tiporeporte = UtilidadesServlet.getInt(request.getParameter("cmbtiporeporte"), -1);
-        java.sql.Date fein=UtilidadesServlet.getFecha(request.getParameter("feinicial"), null);
-        java.sql.Date fin=UtilidadesServlet.getFecha(request.getParameter("fefinal"), null);
-        boolean usarFechas=request.getParameter("chkfechas")!=null;
+        java.sql.Date fein = UtilidadesServlet.getFecha(request.getParameter("feinicial"), null);
+        java.sql.Date fin = UtilidadesServlet.getFecha(request.getParameter("fefinal"), null);
+        boolean usarFechas = request.getParameter("chkfechas") != null;
         switch (tiporeporte) {
             case 1:
                 reporteador = new ManejadorActivo();
-                request.setAttribute("Rprt_Datos", usarFechas?
-                        reporteador.obtenerDatosReporte(fein, fin):
-                        reporteador.obtenerDatosReporte());
+                request.setAttribute("Rprt_Datos", usarFechas
+                        ? reporteador.obtenerDatosReporte(fein, fin)
+                        : reporteador.obtenerDatosReporte());
                 disp = request.getRequestDispatcher("/modulos/reportes/rprt_activos.jsp");
                 request.setAttribute("Usa_Fechas", usarFechas);
                 request.setAttribute("Fecha_Ini", fein);
@@ -168,9 +187,9 @@ public class AccionesReportes extends HttpServlet {
                 break;
             case 2:
                 reporteador = new ManejadorProveedor();
-                request.setAttribute("Rprt_Datos", usarFechas?
-                        reporteador.obtenerDatosReporte(fein, fin):
-                        reporteador.obtenerDatosReporte());
+                request.setAttribute("Rprt_Datos", usarFechas
+                        ? reporteador.obtenerDatosReporte(fein, fin)
+                        : reporteador.obtenerDatosReporte());
                 disp = request.getRequestDispatcher("/modulos/reportes/rprt_proveedores.jsp");
                 request.setAttribute("Usa_Fechas", usarFechas);
                 request.setAttribute("Fecha_Ini", fein);
@@ -181,21 +200,8 @@ public class AccionesReportes extends HttpServlet {
                 reporteador = new ManejadorUsuario();
                 request.setAttribute("Rprt_Datos", reporteador.obtenerDatosReporte());
                 disp = request.getRequestDispatcher("/modulos/reportes/rprt_usuarios.jsp");
-                disp.forward(request, response);                
+                disp.forward(request, response);
                 break;
         }
-        
-
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

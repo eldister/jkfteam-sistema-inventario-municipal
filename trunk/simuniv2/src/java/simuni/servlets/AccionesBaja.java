@@ -40,7 +40,7 @@ public class AccionesBaja extends HttpServlet {
      */
     enum OpcionesDo {
 
-        Listado,Listado_Asinc,Query_Asinc, Nuevo, Eliminar, Modificar, Query,Nueva_Solicitud_Baja, AccionDefault
+        Listado, Listado_Asinc, Query_Asinc, Nuevo, Eliminar, Modificar, Query, Nueva_Solicitud_Baja, AccionDefault
     }
 
     /**
@@ -113,7 +113,7 @@ public class AccionesBaja extends HttpServlet {
                         request.setAttribute("registro", baja);
                     }
                     disp = request.getRequestDispatcher("/modulos/bajas/eliminar.jsp");
-                    break;                 
+                    break;
                 case AccionDefault:
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
                     paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
@@ -159,9 +159,9 @@ public class AccionesBaja extends HttpServlet {
             ResultSet resultset = null;
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
-               
-                    Baja nuevobaja =generarBaja(request);
-                   //falta general
+
+                    Baja nuevobaja = generarBaja(request);
+                    //falta general
                     respuesta = mbaja.registrarBaja(nuevobaja);
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("registro", nuevobaja);
@@ -205,16 +205,26 @@ public class AccionesBaja extends HttpServlet {
             //redirigir a pagian de error de sistema
         }
     }
-    
-    private Baja generarBaja(HttpServletRequest request){
-        Baja baja=new Baja();
-        try{
+
+    /**
+     * Función que permite obtener un objeto de Baja a partir de la soliciitud
+     * que el usuario realiza y que el servidor recibe, esto para la operacion
+     * de registro. Si los campos no son correctos, se completaran con nulos o
+     * con -1 en caso de ser numéricos.
+     *
+     * @param request el objeto que contiene el dato de la solicitud.
+     * @return un objeto Baja para su uso.
+     * @since 1.0
+     */
+    private Baja generarBaja(HttpServletRequest request) {
+        Baja baja = new Baja();
+        try {
             baja.setCodigoDocumentoRespaldo(request.getParameter("txtdocumentorespaldo"));
             baja.setFechaBaja(UtilidadesServlet.getFecha(request.getParameter("txtfechabaja"), null));
             baja.setObservaciones(request.getParameter("txtobservaciones"));
             baja.setRazonBaja(request.getParameter("txtrazonbaja"));
-            baja.setPlacaActivo(request.getParameter("hddactivo"));  
-        }catch(Exception ex){
+            baja.setPlacaActivo(request.getParameter("hddactivo"));
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return baja;

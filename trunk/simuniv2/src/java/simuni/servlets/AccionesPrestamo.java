@@ -1,10 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package simuni.servlets;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.Date;
@@ -13,18 +8,34 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.DateFormatter;
 import simuni.clases.ln.ManejadorPrestamo;
 import simuni.entidades.Prestamo;
 import simuni.entidades.Respuesta;
 import simuni.utils.UtilidadesServlet;
 
 /**
+ * Esta clase se encarga de realizar el manejo de las solicitudes del modulo de
+ * Prestamos. Acepta solicitudes del tipo POST o GET. Se encarga de dar una
+ * respuesta a esas demandas.
  *
  * @author Keylin
+ * @since 1.0
+ * @version 1.0
  */
 public class AccionesPrestamo extends HttpServlet {
 
+    /**
+     * Esta enumeración es particular al servelet para poder hacer mas facil y
+     * exacto el control de operaciones solicitadas. Entre las operaciones
+     * comunes que se solicitan estan agregar, modificar, eliminar, hacer un
+     * query de busqueda y tambien hacer el listado por defecto que hay de los
+     * datos ingresados. Si el usuario no elige una de las operaciones de la
+     * enumeración por defecto se hara la operacion listado.
+     *
+     * @author Keylin
+     * @since 1.0
+     * @version 1.0
+     */
     enum OpcionesDo {
 
         Listado, Nuevo, Eliminar, Modificar, Query, AccionDefault, Listado_Asinc, Query_Asinc
@@ -35,6 +46,7 @@ public class AccionesPrestamo extends HttpServlet {
      *
      * @param key el valor enviado por el cliente.
      * @return Un elemento de la enumeración OpcionesDo
+     * @since 1.0
      */
     private OpcionesDo getOpcion(String key) {
         if (key == null || key.length() == 0) {
@@ -69,7 +81,7 @@ public class AccionesPrestamo extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher disp = null;
-        Prestamo prestamo=null;
+        Prestamo prestamo = null;
         try {
             int desplazamiento = 0;
             int npagina = 0;
@@ -114,8 +126,8 @@ public class AccionesPrestamo extends HttpServlet {
                     registro = Integer.parseInt(request.getParameter("registro"));
                     prestamo = mprestamo.getPrestamo(registro);
                     request.setAttribute("registro", prestamo);
-                    disp = request.getRequestDispatcher("/modulos/prestamos/eliminar.jsp"); 
-                    
+                    disp = request.getRequestDispatcher("/modulos/prestamos/eliminar.jsp");
+
                     break;
                 case AccionDefault:
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
@@ -148,7 +160,7 @@ public class AccionesPrestamo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       RequestDispatcher disp = null;
+        RequestDispatcher disp = null;
         Prestamo prestamo = null;
         Respuesta respuesta = null;
         try {
@@ -170,7 +182,7 @@ public class AccionesPrestamo extends HttpServlet {
                     request.setAttribute("respuesta", respuesta);
                     disp = request.getRequestDispatcher("/modulos/prestamos/nuevo.jsp");
                     break;
-               case Modificar:
+                case Modificar:
                     prestamo = generarActualizacionPrestamo(request);
                     respuesta = mprestamo.modificarPrestamo(prestamo);
                     request.setAttribute("registro", prestamo);
@@ -183,7 +195,7 @@ public class AccionesPrestamo extends HttpServlet {
                     respuesta = mprestamo.eliminarPrestamo(prestamo);
                     request.setAttribute("registro", prestamo);
                     request.setAttribute("respuesta", respuesta);
-                    disp = request.getRequestDispatcher("/modulos/prestamos/eliminar.jsp");                 
+                    disp = request.getRequestDispatcher("/modulos/prestamos/eliminar.jsp");
                     break;
                 case Query:
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
@@ -222,9 +234,20 @@ public class AccionesPrestamo extends HttpServlet {
             //redirigir a pagian de error de sistema
         }
     }
+
+    /**
+     * Función que permite obtener un objeto de Prestamo a partir de la
+     * soliciitud que el usuario realiza y que el servidor recibe, esto para la
+     * operacion de ingreso. Si los campos no son correctos, se completaran con
+     * nulos o con -1 en caso de ser numéricos.
+     *
+     * @param request el objeto que contiene el dato de la solicitud.
+     * @return un objeto Prestamo para su uso.
+     * @since 1.0
+     */
     private Prestamo generarPrestamo(HttpServletRequest request) {
         Prestamo resp = new Prestamo();
-        
+
         String departamentosolicitante = request.getParameter("txtdepartamento");
         Date fechadevolucion = UtilidadesServlet.getFecha(request.getParameter("txtfechaDevolucion"), null);
         String idactivo = request.getParameter("txtidActivo");
@@ -237,13 +260,23 @@ public class AccionesPrestamo extends HttpServlet {
         resp.setFechaDevolucion(fechadevolucion);
         resp.setIdActivo(idactivo);
         resp.setObservaciones(observacion);
-        
+
         return resp;
     }
-    
+
+    /**
+     * Función que permite obtener un objeto de Prestamo a partir de la
+     * soliciitud que el usuario realiza y que el servidor recibe, esto para la
+     * operacion de actualización. Si los campos no son correctos, se
+     * completaran con nulos o con -1 en caso de ser numéricos.
+     *
+     * @param request el objeto que contiene el dato de la solicitud.
+     * @return un objeto Prestamo para su uso.
+     * @since 1.0
+     */
     private Prestamo generarActualizacionPrestamo(HttpServletRequest request) {
         Prestamo resp = new Prestamo();
-        
+
         int idPrestamo = Integer.parseInt(request.getParameter("txtprestamo"));
         String departamentosolicitante = request.getParameter("txtdepartamento");
         Date fechadevolucion = UtilidadesServlet.getFecha(request.getParameter("txtfechaDevolucion"), null);
@@ -258,7 +291,7 @@ public class AccionesPrestamo extends HttpServlet {
         resp.setFechaDevolucion(fechadevolucion);
         resp.setIdActivo(idactivo);
         resp.setObservaciones(observacion);
-        
+
         return resp;
     }
 }

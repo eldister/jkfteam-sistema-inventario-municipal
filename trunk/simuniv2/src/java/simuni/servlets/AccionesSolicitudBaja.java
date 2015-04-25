@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import simuni.clases.ln.ManejadorBaja;
 import simuni.clases.ln.ManejadorSolicitudBaja;
 import simuni.entidades.Baja;
 import simuni.entidades.Respuesta;

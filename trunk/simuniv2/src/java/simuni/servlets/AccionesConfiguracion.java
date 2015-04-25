@@ -40,7 +40,7 @@ public class AccionesConfiguracion extends HttpServlet {
      */
     enum OpcionesDo {
 
-        Listado, Nuevo, Eliminar, Modificar, Query, AccionDefault,Modificar_ConfiguracionRespaldo,Nuevo_ConfiguracionRespaldo
+        Listado, Nuevo, Eliminar, Modificar, Query, AccionDefault, Modificar_ConfiguracionRespaldo, Nuevo_ConfiguracionRespaldo
     }
 
     /**
@@ -213,6 +213,16 @@ public class AccionesConfiguracion extends HttpServlet {
         }
     }
 
+    /**
+     * Función que permite obtener un objeto de Configuracion a partir de la
+     * soliciitud que el usuario realiza y que el servidor recibe, esto para la
+     * operacion de registro. Si los campos no son correctos, se completaran con
+     * nulos o con -1 en caso de ser numéricos.
+     *
+     * @param request el objeto que contiene el dato de la solicitud.
+     * @return un objeto Configuración para su uso.
+     * @since 1.0
+     */
     private Configuracion generarConfiguracionRespaldoBD(HttpServletRequest request) {
         Configuracion configuracion = new Configuracion();
         try {
