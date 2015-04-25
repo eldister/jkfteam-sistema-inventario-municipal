@@ -131,6 +131,13 @@ public class ManejadorNotificaciones {
 
     }
     
+    /**
+     * Método que obtiene un mensaje en particular
+     * 
+     * @param codigo el codigo del mensaje que se desea obtener
+     * @return un objeto tipo noficiacion con el mensaje encontrado
+     * @since 1.0
+     */
     public Notificacion obtenerMensaje(int codigo){
          Notificacion notificacion=null;
         try {
@@ -164,6 +171,15 @@ public class ManejadorNotificaciones {
 
     }
 
+    /**
+     * Método para el registro o la agregación a la base de datos de un
+     * mensaje enviado por un usuario a otro.
+     * 
+     * @param tipoactivo un objeto con la información del mensaje enviado
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @since 1.0
+     */
     public Respuesta agregarMensaje(Notificacion tipoactivo) {
         Respuesta resp = new Respuesta();
         ManejadorDatosNotificaciones mdmensaje = new ManejadorDatosNotificaciones();

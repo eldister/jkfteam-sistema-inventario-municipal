@@ -176,8 +176,6 @@ public class ManejadorBaja implements IReporteador{
      * @return resp un arraylist con los datos recupertados de la base de datos para 
      * que seran utilizados en el reporte
      */
-    
-
     @Override
     public ArrayList<String[]> obtenerDatosReporte() {
         ArrayList<String[]> resp = new ArrayList<String[]>();
@@ -213,6 +211,12 @@ public class ManejadorBaja implements IReporteador{
         return resp;
     }
 
+    /**
+     * Método abstracto implementado de la interfaz IReporteador para obtener los datos 
+     * que serán utilizados en el reporte de acuerdo a un rango de fechas.
+     * @return resp un arraylist con los datos recupertados de la base de datos para 
+     * que seran utilizados en el reporte
+     */
     @Override
     public ArrayList<String[]> obtenerDatosReporte(Date fini, Date ffin) {
         ArrayList<String[]> resp = new ArrayList<String[]>();

@@ -211,6 +211,14 @@ public class ManejadorEstado {
         return resp;
     }
 
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a los estados
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @return Un objeto Estado con los valores correspondientes
+     * @since 1.0
+     */
     public Estado getEstado(int codigo) {
         Estado resp = null;
         ManejadorDatosEstado mdestado = new ManejadorDatosEstado();

@@ -50,6 +50,14 @@ public class ManejadorPermiso {
         return resp;
     }
 
+    /**
+     * Método utilizado para la asignación de los permisos a un usuario en particular
+     * 
+     * @param permisos que se le pueden dar o quitar a un usuario
+     * @param idusuario identificador del usuario
+     * @return un arraylist con la respuesta obtenida durante la operación.
+     * @since 1.0
+     */
     public ArrayList<Respuesta> asignarPermisos(String permisos[], String idusuario) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorDatosPermiso mdpermiso = new ManejadorDatosPermiso();
@@ -172,6 +180,13 @@ public class ManejadorPermiso {
         return resp;
     }
 
+    /**
+     * Método que obtiene todo los resultados de los permisos a través de una
+     * vista de la base de datos
+     * 
+     * @return un arraylist con el listado de los permisos para un tipo de usuario
+     * @since 1.0
+     */
     public ArrayList<Permiso> listadoPermisos() {
 
         ArrayList<Permiso> tiposusuario = null;
@@ -196,6 +211,14 @@ public class ManejadorPermiso {
         return tiposusuario;
     }
 
+    /**
+     * Método que obtiene todo los permisos que han sido asignados a los usuarios del
+     * sistema
+     * 
+     * @param idusuario usuarios de quien se obtendran la lista de permisos
+     * @return un arraylist con el listado de los permisos asignados a dicho usuario
+     * @since 1.0
+     */
     public ArrayList<Permiso> listadoPermiso_Asignados(String idusuario) {
 
         ArrayList<Permiso> tiposusuario = null;
@@ -220,6 +243,14 @@ public class ManejadorPermiso {
         return tiposusuario;
     }
 
+    /**
+     * Método que obtiene todo los permisos que tiene disponibles un usuario del
+     * sistema
+     * 
+     * @param idusuario usuarios de quien se obtendran la lista de permisos disponibles
+     * @return un resultset con el listado de los permisos disponibles de dicho usuario
+     * @since 1.0
+     */
     public ArrayList<Permiso> listadoPermiso_Disponibles(String idusuario) {
 
         ArrayList<Permiso> tiposusuario = null;
@@ -292,6 +323,14 @@ public class ManejadorPermiso {
         return resp;
     }
 
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a los permisos
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @return Un objeto Permiso con los valores correspondientes
+     * @since 1.0
+     */
     public Permiso getPermiso(int codigo) {
         Permiso resp = null;
         ManejadorDatosPermiso mdpermiso = new ManejadorDatosPermiso();

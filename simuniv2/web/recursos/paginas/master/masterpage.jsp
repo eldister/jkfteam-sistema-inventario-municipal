@@ -121,31 +121,7 @@
                             </div>
                         </div>                            
                     </div>    
-                              <!--          
-                    <div id='simuni_div_menu'>
-                        <ul>
-                            <li><a href='#'><img src="/simuniv2/recursos/imagenes/menu/home.png" width="20" height="16" style="padding-right: 4px;">Inicio</a></li>
-                           <li class='active has-sub'><a href='#'>Sistema<img src="/simuniv2/recursos/imagenes/menu/circle-down.png" width="20" height="16" style="padding-left: 4px;"></span></a>
-                              <ul>
-                                 <li class='has-sub'><a href='#'>Activo<img src="/simuniv2/recursos/imagenes/menu/circle-right.png" width="16" height="12" style="float: right;"></span></a>
-                                    <ul>
-                                       <li><a href='#'>Registrar</a></li>
-                                       <li><a href='#'>Listado</a></li>
-                                    </ul>
-                                 </li>
-                                 <li class='has-sub'><a href='#'>Proveedores<img src="/simuniv2/recursos/imagenes/menu/circle-right.png" width="16" height="12" style="float: right;"></span></a>
-                                    <ul>
-                                       <li><a href='#'>Registrar</a></li>
-                                       <li><a href='#'>Listado</a></li>
-                                    </ul>
-                                 </li>
-                              </ul>
-                           </li>
-                           <li><a href='#'>Contacto</a></li>
-                           <li><a href='#'>Extras</a></li>
-                        </ul>
-                    </div>
-                                 -->      
+                                        
                     <%
                             String menu_usuario = user.getMenuusuario();
                             if (menu_usuario != null) {
