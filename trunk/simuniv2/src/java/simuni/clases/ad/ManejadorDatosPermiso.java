@@ -186,8 +186,10 @@ public class ManejadorDatosPermiso {
     /**
      * Método que obtiene todo los resultados de los permisos a través de una
      * vista de la base de datos
+     * 
      * @throws SQLException en caso de que ocurra una excepcion 
      * @return un resultset con el resultado al ejecutar el query sql
+     * @since 1.0
      */
         public ResultSet listadoPermiso() throws SQLException {
         ResultSet resp = null;
@@ -205,12 +207,15 @@ public class ManejadorDatosPermiso {
         return resp;
 
     } 
+        
    /**
      * Método que obtiene todo los permisos que han sido asignados a los usuarios del
      * sistema
+     * 
      * @param nombre_usuario usuarios de quien se obtendran la lista de permisos
      * @throws SQLException en caso de que ocurra una excepcion 
      * @return un resultset con el listado de los permisos asignados a dicho usuario
+     * @since 1.0
      */
    public ResultSet listadoPermiso_Asignados(String nombre_usuario) throws SQLException {
         ResultSet resp = null;
@@ -229,12 +234,15 @@ public class ManejadorDatosPermiso {
         return resp;
 
     } 
+   
    /**
      * Método que obtiene todo los permisos que tiene disponibles un usuario del
      * sistema
+     * 
      * @param nombre_usuario usuarios de quien se obtendran la lista de permisos disponibles
      * @throws SQLException en caso de que ocurra una excepcion 
      * @return un resultset con el listado de los permisos disponibles de dicho usuario
+     * @since 1.0
      */
    public ResultSet listadoPermiso_Disponibles(String nombre_usuario) throws SQLException {
         ResultSet resp = null;

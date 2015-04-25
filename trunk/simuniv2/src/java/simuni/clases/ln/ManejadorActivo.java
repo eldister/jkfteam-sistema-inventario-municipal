@@ -35,7 +35,8 @@ public class ManejadorActivo implements IReporteador {
 
     /**
      * Función que se encarga de obtener un listado de los registros ya
-     * ingreados. No lanza excepciones, y si las hay, las registra en bitácora.
+     * ingreados con relación a los departamentos. No lanza excepciones, y si 
+     * las hay, las registra en bitácora.
      *
      * @return Un ResultSet que trae consigo los datos de la selección.
      * @since 1.0
@@ -45,31 +46,80 @@ public class ManejadorActivo implements IReporteador {
         return mdepartamento.listadoDepartamento();
     }
 
+    /**
+     * Función que se encarga de obtener un listado de los registros ya
+     * ingreados con relación a los tipos de pagos. No lanza excepciones, y si 
+     * las hay, las registra en bitácora.
+     *
+     * @return Un ResultSet que trae consigo los datos de la selección.
+     * @since 1.0
+     */
     public ArrayList<TipoPago> listadoTipoPago() {
         ManejadorTipoPago mdtipopago = new ManejadorTipoPago();
         return mdtipopago.listadoTipoPago();
     }
 
+    /**
+     * Función que se encarga de obtener un listado de los registros ya
+     * ingreados con relación a los estados. No lanza excepciones, y si 
+     * las hay, las registra en bitácora.
+     *
+     * @return Un ResultSet que trae consigo los datos de la selección.
+     * @since 1.0
+     */
     public ArrayList<Estado> listadoEstado() {
         ManejadorEstado mdestado = new ManejadorEstado();
         return mdestado.listadoEstado();
     }
 
+    /**
+     * Función que se encarga de obtener un listado de los registros ya
+     * ingreados con relación a los tipos de activos. No lanza excepciones, y si 
+     * las hay, las registra en bitácora.
+     *
+     * @return Un ResultSet que trae consigo los datos de la selección.
+     * @since 1.0
+     */
     public ArrayList<TipoActivo> listadoTipoActivo() {
         ManejadorTipoActivo mtipoactivo = new ManejadorTipoActivo();
         return mtipoactivo.listadoTipoActivo();
     }
 
+    /**
+     * Función que se encarga de obtener un listado de los registros ya
+     * ingreados con relación a los tipos de bateria. No lanza excepciones, y si 
+     * las hay, las registra en bitácora.
+     *
+     * @return Un ResultSet que trae consigo los datos de la selección.
+     * @since 1.0
+     */
     public ArrayList<TipoBateria> listadoTipoBateria() {
         ManejadorTipoBateria mtipoactivo = new ManejadorTipoBateria();
         return mtipoactivo.listadoTipoBateria();
     }
 
+    /**
+     * Función que se encarga de obtener un listado de los registros ya
+     * ingreados con relación a los tipos de llantas. No lanza excepciones, y si 
+     * las hay, las registra en bitácora.
+     *
+     * @return Un ResultSet que trae consigo los datos de la selección.
+     * @since 1.0
+     */
     public ArrayList<TipoLlanta> listadoTipoLlanta() {
         ManejadorTipoLlanta mtipollanta = new ManejadorTipoLlanta();
         return mtipollanta.listadoTipoLlanta();
     }
 
+    /**
+     * Método para ingresar un nuevo registro de un activo municipal.
+     * 
+     * @param activo objeto con la información del activo a registrar.
+     * @param tipoRegistro el tipo de registro correspondiente al tipo de activo
+     * que se va a registrar a la base de datos del sistema.
+     * @return Un arrayList con la respuesta obtenida durante el proceso
+     * @since 1.0
+     */
     public ArrayList<Respuesta> registrarActivo(Activo activo, int tipoRegistro) {
 
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
@@ -104,6 +154,14 @@ public class ManejadorActivo implements IReporteador {
 
     }
 
+    /**
+     * Método que registra la sistema un activo de tipo articulo.
+     * 
+     * @param activoarticulo objeto con la información del activo de tipo 
+     * articulo.
+     * @return un objeto con la respuesta de la operación.
+     * @since 1.0
+     */
     private Respuesta registrarActivoArticulo(ActivoArticulo activoarticulo) {
         Respuesta resp = new Respuesta();
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
@@ -126,7 +184,7 @@ public class ManejadorActivo implements IReporteador {
                         if (imaux.getCodigoImagen() > 0) {
                             msg += "<br>Proceso de guardado de imagen " + mactivo.guardarImagenActivo(imaux);
                         } else {
-                            System.out.println("No se puede registrar :D");
+                            System.out.println("No se puede registrar :(");
                         }
                     }
                 }
@@ -140,6 +198,14 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Método para actualizar un registro con la información de un activo de tipo
+     * artículo en particular.
+     * 
+     * @param activoarticulo con la información a actualizar.
+     * @return Un arrayList con la respuesta obtenida durante el proceso
+     * @since 1.0
+     */
     public ArrayList<Respuesta> actualizarActivoArticulo(ActivoArticulo activoarticulo) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
@@ -203,6 +269,14 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Método para agregar al registro una imagen correspondiente al activo que
+     * será ingresado a la base de datos del sistema.
+     * 
+     * @param activo con la información del activo que será registrado
+     * @return Un arrayList con la respuesta obtenida durante el proceso
+     * @since 1.0
+     */
     public ArrayList<Respuesta> agregarImagenesActivo(Activo activo) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
@@ -248,6 +322,14 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Método que registra la sistema un activo de tipo transporte.
+     * 
+     * @param activoTransporte objeto con la información del activo de tipo 
+     * transporte.
+     * @return un objeto con la respuesta de la operación.
+     * @since 1.0
+     */
     private ArrayList<Respuesta> registrarActivoTransporte(ActivoTransporte activoTransporte) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorArchivos marchivos = new ManejadorArchivos();
@@ -338,6 +420,14 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Método para actualizar un registro con la información de un activo de tipo
+     * transporte en particular.
+     * 
+     * @param activoTransporte con la información a actualizar.
+     * @return Un arrayList con la respuesta obtenida durante el proceso
+     * @since 1.0
+     */
     public ArrayList<Respuesta> actualizarActivoTransporte(ActivoTransporte activoTransporte) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorArchivos marchivos = new ManejadorArchivos();
@@ -436,6 +526,16 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Método que válida si una placa de algún activo de tipo articulo ya se 
+     * encunetra registrada en la base de datos del sistema.
+     * 
+     * @param placaactivo identificador del activo.
+     * @return un valor booleano
+     * true en caso de que exista
+     * false en caso de que no exista
+     * @since 1.0
+     */
     public boolean existePlacaActivo(String placaactivo) {
         boolean resp = false;
         ManejadorDatosActivo mdactivo = new ManejadorDatosActivo();
@@ -448,6 +548,16 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Método que válida si una placa de algún activo de tipo transporte ya se 
+     * encuentra registrada en la base de datos del sistema.
+     * 
+     * @param placavehiculo identificador del activo de tipo transporte.
+     * @return un valor booleano
+     * true en caso de que exista
+     * false en caso de que no exista
+     * @since 1.0
+     */
     public boolean existePlacaVehiculo(String placavehiculo) {
         boolean resp = false;
         ManejadorDatosActivo mdactivo = new ManejadorDatosActivo();
@@ -460,6 +570,16 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * funcion que permite determinar si la placa que se pasa por parámetro es
+     * del tipo Artículo o no.
+     *
+     * @param codigoRegistro la placa a buscar
+     * @return un valor booleano
+     * true si es activo Articulo 
+     * false en caso de que no sea un activo articulo
+     * @since 1.0
+     */
     public boolean isRegistroArticulo(String codigoRegistro) {
         boolean resp = false;
         ManejadorDatosActivo mdactivo = new ManejadorDatosActivo();
@@ -472,6 +592,16 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * funcion que permite determinar si la placa que se pasa por parámetro es
+     * del tipo transporte o no.
+     *
+     * @param codigoRegistro la placa a buscar
+     * @return un valor booleano
+     * true si es activo transporte
+     * false en caso de que no sea un activo transporte
+     * @since 1.0
+     */
     public boolean isRegistroTransporte(String codigoRegistro) {
         boolean resp = false;
         ManejadorDatosActivo mdactivo = new ManejadorDatosActivo();
@@ -484,6 +614,12 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Método que obtiene las imagenes de un activo a partir de la placa del mismo.
+     * 
+     * @param codigoRegistro el identificador del activo
+     * @return un arraylist con las imagenes correspondientes al activo
+     */
     public ArrayList<ImagenActivo> getImagenesActivo(String codigoRegistro) {
         ManejadorDatosActivo mdactivo = new ManejadorDatosActivo();
         ArrayList<ImagenActivo> resp = null;
@@ -495,6 +631,14 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Esta función hace una búsqueda del consecutivo de un vehículo particular.
+     *
+     * @param consecutivotipovehiculo el valor a buscar
+     * @return un valor booleano
+     * true si existe
+     * false si no existe
+     */
     public boolean existeConsecutivoTipoVehiculo(String consecutivotipovehiculo) {
         boolean resp = false;
         ManejadorDatosActivo mdactivo = new ManejadorDatosActivo();
@@ -556,6 +700,15 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Funcion que hace obtiene el activo del tipo artículo, recibe como
+     * parámetro el número de placa y posteriormente se asignan valores para
+     * poder devolver un objeto "lleno" con los valores de la placa solicitada.
+     *
+     * @param codigoRegistro el número de placa
+     * @return el objeto ActivoArticulo o null
+     * @since 1.0
+     */
     public ActivoArticulo getActivoArticulo(String codigoRegistro) {
         ActivoArticulo resp = null;
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
@@ -567,6 +720,15 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Funcion que hace obtiene el activo del tipo transporte, recibe como
+     * parámetro el número de placa y posteriormente se asignan valores para
+     * poder devolver un objeto "lleno" con los valores de la placa solicitada.
+     *
+     * @param codigoRegistro el número de placa
+     * @return el objeto ActivoTransporte o null
+     * @since 1.0
+     */
     public ActivoTransporte getActivoTransporte(String codigoRegistro) {
         ActivoTransporte resp = null;
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
@@ -578,6 +740,14 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Operación que se encarga de realizar la eliminación del
+     * <strong>Activo</strong> tipo articulo de la base de datos..
+     *
+     * @param activo El registro a eliminar.
+     * @return un arraylist con la respuesta obtenida durante la operacion
+     * @since 1.0
+     */
     public ArrayList<Respuesta> eliminarActivoArticulo(ActivoArticulo activo) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
@@ -600,6 +770,14 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Operación que se encarga de realizar la desactivación del
+     * <strong>Activo</strong> tipo articulo de la base de datos..
+     *
+     * @param activo El registro a desactivar.
+     * @return un arraylist con la respuesta obtenida durante la operacion
+     * @since 1.0
+     */
     public ArrayList<Respuesta> desactivarActivoArticulo(ActivoArticulo activo) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
@@ -622,6 +800,14 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Operación que se encarga de realizar la eliminación del
+     * <strong>Activo</strong> de tipo transporte de la base de datos..
+     *
+     * @param activo El registro a eliminar.
+     * @return un arraylist con la respuesta obtenida durante la operacion
+     * @since 1.0
+     */
     public ArrayList<Respuesta> eliminarActivoTransporte(ActivoTransporte activo) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
@@ -644,6 +830,14 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Operación que se encarga de realizar la eliminación del
+     * <strong>Activo</strong> de tipo transporte de la base de datos..
+     *
+     * @param activo El registro a desactivar.
+     * @return un arraylist con la respuesta obtenida durante la operacion
+     * @since 1.0
+     */
     public ArrayList<Respuesta> desactivarActivoTransporte(ActivoTransporte activo) {
         ArrayList<Respuesta> resp = new ArrayList<Respuesta>();
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
@@ -666,6 +860,15 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Método que válido si un activo es apto para dar de baja.
+     * 
+     * @param placaActivo identificador del activo.
+     * @return un valor booleano.
+     * true en caso de que sea apto para baja
+     * false en caso de que no sea apto para baja
+     * @since 1.0
+     */
     public boolean isActivoparaBaja(String placaActivo) {
         boolean resp = false;
         int estadoactivo = -1;
@@ -687,6 +890,13 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
+    /**
+     * Método para generar un reporte general de todos los activos de la municipalidad
+     * que no se encuentren en estado inactivo.
+     * 
+     * @return un arraylist con la información para la generación de un reporte
+     * @since 1.0
+     */
     @Override
     public ArrayList<String[]> obtenerDatosReporte() {
         ArrayList<String[]> resp = new ArrayList<String[]>();
@@ -725,6 +935,15 @@ public class ManejadorActivo implements IReporteador {
         
         return resp;
     }
+    
+    /**
+     * Método para generar un reporte general de todos los activos de la municipalidad
+     * que no se encuentren en estado inactivo con respecto a un departamento.
+     * 
+     * @param departamento identificador del departamento. No se esta utilizando.
+     * @return un arraylist con la información para la generación de un reporte
+     * @since 1.0
+     */
  public ArrayList<String[]> obtenerDatosReporte(int departamento) {
         ArrayList<String[]> resp = new ArrayList<String[]>();
         ManejadorDatosActivo mactivo = new ManejadorDatosActivo();
@@ -763,7 +982,13 @@ public class ManejadorActivo implements IReporteador {
         return resp;
     }
 
-
+    /**
+     * Método para generar un reporte general de acuerdo a un rango de fechas con
+     * todos los activos de la municipalidad que no se encuentren en estado inactivo.
+     * 
+     * @return un arraylist con la información para la generación de un reporte
+     * @since 1.0
+     */
     @Override
     public ArrayList<String[]> obtenerDatosReporte(Date fini, Date ffin) {
            ArrayList<String[]> resp = new ArrayList<String[]>();

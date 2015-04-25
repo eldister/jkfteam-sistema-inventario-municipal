@@ -425,6 +425,14 @@ public class ManejadorEntregaDocumento {
         return resp;
     }
 
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a un documento
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @return Un objeto EntregaDocumento con los valores correspondientes
+     * @since 1.0
+     */
     public EntregaDocumento getEntregaDocumento(int codigo) {
         EntregaDocumento resp = null;
         ManejadorDatosEntregaDocumento mdentregadocumento = new ManejadorDatosEntregaDocumento();
@@ -437,6 +445,13 @@ public class ManejadorEntregaDocumento {
         return resp;
     }
 
+    /**
+     * Realiza una busqueda en la base de datos.
+     *
+     * @param codigo identificador de los documentos entrega
+     * @return Un ResultSet con los resultados de la busqueda
+     * @since 1.0
+     */
     public ResultSet getDocumentosEntrega(int codigo) {
         ResultSet resp = null;
         ManejadorDatosEntregaDocumento mdentregadocumento = new ManejadorDatosEntregaDocumento();
