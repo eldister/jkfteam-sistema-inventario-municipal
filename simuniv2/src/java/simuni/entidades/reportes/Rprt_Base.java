@@ -138,6 +138,21 @@ public class Rprt_Base {
 
     }
 
+    /**
+     * quinto constructor de la clase
+     * contructor con parametros para la intanciación de objetos relacionados con los
+     * reportes que será generado por un usuario
+     * 
+     * @param columnas vector o arreglo con las columnas que se mostraran en la tabla del reporte
+     * @param datos arraylist con los datos que se hayan obtenido en una consulta a la base
+     * de datos con relación a los registros de los procesos que se desean hacer un reporte.
+     * @param titulo titulo del reporte
+     * @param usuario individuo quién realiza o realizó la generación del reporte
+     * @param observaciones observaciones que se realicen
+     * @param horizontal el horizontal que será mostrado
+     * @param document document to set
+     * @param out flujo de salida de datos
+     */
     public Rprt_Base(String[] columnas, ArrayList<String[]> datos, String titulo, String usuario, String observaciones, boolean horizontal, Document document, ServletOutputStream out) {
         this.columnas = columnas;
         this.datos = datos;
