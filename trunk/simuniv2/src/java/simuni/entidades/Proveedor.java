@@ -34,20 +34,31 @@ public class Proveedor extends Persona {
     private Persona representanteLegal;
     private ArrayList<TipoProveedor>tipoServicios=null;
 
+    //Constructor de la clase
     public Proveedor() {
     }
 
-
+/**
+ * @return un string con nombre del representante legal
+ */
 public String getNombreRepresentanteLegal(){
     return this.representanteLegal!=null?this.representanteLegal.getNombre():"";
 }
+/**
+ * @return un string con el primer apellido del representante legal
+ */
 public String getPrimerApellidoRepresentanteLegal(){
     return this.representanteLegal!=null?this.representanteLegal.getPrimerApellido():"";
 }
+/**
+ * @return un string con el segundo apellido del representante legal
+ */
 public String getSegundoApellidoRepresentanteLegal(){
     return this.representanteLegal!=null?this.representanteLegal.getSegundoApellido():"";
 }
-
+/**
+ * @return un string con la cedula del representante legal
+ */
 public String getCedulaRepresentanteLegal(){
     return this.representanteLegal!=null?this.representanteLegal.getCedula():"";
 }
@@ -219,7 +230,6 @@ public String getCedulaRepresentanteLegal(){
         this.representanteLegal = representanteLegal;
     }
     /**
-     * 
      * @param cedula
      * @param nombre
      * @param primerapellido
@@ -305,6 +315,10 @@ public String getCedulaRepresentanteLegal(){
         this.tipoServicios = tipoServicios;
     }
     
+    /**
+     * @param codigo
+     * @return bool value
+     */
     public boolean agregarTipoServicio(int codigo){
         if(this.tipoServicios==null){
             this.tipoServicios=new ArrayList<TipoProveedor>();

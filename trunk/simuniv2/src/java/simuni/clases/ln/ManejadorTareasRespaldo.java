@@ -17,7 +17,21 @@ import simuni.entidades.archivos.ManejadorRespaldos;
  * @author FchescO
  */
 public class ManejadorTareasRespaldo {
+    
+    //variable global del manejador de respaldos para uso en los métodos de la clase
 ManejadorRespaldos mrespaldos = new ManejadorRespaldos();
+
+    /**
+     * Método que se encarga de la configuración, la creación y la actualización
+     * de un respaldo de base de datos. 
+     * 
+     * @param planificado parametro booleano para las distintas operaciones 
+     * del respaldo de la base de datos. 
+     * @return un valor booleano
+     * true para la configuración del respaldo de la base de datos.
+     * false para la creación del respaldo de base de datos.
+     * @since 1.0
+     */
     public boolean hacerRespaldoBaseDatos(boolean planificado) {
         boolean respuesta = false;
         TareaRespaldo tarearespaldo = null;
@@ -79,6 +93,14 @@ ManejadorRespaldos mrespaldos = new ManejadorRespaldos();
         return respuesta;
     }
     
+    /**
+     * Método que hace una llamada a otro de los metodos de la clase para la creación,
+     * configuración y actualización de los respaldos de la base de datos.
+     * 
+     * @param planificado parametro booleano para las distintas operaciones 
+     * @return un objeto con la respuesta de la operación.
+     * @since 1.0
+     */
     public Respuesta hacerRespaldoBD(boolean planificado){
         Respuesta resp=new Respuesta();
         if(hacerRespaldoBaseDatos(planificado)){

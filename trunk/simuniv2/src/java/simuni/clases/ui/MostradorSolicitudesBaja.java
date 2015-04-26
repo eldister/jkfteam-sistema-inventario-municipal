@@ -18,6 +18,7 @@ import simuni.enums.Recursos;
  */
 public class MostradorSolicitudesBaja {
     
+    //variable global booleana utilizada por los metodos de la clase
     private boolean isAdmin=false;
     /**
      * Esta funcion recibe como parámetro un ResultSet y cantidad de paginas y

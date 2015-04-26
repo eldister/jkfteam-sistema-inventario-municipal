@@ -96,6 +96,10 @@ public class EntregaDocumento {
         this.documentos = documentos;
     }
 
+    /**
+     * @param documento the document to add
+     * @return bool value
+     */
     public boolean addDocumento(Documento documento) {
         if (this.documentos == null) {
             this.documentos = new ArrayList<Documento>();
@@ -105,6 +109,11 @@ public class EntregaDocumento {
 
     }
 
+    /**
+     * 
+     * @param documento the document to remove
+     * @return bool value
+     */
     public boolean removeDocumento(Documento documento) {
         if (this.documentos == null) {
             return false;

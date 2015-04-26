@@ -211,6 +211,14 @@ public class ManejadorTipoLlanta {
         return resp;
     }
 
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a los tipos de llantas
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @return Un objeto TipoLlanta con los valores correspondientes
+     * @since 1.0
+     */
     public TipoLlanta getTipoLlanta(int codigo) {
         TipoLlanta resp = null;
         ManejadorDatosTipoLlanta mdtipollanta = new ManejadorDatosTipoLlanta();

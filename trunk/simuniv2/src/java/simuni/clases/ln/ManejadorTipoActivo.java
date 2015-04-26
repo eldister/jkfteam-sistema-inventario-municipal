@@ -212,6 +212,14 @@ public class ManejadorTipoActivo {
         return resp;
     }
 
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a los tipos de activo
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @return Un objeto TipoActivo con los valores correspondientes
+     * @since 1.0
+     */
     public TipoActivo getTipoActivo(int codigo) {
         TipoActivo resp = null;
         ManejadorDatosTipoActivo mdtipoactivo = new ManejadorDatosTipoActivo();

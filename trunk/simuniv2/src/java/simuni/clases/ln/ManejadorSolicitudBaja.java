@@ -110,6 +110,14 @@ public class ManejadorSolicitudBaja {
 
     }
     
+    /**
+     * Operación que se encarga de realizar la modificación del estado de la
+     * <strong>SolicitudBaja</strong> de la base de datos.
+     *
+     * @param solicitudbaja El registro a modificar.
+     * @return Un objeto Respuesta que indica el resultado de la operación.
+     * @since 1.0
+     */
     public Respuesta modificarEstadoSolicitudBaja(SolicitudBaja solicitudbaja) {
         Respuesta resp = new Respuesta();
         ManejadorDatosSolicitudBaja mdsolicitudbaja = new ManejadorDatosSolicitudBaja();
@@ -180,6 +188,17 @@ public class ManejadorSolicitudBaja {
         return resp;
 
     }
+    
+    /**
+     * Realiza una busqueda en la base de datos sobre las solicitudes de baja.
+     *
+     * @param query El criterio a buscar.
+     * @param desplazamiento Cantidad de registros que se deben de pasar.
+     * @param paginacion La cantidad de registros a devolver.
+     * @param usuario identificador del usuario
+     * @return Un ResultSet con los resultados de la busqueda
+     * @since 1.0
+     */
     public ResultSet busquedaSolicitudBajaUsuario(String query, int desplazamiento, int paginacion,String usuario) {
         ResultSet resp = null;
         ManejadorDatosSolicitudBaja mdSolicitudBaja = new ManejadorDatosSolicitudBaja();
@@ -216,6 +235,16 @@ public class ManejadorSolicitudBaja {
         }
         return resp;
     }
+    
+    /**
+     * Obtiene la cantidad de registros que hay en la base de datos, con el
+     * criterio qeu se pasa por parámetro. 
+     *
+     * @param query La cadena con la busqueda a evaluar.
+     * @param usuario identificacion del usuario del sistema
+     * @return Un entero con la cantidad de registros.
+     * @since 1.0
+     */
     public int getCantidadRegistrosUsuario(String query,String usuario) {
         int resp = 0;
         try {
@@ -229,6 +258,15 @@ public class ManejadorSolicitudBaja {
         }
         return resp;
     }
+    
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a las solicitudes de baja
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @return Un objeto solicitudes de baja con los valores correspondientes
+     * @since 1.0
+     */
     public SolicitudBaja getSolicitudBaja(int codigo) {
         SolicitudBaja resp = null;
         ManejadorDatosSolicitudBaja mdsolicitudbaja = new ManejadorDatosSolicitudBaja();
@@ -239,6 +277,17 @@ public class ManejadorSolicitudBaja {
         }
         return resp;
     }
+    
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a las solicitudes de bajas por usuario.
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @param usuario identificador del usuario del sistema.
+     * @return Un objeto de solicitud de baja con los valores correspondientes
+     * por usuario.
+     * @since 1.0
+     */
     public SolicitudBaja getSolicitudBajaUsuario(int codigo,String usuario) {
         SolicitudBaja resp = null;
         ManejadorDatosSolicitudBaja mdsolicitudbaja = new ManejadorDatosSolicitudBaja();

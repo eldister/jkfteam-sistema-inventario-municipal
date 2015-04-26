@@ -232,6 +232,14 @@ public class ManejadorProveedor implements IReporteador {
         return resp;
     }
 
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a los proveedores
+     *
+     * @param cedula El código / identificador del registro a buscar.
+     * @return Un objeto Proveedor con los valores correspondientes
+     * @since 1.0
+     */
     public Proveedor getProveedor(String cedula) {
         Proveedor resp = null;
         ManejadorDatosProveedor mdproveedor = new ManejadorDatosProveedor();
@@ -243,6 +251,14 @@ public class ManejadorProveedor implements IReporteador {
         }
         return resp;
     }
+    
+    /**
+     * Método que obtiene una lista de proveedores según un tipo de servicio en particular
+     * 
+     * @param tiposervicio el identificador del tipo de servicio
+     * @return un arraylist con todos los proveedores que ofrecen ese servicio
+     * @since 1.0
+     */
      public ArrayList<Proveedor> getProveedoresXTipoServicio(int tiposervicio){
          ArrayList<Proveedor> resp = null;
         ManejadorDatosProveedor mdproveedor = new ManejadorDatosProveedor();
@@ -255,6 +271,16 @@ public class ManejadorProveedor implements IReporteador {
         return resp;         
      }
 
+     /**
+     * Método que válida si el proveedor ya se encuentra registrada en la base 
+     * de datos del sistema.
+     * 
+     * @param cedula identificador del proveedor
+     * @return un valor booleano
+     * true en caso de que exista
+     * false en caso de que no exista
+     * @since 1.0
+     */
     public boolean existeProveedor(String cedula) {
         boolean resp = false;
         ManejadorDatosProveedor mdproveedor = new ManejadorDatosProveedor();
@@ -267,11 +293,25 @@ public class ManejadorProveedor implements IReporteador {
         return resp;
     }
 
+    /**
+     * Función que se encarga de obtener un listado de los registros ya
+     * ingreados. 
+     *
+     * @return Un ResultSet que trae consigo los datos de la selección.
+     * @since 1.0
+     */
     public ArrayList<TipoProveedor> listadoTipoProveedor() {
         ManejadorTipoProveedor mdtipopago = new ManejadorTipoProveedor();
         return mdtipopago.listadoTipoProveedor();
     }
 
+    /**
+     * Método para generar un reporte general de todos los proveedores ingresados
+     * en la base de datos.
+     * 
+     * @return un arraylist con la información para la generación de un reporte
+     * @since 1.0
+     */
     @Override
     public ArrayList<String[]> obtenerDatosReporte() {
           ArrayList<String[]> resp = new ArrayList<String[]>();
@@ -314,6 +354,13 @@ public class ManejadorProveedor implements IReporteador {
         return resp;
     }
 
+    /**
+     * Método para generar un reporte general de todos los proveedores registrados
+     * enla base de datos de acuerdo a un rango de fechas
+     * 
+     * @return un arraylist con la información para la generación de un reporte
+     * @since 1.0
+     */
   @Override
     public ArrayList<String[]> obtenerDatosReporte(Date fini, Date ffin) {
            ArrayList<String[]> resp = new ArrayList<String[]>();
