@@ -176,6 +176,14 @@ public class ManejadorTipoReporte {
         return resp;
     }
 
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a los tipos de reportes
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @return Un objeto TipoReporte con los valores correspondientes
+     * @since 1.0
+     */
     public TipoReporte getTipoReporte(int codigo) {
         TipoReporte resp = null;
         ManejadorDatosTipoReporte mdtiporeporte = new ManejadorDatosTipoReporte();
@@ -187,6 +195,15 @@ public class ManejadorTipoReporte {
         }
         return resp;
     }
+    
+    /**
+     * Función que se encarga de obtener un listado de los registros ya
+     * ingreados con relación a los tipos de reportes. No lanza excepciones, y si 
+     * las hay, las registra en bitácora.
+     *
+     * @return Un arraylist que trae consigo los datos de la selección.
+     * @since 1.0
+     */
  public ArrayList<TipoReporte> listadoTipoReporte() {
 
         ArrayList<TipoReporte> tiporeportes = null;

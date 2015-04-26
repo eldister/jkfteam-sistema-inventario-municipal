@@ -38,6 +38,17 @@ public class GrillaBase {
     private String mostrarOcultosMsg = "Ocultos";
     private boolean usarControles = true;
 
+    /**
+     * Método para la rendirización de la grilla de acuerdo a los criterios de 
+     * filtro.
+     * 
+     * @param criteriofiltro el criterio para renderizar según el filtro
+     * @param encabezados encabezado de la tabla.
+     * @param filas filas de la grilla
+     * @param cantidadpag total de las paginas de la grilla
+     * @return un string con código html
+     * @since 1.0
+     */
     public String renderizar(Object[] criteriofiltro, Object[] encabezados, ArrayList<Object[]> filas, int cantidadpag) {
         StringBuilder resp = new StringBuilder();
         resp.append("<div id='sm_grilla_maincontainer'>");
@@ -359,6 +370,15 @@ public class GrillaBase {
         this.opciommostrarfiltro = opciommostrarfiltro;
     }
 
+    /**
+     * Método para la rendirización unicamente del cuerpo de la grilla.
+     * 
+     * @param encabezados encabezado de la tabla.
+     * @param filas filas de la grilla
+     * @param cantidadpaginas total de las paginas de la grilla
+     * @return un string con código html
+     * @since 1.0
+     */
     public String renderizarSoloCuerpoTabla(Object[] encabezados, ArrayList<Object[]> filas, int cantidadpaginas) {
         StringBuilder resp = new StringBuilder();
         resp.append("<div class='sm_div_puratablecontainer'>");///EESTE CAMBIO DE ULTIMA HORA
@@ -482,6 +502,16 @@ public class GrillaBase {
         this.usarAgregarself = usarAgregarself;
     }
 
+    /**
+     * Método para la rendirización unicamente del cuerpo de la grilla.
+     * 
+     * @param resultset con los valores obtenidos en las operaciones de los 
+     * procesos con la base de datos.
+     * @param cantidadpag total de las paginas de la grilla
+     * @return un string con código html
+     * @throws SQLException en caso de que ocurrá una excepcion sql.
+     * @since 1.0
+     */
     public String renderizar(ResultSet resultset, int cantidadpag) throws SQLException {
         StringBuilder resp = new StringBuilder();
         resp.append("<div id='sm_grilla_maincontainer'>");
@@ -724,6 +754,16 @@ public class GrillaBase {
 
     }
 
+    /**
+     * Método para la rendirización unicamente del cuerpo de la grilla.
+     * 
+     * @param resultset con los valores obtenidos en las operaciones de los 
+     * procesos con la base de datos.
+     * @param cantidadpaginas total de las paginas de la grilla
+     * @throws SQLException en caso de que ocurra una excepcion
+     * @return un string con código html
+     * @since 1.0
+     */
     public String renderizarSoloCuerpoTabla(ResultSet resultset, int cantidadpaginas) throws SQLException {
         StringBuilder resp = new StringBuilder();
 

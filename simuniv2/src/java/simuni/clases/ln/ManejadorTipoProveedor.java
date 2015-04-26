@@ -209,6 +209,14 @@ public class ManejadorTipoProveedor {
         return resp;
     }
 
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a los tipos de proveedores
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @return Un objeto TipoProveedor con los valores correspondientes
+     * @since 1.0
+     */
     public TipoProveedor getTipoProveedor(int codigo) {
         TipoProveedor resp = null;
         ManejadorDatosTipoProveedor mdtipoproveedor = new ManejadorDatosTipoProveedor();

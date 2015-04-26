@@ -187,11 +187,26 @@ public class ManejadorVenta implements IReporteador {
         }
         return resp;
     }
+    
+    /**
+     * Método para obtener un listado de los tipos de pagos
+     * 
+     * @return un arraylist con los resultados obtenidos
+     * @since 1.0
+     */
     public ArrayList<TipoPago> listadoTipoPago() {
         ManejadorTipoPago mdtipopago = new ManejadorTipoPago();
         return mdtipopago.listadoTipoPago();
     }
 
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a las ventas
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @return Un objeto Venta con los valores correspondientes
+     * @since 1.0
+     */
     public Venta getVenta(int codigo) {
         Venta resp = null;
         ManejadorDatosVenta mdventa = new ManejadorDatosVenta();
@@ -210,8 +225,6 @@ public class ManejadorVenta implements IReporteador {
      * @return resp un arraylist con los datos recupertados de la base de datos para 
      * que seran utilizados en el reporte
      */
-    
-
     @Override
     public ArrayList<String[]> obtenerDatosReporte() {
         ArrayList<String[]> resp = new ArrayList<String[]>();
@@ -249,6 +262,13 @@ public class ManejadorVenta implements IReporteador {
         return resp;
     }
 
+    /**
+     * Método para generar un reporte general de acuerdo a un rango de fechas con
+     * todos las ventas registradas en la base de datos del sistema.
+     * 
+     * @return un arraylist con la información para la generación de un reporte
+     * @since 1.0
+     */
     @Override
     public ArrayList<String[]> obtenerDatosReporte(Date fini, Date ffin) {
         ArrayList<String[]> resp = new ArrayList<String[]>();

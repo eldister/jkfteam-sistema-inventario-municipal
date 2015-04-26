@@ -80,6 +80,18 @@ public class ManejadorUsuario implements IReporteador {
         }
         return usu;
     }
+    
+    /**
+     * Método que válida si un usuario tiene o no permisos de usuario
+     * 
+     * 
+     * @param idusuario identificación del usuario
+     * @param codigopermiso código de permiso relacionado a un usuario
+     * @return un valor booleano
+     * true en caso de que tiene permisos
+     * false en caso de que no tenga permisos
+     * @since 1.0
+     */
     public boolean usuarioTienePermiso(int codigopermiso,String idusuario){
         boolean resp=false;
          ManejadorDatosUsuario manejadordatosusuarios = new ManejadorDatosUsuario();
@@ -95,6 +107,14 @@ public class ManejadorUsuario implements IReporteador {
         }
         return resp;
     }
+    
+    /**
+     * Método para obtener a un usuario en especifico de la base de datos
+     *
+     * @param usuario cuyos datos serán obtenidos de la base de datos
+     * @return un objeto de tipo usuario
+     * @since 1.0
+     */
     public Usuario obtenerUsuario(String usuario) {
         Usuario usuarioresp = null;
         try {
@@ -111,14 +131,34 @@ public class ManejadorUsuario implements IReporteador {
         return usuarioresp;
     }
 
+    /**
+     * Método para obtener un listado de los puestos
+     * 
+     * @return un arraylist con los resultados obtenidos
+     * @since 1.0
+     */
     public ArrayList<Puesto> listadoPuesto() {
         ManejadorPuesto mdpuesto = new ManejadorPuesto();
         return mdpuesto.listadoPuesto();
     }
+    
+    /**
+     * Método para obtener un listado de los tipos de usuario
+     * 
+     * @return un arraylist con los resultados obtenidos
+     * @since 1.0
+     */
     public ArrayList<TipoUsuario> listadoTipoUsuario() {
         ManejadorTipoUsuario mdtiposusuario = new ManejadorTipoUsuario();
         return mdtiposusuario.listadoTipoUsuarios();
     }  
+    
+    /**
+     * Método para obtener un listado de los departamentos
+     * 
+     * @return un arraylist con los resultados obtenidos
+     * @since 1.0
+     */
     public ArrayList<Departamento> listadoDepartamento() {
         ManejadorDepartamento mdepartamento = new ManejadorDepartamento();
         return mdepartamento.listadoDepartamento();
@@ -169,6 +209,17 @@ public class ManejadorUsuario implements IReporteador {
         return resp;
 
     }
+    
+    /**
+     * Método que realiza una búsqueda de un usuario que se encuentra inactivo
+     * en el sistema
+     * 
+     * @param query sentencia para la búsqueda del usuario
+     * @param desplazamiento de los registros
+     * @param paginacion de los registros
+     * @return Un resultset con los resultados de la operación.
+     * @since 1.0
+     */
      public ResultSet busquedaUsuarioInactivo(String query, int desplazamiento, int paginacion) throws SQLException {
         ResultSet resp = null;
         ManejadorDatosUsuario mdUsuario = new ManejadorDatosUsuario();
@@ -183,6 +234,12 @@ public class ManejadorUsuario implements IReporteador {
 
     }   
     
+     /**
+     * Método para obtener un listado de los usuarios.
+     * 
+     * @return un arraylist con los resultados obtenidos
+     * @since 1.0
+     */
     public ArrayList<Usuario> listadoUsuarios(){
         ArrayList<Usuario> usuarios = null;
         ManejadorDatosUsuario mdUsuario = new ManejadorDatosUsuario();
@@ -205,6 +262,13 @@ public class ManejadorUsuario implements IReporteador {
         }
         return usuarios;        
     }
+    
+    /**
+     * Método para obtener un listado de los permisos de usuario
+     * 
+     * @return un arraylist con los resultados obtenidos
+     * @since 1.0
+     */
     public ArrayList<Usuario> listadoUsuarios_Permisos(){
         ArrayList<Usuario> usuarios = null;
         ManejadorDatosUsuario mdUsuario = new ManejadorDatosUsuario();
@@ -229,7 +293,13 @@ public class ManejadorUsuario implements IReporteador {
         return usuarios;        
     }    
     
-
+    /**
+     * Metodo para registrar un unevo usuario al sistema
+     *
+     * @param usuario El nuevo registro a ingresar.
+     * @return un objeto con la respuesta de la operación.
+     * @since 1.0
+     */
     public Respuesta registrarUsuario(Usuario usuario) {
         Respuesta resp = new Respuesta();
         ManejadorDatosUsuario mdusuario = new ManejadorDatosUsuario();
@@ -250,6 +320,14 @@ public class ManejadorUsuario implements IReporteador {
         return resp;
     }
     
+    /**
+     * Método contrario al anterior, este método a un usuario cuyo registro en la base
+     * de datos del sistema se encuentra en estado INACTIVO.
+     *
+     * @param usuario a quien se rehabilitara el registro en la base de datos
+     * @return un objeto con la respuesta de la operación.
+     * @since 1.0
+     */
     public Respuesta reactivarUsuario(Usuario usuario) {
         Respuesta resp = new Respuesta();
         ManejadorDatosUsuario mdusuario = new ManejadorDatosUsuario();
@@ -270,6 +348,14 @@ public class ManejadorUsuario implements IReporteador {
         return resp;
     }    
 
+    /**
+     * Método para la modificación o cambios de la información de un usuario 
+     * en particular
+     *
+     * @param usuario El nuevo registro a ingresar.
+     * @return un objeto con la respuesta de la operación.
+     * @since 1.0
+     */
     public Respuesta modificarUsuario(Usuario usuario) {
         Respuesta resp = new Respuesta();
         ManejadorDatosUsuario mdusuario = new ManejadorDatosUsuario();
@@ -290,6 +376,13 @@ public class ManejadorUsuario implements IReporteador {
         return resp;
     }
 
+    /**
+     * Método para la deshabilitacion de un registro de un usuario del sistema 
+     *
+     * @param usuario a quien se deshabilitara su registro del sistema
+     * @return un objeto con la respuesta de la operación.
+     * @since 1.0
+     */
     public Respuesta eliminarUsuario(Usuario usuario) {
         Respuesta resp = new Respuesta();
         ManejadorDatosUsuario mdusuario = new ManejadorDatosUsuario();
@@ -309,6 +402,16 @@ public class ManejadorUsuario implements IReporteador {
         }
         return resp;
     }
+    
+    /**
+     * Obtiene la cantidad de registros que hay en la base de datos, con el
+     * criterio qeu se pasa por parámetro. No lanza excepciones, y si las hay,
+     * las registra en bitácora.
+     *
+     * @param query La cadena con la busqueda a evaluar.
+     * @return Un entero con la cantidad de registros.
+     * @since 1.0
+     */
         public int getCantidadRegistros(String query) {
         int resp = 0;
         try {
@@ -322,6 +425,15 @@ public class ManejadorUsuario implements IReporteador {
         }
         return resp;
     }
+        /**
+     * Obtiene la cantidad de registros de los usuarios que se encuentran
+     * inactivos que hay en la base de datos, con el criterio qeu se pasa por 
+     * parámetro. No lanza excepciones, y si las hay, las registra en bitácora.
+     *
+     * @param query La cadena con la busqueda a evaluar.
+     * @return Un entero con la cantidad de registros.
+     * @since 1.0
+     */
         public int getCantidadRegistrosInactivos(String query) {
         int resp = 0;
         try {
@@ -336,7 +448,16 @@ public class ManejadorUsuario implements IReporteador {
         return resp;
     }        
         
-        
+        /**
+     * Método para modificar o cambiar la contraseña de un usuario en particular
+     * en caso de que el usuario asi lo desee
+     *
+     * @param usuario objeto tipo Usuario referente al individuo que va a cambiar su contraseña
+     * contiene la informacion del usuario, ademas de la nueva contraseña
+     * @param pass_actual la contraseña que posee actualmente el usuario
+     * @return un objeto con la respuesta de la operación.
+     * @since 1.0
+     */
     public Respuesta modificarClaveUsuario(Usuario usuario,String pass_actual) {
         Respuesta resp = new Respuesta();
        
@@ -357,6 +478,18 @@ public class ManejadorUsuario implements IReporteador {
         }
         return resp;
     }
+    
+    /**
+     * Método para actualizar la contraseña de un usuario, se llama resetear puesto que 
+     * se le puede colocar la que tenia anteriormente o cualquiera que considere poner
+     * el encargado de las TICs
+     *
+     * @param usuario a quien se le hara el reseteo de la contraseña
+     * contiene la información del usuario y la contraseña nueva
+     * @return Un string con la respuesta directamente del servidor de base de
+     * datos.
+     * @since 1.0
+     */
         public Respuesta resetearClaveUsuario(Usuario usuario) {
         Respuesta resp = new Respuesta();
        
@@ -378,6 +511,13 @@ public class ManejadorUsuario implements IReporteador {
         return resp;
     }
 
+        /**
+     * Método para generar un reporte general de todos los usuarios registrados 
+     * en la base de datos del sistema.
+     * 
+     * @return un arraylist con la información para la generación de un reporte
+     * @since 1.0
+     */
     @Override
     public ArrayList<String[]> obtenerDatosReporte() {
  ArrayList<String[]> resp = new ArrayList<String[]>();
@@ -416,7 +556,13 @@ public class ManejadorUsuario implements IReporteador {
         
         return resp;}
 
-
+    /**
+     * Método para generar un reporte general de acuerdo a un rango de fechas con
+     * todos los usuarios registrados en la base de datos del sistema.
+     * 
+     * @return un arraylist con la información para la generación de un reporte
+     * @since 1.0
+     */
     @Override
     public ArrayList<String[]> obtenerDatosReporte(Date fini, Date ffin) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

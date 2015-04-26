@@ -209,6 +209,14 @@ public class ManejadorTipoPago {
         return resp;
     }
 
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a los tipos de pagos
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @return Un objeto TipoPago con los valores correspondientes
+     * @since 1.0
+     */
     public TipoPago getTipoPago(int codigo) {
         TipoPago resp = null;
         ManejadorDatosTipoPago mdtipopago = new ManejadorDatosTipoPago();

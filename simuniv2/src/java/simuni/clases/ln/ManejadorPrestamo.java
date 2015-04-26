@@ -1,7 +1,6 @@
 package simuni.clases.ln;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import simuni.clases.ad.ManejadorDatosPrestamo;
 import simuni.entidades.Respuesta;
 import simuni.entidades.Prestamo;
@@ -19,7 +18,7 @@ public class ManejadorPrestamo {
      * Operación que se encarga de realizar el ingreso / registro del
      * <strong>Prestamo</strong>.
      *
-     * @param Prestamo El nuevo registro a ingresar.
+     * @param prestamo El nuevo registro a ingresar.
      * @return Un objeto Respuesta que indica el resultado de la operación.
      * @since 1.0
      */
@@ -48,7 +47,7 @@ public class ManejadorPrestamo {
      * <strong>Prestamo</strong> de la base de datos. No lanza excepciones, y si
      * las hay, las registra en bitácora.
      *
-     * @param Prestamo El registro a eliminar.
+     * @param prestamo El registro a eliminar.
      * @return Un objeto Respuesta que indica el resultado de la operación.
      * @since 1.0
      */
@@ -177,7 +176,14 @@ public class ManejadorPrestamo {
         return resp;
     }
 
-
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a los préstamos
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @return Un objeto Prestamo con los valores correspondientes
+     * @since 1.0
+     */
     public Prestamo getPrestamo(int codigo) {
         Prestamo resp = null;
         ManejadorDatosPrestamo mdprestamo = new ManejadorDatosPrestamo();

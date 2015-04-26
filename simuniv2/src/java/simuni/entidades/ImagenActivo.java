@@ -23,6 +23,9 @@ public class ImagenActivo {
     private InputStream streamArchivo;
     private String pathDocumento;
 
+    /**
+     * @return un string de como se va a presentar la información
+     */
     @Override
     public String toString() {
         return fechaSubida+urldocumento+codigoActivo+nombreArchivo+serverArchivo+pathDocumento;

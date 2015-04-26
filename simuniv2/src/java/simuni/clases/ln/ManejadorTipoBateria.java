@@ -204,6 +204,14 @@ public class ManejadorTipoBateria {
         return resp;
     }
 
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a los tipos bateria
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @return Un objeto TipoBateria con los valores correspondientes
+     * @since 1.0
+     */
     public TipoBateria getTipoBateria(int codigo) {
         TipoBateria resp = null;
         ManejadorDatosTipoBateria mdtipobateria = new ManejadorDatosTipoBateria();

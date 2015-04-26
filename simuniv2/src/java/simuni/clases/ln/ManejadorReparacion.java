@@ -193,7 +193,6 @@ public class ManejadorReparacion implements IReporteador{
      * @param codigo de la reparación que se desea obtener
      * @return Un string con la respuesta directamente del servidor de base de
      * datos.
-     * @throws SQLException Si ocurre una excepcion sql.
      * @since 1.0
      */
     public Reparacion getReparacion(int codigo) {

@@ -48,7 +48,14 @@ public class ManejadorPuesto {
         return puestos;
     }
     
-    
+    /**
+     * Funcion que se encarga de traer un registro específico de la base de
+     * datos con relacion a los puestos
+     *
+     * @param codigo El código / identificador del registro a buscar.
+     * @return Un objeto Puesto con los valores correspondientes
+     * @since 1.0
+     */
     public Puesto getPuesto(int codigo) {
         Puesto resp = null;
         ManejadorDatosPuesto mdpuesto = new ManejadorDatosPuesto();
