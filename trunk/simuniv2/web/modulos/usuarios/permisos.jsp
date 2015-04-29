@@ -1,3 +1,6 @@
+<%
+    request.setAttribute("permiso_requerido", 47);
+%>
 <%@page import="java.util.Iterator"%>
 <%@page import="simuni.entidades.Usuario"%>
 <%@page import="java.util.ArrayList"%>

@@ -1,3 +1,6 @@
+<%
+    request.setAttribute("permiso_requerido", 23);
+%>
 <%@page import="simuni.entidades.Respuesta"%>
 <%@page import="simuni.entidades.Notificacion"%>
 <%@page import="java.util.Iterator"%>

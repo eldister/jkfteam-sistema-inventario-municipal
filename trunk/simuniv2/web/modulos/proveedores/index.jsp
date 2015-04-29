@@ -1,3 +1,6 @@
+<%
+    request.setAttribute("permiso_requerido", 29);
+%>
 <%@page import="simuni.clases.ui.MostradorProveedor"%>
 <%@page import="simuni.clases.ui.MostradorDepartamento"%>
 <%@page import="java.sql.ResultSet"%>

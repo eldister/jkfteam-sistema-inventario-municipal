@@ -1,3 +1,6 @@
+<%
+    request.setAttribute("permiso_requerido", 28);
+%>
 <%@page import="simuni.enums.Recursos"%>
 <%@page import="simuni.entidades.Prestamo"%>
 <%@page import="simuni.entidades.Respuesta"%>

@@ -33,11 +33,6 @@ public class ManejadorNotificaciones {
         ManejadorDatosNotificaciones manejadornotificaciones = new ManejadorDatosNotificaciones();
         boolean resp = false;
         try {
-            resp = manejadornotificaciones.agregarNotificacion(notificacion);
-            if (notificacion == null) {
-                return false;
-            }
-
             if (notificacion == null) {
                 return false;
             } else if (notificacion.getFechaNotificacion() != null) {
@@ -47,11 +42,12 @@ public class ManejadorNotificaciones {
                 formatoFecha.format(notificacion.getFechaNotificacion());
             }
 
-            if (notificacion == null) {
-                return false;
-            } else if (notificacion.getUsuarioOrigen() == null) {
+            if (notificacion.getUsuarioOrigen() == null) {
                 return false;
             }
+            resp = manejadornotificaciones.agregarNotificacion(notificacion);
+
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
