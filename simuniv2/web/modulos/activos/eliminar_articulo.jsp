@@ -1,3 +1,6 @@
+<%
+    request.setAttribute("permiso_requerido", 5);
+%>
 <%@page import="simuni.entidades.ImagenActivo"%>
 <%@page import="simuni.entidades.ActivoArticulo"%>
 <%@page import="simuni.utils.UtilidadesServlet"%>

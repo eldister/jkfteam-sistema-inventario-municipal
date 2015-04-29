@@ -1,3 +1,6 @@
+<%
+    request.setAttribute("permiso_requerido", 32);
+%>
 <%@page import="simuni.enums.Recursos"%>
 <%@page import="simuni.entidades.Proveedor"%>
 <%@page language='java' contentType='text/html; charset=ISO-8859-1' pageEncoding='ISO-8859-1'%>

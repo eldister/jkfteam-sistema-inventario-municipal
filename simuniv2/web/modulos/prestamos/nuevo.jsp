@@ -1,3 +1,6 @@
+<%
+    request.setAttribute("permiso_requerido", 26);
+%>
 <%-- 
     Document   : nuevo.jsp
     Created on : 03-feb-2015, 22:45:06

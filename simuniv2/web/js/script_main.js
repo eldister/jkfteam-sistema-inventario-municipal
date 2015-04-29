@@ -83,11 +83,13 @@ function initMensajesNotificaciones() {
         url: SIMUNI_SERVER + "/notificacion?proceso=notificaciones",
         cache: false,
         success: function(html) {
-            console.info("notificacioooooooooooooooooo " + html)
-            if (html) {
+           
+            if (html) { console.info("notificacioooooooooooooooooo " + html)
                 if (html.length > 10) {
                     $("#sm_notificacionescontainer").html(html);
                 }
+            }else{
+                alert('notifiacion nada');
             }
         },
         beforeSend: function() {

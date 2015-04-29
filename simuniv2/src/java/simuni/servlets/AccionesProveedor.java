@@ -14,8 +14,10 @@ import simuni.entidades.Respuesta;
 import simuni.utils.UtilidadesServlet;
 
 /**
- * Esta clase se encarga de realizar el manejo de las solicitudes del modulo de proveedores. Acepta solicitudes
- * del tipo POST o GET. Se encarga de dar una respuesta a esas demandas.
+ * Esta clase se encarga de realizar el manejo de las solicitudes del modulo de
+ * proveedores. Acepta solicitudes del tipo POST o GET. Se encarga de dar una
+ * respuesta a esas demandas.
+ *
  * @author FchescO
  * @since 1.0
  * @version 1.0
@@ -36,8 +38,9 @@ public class AccionesProveedor extends HttpServlet {
      */
     enum OpcionesDo {
 
-        Listado,Listado2,Listado_Asinc, Nuevo, Eliminar, Modificar, Existe, Query,Query_Asinc, ReintentoNuevo, AccionDefault
+        Listado, Listado2, Listado_Asinc, Nuevo, Eliminar, Modificar, Existe, Query, Query_Asinc, ReintentoNuevo, AccionDefault
     }
+
     /**
      * Se encarga de clasificar la operación solicitada por el cliente.
      *
@@ -64,11 +67,11 @@ public class AccionesProveedor extends HttpServlet {
             return OpcionesDo.ReintentoNuevo;
         } else if (key.equals("listado_asinc")) {
             return OpcionesDo.Listado_Asinc;
-        }else if (key.equals("query_asinc")) {
+        } else if (key.equals("query_asinc")) {
             return OpcionesDo.Query_Asinc;
-        }else if (key.equals("listado2")) {
+        } else if (key.equals("listado2")) {
             return OpcionesDo.Listado2;
-        } 
+        }
         return OpcionesDo.AccionDefault;
     }
 
@@ -105,7 +108,7 @@ public class AccionesProveedor extends HttpServlet {
                     disp = request.getRequestDispatcher("/modulos/proveedores/listado_proveedores.jsp");
                     break;
                 case Listado:
-                    
+
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
                     paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
                     desplazamiento = ((npagina) * paginacion);
@@ -116,7 +119,7 @@ public class AccionesProveedor extends HttpServlet {
                     request.setAttribute("query", query);
                     break;
                 case Listado_Asinc:
-                    
+
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
                     paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
                     desplazamiento = ((npagina) * paginacion);
@@ -125,19 +128,29 @@ public class AccionesProveedor extends HttpServlet {
                     disp = request.getRequestDispatcher("/modulos/proveedores/_asinc/_asinc_index.jsp");
                     request.setAttribute("paginacion", ((int) mproveedor.getCantidadRegistros(query, mostrar_inactivos) / paginacion) + 1);
                     request.setAttribute("query", query);
-                    break;                    
+                    break;
                 case Modificar:
                     registro = request.getParameter("registro");
                     proveedor = mproveedor.getProveedor(registro);
                     request.setAttribute("registro", proveedor);
-                    request.setAttribute("tipoproveedores", mproveedor.listadoTipoProveedor());    
+                    request.setAttribute("tipoproveedores", mproveedor.listadoTipoProveedor());
                     disp = request.getRequestDispatcher("/modulos/proveedores/editar.jsp");
                     break;
                 case Eliminar:
                     registro = request.getParameter("registro");
                     proveedor = mproveedor.getProveedor(registro);
                     request.setAttribute("registro", proveedor);
-                    disp = request.getRequestDispatcher("/modulos/proveedores/eliminar.jsp");                    
+                    disp = request.getRequestDispatcher("/modulos/proveedores/eliminar.jsp");
+                    break;
+                case AccionDefault:
+                    npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
+                    paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
+                    desplazamiento = ((npagina) * paginacion);
+                    resultset = mproveedor.busquedaProveedor(query, desplazamiento, paginacion, mostrar_inactivos);//provisional
+                    request.setAttribute("listado", resultset);
+                    disp = request.getRequestDispatcher("/modulos/proveedores/index.jsp");
+                    request.setAttribute("paginacion", ((int) mproveedor.getCantidadRegistros(query, mostrar_inactivos) / paginacion) + 1);
+                    request.setAttribute("query", query);
                     break;
             }
             request.setAttribute("mostrar_inactivos", mostrar_inactivos ? "1" : "");
@@ -219,14 +232,14 @@ public class AccionesProveedor extends HttpServlet {
                     request.setAttribute("paginacion", ((int) mproveedor.getCantidadRegistros(query, mostrar_inactivos) / paginacion) + 1);
                     request.setAttribute("mostrar_inactivos", mostrar_inactivos ? "checked" : "");
                     disp.forward(request, response);
-                    break;                    
+                    break;
                 case Modificar:
                     proveedor = generarProveedor(request);
                     respuesta = mproveedor.modificarProveedor(proveedor);
                     request.setAttribute("registro", proveedor);
                     request.setAttribute("respuesta", respuesta);
                     disp = request.getRequestDispatcher("/modulos/proveedores/msgs/notificacion_edicion.jsp");
-                    disp.forward(request, response);                    
+                    disp.forward(request, response);
                     break;
                 case Eliminar:
                     registro = request.getParameter("registro");
@@ -235,14 +248,14 @@ public class AccionesProveedor extends HttpServlet {
                     request.setAttribute("registro", proveedor);
                     request.setAttribute("respuesta", respuesta);
                     disp = request.getRequestDispatcher("/modulos/proveedores/msgs/notificacion_eliminacion.jsp");
-                    disp.forward(request, response);                        
+                    disp.forward(request, response);
                     break;
                 case Listado2:
-                    int tipoServicio=UtilidadesServlet.getInt(request.getParameter("tiposervicio"), 1);
+                    int tipoServicio = UtilidadesServlet.getInt(request.getParameter("tiposervicio"), 1);
                     request.setAttribute("registros", mproveedor.getProveedoresXTipoServicio(tipoServicio));
                     disp = request.getRequestDispatcher("/modulos/proveedores/_asinc/_asinc_listar2.jsp");
-                    disp.forward(request, response);                      
-                    break;  
+                    disp.forward(request, response);
+                    break;
             }
 
         } catch (Exception ex) {
@@ -252,13 +265,17 @@ public class AccionesProveedor extends HttpServlet {
             //redirigir a  pagina de error de sistema
         }
     }
-/**
- * Función que permite obtener un objeto de Proveedor a partir de la soliciitud que el usuario realiza y que el servidor recibe.
- * Si los campos no son correctos, se completaran con nulos o con -1 en caso de ser numéricos.
- * @param request el objeto que contiene el dato de la solicitud.
- * @return un objeto Proveedor para su uso.
- * @since 1.0
- */
+
+    /**
+     * Función que permite obtener un objeto de Proveedor a partir de la
+     * soliciitud que el usuario realiza y que el servidor recibe. Si los campos
+     * no son correctos, se completaran con nulos o con -1 en caso de ser
+     * numéricos.
+     *
+     * @param request el objeto que contiene el dato de la solicitud.
+     * @return un objeto Proveedor para su uso.
+     * @since 1.0
+     */
     private Proveedor generarProveedor(HttpServletRequest request) {
         Proveedor resp = new Proveedor();
         String tipoproveedor = request.getParameter("cmbtipoproveedor");
@@ -282,7 +299,7 @@ public class AccionesProveedor extends HttpServlet {
         String numcuenta = request.getParameter("txtnumcuenta");
         String nombreempresa = request.getParameter("txtnombreempresa");
         String direccionempresa = request.getParameter("txtdireccionempresa");
-       
+
         resp.setTipoProveedor(tipoproveedor);
         resp.setEstado(estadoproveedor);
         resp.setCedula(cedula);
@@ -303,10 +320,10 @@ public class AccionesProveedor extends HttpServlet {
         resp.setDirEmpresa(direccionempresa);
         resp.setFechaRegistro(new Date());
         resp.setFechaUltimaModificacion(new Date());
-        String[]tiposservicios=request.getParameterValues("cmbserviciosproveedor");
-        if(tiposservicios!=null){
+        String[] tiposservicios = request.getParameterValues("cmbserviciosproveedor");
+        if (tiposservicios != null) {
             for (int i = 0; i < tiposservicios.length; i++) {
-                System.out.println("Servicio >>>>>> "+tiposservicios[i]);
+                System.out.println("Servicio >>>>>> " + tiposservicios[i]);
                 resp.agregarTipoServicio(UtilidadesServlet.getInt(tiposservicios[i], -1));
             }
         }

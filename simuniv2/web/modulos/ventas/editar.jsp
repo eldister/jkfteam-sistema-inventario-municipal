@@ -1,3 +1,6 @@
+<%
+    request.setAttribute("permiso_requerido", 50);
+%>
 <%@page import="simuni.entidades.mantenimientos.TipoPago"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="simuni.entidades.Venta"%>

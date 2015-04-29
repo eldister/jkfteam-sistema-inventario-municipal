@@ -193,6 +193,16 @@ public class AccionesActivo extends HttpServlet {
                     request.setAttribute("estados", mactivo.listadoEstado());
                     request.setAttribute("tiposactivo", mactivo.listadoTipoActivo());
                     break;
+                case AccionDefault:
+                    npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
+                    paginacion = UtilidadesServlet.getNumeroDePagina(request.getSession().getAttribute("paginacion"), 7);
+                    desplazamiento = ((npagina) * paginacion);
+                    resultset = mactivo.busquedaActivo(query, desplazamiento, paginacion,mostrar_inactivos);
+                    request.setAttribute("listado", resultset);
+                    disp = request.getRequestDispatcher("/modulos/activos/index.jsp");
+                    request.setAttribute("paginacion", ((int) mactivo.getCantidadRegistros(query,mostrar_inactivos) / paginacion) + 1);
+                    request.setAttribute("query", query);
+                    break;                    
             }
             disp.forward(request, response);
         } catch (Exception ex) {
