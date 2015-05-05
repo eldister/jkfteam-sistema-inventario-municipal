@@ -101,7 +101,7 @@ public class AccionesMensaje extends HttpServlet {
                     desplazamiento = ((npagina) * paginacion);
                     // resultset = mmensaje.busquedaMensaje(query, desplazamiento, paginacion);
                     request.setAttribute("listado", resultset);
-                    disp = request.getRequestDispatcher("/modulos/mantenimientos/mensajes/index.jsp");
+                    disp = request.getRequestDispatcher("/modulos/mensajes/index.jsp");
                     // request.setAttribute("paginacion", ((int) mmensaje.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
                     break;
@@ -112,7 +112,7 @@ public class AccionesMensaje extends HttpServlet {
                       //  Notificacion mensaje = mmensaje.getMensaje(registro);
                         //  request.setAttribute("registro", mensaje);
                     }
-                    disp = request.getRequestDispatcher("/modulos/mantenimientos/mensajes/_asinc/_asinc_editar.jsp");
+                    disp = request.getRequestDispatcher("/modulos/mensajes/_asinc/_asinc_editar.jsp");
                     break;
                 case Eliminar:
                     if (UtilidadesServlet.tryParseInt(request.getParameter("registro"))) {
@@ -120,7 +120,7 @@ public class AccionesMensaje extends HttpServlet {
                       //  Notificacion mensaje = mmensaje.getMensaje(registro);
                         //     request.setAttribute("registro", mensaje);
                     }
-                    disp = request.getRequestDispatcher("/modulos/mantenimientos/mensajes/_asinc/_asinc_eliminar.jsp");
+                    disp = request.getRequestDispatcher("/modulos/mensajes/_asinc/_asinc_eliminar.jsp");
                     break;
                 case AccionDefault:
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
@@ -128,7 +128,7 @@ public class AccionesMensaje extends HttpServlet {
                     desplazamiento = ((npagina) * paginacion);
                     //    resultset = mmensaje.busquedaMensaje(query, desplazamiento, paginacion);
                     request.setAttribute("listado", resultset);
-                    disp = request.getRequestDispatcher("/modulos/mantenimientos/mensajes/index.jsp");
+                    disp = request.getRequestDispatcher("/modulos/mensajes/index.jsp");
                     //      request.setAttribute("paginacion", ((int) mmensaje.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
                     break;
