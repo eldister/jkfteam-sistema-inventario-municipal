@@ -7,7 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorTipoLlanta;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.mantenimientos.TipoLlanta;
 import simuni.utils.UtilidadesServlet;
@@ -161,6 +165,15 @@ public class AccionesTipoLlanta extends HttpServlet {
             String query = request.getParameter("query");
             query = query == null ? "" : query;
             ResultSet resultset = null;
+            
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+            
+            
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     nombretipollanta = request.getParameter("txtnombretipollanta");
@@ -170,6 +183,15 @@ public class AccionesTipoLlanta extends HttpServlet {
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("nuevoregistro", nuevotipollanta);
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposllantas/_asinc/_asinc_nuevo.jsp");
+                  
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registra un nuevo tipo de llanta " + nuevotipollanta.getNombretipollanta(),
+                            "Se registra nuevo tipo de llanta.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha registrado a " + nuevotipollanta.getNombretipollanta()+" como tipo de llanta");
+                    mnotif.agregarNNotificacion(notificacion);
+                    
                     break;
                 case Modificar:
                     nombretipollanta = request.getParameter("txtnombretipollanta");
@@ -181,6 +203,17 @@ public class AccionesTipoLlanta extends HttpServlet {
                         respuesta = mtipollanta.modificarTipoLlanta(tipollanta);
                         request.setAttribute("registro", tipollanta);
                         request.setAttribute("respuesta", respuesta);
+                        
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se modifica un  tipo de llanta " + tipollanta.getNombretipollanta(),
+                            "Se modifica  tipo de llanta.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha modificado a " + tipollanta.getNombretipollanta()+" como tipo de llanta");
+                    mnotif.agregarNNotificacion(notificacion);
+
+                        
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposllantas/_asinc/_asinc_editar.jsp");
                     } else {
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposllantas/index.jsp");
@@ -194,6 +227,15 @@ public class AccionesTipoLlanta extends HttpServlet {
                         request.setAttribute("registro", tipollanta);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposllantas/_asinc/_asinc_eliminar.jsp");
+                  
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se elimina un  tipo de llanta " + tipollanta.getIdtipollanta(),
+                            "Se elimina  tipo de llanta.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha eliminado a " + tipollanta.getIdtipollanta()+" como tipo de llanta");
+                    mnotif.agregarNNotificacion(notificacion);                    
                     }
                     break;
                 case Query:

@@ -9,7 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorUsuario;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.Usuario;
 import simuni.enums.Recursos;
@@ -220,6 +224,15 @@ public class AccionesUsuario extends HttpServlet {
             query = query == null ? "" : query;
             ResultSet resultset = null;
             Usuario usuario = null;
+            
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+            
+            
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
 
@@ -228,6 +241,16 @@ public class AccionesUsuario extends HttpServlet {
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("nuevoregistro", nuevousuario);
                     disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_nuevo.jsp");
+                    
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registra un usuario " + usuario.getNombreusuario(),
+                            "Se registra un usuario.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha registrado a " + usuario.getNombreusuario()+" como usuario");
+                    mnotif.agregarNNotificacion(notificacion);
+                    
                     disp.forward(request, response);
                     break;
                 case Modificar:
@@ -238,6 +261,15 @@ public class AccionesUsuario extends HttpServlet {
                         request.setAttribute("registro", usuario);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_editar.jsp");
+                        
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se modifica un usuario " + usuario.getNombreusuario(),
+                            "Se modifica  un usuario.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha modificado  a " + usuario.getNombreusuario()+" como usuario");
+                    mnotif.agregarNNotificacion(notificacion);                        
                         disp.forward(request, response);
                     }
                     break;
@@ -254,6 +286,16 @@ public class AccionesUsuario extends HttpServlet {
                         request.setAttribute("tiposusuario", musuario.listadoTipoUsuario());
                         request.setAttribute("puestos", musuario.listadoPuesto());
                         disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_eliminar.jsp");
+                        
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se elimina  un usuario " + usuario.getNombreusuario(),
+                            "Se elimina  un usuario.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha eliminado  a " + usuario.getNombreusuario()+" como usuario");
+                    mnotif.agregarNNotificacion(notificacion);   
+                    
                         disp.forward(request, response);
                     }
                     break;
@@ -347,6 +389,14 @@ public class AccionesUsuario extends HttpServlet {
                         System.out.println("El que se va a reacviar es " + registro);
                         musuario.reactivarUsuario(usuario);
                         response.getWriter().print("Usuario Reactivado");
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se reactiva  un usuario " + usuario.getNombreusuario(),
+                            "Se reactiva  un usuario.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha reactiva  a " + usuario.getNombreusuario()+" como usuario");
+                    mnotif.agregarNNotificacion(notificacion);                           
+                        
                     }
                     break;
 

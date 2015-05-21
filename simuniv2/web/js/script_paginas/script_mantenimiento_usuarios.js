@@ -62,7 +62,8 @@ function mostrarventanamodal() {
         minHeight: '600px',
         height: 550,
         position: {my: "left-10 top-20", at: "left top", of: sm_body_mainsection},
-        maxWidth: "768px"});
+        maxWidth: "768px"
+       });
 
 
 }

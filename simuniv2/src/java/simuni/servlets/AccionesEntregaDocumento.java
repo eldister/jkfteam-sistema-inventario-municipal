@@ -13,11 +13,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import simuni.clases.ln.ManejadorBitacora;
 import simuni.clases.ln.ManejadorEntregaDocumento;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorProveedor;
 import simuni.entidades.Documento;
 import simuni.entidades.EntregaDocumento;
+import simuni.entidades.Notificacion;
 import simuni.entidades.Proveedor;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.enums.Recursos;
 import simuni.utils.UtilidadesServlet;
@@ -211,6 +215,13 @@ public class AccionesEntregaDocumento extends HttpServlet {
         query = query == null ? "" : query;
         int codigoentrega = 0;
         ManejadorEntregaDocumento mentregadocumento = new ManejadorEntregaDocumento();
+
+        ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+        RegistroBitacora registroBitacora;
+        String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+        Notificacion notificacion = new Notificacion();
+        ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+
         try {
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
@@ -221,6 +232,15 @@ public class AccionesEntregaDocumento extends HttpServlet {
                     request.setAttribute("nuevoregistro", entregadocumento);
                     disp = request.getRequestDispatcher("/modulos/proveedores/documentos/_asinc/_asinc_nuevo.jsp");
                     System.out.println("Pase por aquiiiiii y veamos" + request.getParameter("registro") + (respuestas != null));
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuestas.get(0), request,
+                            "Se han ingresados nuevos documentos ",
+                            "Se registra documentos.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se suben documentos del proveedor " + entregadocumento.getCedulaproveedor());
+                    mnotif.agregarNNotificacion(notificacion);
+
                     disp.forward(request, response);
                     break;
                 case Modificar:
@@ -234,6 +254,15 @@ public class AccionesEntregaDocumento extends HttpServlet {
                         request.setAttribute("registro", entregadocumento);
                         disp = request.getRequestDispatcher("/modulos/proveedores/documentos/_asinc/_asinc_editar.jsp");
                         System.out.println("Pase por aquiiiiii y veamos" + request.getParameter("registro") + (respuestas != null));
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuestas.get(0), request,
+                                "Se han modificado  documentos del proveedor " + entregadocumento.getCedulaproveedor(),
+                                "Se modifica  documentos.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se modifican  documentos subidos del proveedor " + entregadocumento.getCedulaproveedor());
+                        mnotif.agregarNNotificacion(notificacion);
+
                         disp.forward(request, response);
                     } else {
                         response.sendRedirect(Recursos.Servers.MAINSERVER + "/proveedor?proceso=listado");
@@ -265,6 +294,15 @@ public class AccionesEntregaDocumento extends HttpServlet {
                         request.setAttribute("registro", entregadocumento);
                         disp = request.getRequestDispatcher("/modulos/proveedores/documentos/_asinc/_asinc_eliminar.jsp");
                         System.out.println("Pase por aquiiiiii y veamos" + request.getParameter("registro") + (respuestas != null));
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuestas.get(0), request,
+                                "Se han eliminado entrega de  documentos del proveedor " + entregadocumento.getCedulaproveedor(),
+                                "Se elimina.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se eliminan  documentos subidos del proveedor " + entregadocumento.getCodigo());
+                        mnotif.agregarNNotificacion(notificacion);                        
+                        
                         disp.forward(request, response);
                     } else {
                         response.sendRedirect(Recursos.Servers.MAINSERVER + "/proveedor?proceso=listado");
@@ -286,6 +324,14 @@ public class AccionesEntregaDocumento extends HttpServlet {
                         request.setAttribute("listado", resultset);
                         disp = request.getRequestDispatcher("/modulos/proveedores/documentos/_asinc/_asinc_listardocumentos.jsp");
 
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuestas.get(0), request,
+                                "Se han eliminado entrega de  documentos del proveedor " + entregadocumento.getCedulaproveedor(),
+                                "Se elimina.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se eliminan  documentos subidos del proveedor " + entregadocumento.getCodigo());
+                        mnotif.agregarNNotificacion(notificacion);      
+                        
                         disp.forward(request, response);
                     } else {
                         response.sendRedirect(Recursos.Servers.MAINSERVER + "/proveedor?proceso=listado");

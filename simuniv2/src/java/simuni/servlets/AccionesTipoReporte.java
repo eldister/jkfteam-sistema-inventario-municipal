@@ -7,7 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorTipoReporte;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.mantenimientos.TipoReporte;
 import simuni.utils.UtilidadesServlet;
@@ -161,6 +165,15 @@ public class AccionesTipoReporte extends HttpServlet {
             String query = request.getParameter("query");
             query = query == null ? "" : query;
             ResultSet resultset = null;
+            
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+            
+            
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     nombretiporeporte = request.getParameter("txtnombretiporeporte");
@@ -170,6 +183,16 @@ public class AccionesTipoReporte extends HttpServlet {
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("nuevoregistro", nuevotiporeporte);
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposreporte/_asinc/_asinc_nuevo.jsp");
+                 
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registra un nuevo tipo de reporte " + nuevotiporeporte.getNombretiporeporte(),
+                            "Se registra nuevo tipo de reporte.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha registrado a " + nuevotiporeporte.getNombretiporeporte()+" como tipo de reporte");
+                    mnotif.agregarNNotificacion(notificacion);                    
+                    
                     break;
                 case Modificar:
                     nombretiporeporte = request.getParameter("txtnombretiporeporte");
@@ -182,6 +205,16 @@ public class AccionesTipoReporte extends HttpServlet {
                         request.setAttribute("registro", tiporeporte);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposreporte/_asinc/_asinc_editar.jsp");
+                   
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se modifica un  tipo de reporte " + tiporeporte.getNombretiporeporte(),
+                            "Se modifica nuevo tipo de reporte.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha modifica a " + tiporeporte.getNombretiporeporte()+" como tipo de reporte");
+                    mnotif.agregarNNotificacion(notificacion);                    
+                                        
+                    
                     } else {
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposreporte/index.jsp");
                     }

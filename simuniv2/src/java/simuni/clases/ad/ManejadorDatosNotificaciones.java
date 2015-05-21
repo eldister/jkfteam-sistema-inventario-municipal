@@ -48,7 +48,7 @@ public class ManejadorDatosNotificaciones {
         st.setString(6, notificacion.getTipoNotificacion());
         st.registerOutParameter(7, java.sql.Types.VARCHAR);
         st.execute();
-        resp = st.getString(7);
+        //resp = st.getString(7);
         Conexionmysql.cerrarConexion(con);
         return resp;
     }
@@ -64,14 +64,11 @@ public class ManejadorDatosNotificaciones {
      */
     public boolean agregarNotificacion(Notificacion notificacion) throws SQLException {
         Connection con = Conexionmysql.obtenerConexion();
-        PreparedStatement st = con.prepareCall("{CALL sp_agregarNotificacion(?,?,?,?,?,?)}");
+        CallableStatement st = con.prepareCall("{CALL simuni_sp_registro_notificacion(?,?,?)}");
 
-        st.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
-        st.setString(2, notificacion.getUsuarioObjetivo());
-        st.setString(3, notificacion.getUsuarioOrigen());
-        st.setString(4, "Activo");
-        st.setString(5, notificacion.getDescripcionNotificacion());
-        st.setString(6, "Notificacion");
+        st.setString(1, notificacion.getUsuarioOrigen());
+        st.setString(2, notificacion.getDescripcionNotificacion());
+        st.registerOutParameter(3, java.sql.Types.VARCHAR);
         st.executeUpdate();
         Conexionmysql.cerrarConexion(con);
         return true;

@@ -7,24 +7,28 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorReparacion;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.Reparacion;
 import simuni.utils.UtilidadesServlet;
 
 /**
  * Este servelet controla las acciones que tienen qeu ver con el catálogo de
- * Reparacion
- * En este se controlan los get y post correspondientes a las solicitudes del
- * usuario y tambien la preparación de lo necesario para dar respuesta a la
- * solicitud. Entre las operaciones qeu se contemplan estan las básicas de
- * ingreso, modificación y eliminacion.
+ * Reparacion En este se controlan los get y post correspondientes a las
+ * solicitudes del usuario y tambien la preparación de lo necesario para dar
+ * respuesta a la solicitud. Entre las operaciones qeu se contemplan estan las
+ * básicas de ingreso, modificación y eliminacion.
  *
  * @author Producjeffer
  * @since 1.0
  * @version 2.0
  */
 public class AccionesReparacion extends HttpServlet {
+
     /**
      * Esta enumeración es particular al servelet para poder hacer mas facil y
      * exacto el control de operaciones solicitadas. Entre las operaciones
@@ -83,15 +87,15 @@ public class AccionesReparacion extends HttpServlet {
             int npagina = 0;
             int paginacion = 0;//obtener la paginacion y pagina actual  
             int registro = 0;
-            
+
             ManejadorReparacion mreparacion = new ManejadorReparacion();
             String query = request.getParameter("query");
             ResultSet resultset = null;
             query = query == null ? "" : query;
             switch (getOpcion(request.getParameter("proceso"))) {
-                case Nuevo:  
-                     disp = request.getRequestDispatcher("/modulos/reparaciones/nuevo.jsp");
-                     System.out.println("Entreeee");
+                case Nuevo:
+                    disp = request.getRequestDispatcher("/modulos/reparaciones/nuevo.jsp");
+                    System.out.println("Entreeee");
                     break;
                 case Listado:
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
@@ -164,6 +168,12 @@ public class AccionesReparacion extends HttpServlet {
             query = query == null ? "" : query;
             ResultSet resultset = null;
 
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     reparacion = generarReparacion(request);
@@ -171,6 +181,15 @@ public class AccionesReparacion extends HttpServlet {
                     respuesta = mreparacion.registrarReparacion(reparacion);
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("registro", reparacion);
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registra una reparación del activo" + reparacion.getPlacaActivo(),
+                            "Se registra una reparación");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha registrado una reparación del activo " + reparacion.getPlacaActivo());
+                    mnotif.agregarNNotificacion(notificacion);
+
                     disp = request.getRequestDispatcher("/modulos/reparaciones/nuevo.jsp");
                     break;
                 case Modificar:
@@ -179,6 +198,14 @@ public class AccionesReparacion extends HttpServlet {
                     request.setAttribute("registro", reparacion);
                     request.setAttribute("respuesta", respuesta);
                     disp = request.getRequestDispatcher("/modulos/reparaciones/editar.jsp");
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se modifica una reparación del activo" + reparacion.getPlacaActivo(),
+                            "Se modifica una reparación");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha modificado una reparación del activo " + reparacion.getPlacaActivo());
+                    mnotif.agregarNNotificacion(notificacion);
                     break;
                 case Eliminar:
                     if (UtilidadesServlet.tryParseInt(request.getParameter("registro"))) {
@@ -188,6 +215,14 @@ public class AccionesReparacion extends HttpServlet {
                         request.setAttribute("registro", reparacion);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/reparaciones/eliminar.jsp");
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se elimina una reparación del activo" + reparacion.getPlacaActivo(),
+                                "Se elimina una reparación");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha eliminado una reparación del activo " + reparacion.getPlacaActivo());
+                        mnotif.agregarNNotificacion(notificacion);
                     }
                     break;
                 case Query:
@@ -220,17 +255,18 @@ public class AccionesReparacion extends HttpServlet {
     }
 
     /**
-     * metodo para la generacion de una nueva reparacion con la información obtenido
-     * de los formularios html del lado del cliente
-     * 
+     * metodo para la generacion de una nueva reparacion con la información
+     * obtenido de los formularios html del lado del cliente
+     *
      * @param request solicitud al servlet
-     * @return la nueva reparación con la información obtenida de los formularios
+     * @return la nueva reparación con la información obtenida de los
+     * formularios
      */
     private Reparacion generarReparacion(HttpServletRequest request) {
         Reparacion reparacion = new Reparacion();
         try {
             reparacion.setnombreReparador(request.getParameter("txtnombrereparador"));
-            System.out.println("fechaaaaaaa "+request.getParameter("txtfechareparacion"));
+            System.out.println("fechaaaaaaa " + request.getParameter("txtfechareparacion"));
             reparacion.setFechaReparacion(UtilidadesServlet.getFecha(request.getParameter("txtfechareparacion"), null));
             reparacion.setCostoReparacion(UtilidadesServlet.getDouble(request.getParameter("txtmontoreparacion"), -1));
             reparacion.setIdUsuario(request.getSession().getAttribute("USERNAME").toString());

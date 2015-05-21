@@ -18,7 +18,7 @@
                 <p class='sm_div_textonotificacion'>
                     <% out.print(notificacion.getDescripcionNotificacion());%>
                 </p>
-                <p><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/notificacion?proceso=notificaciones">Ver</a></p>
+                <p><a href="<%out.print(Recursos.Servers.MAINSERVER);%>/notificacion?proceso=ver_notificaciones">Detalle</a></p>
                                   
             </div> 
 <%

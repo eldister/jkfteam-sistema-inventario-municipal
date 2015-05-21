@@ -52,8 +52,11 @@ public class ManejadorBitacora {
 
         RegistroBitacora registro = new RegistroBitacora();
         registro.setUsuario((String) request.getSession().getAttribute("USERNAME"));
-        registro.setEstado(respuesta.getNivel() == 2 ? "Incompleto" : "Completo");
+        registro.setEstado(respuesta!=null&&respuesta.getNivel() == 2 ? "Incompleto" : "Completo");
         registro.setDescripcion(descripcion);
+        //cambiar observaciones
+        observaciones=observaciones + "Desde la dirección "+request.getRemoteAddr()+". Otros datos: Autenticación"+
+                request.getAuthType()+ " Protocolo: "+request.getProtocol()+" Id sesión: "+request.getRequestedSessionId();
         registro.setObservaciones(observaciones);
         return registro;
     }

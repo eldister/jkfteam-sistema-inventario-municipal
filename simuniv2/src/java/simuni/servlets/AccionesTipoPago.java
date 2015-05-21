@@ -7,7 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorTipoPago;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.mantenimientos.TipoPago;
 import simuni.utils.UtilidadesServlet;
@@ -161,6 +165,13 @@ public class AccionesTipoPago extends HttpServlet {
             String query = request.getParameter("query");
             query = query == null ? "" : query;
             ResultSet resultset = null;
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     nombretipopago = request.getParameter("txtnombretipopago");
@@ -170,6 +181,15 @@ public class AccionesTipoPago extends HttpServlet {
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("nuevoregistro", nuevotipopago);
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/tipospago/_asinc/_asinc_nuevo.jsp");
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registra un nuevo tipo de pago " + nuevotipopago.getNombretipopago(),
+                            "Se registra nuevo tipo de pago.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha registrado a " + nuevotipopago.getNombretipopago() + " como tipo de pago");
+                    mnotif.agregarNNotificacion(notificacion);
+
                     break;
                 case Modificar:
                     nombretipopago = request.getParameter("txtnombretipopago");
@@ -182,6 +202,15 @@ public class AccionesTipoPago extends HttpServlet {
                         request.setAttribute("registro", tipopago);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tipospago/_asinc/_asinc_editar.jsp");
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se modifica un  tipo de pago " + tipopago.getNombretipopago(),
+                                "Se registra  tipo de pago.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha modificado a " + tipopago.getNombretipopago() + " como tipo de pago");
+                        mnotif.agregarNNotificacion(notificacion);
+
                     } else {
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tipospago/index.jsp");
                     }
@@ -194,6 +223,13 @@ public class AccionesTipoPago extends HttpServlet {
                         request.setAttribute("registro", tipopago);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tipospago/_asinc/_asinc_eliminar.jsp");
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se elimina un  tipo de pago " + tipopago.getNombretipopago(),
+                                "Se elimina  tipo de pago.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha eliminado a " + tipopago.getNombretipopago() + " como tipo de pago");
+                        mnotif.agregarNNotificacion(notificacion);
                     }
                     break;
                 case Query:

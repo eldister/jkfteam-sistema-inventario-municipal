@@ -7,9 +7,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
 import simuni.clases.ln.ManejadorConfiguracion;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.entidades.Respuesta;
 import simuni.entidades.Configuracion;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.utils.UtilidadesServlet;
 
 /**
@@ -92,9 +96,16 @@ public class AccionesConfiguracion extends HttpServlet {
             String query = request.getParameter("query");
             ResultSet resultset = null;
             query = query == null ? "" : query;
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo_ConfiguracionRespaldo:
                     disp = request.getRequestDispatcher("/modulos/configuraciones/nuevo_cr.jsp");
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(null, request,
+                            "Solicitud de formulario para crear una nueva configuración",
+                            "Se solicita formulario para nueva configuración");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
                     break;
 
                 case Modificar_ConfiguracionRespaldo:
@@ -106,6 +117,11 @@ public class AccionesConfiguracion extends HttpServlet {
                     request.setAttribute("registro", configuracion);
 
                     disp = request.getRequestDispatcher("/modulos/configuraciones/editar_cr.jsp");
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(null, request,
+                            "Solicitud de formulario para edigar una  configuración de sistema",
+                            "Se solicita formulario para  configuración de sistema");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
                     break;
                 case Eliminar:
                     if (UtilidadesServlet.tryParseInt(request.getParameter("registro"))) {
@@ -113,6 +129,10 @@ public class AccionesConfiguracion extends HttpServlet {
                         configuracion = mconfiguracion.getConfiguracionRespaldo(registro);
                         request.setAttribute("registro", configuracion);
                     }
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(null, request,
+                            "Solicitud de formulario para eliminar una  configuración de sistema",
+                            "Se solicita formulario para eliminar configuración de sistema");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
                     disp = request.getRequestDispatcher("/modulos/configuraciones/eliminar.jsp");
                     break;
                 case AccionDefault:
@@ -124,6 +144,10 @@ public class AccionesConfiguracion extends HttpServlet {
                     disp = request.getRequestDispatcher("/modulos/configuraciones/index.jsp");
                     //  request.setAttribute("paginacion", ((int) mconfiguracion.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(null, request,
+                            "Acccion default configuración de sistema",
+                            "configuración sistema default");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
                     break;
             }
             disp.forward(request, response);
@@ -158,6 +182,13 @@ public class AccionesConfiguracion extends HttpServlet {
             Configuracion configuracion = null;
             query = query == null ? "" : query;
             ResultSet resultset = null;
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo_ConfiguracionRespaldo:
 
@@ -165,6 +196,15 @@ public class AccionesConfiguracion extends HttpServlet {
                     respuesta = mconfiguracion.registrarConfiguracionRespaldoBD(nuevaconfiguracion);
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("registro", nuevaconfiguracion);
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registra una nueva configuración de respaldo del sistema ",
+                            "Se registra nueva configuración");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha registrado una nueva configuración del sistema!.");
+                    mnotif.agregarNNotificacion(notificacion);
+
                     disp = request.getRequestDispatcher("/modulos/configuraciones/nuevo_cr.jsp");
                     break;
                 case Modificar_ConfiguracionRespaldo:
@@ -172,6 +212,14 @@ public class AccionesConfiguracion extends HttpServlet {
                     respuesta = mconfiguracion.actualizarConfiguracionRespaldoBD(configuracion);
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("registro", configuracion);
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se modificó una  configuración de respaldo del sistema (" + configuracion.getCodigoConfiguracion() + ")",
+                            "Se modifica una configuración");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha modificado una  configuración del sistema!.");
+                    mnotif.agregarNNotificacion(notificacion);
+
                     disp = request.getRequestDispatcher("/modulos/configuraciones/editar_cr.jsp");
                     break;
                 case Eliminar:
@@ -181,6 +229,13 @@ public class AccionesConfiguracion extends HttpServlet {
                         //  respuesta = mconfiguracion.eliminarConfiguracion(configuracion);
                         request.setAttribute("registro", configuracion);
                         request.setAttribute("respuesta", respuesta);
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se eliminó una  configuración de respaldo del sistema (" + configuracion.getCodigoConfiguracion() + ")",
+                                "Se eliminó una configuración");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha eliminado una  configuración del sistema!.");
+                        mnotif.agregarNNotificacion(notificacion);
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/configuracions/_asinc/_asinc_eliminar.jsp");
                     }
                     break;
@@ -191,6 +246,10 @@ public class AccionesConfiguracion extends HttpServlet {
                     // resultset = mconfiguracion.busquedaConfiguracion(query, desplazamiento, paginacion);
                     request.setAttribute("listado", resultset);
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/configuracions/_asinc/_asinc_listar.jsp");
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(null, request,
+                            "Listado de configuraciones, asinc",
+                            "Listado de configuraciones, asinc");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
                     // request.setAttribute("paginacion", ((int) mconfiguracion.getCantidadRegistros(query) / paginacion) + 1);
                     break;
                 case AccionDefault:
@@ -202,6 +261,10 @@ public class AccionesConfiguracion extends HttpServlet {
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/configuracions/index.jsp");
                     //  request.setAttribute("paginacion", ((int) mconfiguracion.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(null, request,
+                            "configuracion de sistema, default post",
+                            "configuracion de sistema, default post");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
                     break;
             }
             disp.forward(request, response);

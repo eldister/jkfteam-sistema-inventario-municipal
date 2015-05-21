@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorTipoActivo;
+import simuni.entidades.Notificacion;
 import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.mantenimientos.TipoActivo;
@@ -165,6 +167,11 @@ public class AccionesTipoActivo extends HttpServlet {
             String query = request.getParameter("query");
             query = query == null ? "" : query;
             ResultSet resultset = null;
+
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     nombretipoactivo = request.getParameter("txtnombretipoactivo");
@@ -176,6 +183,9 @@ public class AccionesTipoActivo extends HttpServlet {
                             "Se registro un nuevo tipo de Activo", "Se registró el registro  "
                             + nuevotipoactivo.getNombretipoactivo());
                     manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha registrado a " + nombretipoactivo + " como tipo de activo");
+                    mnotif.agregarNNotificacion(notificacion);
 
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("nuevoregistro", nuevotipoactivo);
@@ -195,6 +205,10 @@ public class AccionesTipoActivo extends HttpServlet {
                                 "Se modificó un nuevo tipo de Activo", "Se modificó el registro  "
                                 + tipoactivo.getIdtipoactivo());
                         manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha modificado a " + nombretipoactivo + " como tipo de activo");
+                        mnotif.agregarNNotificacion(notificacion);
+
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposactivos/_asinc/_asinc_editar.jsp");
                     } else {
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposactivos/index.jsp");
@@ -207,6 +221,13 @@ public class AccionesTipoActivo extends HttpServlet {
                         respuesta = mtipoactivo.eliminarTipoActivo(tipoactivo);
                         request.setAttribute("registro", tipoactivo);
                         request.setAttribute("respuesta", respuesta);
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se eliminó un  tipo de Activo", "Se eliminó el registro  "
+                                + tipoactivo.getIdtipoactivo());
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha eliminado a " + tipoactivo.getIdtipoactivo() + " como tipo de activo");
+                        mnotif.agregarNNotificacion(notificacion);
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposactivos/_asinc/_asinc_eliminar.jsp");
                     }
                     break;

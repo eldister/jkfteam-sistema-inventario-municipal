@@ -8,8 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import simuni.clases.ln.ManejadorBaja;
+import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.entidades.Respuesta;
 import simuni.entidades.Baja;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.utils.UtilidadesServlet;
 
 /**
@@ -80,6 +84,8 @@ public class AccionesBaja extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher disp = null;
+        ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+        RegistroBitacora registroBitacora;
         try {
             int desplazamiento = 0;
             int npagina = 0;
@@ -92,9 +98,17 @@ public class AccionesBaja extends HttpServlet {
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     disp = request.getRequestDispatcher("/modulos/bajas/nuevo.jsp");
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(null, request,
+                            "Se da de baja el activo, solicitud formulario ",
+                            "Solicitud formulario para dar de baja un activo.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
                     break;
                 case Nueva_Solicitud_Baja:
                     disp = request.getRequestDispatcher("/modulos/bajas/nueva_solicitud.jsp");
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(null, request,
+                            "Se da la solicitud  baja el activo, solicitud formulario ",
+                            "Solicitud de formulario para solicitud baja un activo.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
                     break;
                 case Listado:
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
@@ -105,12 +119,20 @@ public class AccionesBaja extends HttpServlet {
                     disp = request.getRequestDispatcher("/modulos/bajas/index.jsp");
                     request.setAttribute("paginacion", ((int) mbaja.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(null, request,
+                            "Se da la solicitud, listado de bajas ",
+                            "Listado de bajas.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
                     break;
                 case Eliminar:
                     if (UtilidadesServlet.tryParseInt(request.getParameter("registro"))) {
                         registro = Integer.parseInt(request.getParameter("registro"));
                         Baja baja = mbaja.getBaja(registro);
                         request.setAttribute("registro", baja);
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(null, request,
+                                "Se da la solicitud, eliinación de bajas ",
+                                "Eliminación de bajas.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
                     }
                     disp = request.getRequestDispatcher("/modulos/bajas/eliminar.jsp");
                     break;
@@ -123,6 +145,10 @@ public class AccionesBaja extends HttpServlet {
                     disp = request.getRequestDispatcher("/modulos/bajas/index.jsp");
                     request.setAttribute("paginacion", ((int) mbaja.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(null, request,
+                            "Se da la solicitud, listado de bajas, default ",
+                            "Listado de bajas, default");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
                     break;
             }
             disp.forward(request, response);
@@ -157,6 +183,13 @@ public class AccionesBaja extends HttpServlet {
             String query = request.getParameter("query");
             query = query == null ? "" : query;
             ResultSet resultset = null;
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
 
@@ -165,6 +198,13 @@ public class AccionesBaja extends HttpServlet {
                     respuesta = mbaja.registrarBaja(nuevobaja);
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("registro", nuevobaja);
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se da de baja el activo " + nuevobaja.getPlacaActivo(),
+                            "Borrado de los datos de un activo");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            nuevobaja.getPlacaActivo() + " ha sido dado de baja de la base de datos.");
+                    mnotif.agregarNNotificacion(notificacion);
                     disp = request.getRequestDispatcher("/modulos/bajas/nuevo.jsp");
                     break;
                 case Eliminar:
@@ -172,6 +212,14 @@ public class AccionesBaja extends HttpServlet {
                         registro = Integer.parseInt(request.getParameter("registro"));
                         Baja baja = mbaja.getBaja(registro);
                         respuesta = mbaja.eliminarBaja(baja);
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se cancela la baja del activo " + baja.getPlacaActivo(),
+                                "Restaurado los datos de un activo");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                baja.getPlacaActivo() + " ha sido restaurado a la base de datos.");
+                        mnotif.agregarNNotificacion(notificacion);
                         request.setAttribute("registro", baja);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/bajas/index.jsp");
@@ -185,6 +233,11 @@ public class AccionesBaja extends HttpServlet {
                     request.setAttribute("listado", resultset);
                     disp = request.getRequestDispatcher("/modulos/bajas/_asinc/_asinc_listar.jsp");
                     request.setAttribute("paginacion", ((int) mbaja.getCantidadRegistros(query) / paginacion) + 1);
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(null, request,
+                            "Se da la solicitud, asincrónico, listado de bajas ",
+                            "Listado de bajas, asincrónico.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+
                     break;
                 case AccionDefault:
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);
@@ -195,6 +248,10 @@ public class AccionesBaja extends HttpServlet {
                     disp = request.getRequestDispatcher("/modulos/bajas/index.jsp");
                     request.setAttribute("paginacion", ((int) mbaja.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(null, request,
+                            "Se da la solicitud, listado de bajas, default ",
+                            "Listado de bajas, default");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
                     break;
             }
             disp.forward(request, response);
