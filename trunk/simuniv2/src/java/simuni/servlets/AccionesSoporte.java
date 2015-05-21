@@ -7,7 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorTareasRespaldo;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 
 /**
@@ -121,11 +125,26 @@ public class AccionesSoporte extends HttpServlet {
             query = query == null ? "" : query;
             ResultSet resultset = null;
             ManejadorTareasRespaldo mtareasbackup = new ManejadorTareasRespaldo();
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();            
+            
             switch (getOpcion(request.getParameter("proceso"))) {
                 case HacerBackup:
                     respuesta = mtareasbackup.hacerRespaldoBD(false);
                     request.setAttribute("respuesta", respuesta);
                     disp = request.getRequestDispatcher("/modulos/soporte/hacerbackup.jsp");
+                    
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se hace un backup general" ,
+                            "Se registra un backup");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha completado el backup");
+                    mnotif.agregarNNotificacion(notificacion);                    
                     break;
 
             }

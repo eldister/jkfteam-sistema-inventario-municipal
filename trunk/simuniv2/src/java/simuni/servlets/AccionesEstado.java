@@ -7,7 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
 import simuni.clases.ln.ManejadorEstado;
+import simuni.clases.ln.ManejadorNotificaciones;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.mantenimientos.Estado;
 import simuni.utils.UtilidadesServlet;
@@ -161,6 +165,13 @@ public class AccionesEstado extends HttpServlet {
             String query = request.getParameter("query");
             query = query == null ? "" : query;
             ResultSet resultset = null;
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     nombreestado = request.getParameter("txtnombreestado");
@@ -169,6 +180,15 @@ public class AccionesEstado extends HttpServlet {
                     respuesta = mestado.registrarEstado(nuevoestado);
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("nuevoregistro", nuevoestado);
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registra un nuevo tipo de estado " + nuevoestado.getNombreestado(),
+                            "Se registra nuevo tipo de estado.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha registrado a " + nuevoestado.getNombreestado());
+                    mnotif.agregarNNotificacion(notificacion);
+
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/estados/_asinc/_asinc_nuevo.jsp");
                     break;
                 case Modificar:
@@ -181,6 +201,15 @@ public class AccionesEstado extends HttpServlet {
                         respuesta = mestado.modificarEstado(estado);
                         request.setAttribute("registro", estado);
                         request.setAttribute("respuesta", respuesta);
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se modificado un  tipo de estado " + estado.getNombreestado(),
+                                "Se modificado un tipo de estado.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha modificado a " + estado.getNombreestado());
+                        mnotif.agregarNNotificacion(notificacion);
+
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/estados/_asinc/_asinc_editar.jsp");
                     } else {
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/estados/index.jsp");
@@ -193,6 +222,15 @@ public class AccionesEstado extends HttpServlet {
                         respuesta = mestado.eliminarEstado(estado);
                         request.setAttribute("registro", estado);
                         request.setAttribute("respuesta", respuesta);
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se elimina un  tipo de estado " + estado.getNombreestado(),
+                                "Se elimina un tipo de estado.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha eliminado a " + estado.getIdestado());
+                        mnotif.agregarNNotificacion(notificacion);
+
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/estados/_asinc/_asinc_eliminar.jsp");
                     }
                     break;

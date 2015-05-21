@@ -31,6 +31,7 @@ public class ManejadorDatosBitacora {
     public String registrarEnBitacora(RegistroBitacora registroBitacora) throws SQLException {
         String resp = "";
         try {
+            
             Connection con = Conexionmysql.obtenerConexion();
             CallableStatement cs = con.prepareCall("{call simuni_sp_registro_enbitacora(?,?,?,?,?)}");
             cs.setString(1, registroBitacora.getUsuario());
@@ -41,8 +42,10 @@ public class ManejadorDatosBitacora {
             ResultSet rs = cs.executeQuery();
             resp = cs.getString(5);
             Conexionmysql.cerrarConexion(con);
+            System.out.println("Registrado en bitacora");
         } catch (SQLException ex) {
             resp = ex.getMessage();
+            ex.printStackTrace();
             throw ex;
         }
         return resp;

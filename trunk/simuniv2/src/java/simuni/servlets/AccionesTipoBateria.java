@@ -7,7 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorTipoBateria;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.mantenimientos.TipoBateria;
 import simuni.utils.UtilidadesServlet;
@@ -161,6 +165,13 @@ public class AccionesTipoBateria extends HttpServlet {
             String query = request.getParameter("query");
             query = query == null ? "" : query;
             ResultSet resultset = null;
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     nombretipobateria = request.getParameter("txtnombretipobateria");
@@ -170,6 +181,14 @@ public class AccionesTipoBateria extends HttpServlet {
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("nuevoregistro", nuevotipobateria);
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposbaterias/_asinc/_asinc_nuevo.jsp");
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registra un nuevo tipo de batería " + nuevotipobateria.getNombretipobateria(),
+                            "Se registra nuevo tipo de batería.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha registrado a " + nuevotipobateria.getNombretipobateria() + " como tipo de batería");
+                    mnotif.agregarNNotificacion(notificacion);
                     break;
                 case Modificar:
                     nombretipobateria = request.getParameter("txtnombretipobateria");
@@ -181,6 +200,14 @@ public class AccionesTipoBateria extends HttpServlet {
                         respuesta = mtipobateria.modificarTipoBateria(tipobateria);
                         request.setAttribute("registro", tipobateria);
                         request.setAttribute("respuesta", respuesta);
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se modifica un  tipo de batería " + nombretipobateria,
+                                "Se modifica  tipo de batería.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha modificado a " + nombretipobateria + " como tipo de batería");
+                        mnotif.agregarNNotificacion(notificacion);
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposbaterias/_asinc/_asinc_editar.jsp");
                     } else {
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposbaterias/index.jsp");
@@ -193,6 +220,14 @@ public class AccionesTipoBateria extends HttpServlet {
                         respuesta = mtipobateria.eliminarTipoBateria(tipobateria);
                         request.setAttribute("registro", tipobateria);
                         request.setAttribute("respuesta", respuesta);
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se elimina un  tipo de batería " + tipobateria.getNombretipobateria(),
+                                "Se elimina  tipo de batería.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha eliminado a " + tipobateria.getNombretipobateria() + " como tipo de batería");
+                        mnotif.agregarNNotificacion(notificacion);
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/tiposbaterias/_asinc/_asinc_eliminar.jsp");
                     }
                     break;

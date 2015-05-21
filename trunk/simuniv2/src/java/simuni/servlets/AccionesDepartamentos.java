@@ -7,7 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
 import simuni.clases.ln.ManejadorDepartamento;
+import simuni.clases.ln.ManejadorNotificaciones;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.mantenimientos.Departamento;
 import simuni.utils.UtilidadesServlet;
@@ -87,6 +91,7 @@ public class AccionesDepartamentos extends HttpServlet {
             String query = request.getParameter("query");
             ResultSet resultset = null;
             query = query == null ? "" : query;
+            
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/departamentos/_asinc/_asinc_nuevo.jsp");
@@ -161,6 +166,13 @@ public class AccionesDepartamentos extends HttpServlet {
             String query = request.getParameter("query");
             query = query == null ? "" : query;
             ResultSet resultset = null;
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     nombredepartamento = request.getParameter("txtnombredepartamento");
@@ -169,6 +181,15 @@ public class AccionesDepartamentos extends HttpServlet {
                     respuesta = mdepartamento.registrarDepartamento(nuevodepartamento);
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("nuevoregistro", nuevodepartamento);
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registra un nuevo departamento " + nuevodepartamento.getNombredepartamento(),
+                            "Se registra nuevo depto.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha registrado a " + nuevodepartamento.getNombredepartamento());
+                    mnotif.agregarNNotificacion(notificacion);
+
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/departamentos/_asinc/_asinc_nuevo.jsp");
                     break;
                 case Modificar:
@@ -179,6 +200,15 @@ public class AccionesDepartamentos extends HttpServlet {
                         departamento.setIddepartamento(registro);
                         departamento.setNombredepartamento(nombredepartamento);
                         respuesta = mdepartamento.modificarDepartamento(departamento);
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se modifica un  departamento (" + departamento.getNombredepartamento() + ")",
+                                "Se modifica depto.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha modificado a " + departamento.getNombredepartamento());
+                        mnotif.agregarNNotificacion(notificacion);
+
                         request.setAttribute("registro", departamento);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/departamentos/_asinc/_asinc_editar.jsp");
@@ -193,6 +223,15 @@ public class AccionesDepartamentos extends HttpServlet {
                         respuesta = mdepartamento.eliminarDepartamento(departamento);
                         request.setAttribute("registro", departamento);
                         request.setAttribute("respuesta", respuesta);
+                        
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se elimina un  departamento (" + departamento.getIddepartamento()+ ")",
+                                "Se elimina depto.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha eliminado a " + departamento.getIddepartamento());
+                        mnotif.agregarNNotificacion(notificacion);                        
+                        
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/departamentos/_asinc/_asinc_eliminar.jsp");
                     }
                     break;

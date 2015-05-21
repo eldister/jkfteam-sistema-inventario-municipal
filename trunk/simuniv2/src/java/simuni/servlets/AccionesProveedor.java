@@ -8,8 +8,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorProveedor;
+import simuni.entidades.Notificacion;
 import simuni.entidades.Proveedor;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.utils.UtilidadesServlet;
 
@@ -189,6 +193,14 @@ public class AccionesProveedor extends HttpServlet {
             String query = request.getParameter("query");
             ResultSet resultset = null;
             query = query == null ? "" : query;
+            
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+            
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     proveedor = generarProveedor(request);
@@ -196,6 +208,16 @@ public class AccionesProveedor extends HttpServlet {
                     request.setAttribute("registro", proveedor);
                     request.setAttribute("respuesta", respuesta);
                     disp = request.getRequestDispatcher("/modulos/proveedores/msgs/notificacion_registro.jsp");
+             
+ 
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registra un nuevo proveedor " + proveedor.getCedula(),
+                            "Se registra nuevo proveedor.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha registrado a " + proveedor.getCedula()+" como proveedor");
+                    mnotif.agregarNNotificacion(notificacion);
+                   
                     disp.forward(request, response);
 
                     break;
@@ -239,6 +261,15 @@ public class AccionesProveedor extends HttpServlet {
                     request.setAttribute("registro", proveedor);
                     request.setAttribute("respuesta", respuesta);
                     disp = request.getRequestDispatcher("/modulos/proveedores/msgs/notificacion_edicion.jsp");
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se modifica un  proveedor " + proveedor.getCedula(),
+                            "Se modifica  proveedor.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha modificado al proveedor " + proveedor.getCedula()+"");
+                    mnotif.agregarNNotificacion(notificacion);                    
+                    
                     disp.forward(request, response);
                     break;
                 case Eliminar:
@@ -248,7 +279,17 @@ public class AccionesProveedor extends HttpServlet {
                     request.setAttribute("registro", proveedor);
                     request.setAttribute("respuesta", respuesta);
                     disp = request.getRequestDispatcher("/modulos/proveedores/msgs/notificacion_eliminacion.jsp");
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se elimina un  proveedor " + proveedor.getCedula(),
+                            "Se elimina  proveedor.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha eliminado al proveedor " + proveedor.getCedula()+"");
+                    mnotif.agregarNNotificacion(notificacion);                        
+                    
                     disp.forward(request, response);
+                    
                     break;
                 case Listado2:
                     int tipoServicio = UtilidadesServlet.getInt(request.getParameter("tiposervicio"), 1);

@@ -7,7 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorVenta;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.Venta;
 import simuni.utils.UtilidadesServlet;
@@ -166,6 +170,15 @@ public class AccionesVenta extends HttpServlet {
             query = query == null ? "" : query;
             ResultSet resultset = null;
 
+            
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+
+            
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     venta = generarVenta(request);
@@ -175,6 +188,16 @@ public class AccionesVenta extends HttpServlet {
                     request.setAttribute("registro", venta);
                     request.setAttribute("tipospago", mventa.listadoTipoPago());
                     disp = request.getRequestDispatcher("/modulos/ventas/nuevo.jsp");
+                    
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registra una venta del activo " + venta.getPlacaActivo(),
+                            "Se registra nueva venta.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha vendido a  " + venta.getPlacaActivo());
+                    mnotif.agregarNNotificacion(notificacion);
+                    
                     break;
                 case Modificar:
                     venta = generarVenta(request);
@@ -183,6 +206,16 @@ public class AccionesVenta extends HttpServlet {
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("tipospago", mventa.listadoTipoPago());
                     disp = request.getRequestDispatcher("/modulos/ventas/editar.jsp");
+                    
+                    
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se modifica una venta del activo " + venta.getPlacaActivo(),
+                            "Se modifica nueva venta.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha modificado a la venta del activo " + venta.getPlacaActivo());
+                    mnotif.agregarNNotificacion(notificacion);                    
                     break;
                 case Eliminar:
                     if (UtilidadesServlet.tryParseInt(request.getParameter("registro"))) {
@@ -193,6 +226,15 @@ public class AccionesVenta extends HttpServlet {
                         request.setAttribute("respuesta", respuesta);
                           request.setAttribute("tipospago", mventa.listadoTipoPago());
                         disp = request.getRequestDispatcher("/modulos/ventas/eliminar.jsp");
+                        
+                        
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se elimina una venta del activo " + venta.getPlacaActivo(),
+                            "Se elimina nueva venta.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha eliminado a la venta del activo " + venta.getPlacaActivo());
+                    mnotif.agregarNNotificacion(notificacion);                          
                     }
                     break;
                 case Query:

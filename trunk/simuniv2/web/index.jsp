@@ -266,6 +266,11 @@
                                                         $("#sm_body_ventanamodal").dialog('destroy');
                                                         location.reload();
                                                 </script>
+                                                <style>
+                                                    #sm_body_ventanamodal{
+                                                        z-index: 1001;
+                                                    }
+                                                </style>
                                             </div>
                                         </div>
                                     </div>

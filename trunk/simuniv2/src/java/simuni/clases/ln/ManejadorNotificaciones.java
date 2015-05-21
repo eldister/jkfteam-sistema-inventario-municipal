@@ -28,6 +28,7 @@ public class ManejadorNotificaciones {
      * @return true en caso de que la operación se halla realizado con éxito o
      * false en caso de que no
      * @since 1.0
+     * @deprecated 
      */
     public boolean agregarNotificacion(Notificacion notificacion) {
         ManejadorDatosNotificaciones manejadornotificaciones = new ManejadorDatosNotificaciones();
@@ -53,6 +54,8 @@ public class ManejadorNotificaciones {
         }
         return resp;
     }
+    
+    
 
     /**
      * Este método obtiene una lista con todas las notificaciones enviadas a un
@@ -195,4 +198,29 @@ public class ManejadorNotificaciones {
         }
         return resp;
     }
+    public boolean agregarNNotificacion(Notificacion notificacion) {
+        ManejadorDatosNotificaciones manejadornotificaciones = new ManejadorDatosNotificaciones();
+        boolean resp = false;
+        try {
+            
+
+            if (notificacion.getUsuarioOrigen() == null) {
+                return false;
+            }
+            resp = manejadornotificaciones.agregarNotificacion(notificacion);
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return resp;
+    }
+    
+    public Notificacion generarRegistroNotificacion(String origen, String descripcion){
+        Notificacion notifi=new Notificacion();
+        notifi.setUsuarioOrigen(origen);
+        notifi.setDescripcionNotificacion(descripcion);
+        return notifi;
+    }
+        
 }

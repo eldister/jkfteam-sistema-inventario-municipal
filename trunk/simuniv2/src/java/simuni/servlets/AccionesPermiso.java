@@ -8,7 +8,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorPermiso;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.mantenimientos.Permiso;
 import simuni.utils.UtilidadesServlet;
@@ -41,7 +45,7 @@ public class AccionesPermiso extends HttpServlet {
      */
     enum OpcionesDo {
 
-        Listado, Nuevo, Eliminar, Modificar, Query, AccionDefault,PermisosAsignados,PermisosDisponibles,AsignarPermisos
+        Listado, Nuevo, Eliminar, Modificar, Query, AccionDefault, PermisosAsignados, PermisosDisponibles, AsignarPermisos
     }
 
     /**
@@ -67,7 +71,7 @@ public class AccionesPermiso extends HttpServlet {
             return OpcionesDo.PermisosDisponibles;
         } else if (key.equals("perasignados")) {
             return OpcionesDo.PermisosAsignados;
-        }else if (key.equals("asignar")) {
+        } else if (key.equals("asignar")) {
             return OpcionesDo.AsignarPermisos;
         }
         return OpcionesDo.AccionDefault;
@@ -94,7 +98,7 @@ public class AccionesPermiso extends HttpServlet {
             String query = request.getParameter("query");
             ResultSet resultset = null;
             query = query == null ? "" : query;
-            
+
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/permisos/_asinc/_asinc_nuevo.jsp");
@@ -136,7 +140,7 @@ public class AccionesPermiso extends HttpServlet {
                     request.setAttribute("paginacion", ((int) mpermiso.getCantidadRegistros(query) / paginacion) + 1);
                     request.setAttribute("query", query);
                     break;
-                 
+
             }
             disp.forward(request, response);
         } catch (Exception ex) {
@@ -170,7 +174,14 @@ public class AccionesPermiso extends HttpServlet {
             String query = request.getParameter("query");
             query = query == null ? "" : query;
             ResultSet resultset = null;
-            String idusuario=null;
+            String idusuario = null;
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario2 = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
                     nombrepermiso = request.getParameter("txtnombrepermiso");
@@ -179,6 +190,15 @@ public class AccionesPermiso extends HttpServlet {
                     respuesta = mpermiso.registrarPermiso(nuevopermiso);
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("nuevoregistro", nuevopermiso);
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registra un nuevo tipo de permiso " + nombrepermiso,
+                            "Se registra nuevo tipo de permiso.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario2,
+                            "Se ha registrado a un nuevo permiso  (" + nuevopermiso + ")");
+                    mnotif.agregarNNotificacion(notificacion);
+
                     disp = request.getRequestDispatcher("/modulos/mantenimientos/permisos/_asinc/_asinc_nuevo.jsp");
                     break;
                 case Modificar:
@@ -191,6 +211,15 @@ public class AccionesPermiso extends HttpServlet {
                         respuesta = mpermiso.modificarPermiso(permiso);
                         request.setAttribute("registro", permiso);
                         request.setAttribute("respuesta", respuesta);
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se modifica un  tipo de permiso " + nombrepermiso,
+                                "Se modifica  tipo de permiso.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario2,
+                                "Se ha modificado  a un  permiso  (" + nombrepermiso + ")");
+                        mnotif.agregarNNotificacion(notificacion);
+
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/permisos/_asinc/_asinc_editar.jsp");
                     } else {
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/permisos/index.jsp");
@@ -203,6 +232,14 @@ public class AccionesPermiso extends HttpServlet {
                         respuesta = mpermiso.eliminarPermiso(permiso);
                         request.setAttribute("registro", permiso);
                         request.setAttribute("respuesta", respuesta);
+                        
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se elimina un  tipo de permiso " + nombrepermiso,
+                                "Se elimina  tipo de permiso.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario2,
+                                "Se ha eliminado  a un  permiso  (" + registro + ")");
+                        mnotif.agregarNNotificacion(notificacion);                        
                         disp = request.getRequestDispatcher("/modulos/mantenimientos/permisos/_asinc/_asinc_eliminar.jsp");
                     }
                     break;
@@ -226,30 +263,38 @@ public class AccionesPermiso extends HttpServlet {
                     request.setAttribute("query", query);
                     break;
                 case PermisosAsignados:
-                    idusuario=request.getParameter("cmbusuario");
-                     if(idusuario!=null){
-                         request.setAttribute("permisos", mpermiso.listadoPermiso_Asignados(idusuario));
-                     }
-                     System.out.println("sirviooooooo");
-                    disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_permisos_asignados.jsp"); 
+                    idusuario = request.getParameter("cmbusuario");
+                    if (idusuario != null) {
+                        request.setAttribute("permisos", mpermiso.listadoPermiso_Asignados(idusuario));
+                    }
+                    System.out.println("sirviooooooo");
+                    disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_permisos_asignados.jsp");
                     break;
                 case PermisosDisponibles:
-                    idusuario=request.getParameter("cmbusuario");
-                     if(idusuario!=null){
-                         request.setAttribute("permisos", mpermiso.listadoPermiso_Disponibles(idusuario));
-                     }
-                    disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_permisos_noasignados.jsp"); 
-                    break;   
+                    idusuario = request.getParameter("cmbusuario");
+                    if (idusuario != null) {
+                        request.setAttribute("permisos", mpermiso.listadoPermiso_Disponibles(idusuario));
+                    }
+                    disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_permisos_noasignados.jsp");
+                    break;
                 case AsignarPermisos:
                     //validar qeu usuario no sea null
-                    idusuario=request.getParameter("cmbusuario");
-                    String permisosnuevos[]=request.getParameterValues("cmbpermisoasignados[]");
-                    System.out.println(permisosnuevos!=null);
-                    ArrayList<Respuesta>valor_respuesta=mpermiso.asignarPermisos(permisosnuevos, idusuario);
-                    
-                    request.setAttribute("respuesta", valor_respuesta);  
-                    disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_asignacion_respuesta.jsp"); 
-                       
+                    idusuario = request.getParameter("cmbusuario");
+                    String permisosnuevos[] = request.getParameterValues("cmbpermisoasignados[]");
+                    System.out.println(permisosnuevos != null);
+                    ArrayList<Respuesta> valor_respuesta = mpermiso.asignarPermisos(permisosnuevos, idusuario);
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(valor_respuesta.get(0), request,
+                                "Se modifica el acceso a  " + idusuario,
+                                "Se modifica  tipo de permiso.");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario2,
+                                "Se ha modificado  las reglas de acceso a   (" + idusuario + ")");
+                        mnotif.agregarNNotificacion(notificacion);
+                        
+                    request.setAttribute("respuesta", valor_respuesta);
+                    disp = request.getRequestDispatcher("/modulos/usuarios/_asinc/_asinc_asignacion_respuesta.jsp");
+
                     break;
             }
             disp.forward(request, response);

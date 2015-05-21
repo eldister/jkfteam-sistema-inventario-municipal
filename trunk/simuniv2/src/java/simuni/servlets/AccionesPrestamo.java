@@ -8,8 +8,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorPrestamo;
+import simuni.entidades.Notificacion;
 import simuni.entidades.Prestamo;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.utils.UtilidadesServlet;
 
@@ -171,6 +175,14 @@ public class AccionesPrestamo extends HttpServlet {
             String registro = "";
             ManejadorPrestamo mprestamo = new ManejadorPrestamo();
 
+            
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+            
             String query = request.getParameter("query");
             ResultSet resultset = null;
             query = query == null ? "" : query;
@@ -181,6 +193,14 @@ public class AccionesPrestamo extends HttpServlet {
                     request.setAttribute("registro", prestamo);
                     request.setAttribute("respuesta", respuesta);
                     disp = request.getRequestDispatcher("/modulos/prestamos/nuevo.jsp");
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se registra un nuevo prestamo del activo " + prestamo.getIdActivo(),
+                            "Se registra nuevo prestamo de activo.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha dado en préstamo el activo "+prestamo.getIdActivo());
+                    mnotif.agregarNNotificacion(notificacion);                    
                     break;
                 case Modificar:
                     prestamo = generarActualizacionPrestamo(request);
@@ -188,6 +208,14 @@ public class AccionesPrestamo extends HttpServlet {
                     request.setAttribute("registro", prestamo);
                     request.setAttribute("respuesta", respuesta);
                     disp = request.getRequestDispatcher("/modulos/prestamos/editar.jsp");
+                    
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se modifica un  prestamo hecho del activo " + prestamo.getIdActivo(),
+                            "Se modifica un  prestamo del activo.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha modificado un préstamo del activo "+prestamo.getIdActivo());
+                    mnotif.agregarNNotificacion(notificacion);                      
                     break;
                 case Eliminar:
                     registro = request.getParameter("registro");
@@ -196,6 +224,15 @@ public class AccionesPrestamo extends HttpServlet {
                     request.setAttribute("registro", prestamo);
                     request.setAttribute("respuesta", respuesta);
                     disp = request.getRequestDispatcher("/modulos/prestamos/eliminar.jsp");
+
+                    
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se elimina un  prestamo hecho del activo " + prestamo.getIdActivo(),
+                            "Se elimina un  prestamo del activo.");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha eliminado un préstamo del activo "+prestamo.getIdActivo());
+                    mnotif.agregarNNotificacion(notificacion);                        
                     break;
                 case Query:
                     npagina = UtilidadesServlet.getNumeroDePagina(request.getParameter("pag"), 0);

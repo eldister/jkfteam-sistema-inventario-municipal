@@ -7,8 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import simuni.clases.ln.ManejadorBitacora;
+import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.clases.ln.ManejadorSolicitudBaja;
 import simuni.entidades.Baja;
+import simuni.entidades.Notificacion;
+import simuni.entidades.RegistroBitacora;
 import simuni.entidades.Respuesta;
 import simuni.entidades.SolicitudBaja;
 import simuni.enums.Recursos;
@@ -185,6 +189,13 @@ public class AccionesSolicitudBaja extends HttpServlet {
             String query = request.getParameter("query");
             query = query == null ? "" : query;
             ResultSet resultset = null;
+
+            ManejadorBitacora manejadorBitacora = ManejadorBitacora.getInstance();
+            RegistroBitacora registroBitacora;
+            String idusuario2 = request.getSession().getAttribute("USERNAME") == null ? null : request.getSession().getAttribute("USERNAME").toString();
+            Notificacion notificacion = new Notificacion();
+            ManejadorNotificaciones mnotif = new ManejadorNotificaciones();
+
             switch (getOpcion(request.getParameter("proceso"))) {
                 case Nuevo:
 
@@ -192,6 +203,15 @@ public class AccionesSolicitudBaja extends HttpServlet {
                     respuesta = msolicitudbaja.registrarSolicitudBaja(solicitudbaja);
                     request.setAttribute("respuesta", respuesta);
                     request.setAttribute("registro", solicitudbaja);
+
+                    registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                            "Se solicita dar de baja al activo" + solicitudbaja.getPlacaActivo(),
+                            "Se registra una solicitud de baja");
+                    manejadorBitacora.registrarEnBitacora(registroBitacora);
+                    notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                            "Se ha registrado una solicitud de baja para el activo " + solicitudbaja.getPlacaActivo());
+                    mnotif.agregarNNotificacion(notificacion);
+
                     disp = request.getRequestDispatcher("/modulos/solicitudbajas/nueva_solicitud.jsp");
                     break;
                 case Modificar:
@@ -204,6 +224,15 @@ public class AccionesSolicitudBaja extends HttpServlet {
                         request.setAttribute("registro", solicitudbaja);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/solicitudbajas/editar_solicitud.jsp");
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se modifica una solicitud de baja del activo" + solicitudbaja.getPlacaActivo(),
+                                "Se modifica una solicitud de baja");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha modificado una solicitud de baja para el activo " + solicitudbaja.getPlacaActivo());
+                        mnotif.agregarNNotificacion(notificacion);
+
                     } else {
                         disp = request.getRequestDispatcher("/modulos/solicitudbajas/index.jsp");
                     }
@@ -216,6 +245,14 @@ public class AccionesSolicitudBaja extends HttpServlet {
                         request.setAttribute("registro", solicitudbaja);
                         request.setAttribute("respuesta", respuesta);
                         disp = request.getRequestDispatcher("/modulos/solicitudbajas/eliminar_solicitud.jsp");
+
+                        registroBitacora = manejadorBitacora.generarRegistroBitacora(respuesta, request,
+                                "Se elimina una solicitud para  dar de baja al activo" + solicitudbaja.getPlacaActivo(),
+                                "Se elimina  una solicitud de baja");
+                        manejadorBitacora.registrarEnBitacora(registroBitacora);
+                        notificacion = mnotif.generarRegistroNotificacion(idusuario,
+                                "Se ha eliminado una solicitud de baja para el activo " + solicitudbaja.getPlacaActivo());
+                        mnotif.agregarNNotificacion(notificacion);
                     }
                     break;
                 case Query:
@@ -284,9 +321,9 @@ public class AccionesSolicitudBaja extends HttpServlet {
     }
 
     /**
-     * metodo para la generacion de una nueva reparacion con la información obtenido
-     * de los formularios html del lado del cliente
-     * 
+     * metodo para la generacion de una nueva reparacion con la información
+     * obtenido de los formularios html del lado del cliente
+     *
      * @param request solicitud al servlet
      * @return la nueva solicitud de baja enviada por algún usuario
      */
