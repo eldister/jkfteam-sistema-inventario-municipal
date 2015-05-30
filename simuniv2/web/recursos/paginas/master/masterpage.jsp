@@ -54,8 +54,8 @@
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/temas/jquery_smoothness/style_jquery-ui.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style_main.css">       
-        <!--<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style_menuprincipal2.css">-->
-       
+       <!--<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style_menuprincipal.css">
+        -->
         <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style_menuprincipal_v3.css">
     
         <script>
@@ -164,7 +164,7 @@
                                         <a class="sm_div_configuracionlink" title="Acceder a la ayuda" href="#">Ayuda.</a>
                                     </div>
                                     <div class="sm_div_cerrarsesion">
-                                        <a class="sm_div_configuracionlink" title="Cerrar Sesión actual"  href="/SIMUNI/AccionesUsuarios?proceso=logout">Salir</a>
+                                        <a class="sm_div_configuracionlink" title="Cerrar Sesión actual"  href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/usuario?proceso=logout"));%>">Salir</a>
                                     </div>
                                 </div>
                             </fieldset>

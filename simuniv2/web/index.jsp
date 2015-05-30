@@ -84,16 +84,15 @@
                 <div id="simunipa" class="simunipa">
                     <h3>SIMUNI</h3>
                 </div>
+                <div id="config" class="config" name="config">
+                    <a href="javascript:mostrarventanamodal();">Actualizar información</a>
+                </div>
             </div>
             <hr/>
             <div id="saludo" class="saludo" name="saludo">
-                Bienvenido <strong><%=request.getSession().getAttribute("USERNAME")%></strong>
-                <input type="hidden" id="id_usuario" name="id_usuario" class="id_usuario">
-            </div>
-            <div id="config" class="config" name="config">
-                <a href="javascript:mostrarventanamodal();">Actualizar información</a>
-            </div>
-            <hr/>
+                        Bienvenido <strong><%=request.getSession().getAttribute("USERNAME")%></strong>
+                        <input type="hidden" id="id_usuario" name="id_usuario" class="id_usuario">
+                    </div>
             <center>
                 <div id="userinfo" class="userinfo" name="userinfo">
                     <table>

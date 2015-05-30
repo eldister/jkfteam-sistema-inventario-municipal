@@ -11,10 +11,11 @@ and open the template in the editor.
     border-radius: 5px;
     box-shadow: 2px 2px 5px #999;
     height: 500px;
-    width: 1024px;;
+    width: 1024px;
 }
 .logocampo{
     padding: 2px;
+    height: 82px;
 }
 .logosys{
     float:left;
@@ -27,6 +28,10 @@ and open the template in the editor.
 .saludo{
     font-size: 500%;
     float:left;
+    clear: both;
+}
+.userinfo{
+    clear: both;
 }
 .config a{
     padding: 6px;
