@@ -1,4 +1,3 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans);
 #simuni_div_menu,
 #simuni_div_menu ul,
 #simuni_div_menu ul li,
@@ -12,10 +11,8 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  z-index: 1000;
 }
 #simuni_div_menu ul{
-    z-index: 1000;
     left: 0%
 }
 #simuni_div_menu ul,
@@ -115,6 +112,7 @@
   line-height: 120%;
   padding: 10px;
   color: #ffffff;
+  z-index: 1;
 }
 #simuni_div_menu .has-sub ul li:hover a {
   background: #0c7fb0;

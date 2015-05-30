@@ -12,6 +12,7 @@ import simuni.clases.ln.ManejadorNotificaciones;
 import simuni.entidades.Respuesta;
 import simuni.entidades.Notificacion;
 import simuni.utils.UtilidadesServlet;
+import simuni.entidades.RegistroBitacora;
 
 /**
  * Este servelet controla las acciones que tienen qeu ver con el catálogo de
