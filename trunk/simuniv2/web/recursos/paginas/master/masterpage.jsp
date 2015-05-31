@@ -158,13 +158,17 @@
                                 <legend>Configuraciones</legend>
                                 <div class="sm_fieldset_notificacionescontainer">
                                     <div class="sm_div_edicionperfil">
-                                        <a class="sm_div_configuracionlink" title="Editar tus datos" href="#">Perfil</a>
+                                        <a class="sm_div_configuracionlink" title="Editar tus datos" href="/simuniv2/usuario?proceso=renovacion">Renovar Clave</a>
                                     </div>
                                     <div class="sm_div_ayudausuario">
-                                        <a class="sm_div_configuracionlink" title="Acceder a la ayuda" href="#">Ayuda.</a>
+                                        <a class="sm_div_configuracionlink" title="Acceder a la ayuda" href="/simuniv2/acerca">Ayuda.</a>
                                     </div>
                                     <div class="sm_div_cerrarsesion">
+<<<<<<< .mine
+                                        <a class="sm_div_configuracionlink" title="Cerrar Sesión actual"  href="/simuniv2/usuario?proceso=logout">Salir</a>
+=======
                                         <a class="sm_div_configuracionlink" title="Cerrar Sesión actual"  href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/usuario?proceso=logout"));%>">Salir</a>
+>>>>>>> .r126
                                     </div>
                                 </div>
                             </fieldset>
