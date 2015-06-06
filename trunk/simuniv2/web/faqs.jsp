@@ -112,6 +112,56 @@
                 </div>  
                 <div class="sm_div_faqcontainer">
                     <div class="sm_div_pregunta">
+                        <p>¿SIMUNI registra los eventos del sistema?</p>
+                    </div>
+                    <div class="sm_div_respuesta">
+                       Como parte de la funcionalidad estándar del sistema y 
+                       de los sistemas de información es requisito poder 
+                       guardar cada uno de los procesos que se realizan
+                       para su posterior análisis y poder descubrir algunos
+                       ilícitos que se puedan presentar.
+                    </div>
+                </div>  
+                <div class="sm_div_faqcontainer">
+                    <div class="sm_div_pregunta">
+                        <p>¿El respaldo de los datos se realiza y es segura?</p>
+                    </div>
+                    <div class="sm_div_respuesta">
+                       SIMUNI hace respaldos periódicos de la base de datos,
+                       los cuales están sincronizados con una cuenta de 
+                       DropBox para poder recuperar en caso de errores 
+                       en el sistema o en el ordenador. Los respaldos 
+                       se pueden hacer de manera automática pero también 
+                       el usuario puede hacerlo en cualquier momento según sus prácticas.
+                    </div>
+                </div>  
+                <div class="sm_div_faqcontainer">
+                    <div class="sm_div_pregunta">
+                        <p>¿Se puede enviar un mensaje entre usuarios?</p>
+                    </div>
+                    <div class="sm_div_respuesta">
+                       Sí si es posible, el sistema SIMUNI lo permite.
+                    </div>
+                </div>  
+                <div class="sm_div_faqcontainer">
+                    <div class="sm_div_pregunta">
+                        <p>¿Cuáles son los navegadores recomendados para utilizar el SIMUNI?</p>
+                    </div>
+                    <div class="sm_div_respuesta">
+                       Se recomienda por compatibilidad el navegador web Google 
+                       Chrome o el de Mozilla Firefox. También ha sido probado en Maxthon Web Browser.
+                    </div>
+                </div>  
+                <div class="sm_div_faqcontainer">
+                    <div class="sm_div_pregunta">
+                        <p>¿SIMUNI tiene manual?</p>
+                    </div>
+                    <div class="sm_div_respuesta">
+                       SIMUNI contiene un manual accesible en el menú manual de tu menú principal.
+                    </div>
+                </div>                  
+                <div class="sm_div_faqcontainer">
+                    <div class="sm_div_pregunta">
                         <p></p>
                     </div>
                     <div class="sm_div_respuesta">

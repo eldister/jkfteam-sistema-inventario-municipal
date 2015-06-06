@@ -37,7 +37,7 @@
 
 <form class="sm_div_formulario" method="POST" id="formulario_eliminacion">
     <fieldset id="sm_fs_articulos">
-        <legend style="<%out.print((error && proceso) ? "color:red;" : "color:green");%>" >Actualizacion de Tipo Usuario</legend>
+        <legend style="<%out.print((error && proceso) ? "color:red;" : "color:green");%>" >Eliminación de Deparamento</legend>
         <div class="sm_form_registroinformacion">
             <table class="sm_tb_campos table">
                 <tr class="sm_table_formulariofila">

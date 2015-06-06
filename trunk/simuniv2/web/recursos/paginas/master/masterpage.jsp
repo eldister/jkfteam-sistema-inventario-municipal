@@ -30,7 +30,7 @@
         if (permiso_requerido != null && UtilidadesServlet.tryParseInt(permiso_requerido)) {
             int codigo_permiso = UtilidadesServlet.getInt(permiso_requerido, -1);
             
-            out.print("El permiso solicitado es " + request.getAttribute("permiso_requerido") + permiso_requerido);
+           // out.print("El permiso solicitado es " + request.getAttribute("permiso_requerido") + permiso_requerido);
             if(!manejadorusuarios.usuarioTienePermiso(codigo_permiso, idusuario)){
                        out.print("<script>window.location.replace('/simuniv2/prohibido');</script>");
                        return; 
@@ -161,14 +161,11 @@
                                         <a class="sm_div_configuracionlink" title="Editar tus datos" href="/simuniv2/usuario?proceso=renovacion">Renovar Clave</a>
                                     </div>
                                     <div class="sm_div_ayudausuario">
-                                        <a class="sm_div_configuracionlink" title="Acceder a la ayuda" href="/simuniv2/acerca">Ayuda.</a>
+                                        <a class="sm_div_configuracionlink" title="Acceder a la ayuda" href="/simuniv2/manual">Ayuda.</a>
                                     </div>
                                     <div class="sm_div_cerrarsesion">
-<<<<<<< .mine
-                                        <a class="sm_div_configuracionlink" title="Cerrar Sesión actual"  href="/simuniv2/usuario?proceso=logout">Salir</a>
-=======
                                         <a class="sm_div_configuracionlink" title="Cerrar Sesión actual"  href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/usuario?proceso=logout"));%>">Salir</a>
->>>>>>> .r126
+
                                     </div>
                                 </div>
                             </fieldset>
@@ -203,9 +200,8 @@
                             <div class="sm_div_colcontainer">
                                 <b>Páginas</b>
                                 <ul>
-                                    <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/acerca"));%>">Acerca de</a></li>
+                                    <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/faq"));%>" title="Preguntas Frecuentes">Preguntas Frecuentes</a></li>
                                     <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/mapa"));%>" title="Ver el sistema desde arriba">Mapa del sitio</a></li>
-                                    <li><a href="#" title="#">Mantenimiento Activos</a></li>
 
                                 </ul>
                             </div>
@@ -213,16 +209,16 @@
                             <div class="sm_div_colcontainer">
                                 <b>SIMUNI</b><br/>
                                 <ul> 
-                                    <li><a href="#" title="Información del proyecto">Acerca del proyecto</a></li>
-                                    <li><a href="#" title="Creadores del sistema">Desarrolladores</a></li>                     
+                                    <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/acerca"));%>" title="Información del proyecto">Acerca del proyecto</a></li>
+                                    <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/contacto"));%>" title="Creadores del sistema">Desarrolladores</a></li>                     
                                 </ul>
                             </div>  
 
                             <div class="sm_div_colcontainer">
                                 <b>Ayuda</b><br/>
                                 <ul>
-                                    <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/faq"));%>" title="Preguntas Frecuentes">FAQ</a></li>
-                                    <li><a href="#" title="Ir al manual">Manual de usuario</a></li>
+
+                                    <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/manual"));%>" title="Ir al manual">Manual de usuario</a></li>
                                     <li><a href="<%out.print(Recursos.Servers.MAINSERVER.toString().concat("/contacto"));%>" title="Contactar al administrador">Contacto</a></li>
                                 </ul>
                             </div>                     
