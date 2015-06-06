@@ -1,0 +1,23 @@
+            .sm_manual_fecha{
+
+            }
+            .sm_div_manual_block{
+                padding: 20px;
+                margin: 5px;
+                margin-bottom: 10px;
+                box-shadow: 0 0 5px rgba(0,0,0,0.7);
+            }
+            .sender_label{
+                margin: 5px;
+                font-size: 1.2em;
+                text-decoration: overline;
+                font-weight: 700;
+            }
+            .sm_div_textomanual_block a{
+                display: block;
+                font-size: 1.3em;
+                margin-top: 25px;
+            }
+            .sm_div_textomanual_block a:before{
+                content: '> ';
+            }

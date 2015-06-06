@@ -114,6 +114,11 @@
         <servlet-name>AccionesReportes</servlet-name>
         <servlet-class>simuni.servlets.AccionesReportes</servlet-class>
     </servlet>
+    <servlet>
+        <description>Manual de usuario</description>
+        <servlet-name>manualusuario</servlet-name>
+        <jsp-file>/manual.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccionesTipoUsuario</servlet-name>
         <url-pattern>/tipousuario</url-pattern>
@@ -134,15 +139,14 @@
         <servlet-name>AccionesEstado</servlet-name>
         <url-pattern>/estado</url-pattern>
     </servlet-mapping>
-           <servlet>
+    <servlet>
         <servlet-name>AccionesPrestamo</servlet-name>
         <servlet-class>simuni.servlets.AccionesPrestamo</servlet-class>
     </servlet>
-        <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AccionesPrestamo</servlet-name>
         <url-pattern>/prestamo</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>AccionesTipoActivo</servlet-name>
         <url-pattern>/tipoactivo</url-pattern>
@@ -246,6 +250,10 @@
     <servlet-mapping>
         <servlet-name>AccionesReportes</servlet-name>
         <url-pattern>/reporte</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>manualusuario</servlet-name>
+        <url-pattern>/manual</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -42,7 +42,7 @@
             <table class="sm_tb_campos table">
                 <tr class="sm_table_formulariofila">
                     <th>
-                        <label>Nombre de Tipo de Usuario</label>
+                        <label>Nombre del Departamento</label>
                     </th>
                     <td>
                         <input type="text" value="<%out.print(proceso ? departamento.getNombredepartamento(): "");%>" class="form-control" id="txtnombredepartamento" required="required"  name="txtnombredepartamento">

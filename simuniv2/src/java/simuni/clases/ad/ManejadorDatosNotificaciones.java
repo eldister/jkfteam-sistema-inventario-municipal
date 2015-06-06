@@ -171,10 +171,11 @@ public class ManejadorDatosNotificaciones {
             Notificacion notificacion = new Notificacion();
             notificacion.setIdNotificacion(rs.getInt(1));
             notificacion.setFechaNotificacion(rs.getTimestamp(2));
-            notificacion.setUsuarioOrigen(rs.getString(3));
-            notificacion.setEstadoNotificacion(rs.getString(4));
-            notificacion.setDescripcionNotificacion(rs.getString(5));
-            notificacion.setTipoNotificacion(rs.getString(6));
+            notificacion.setUsuarioObjetivo(rs.getString(3));
+            notificacion.setUsuarioOrigen(rs.getString(4));
+            notificacion.setEstadoNotificacion(rs.getString(5));
+            notificacion.setDescripcionNotificacion(rs.getString(6));
+            notificacion.setTipoNotificacion(rs.getString(7));
             notificaciones.add(notificacion);
             System.out.println("Notificacion");
         }
