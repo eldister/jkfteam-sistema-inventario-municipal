@@ -87,7 +87,70 @@
                     <div class='sm_div_textomanual_block'>
                         <a href="modulos/ayuda/manual/reportes.pdf">Reportes del Sistema</a>
                     </div>  
-                </div>                
+                </div>   
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_de_registro_de_usuario.pdf">Registrar un nuevo usuario</a>
+                    </div>  
+                </div>
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_actualizar_registro_de_usuario.pdf">Actualizar registro de usuario</a>
+                    </div>  
+                </div>
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_asignar_permisos_a_usuarios.pdf">Asignar permisos a los usuarios</a>
+                    </div>  
+                </div>
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_eliminar_usuario.pdf">Eliminar un usuario</a>
+                    </div>  
+                </div>
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_para_cierrar_sesión.pdf">Cerrar sesión</a>
+                    </div>  
+                </div>
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_para_enviar_un_mensaje.pdf">Enviar un mensaje</a>
+                    </div>  
+                </div>
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_registro_reparación.pdf">Registro de una reparación de activo</a>
+                    </div>  
+                </div>
             </fieldset>
         </div>
     </decorator:content>
