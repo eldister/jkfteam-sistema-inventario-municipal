@@ -228,7 +228,7 @@
                             <tr class="sm_table_formulariofila">
                                 <td>&nbsp;</td>
                                 <td colspan="2">
-                                    <input type="submit" class="form-control" value="Actualizar">
+                                    <input type="submit" class="form-control" value="Actualizar" onclick="javascript:AddSubmitFormActualizacionEventHandler()">
                                 </td>
                                 <td>&nbsp;</td>
                             </tr>                          
