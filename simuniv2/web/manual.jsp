@@ -211,7 +211,7 @@
                         - Generado por Administrador de Sistema
                     </span>
                     <div class='sm_div_textomanual_block'>
-                        <a target="_blank" href="modulos/ayuda/manual/Guía_Solicitud_de_Baja_de_activo.pdf">Solicitud de Baja de un Activo</a>
+                        <a target="_blank" href="modulos/ayuda/manual/Solicitud_de_Baja_de_activo.pdf">Solicitud de Baja de un Activo</a>
                     </div>  
                 </div>
             </fieldset>
