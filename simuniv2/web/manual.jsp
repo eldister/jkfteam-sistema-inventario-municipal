@@ -151,6 +151,69 @@
                         <a target="_blank" href="modulos/ayuda/manual/Guía_registro_reparación.pdf">Registro de una reparación de activo</a>
                     </div>  
                 </div>
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_Eliminación_de_Proveedor.pdf">Eliminación de Proveedor</a>
+                    </div>  
+                </div>
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_Ingresar_Ventas.pdf">Ingreso de ventas de activos</a>
+                    </div>  
+                </div>
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_Ingreso_de_Nuevo_proveedor.pdf">Ingreso de Nuevo Proveedor</a>
+                    </div>  
+                </div>
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_Modificación_Proveedor.pdf">Modificación de Proveedor</a>
+                    </div>  
+                </div>
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_Registro_de_baja.pdf">Registro de Baja de un Activo</a>
+                    </div>  
+                </div>
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_Solicitud_Reparación_de_Activos.pdf">Solicitud de Reparación de un Activo</a>
+                    </div>  
+                </div>
+                <div class='sm_div_manual_block'>   
+                    <code class="sm_manual_fecha">Agregado el 06 de junio 2015</code>
+                    <span class="sm_div_textomanualsender_block">
+                        - Generado por Administrador de Sistema
+                    </span>
+                    <div class='sm_div_textomanual_block'>
+                        <a target="_blank" href="modulos/ayuda/manual/Guía_Solicitud_de_Baja_de_activo.pdf">Solicitud de Baja de un Activo</a>
+                    </div>  
+                </div>
             </fieldset>
         </div>
     </decorator:content>
